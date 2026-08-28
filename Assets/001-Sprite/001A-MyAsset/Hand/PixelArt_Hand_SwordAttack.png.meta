@@ -1,0 +1,2166 @@
+fileFormatVersion: 2
+guid: ee332a766977be04bbb07201f5cb8184
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 16384
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3258
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a54d171c7037ded4480f3286edcc3274
+      internalID: -720682289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_1
+      rect:
+        serializedVersion: 2
+        x: 648
+        y: 3258
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8b6194d527cf334e874d1f616a9a7eb
+      internalID: 922698384
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_2
+      rect:
+        serializedVersion: 2
+        x: 1296
+        y: 3258
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cbfd122a029c9e3489838db755be3711
+      internalID: -1960995967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_3
+      rect:
+        serializedVersion: 2
+        x: 1944
+        y: 3258
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d43312cf16aa31941b837ecaabe8fae3
+      internalID: -1966684609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_4
+      rect:
+        serializedVersion: 2
+        x: 2592
+        y: 3258
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c94fa02574e0b7545a717bec940043a4
+      internalID: -538605237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_5
+      rect:
+        serializedVersion: 2
+        x: 3240
+        y: 3258
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e77871b62c254de4d82061d09a86d3bb
+      internalID: -973856724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_6
+      rect:
+        serializedVersion: 2
+        x: 3888
+        y: 3258
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a8854606213bfd48805a59bbba5f315
+      internalID: 497165851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_7
+      rect:
+        serializedVersion: 2
+        x: 4536
+        y: 3258
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7131a922bced8cc4fb44abcdb6595fda
+      internalID: -2109933000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_8
+      rect:
+        serializedVersion: 2
+        x: 5184
+        y: 3258
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41e1d0808f178a84aa80795322e1b31d
+      internalID: -743184884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2715
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9a3ebd1c1b7f214c96ee97dd697cf7e
+      internalID: 26606034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_10
+      rect:
+        serializedVersion: 2
+        x: 648
+        y: 2715
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bcb5683ca29793049a8e54bd02ab8b1b
+      internalID: 536017864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_11
+      rect:
+        serializedVersion: 2
+        x: 1296
+        y: 2715
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0c20fd8e6fb0134c8270cdc765c49ae
+      internalID: 992064588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_12
+      rect:
+        serializedVersion: 2
+        x: 1944
+        y: 2715
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b87b96580a244140b2a2090fa828c6c
+      internalID: -1721990631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_13
+      rect:
+        serializedVersion: 2
+        x: 2592
+        y: 2715
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 767a527c03f503744bd630373b63ffb5
+      internalID: -532890932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_14
+      rect:
+        serializedVersion: 2
+        x: 3240
+        y: 2715
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41b3d82fe2b34af4a99a1e89b410b23a
+      internalID: 806268179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_15
+      rect:
+        serializedVersion: 2
+        x: 3888
+        y: 2715
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1672032a91016de4c8a8558944b12739
+      internalID: 231733260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_16
+      rect:
+        serializedVersion: 2
+        x: 4536
+        y: 2715
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 75b49746e52a01d4dad6a6e784c56406
+      internalID: 913702180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_17
+      rect:
+        serializedVersion: 2
+        x: 5184
+        y: 2715
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be9d82af5682a45468980496cefd8bf7
+      internalID: -12640040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_18
+      rect:
+        serializedVersion: 2
+        x: 5832
+        y: 2715
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f559c301a0a8a724998724337f9dd924
+      internalID: 1011839003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_19
+      rect:
+        serializedVersion: 2
+        x: 6480
+        y: 2715
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1f60ef1d27bf324a8d29a76ba14c969
+      internalID: 670204848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_20
+      rect:
+        serializedVersion: 2
+        x: 7128
+        y: 2715
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: abb9c277bcd51ef42947016ba11755d1
+      internalID: 1934427537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_21
+      rect:
+        serializedVersion: 2
+        x: 7776
+        y: 2715
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f042639ef4250ee4a9072f6ea7b90bd5
+      internalID: 2075852596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_22
+      rect:
+        serializedVersion: 2
+        x: 8424
+        y: 2715
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d20f30eab2957544f9c78edba6596325
+      internalID: 1647150155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_23
+      rect:
+        serializedVersion: 2
+        x: 9072
+        y: 2715
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e621c2184ae770498e915e61dd77a55
+      internalID: 1482281881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2172
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c4857a09e5e75b40bef95a2063b069a
+      internalID: -1605855659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_25
+      rect:
+        serializedVersion: 2
+        x: 648
+        y: 2172
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1976e475002e1a4fbb770f0d32bfdc3
+      internalID: -1772104583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_26
+      rect:
+        serializedVersion: 2
+        x: 1296
+        y: 2172
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c7df503eea09ef0499292be12d9f7be3
+      internalID: -419244843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_27
+      rect:
+        serializedVersion: 2
+        x: 1944
+        y: 2172
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e897dca14046ef44aa847b2474569927
+      internalID: 1358265063
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_28
+      rect:
+        serializedVersion: 2
+        x: 2592
+        y: 2172
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58cf95d0fc0f61e47ac4164ed02f3e5d
+      internalID: -164865840
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_29
+      rect:
+        serializedVersion: 2
+        x: 3240
+        y: 2172
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e98697d11b79de2469168ab1e931241c
+      internalID: -1389514841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_30
+      rect:
+        serializedVersion: 2
+        x: 3888
+        y: 2172
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4fa0ce0a2f1763048bb6d7781243c76b
+      internalID: 1259329743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_31
+      rect:
+        serializedVersion: 2
+        x: 4536
+        y: 2172
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 709e935ed953a384480964506dcc4ee0
+      internalID: 2002983252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_32
+      rect:
+        serializedVersion: 2
+        x: 5184
+        y: 2172
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7af1db9e62578bc4f90fc72e84ee1a58
+      internalID: -608262490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_33
+      rect:
+        serializedVersion: 2
+        x: 5832
+        y: 2172
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0aea9fdf360bad41b6e762effce644d
+      internalID: 2124232102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_34
+      rect:
+        serializedVersion: 2
+        x: 6480
+        y: 2172
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9963ccfe968e41347be1973d370b933f
+      internalID: 1710078204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_35
+      rect:
+        serializedVersion: 2
+        x: 7128
+        y: 2172
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0eb8bd044ab56784abce98c7b7a880bc
+      internalID: -1561316723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_36
+      rect:
+        serializedVersion: 2
+        x: 7776
+        y: 2172
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 358fa30d2dde4b140a1bbea2bfb637f6
+      internalID: -1101371786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_37
+      rect:
+        serializedVersion: 2
+        x: 8424
+        y: 2172
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1053efc39b236994fb87754bb307af5b
+      internalID: -1179565596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_38
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1629
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b8084ff62681dc44ab455e40467913d
+      internalID: -82099581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_39
+      rect:
+        serializedVersion: 2
+        x: 648
+        y: 1629
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0dc81c1f140fce41a08d050dcc882be
+      internalID: -1064483618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_40
+      rect:
+        serializedVersion: 2
+        x: 1296
+        y: 1629
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 299e01c8cb74ae8479e98fa95c213718
+      internalID: -875036432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_41
+      rect:
+        serializedVersion: 2
+        x: 1944
+        y: 1629
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f616b7b33c9d03419f2f9f44dd23f1f
+      internalID: 1500399978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_42
+      rect:
+        serializedVersion: 2
+        x: 2592
+        y: 1629
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b64efe21ed019c947bcfac3ca6df5d85
+      internalID: 152904616
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_43
+      rect:
+        serializedVersion: 2
+        x: 3240
+        y: 1629
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a909992aa5fc6a14585bef1ca273ca84
+      internalID: 827173923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_44
+      rect:
+        serializedVersion: 2
+        x: 3888
+        y: 1629
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae2e33079f5cdc34ab76b6fd2298901e
+      internalID: -1990717309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_45
+      rect:
+        serializedVersion: 2
+        x: 4536
+        y: 1629
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 130659a1111d75f408b8f40d4679daf2
+      internalID: -643640536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_46
+      rect:
+        serializedVersion: 2
+        x: 5184
+        y: 1629
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a234fcecb6dac74199a87447f7848db
+      internalID: -1578221176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_47
+      rect:
+        serializedVersion: 2
+        x: 5832
+        y: 1629
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8abea379d4af8e143ac0d7a629256f2b
+      internalID: -1573485528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_48
+      rect:
+        serializedVersion: 2
+        x: 6480
+        y: 1629
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7bd93a31732a4d0479e334b92138f3b3
+      internalID: 268647437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_49
+      rect:
+        serializedVersion: 2
+        x: 7128
+        y: 1629
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58b47239957ea9d4eb97d70c88958377
+      internalID: -855704506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_50
+      rect:
+        serializedVersion: 2
+        x: 7776
+        y: 1629
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84f1b94c3a11ead45a8e4762f08ebbe3
+      internalID: -28930131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_51
+      rect:
+        serializedVersion: 2
+        x: 8424
+        y: 1629
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2975a218d40048459e5f00cbf8ccc3a
+      internalID: -1551349735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_52
+      rect:
+        serializedVersion: 2
+        x: 9072
+        y: 1629
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0302c7db52fd34c4d8863475daebce43
+      internalID: 2117600257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_53
+      rect:
+        serializedVersion: 2
+        x: 9720
+        y: 1629
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da51197a6c1e1cc41ac4b73e866fc7ef
+      internalID: 1402785426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_54
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1086
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a8a9c8d09b66ea4798224ecd7bbc18f
+      internalID: -327000669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_55
+      rect:
+        serializedVersion: 2
+        x: 648
+        y: 1086
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e12d278c79eabc4a9bd255f22af8b24
+      internalID: 729382191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_56
+      rect:
+        serializedVersion: 2
+        x: 1296
+        y: 1086
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c99d0ec8b7ae4a4b90287b9abcc943e
+      internalID: -1321893219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_57
+      rect:
+        serializedVersion: 2
+        x: 1944
+        y: 1086
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a54349818ee46984d998b2aff9876ea4
+      internalID: -1591169284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_58
+      rect:
+        serializedVersion: 2
+        x: 2592
+        y: 1086
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6fb6d9e6a2b466748adb38b55bc9e94b
+      internalID: -1828245175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_59
+      rect:
+        serializedVersion: 2
+        x: 3240
+        y: 1086
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e4bb3c840dce2d5409f53872370c1d5a
+      internalID: 144576789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_60
+      rect:
+        serializedVersion: 2
+        x: 3888
+        y: 1086
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 298495fa01673184f9fb950af2004029
+      internalID: -1672164762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_61
+      rect:
+        serializedVersion: 2
+        x: 4536
+        y: 1086
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10c6c900d1ee1774bb4f12b5434eb907
+      internalID: 1689436763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_62
+      rect:
+        serializedVersion: 2
+        x: 5184
+        y: 1086
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4d7f188e8f03fc4dadac415c56d37bf
+      internalID: 1516897256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_63
+      rect:
+        serializedVersion: 2
+        x: 5832
+        y: 1086
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24b07c87deb123247bc85002b346b84c
+      internalID: 1644707191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_64
+      rect:
+        serializedVersion: 2
+        x: 6480
+        y: 1086
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6909c1996ece8cd4cbfc4a388ad3d888
+      internalID: -1785379076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_65
+      rect:
+        serializedVersion: 2
+        x: 7128
+        y: 1086
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83fd2ac8f07172e41b9ffe75aa555ba3
+      internalID: -1036582472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_66
+      rect:
+        serializedVersion: 2
+        x: 7776
+        y: 1086
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d11ae0a54dea2d44db53a4cf3fa665da
+      internalID: 39108119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_67
+      rect:
+        serializedVersion: 2
+        x: 8424
+        y: 1086
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 120afa8df8c002844abc4d92cd46ca65
+      internalID: -427404582
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_68
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 543
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a70977f2a39c8bf4aaa306d558f5d023
+      internalID: -147111585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_69
+      rect:
+        serializedVersion: 2
+        x: 648
+        y: 543
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f54e79c94fa31d40a56b92ff7e96339
+      internalID: 2035818957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_70
+      rect:
+        serializedVersion: 2
+        x: 1296
+        y: 543
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0dc36082a6916e478ea24c2c64838ca
+      internalID: 797485338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_71
+      rect:
+        serializedVersion: 2
+        x: 1944
+        y: 543
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20bf58a021e7cb146acd25bd667a1755
+      internalID: -526674928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_72
+      rect:
+        serializedVersion: 2
+        x: 2592
+        y: 543
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3cbbdda490213914ca48528c29e68590
+      internalID: 340308064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_73
+      rect:
+        serializedVersion: 2
+        x: 3240
+        y: 543
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94fe6fc051ddcc7448604931fc8c952f
+      internalID: 194404123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_74
+      rect:
+        serializedVersion: 2
+        x: 3888
+        y: 543
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d981069ae36512d4b800553065ac9bd6
+      internalID: 219099142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_75
+      rect:
+        serializedVersion: 2
+        x: 4536
+        y: 543
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d382fa8df3375c4caa19e550dc2064a
+      internalID: -2096374388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_76
+      rect:
+        serializedVersion: 2
+        x: 5184
+        y: 543
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 864dc0149b2533f4abe744e8bad03536
+      internalID: -1199194768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_77
+      rect:
+        serializedVersion: 2
+        x: 5832
+        y: 543
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 005e1d03752bd5042bc71986c8a06fed
+      internalID: 1818762633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_78
+      rect:
+        serializedVersion: 2
+        x: 6480
+        y: 543
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f9f6b8ecb6a38240b7e357527780773
+      internalID: -286089212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_79
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74090b7e2d80d044481ee7f3d4043588
+      internalID: -232288336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_80
+      rect:
+        serializedVersion: 2
+        x: 648
+        y: 0
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f71dd1abfb2fa874d8aeb8395a2b5752
+      internalID: 1072003384
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_81
+      rect:
+        serializedVersion: 2
+        x: 1296
+        y: 0
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60dec86b08dd02b47b4dcc17252dc333
+      internalID: 678271775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_82
+      rect:
+        serializedVersion: 2
+        x: 1944
+        y: 0
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: abbd841c92579574abc15046425c978c
+      internalID: 1411576773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_83
+      rect:
+        serializedVersion: 2
+        x: 2592
+        y: 0
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e78b3d982e27ac4fad28e72960a9774
+      internalID: 673511861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_84
+      rect:
+        serializedVersion: 2
+        x: 3240
+        y: 0
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c10d7cca0689f734e91177523dea5877
+      internalID: -590412343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_85
+      rect:
+        serializedVersion: 2
+        x: 3888
+        y: 0
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2cc884a22fd2e54c9c011735bb4ca71
+      internalID: 695006562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_86
+      rect:
+        serializedVersion: 2
+        x: 4536
+        y: 0
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 277d7aeb0793bdb45ba3099125819275
+      internalID: -1581871927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_87
+      rect:
+        serializedVersion: 2
+        x: 5184
+        y: 0
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72c0d38db678cee48a28dd8fb4cc68c3
+      internalID: 1162330963
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Hand_SwordAttack_88
+      rect:
+        serializedVersion: 2
+        x: 5832
+        y: 0
+        width: 648
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf85fbc4bbaadc349a66d35015e3d85d
+      internalID: 402929899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 091e3fe3804b9d240b5197229b84c186
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":16.0,"y":7.0},"gridSpriteSize":{"x":648.0,"y":543.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      PixelArt_Hand_SwordAttack_0: -720682289
+      PixelArt_Hand_SwordAttack_1: 922698384
+      PixelArt_Hand_SwordAttack_10: 536017864
+      PixelArt_Hand_SwordAttack_11: 992064588
+      PixelArt_Hand_SwordAttack_12: -1721990631
+      PixelArt_Hand_SwordAttack_13: -532890932
+      PixelArt_Hand_SwordAttack_14: 806268179
+      PixelArt_Hand_SwordAttack_15: 231733260
+      PixelArt_Hand_SwordAttack_16: 913702180
+      PixelArt_Hand_SwordAttack_17: -12640040
+      PixelArt_Hand_SwordAttack_18: 1011839003
+      PixelArt_Hand_SwordAttack_19: 670204848
+      PixelArt_Hand_SwordAttack_2: -1960995967
+      PixelArt_Hand_SwordAttack_20: 1934427537
+      PixelArt_Hand_SwordAttack_21: 2075852596
+      PixelArt_Hand_SwordAttack_22: 1647150155
+      PixelArt_Hand_SwordAttack_23: 1482281881
+      PixelArt_Hand_SwordAttack_24: -1605855659
+      PixelArt_Hand_SwordAttack_25: -1772104583
+      PixelArt_Hand_SwordAttack_26: -419244843
+      PixelArt_Hand_SwordAttack_27: 1358265063
+      PixelArt_Hand_SwordAttack_28: -164865840
+      PixelArt_Hand_SwordAttack_29: -1389514841
+      PixelArt_Hand_SwordAttack_3: -1966684609
+      PixelArt_Hand_SwordAttack_30: 1259329743
+      PixelArt_Hand_SwordAttack_31: 2002983252
+      PixelArt_Hand_SwordAttack_32: -608262490
+      PixelArt_Hand_SwordAttack_33: 2124232102
+      PixelArt_Hand_SwordAttack_34: 1710078204
+      PixelArt_Hand_SwordAttack_35: -1561316723
+      PixelArt_Hand_SwordAttack_36: -1101371786
+      PixelArt_Hand_SwordAttack_37: -1179565596
+      PixelArt_Hand_SwordAttack_38: -82099581
+      PixelArt_Hand_SwordAttack_39: -1064483618
+      PixelArt_Hand_SwordAttack_4: -538605237
+      PixelArt_Hand_SwordAttack_40: -875036432
+      PixelArt_Hand_SwordAttack_41: 1500399978
+      PixelArt_Hand_SwordAttack_42: 152904616
+      PixelArt_Hand_SwordAttack_43: 827173923
+      PixelArt_Hand_SwordAttack_44: -1990717309
+      PixelArt_Hand_SwordAttack_45: -643640536
+      PixelArt_Hand_SwordAttack_46: -1578221176
+      PixelArt_Hand_SwordAttack_47: -1573485528
+      PixelArt_Hand_SwordAttack_48: 268647437
+      PixelArt_Hand_SwordAttack_49: -855704506
+      PixelArt_Hand_SwordAttack_5: -973856724
+      PixelArt_Hand_SwordAttack_50: -28930131
+      PixelArt_Hand_SwordAttack_51: -1551349735
+      PixelArt_Hand_SwordAttack_52: 2117600257
+      PixelArt_Hand_SwordAttack_53: 1402785426
+      PixelArt_Hand_SwordAttack_54: -327000669
+      PixelArt_Hand_SwordAttack_55: 729382191
+      PixelArt_Hand_SwordAttack_56: -1321893219
+      PixelArt_Hand_SwordAttack_57: -1591169284
+      PixelArt_Hand_SwordAttack_58: -1828245175
+      PixelArt_Hand_SwordAttack_59: 144576789
+      PixelArt_Hand_SwordAttack_6: 497165851
+      PixelArt_Hand_SwordAttack_60: -1672164762
+      PixelArt_Hand_SwordAttack_61: 1689436763
+      PixelArt_Hand_SwordAttack_62: 1516897256
+      PixelArt_Hand_SwordAttack_63: 1644707191
+      PixelArt_Hand_SwordAttack_64: -1785379076
+      PixelArt_Hand_SwordAttack_65: -1036582472
+      PixelArt_Hand_SwordAttack_66: 39108119
+      PixelArt_Hand_SwordAttack_67: -427404582
+      PixelArt_Hand_SwordAttack_68: -147111585
+      PixelArt_Hand_SwordAttack_69: 2035818957
+      PixelArt_Hand_SwordAttack_7: -2109933000
+      PixelArt_Hand_SwordAttack_70: 797485338
+      PixelArt_Hand_SwordAttack_71: -526674928
+      PixelArt_Hand_SwordAttack_72: 340308064
+      PixelArt_Hand_SwordAttack_73: 194404123
+      PixelArt_Hand_SwordAttack_74: 219099142
+      PixelArt_Hand_SwordAttack_75: -2096374388
+      PixelArt_Hand_SwordAttack_76: -1199194768
+      PixelArt_Hand_SwordAttack_77: 1818762633
+      PixelArt_Hand_SwordAttack_78: -286089212
+      PixelArt_Hand_SwordAttack_79: -232288336
+      PixelArt_Hand_SwordAttack_8: -743184884
+      PixelArt_Hand_SwordAttack_80: 1072003384
+      PixelArt_Hand_SwordAttack_81: 678271775
+      PixelArt_Hand_SwordAttack_82: 1411576773
+      PixelArt_Hand_SwordAttack_83: 673511861
+      PixelArt_Hand_SwordAttack_84: -590412343
+      PixelArt_Hand_SwordAttack_85: 695006562
+      PixelArt_Hand_SwordAttack_86: -1581871927
+      PixelArt_Hand_SwordAttack_87: 1162330963
+      PixelArt_Hand_SwordAttack_88: 402929899
+      PixelArt_Hand_SwordAttack_9: 26606034
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,18 @@
+Setup Instructions
+1. Attach both scripts 'PSXRetroGlobals.cs' and 'PSXDownscaleDitherEffect.cs' to your game camera(s).
+2. Replace your model materials with 'FX/PSX Retro Surface'.
+3. That’s it!
+
+Check the demo scene to see the setup in action.
+
+____________________________________________________________________________________________
+URP Setup Instructions:
+
+1. Add PSX Downscale Dither Feature to your URP project’s Universal Renderer Data.
+2. Under Settings/Shaders field, add the PSXDownscaleDither shader.
+____________________________________________________________________________________________
+HDRP Instructions:
+
+1. In the project settings-HDRP Global Settings add PSXDownscaleDitherPostProcess in the After Post Process Field.
+2. Create a Global Volume/Post-processing/Custom/PSX Downscale Dither Post Process.
+3. That's it!

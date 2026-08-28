@@ -1,0 +1,1453 @@
+fileFormatVersion: 2
+guid: b342fa93731c119459ff857396d37561
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 125
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 16384
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: PixelArt-Archer_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2496
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8cc0733178ca4324cbe6d449658a5661
+      internalID: 1065324677
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_1
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 2496
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 29175b047ad29da4b944f7c68ff25dda
+      internalID: 1149630514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_2
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 2496
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ddd6b104d0952e408edbb5fe7c0539d
+      internalID: -2121252375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_3
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 2496
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22dca3d2871b8f54b9533466c2156404
+      internalID: -918467359
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2184
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74b7de777d52f0c46be6029e802019f3
+      internalID: -1573671190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_5
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 2184
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0380b2733b921946a31833972dc56d9
+      internalID: 831960348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 2184
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91ba8c9ffd8375d429d86f45c604a209
+      internalID: 125564332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_7
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 2184
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 631c68f6516a59344ab62831b8bf642b
+      internalID: 148314116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_8
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 2184
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89274916924446748a580aeaef22ce96
+      internalID: -1219440753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_9
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 2184
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 307f2d7d5fdf49442996b324d08c7ad9
+      internalID: 630191445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_10
+      rect:
+        serializedVersion: 2
+        x: 1872
+        y: 2184
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4470b067078f27d4fa75f071cbdf3781
+      internalID: 322276579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_11
+      rect:
+        serializedVersion: 2
+        x: 2184
+        y: 2184
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 920ca48ab88a986429748da202094956
+      internalID: -1945995996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1872
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78e563c7200997f41841e409933e49af
+      internalID: -1051530611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_13
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1872
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a228829909c4a8a459c17e15cf3cbafc
+      internalID: -1771307409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_14
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1872
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 27d635adfadf17747a55253c1baed2a3
+      internalID: -632168193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_15
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1872
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 600ffc14fb0e18543b49c55a7895c5a9
+      internalID: -1610747343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_16
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1872
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 548d045e90881b148ac63ecda0e75b8d
+      internalID: -53171510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_17
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1872
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae2d957f771b5eb4f86ec87ebab69a0d
+      internalID: -1205591891
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_18
+      rect:
+        serializedVersion: 2
+        x: 1872
+        y: 1872
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 149a3c6e903f9d242a0dc5ef36f796c8
+      internalID: -1003418307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_19
+      rect:
+        serializedVersion: 2
+        x: 2184
+        y: 1872
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d94c384046d66949af8ba0b3a252ecc
+      internalID: 1535683821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_20
+      rect:
+        serializedVersion: 2
+        x: 2496
+        y: 1872
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e670f9f5b29e56645a3e8684b944963b
+      internalID: -314361577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_21
+      rect:
+        serializedVersion: 2
+        x: 2808
+        y: 1872
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: faaa1d9d6f280e049a396606e9c8a827
+      internalID: -1553814842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_22
+      rect:
+        serializedVersion: 2
+        x: 3120
+        y: 1872
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0521014776a3f654e9dd42b0bd07f276
+      internalID: -2052688566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_23
+      rect:
+        serializedVersion: 2
+        x: 3432
+        y: 1872
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 368bfeddabe83334ea3fa723c56d673b
+      internalID: -1998628585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1560
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03ce48762fc83bb4b9159b6c4a293ba7
+      internalID: 986841385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_25
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1560
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb499e6c1dcef844da835fe77390bf5f
+      internalID: 237023836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_26
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1560
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a69b775d38ca2184ab254af3bb9efb5d
+      internalID: 680443984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_27
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1560
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e81e373cd62b274695971f443bdea1c
+      internalID: -413333197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_28
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1560
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc40617dcfcd2f44fbd20ce65eca7943
+      internalID: 280729462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_29
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1560
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e129481b5eb5de74ea821eb6d512388b
+      internalID: -2046662968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1248
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2a2600ddf1eaa24099ba7615e7960d2
+      internalID: -1407795710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_31
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 1248
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20124beacadbded4b9921e17bf4e419c
+      internalID: -1254947558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_32
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 1248
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 089a2bf48d225c542b800c5b84380ed1
+      internalID: -2036819702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_33
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 1248
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7defd6a8e6360ad4e84abefe8f4023df
+      internalID: -1512630917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_34
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 1248
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de61ad50948284246ad3a1c27ca39d63
+      internalID: -1211313175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_35
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1248
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90dbe28dd6f9e264a86366c2c5e49499
+      internalID: 1229698518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_36
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 936
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3266b83b88c0fa44b12d6ae00452800
+      internalID: -2071218032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_37
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 936
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d37d8bfed23d7c43a8e55460b775919
+      internalID: 1913673276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_38
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 936
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a6ff5b2418c4f434d8c80c0cb481d31d
+      internalID: 671921481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_39
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 936
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ba618636568e6a4c8cfb6c826bd33aa
+      internalID: 723536553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_40
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 936
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24ccb0b12cdd85a45a7e9b8dfa3bd2a1
+      internalID: 947995222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_41
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 936
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0969adf754b51e6458ac92ac7e200f20
+      internalID: -1032580637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_42
+      rect:
+        serializedVersion: 2
+        x: 1872
+        y: 936
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9fc72d2f738c064986affb4f4374177
+      internalID: -1443097644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_43
+      rect:
+        serializedVersion: 2
+        x: 2184
+        y: 936
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12be08e6367e2d54d9d2d324ada734f3
+      internalID: 578655029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_44
+      rect:
+        serializedVersion: 2
+        x: 2496
+        y: 936
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c6c130ba06f5d6b438f8fea2d1ed9a56
+      internalID: 1862436030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_45
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 624
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1451c07667065f64fb41ccc8ee8b06a7
+      internalID: -1757877842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_46
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 624
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 421ed560cda0c4945a502d83c86f686a
+      internalID: -1498870171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_47
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 624
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 08545e8ff2c65904bb17fdf176372af8
+      internalID: -236346721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_48
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 624
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7651380f7bcc8ef4082468e58f5892cc
+      internalID: -709127532
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_49
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 312
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0af842a2a1fcd6040914d43a321c12ef
+      internalID: -2094849319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_50
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 312
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 410c9d764425e5c48a9e550b2c9448ce
+      internalID: -1196506870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_51
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 312
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96e057be91676ea409da7b5ac128e53c
+      internalID: -1155371712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_52
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 312
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4acf3424fb7642f46b621ee1a8b153eb
+      internalID: -1693557745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_53
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 312
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb3639ad46c6be343b14e8b9d48be91a
+      internalID: 1935931057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_54
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 312
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 989682ca8c82adb46bc11c8fc959ae2b
+      internalID: 923398399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_55
+      rect:
+        serializedVersion: 2
+        x: 1872
+        y: 312
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9cebe5e718541b4bb9adec875342500
+      internalID: -1892470114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_56
+      rect:
+        serializedVersion: 2
+        x: 2184
+        y: 312
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2671e973cb7d678408d19de5a03056e7
+      internalID: -164366660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt-Archer_57
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 312
+        height: 312
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11d36f0a5ddb1474a926a1081560c11a
+      internalID: -2006936421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 557aef0cf144b0841a055993482d26ee
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":5.0,"y":1.0},"gridSpriteSize":{"x":312.0,"y":312.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      PixelArt-Archer_0: 1065324677
+      PixelArt-Archer_1: 1149630514
+      PixelArt-Archer_10: 322276579
+      PixelArt-Archer_11: -1945995996
+      PixelArt-Archer_12: -1051530611
+      PixelArt-Archer_13: -1771307409
+      PixelArt-Archer_14: -632168193
+      PixelArt-Archer_15: -1610747343
+      PixelArt-Archer_16: -53171510
+      PixelArt-Archer_17: -1205591891
+      PixelArt-Archer_18: -1003418307
+      PixelArt-Archer_19: 1535683821
+      PixelArt-Archer_2: -2121252375
+      PixelArt-Archer_20: -314361577
+      PixelArt-Archer_21: -1553814842
+      PixelArt-Archer_22: -2052688566
+      PixelArt-Archer_23: -1998628585
+      PixelArt-Archer_24: 986841385
+      PixelArt-Archer_25: 237023836
+      PixelArt-Archer_26: 680443984
+      PixelArt-Archer_27: -413333197
+      PixelArt-Archer_28: 280729462
+      PixelArt-Archer_29: -2046662968
+      PixelArt-Archer_3: -918467359
+      PixelArt-Archer_30: -1407795710
+      PixelArt-Archer_31: -1254947558
+      PixelArt-Archer_32: -2036819702
+      PixelArt-Archer_33: -1512630917
+      PixelArt-Archer_34: -1211313175
+      PixelArt-Archer_35: 1229698518
+      PixelArt-Archer_36: -2071218032
+      PixelArt-Archer_37: 1913673276
+      PixelArt-Archer_38: 671921481
+      PixelArt-Archer_39: 723536553
+      PixelArt-Archer_4: -1573671190
+      PixelArt-Archer_40: 947995222
+      PixelArt-Archer_41: -1032580637
+      PixelArt-Archer_42: -1443097644
+      PixelArt-Archer_43: 578655029
+      PixelArt-Archer_44: 1862436030
+      PixelArt-Archer_45: -1757877842
+      PixelArt-Archer_46: -1498870171
+      PixelArt-Archer_47: -236346721
+      PixelArt-Archer_48: -709127532
+      PixelArt-Archer_49: -2094849319
+      PixelArt-Archer_5: 831960348
+      PixelArt-Archer_50: -1196506870
+      PixelArt-Archer_51: -1155371712
+      PixelArt-Archer_52: -1693557745
+      PixelArt-Archer_53: 1935931057
+      PixelArt-Archer_54: 923398399
+      PixelArt-Archer_55: -1892470114
+      PixelArt-Archer_56: -164366660
+      PixelArt-Archer_57: -2006936421
+      PixelArt-Archer_6: 125564332
+      PixelArt-Archer_7: 148314116
+      PixelArt-Archer_8: -1219440753
+      PixelArt-Archer_9: 630191445
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
