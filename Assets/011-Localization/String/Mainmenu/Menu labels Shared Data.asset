@@ -1,0 +1,238 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Menu labels Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: Menu labels
+  m_TableCollectionNameGuidString: ee007d460ccfcb34cab5b718be77ea77
+  m_Entries:
+  - m_Id: 361719975936
+    m_Key: mainMenu.Credit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2534637883392
+    m_Key: mainMenu.Credit.BackToMainMenu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2845725216768
+    m_Key: mainMenu.Credit.Credit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 365985583104
+    m_Key: mainMenu.Quit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2401296764928
+    m_Key: mainMenu.Quit.No
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1863754764288
+    m_Key: mainMenu.Quit.QuitConfirmation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2334619914240
+    m_Key: mainMenu.Quit.Yes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 359572492288
+    m_Key: mainMenu.Setting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 102583291904
+    m_Key: mainMenu.Start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1238669250560
+    m_Key: mainMenu.Start.BackToMainMenu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1729734168576
+    m_Key: mainMenu.Start.Cancel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1578642755584
+    m_Key: mainMenu.Start.Confirm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1386610741248
+    m_Key: mainMenu.Start.Difficulty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 632260838608896
+    m_Key: mainMenu.Setting.SoundSetting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 632434193387520
+    m_Key: mainMenu.Setting.SoundSetting.Master
+    m_Metadata:
+      m_Items: []
+  - m_Id: 632619426435072
+    m_Key: mainMenu.Setting.SoundSetting.SFX
+    m_Metadata:
+      m_Items: []
+  - m_Id: 632794203082752
+    m_Key: mainMenu.Setting.SoundSetting.Music
+    m_Metadata:
+      m_Items: []
+  - m_Id: 632926906667008
+    m_Key: mainMenu.Setting.ScreenSetting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 633205714636800
+    m_Key: mainMenu.Setting.ScreenSetting.FullScreen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 633347117207552
+    m_Key: mainMenu.Setting.ScreenSetting.Vsync
+    m_Metadata:
+      m_Items: []
+  - m_Id: 633468915601408
+    m_Key: mainMenu.Setting.ScreenSetting.Resolution
+    m_Metadata:
+      m_Items: []
+  - m_Id: 633569679560704
+    m_Key: mainMenu.Setting.ScreenSetting.Quality
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22543293031174144
+    m_Key: mainMenu.Tutorial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22543368855801856
+    m_Key: 'mainMenu.Intro
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 97419409331638272
+    m_Key: mainMenu.Start.Codex
+    m_Metadata:
+      m_Items: []
+  - m_Id: 123968330006581248
+    m_Key: mainMenu.Extras
+    m_Metadata:
+      m_Items: []
+  - m_Id: 124353841250488320
+    m_Key: mainMenu.RoguelikeDemo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 124669303121301504
+    m_Key: mainMenu.RoguelikeMode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 124669309999960064
+    m_Key: mainMenu.Setting.languageSetting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 124676380770226176
+    m_Key: GameResult.YouWin1 (Demo)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 124676426500722688
+    m_Key: 'GameResult.YouWin2 (Demo)
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 124676444884357120
+    m_Key: GameResult.YouLose1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 124676478967271424
+    m_Key: 'GameResult.YouLose2 (Demo)
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 147833615062978560
+    m_Key: GameResult.YouWin1 (Early Access)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 147833619685101568
+    m_Key: GameResult.YouLose2 (Early Access)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 148219149845319680
+    m_Key: mainMenu.Setting.KeyBindingSetting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 148800027411664896
+    m_Key: GameResult.YouWin2 (Early Access)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 148821990704205824
+    m_Key: RebindActionUI.WaitingPrompt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 148822083654176768
+    m_Key: RebindActionUI.WaitingWithControlPrompt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 148822128155742208
+    m_Key: RebindActionUI.TimeoutDescription
+    m_Metadata:
+      m_Items: []
+  - m_Id: 148822168999874560
+    m_Key: RebindActionUI.FallbackWaitingText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 148830929843965952
+    m_Key: RebindActionUI.BindingPartPrefix
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150459780105818112
+    m_Key: mainMenu.QR-Code
+    m_Metadata:
+      m_Items: []
+  - m_Id: 159209749457457152
+    m_Key: Difficulty.Assisted.Name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 159209927442747392
+    m_Key: Difficulty.Assisted.Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 159210986458370048
+    m_Key: Difficulty.Standard.Name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 159211094780465152
+    m_Key: Difficulty.Standard.Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 159213261352390656
+    m_Key: Difficulty.Hardcore.Name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 159213471147282432
+    m_Key: Difficulty.Hardcore.Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 159213717227098112
+    m_Key: Difficulty.SamuelMustDie.Name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 159213833157660672
+    m_Key: Difficulty.SamuelMustDie.Description
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 4117396765566828568
+  references:
+    version: 2
+    RefIds:
+    - rid: 4117396765566828568
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1745658795412

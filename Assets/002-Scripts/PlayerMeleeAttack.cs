@@ -47,7 +47,7 @@ public class PlayerMeleeAttack : MonoBehaviour
     [HideInInspector] public bool isBlocking = false;
     [HideInInspector] public float currentParry = 0f;
     private float parryDuration = 0.3f;
-    private float blockCooldownDuration = 0.25f;
+    private float blockCooldownDuration = 0.15f;
     private float currentBlockCooldown = 0f;
     private bool isKicking = false;
 
@@ -70,40 +70,37 @@ public class PlayerMeleeAttack : MonoBehaviour
             currentParry -= Time.deltaTime;
         }
 
-        // Listen for Left Mouse Button using the new Input System
-        if (Mouse.current != null)
+        if (playerController.isAttackPressed && currentBlockCooldown <= 0f && !isKicking)
         {
-            if(Mouse.current.leftButton.wasPressedThisFrame && currentBlockCooldown <= 0f && !isKicking)
+            if (playerController.CharacterStaminaComponent.CurrentStamina > 0f)
             {
-                if (playerController.CharacterStaminaComponent.CurrentStamina > 0f)
+                if (Time.time >= lastAttackTime + attackCooldown)
                 {
-                    if (Time.time >= lastAttackTime + attackCooldown)
-                    {
-                        PerformAttack();
-                    }
+                    PerformAttack();
                 }
-            }
-
-            if(Mouse.current.rightButton.wasPressedThisFrame && currentBlockCooldown <= 0f && !isBlocking && !isKicking)
-            {
-                if (playerController.CharacterStaminaComponent.CurrentStamina > 0f)
-                {
-                    isBlocking = true;
-                    meleeAttackState = MeleeAttackState.Block;
-                    anim.speed = 1f;
-                    currentParry = parryDuration;
-                }
-            }
-
-            if(Mouse.current.rightButton.wasReleasedThisFrame && isBlocking)
-            {
-                anim.speed = 1f;
-                isBlocking = false;
-                currentBlockCooldown = blockCooldownDuration;
             }
         }
 
-        if(Keyboard.current.eKey.wasPressedThisFrame && meleeAttackState == MeleeAttackState.Idle && !isKicking)
+        if (playerController.isBlockPressed && currentBlockCooldown <= 0f && !isBlocking && !isKicking)
+        {
+            if (playerController.CharacterStaminaComponent.CurrentStamina > 0f)
+            {
+                RumbleManager.instance.RumblePulse(1f, 2f, 0.15f);
+                isBlocking = true;
+                meleeAttackState = MeleeAttackState.Block;
+                anim.speed = 1f;
+                currentParry = parryDuration;
+            }
+        }
+
+        if (!playerController.isBlockHeld && isBlocking)
+        {
+            anim.speed = 1f;
+            isBlocking = false;
+            currentBlockCooldown = blockCooldownDuration;
+        }
+
+        if (playerController.isKickPressed && meleeAttackState == MeleeAttackState.Idle && !isKicking)
         {
             if (playerController.CharacterStaminaComponent.CurrentStamina > 0f)
             {
@@ -111,6 +108,7 @@ public class PlayerMeleeAttack : MonoBehaviour
 
                 if (targetEnemy != null && targetEnemy.isStunned)
                 {
+                    RumbleManager.instance.RumblePulse(1f, 2.5f, 0.3f);
                     playerController.StaminaDepleted(executeStaminaCost);
                     StartCoroutine(ExecutionSequence(targetEnemy));
                 }
@@ -244,6 +242,7 @@ public class PlayerMeleeAttack : MonoBehaviour
 
     private void PerformKick()
     {
+        RumbleManager.instance.RumblePulse(1f, 2.5f, 0.1f);
         playerController.StaminaDepleted(kickStaminaCost);
 
         Vector3 joltDirection = Vector3.zero;
@@ -268,14 +267,14 @@ public class PlayerMeleeAttack : MonoBehaviour
                 // If it's a valid enemy and we haven't processed them yet on this swing...
                 if (targetEnemy != null && processedEnemies.Add(targetEnemy))
                 {
-                    SoundManager.instance.KickSound_Human();
+                    SoundManager.instance.KickSound_Human(transform.position);
                     targetEnemy.GotKicked(hit.point, kickDamage);
                 }
             }
         }
         else
         {
-            SoundManager.instance.KickSound_Air();
+            SoundManager.instance.KickSound_Air(transform.position);
         }
 
         playerController.TriggerMeleeJolt(joltDirection);
@@ -303,6 +302,7 @@ public class PlayerMeleeAttack : MonoBehaviour
 
     private void ApplyAttackJolt()
     {
+        RumbleManager.instance.RumblePulse(1f, 2.5f, 0.2f);
         playerController.StaminaDepleted(kickStaminaCost);
 
         // Reset combo back to step 1 if the player pauses their attacks
@@ -361,7 +361,7 @@ public class PlayerMeleeAttack : MonoBehaviour
         }
         else
         {
-            SoundManager.instance.SwordSound_Air();
+            SoundManager.instance.SwordSound_Air(transform.position);
         }
 
         playerController.TriggerMeleeJolt(joltDirection);

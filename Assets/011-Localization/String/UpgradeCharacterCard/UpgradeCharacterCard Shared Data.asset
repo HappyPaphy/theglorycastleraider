@@ -1,0 +1,152 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: UpgradeCharacterCard Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: UpgradeCharacterCard
+  m_TableCollectionNameGuidString: 2738a8758d03c034db3ebc1962911340
+  m_Entries:
+  - m_Id: 312772448256
+    m_Key: UpgradeCharacterCard_Name_HyperDrive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 394280357888
+    m_Key: UpgradeCharacterCard_Reward_HyperDrive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 433505488896
+    m_Key: UpgradeCharacterCard_Risk_HyperDrive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 482490765312
+    m_Key: UpgradeCharacterCard_Name_HeavyMetal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 752943681536
+    m_Key: UpgradeCharacterCard_Reward_HeavyMetal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 127029246868639744
+    m_Key: UpgradeCharacterCard_Risk_HeavyMetal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 127029260932141056
+    m_Key: UpgradeCharacterCard_Name_GlassArsenal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 127029284726427648
+    m_Key: UpgradeCharacterCard_Reward_GlassArsenal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 127029298097868800
+    m_Key: UpgradeCharacterCard_Risk_GlassArsenal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 127029313906200576
+    m_Key: UpgradeCharacterCard_Name_BloodTaxes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 127029495616032768
+    m_Key: UpgradeCharacterCard_Reward_BloodTaxes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 127029505355206656
+    m_Key: UpgradeCharacterCard_Risk_BloodTaxes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 127029753335042048
+    m_Key: UpgradeCharacterCard_Name_GoldenCurse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 127029756409466880
+    m_Key: UpgradeCharacterCard_Reward_GoldenCurse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 127029833475608576
+    m_Key: UpgradeCharacterCard_Risk_GoldenCurse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 127029846360510464
+    m_Key: UpgradeCharacterCard_Name_FastFinger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 127029906750099456
+    m_Key: UpgradeCharacterCard_Reward_FastFinger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 127029917424603136
+    m_Key: UpgradeCharacterCard_Risk_FastFinger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 127033950042378240
+    m_Key: UpgradeCharacterCard_PickOneCard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 127238116262072320
+    m_Key: UpgradeCharacterCard_Name_HardPunch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 127238117759438848
+    m_Key: UpgradeCharacterCard_Reward_HardPunch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 127238119089033216
+    m_Key: UpgradeCharacterCard_Risk_HardPunch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 127238131277680640
+    m_Key: UpgradeCharacterCard_Name_VampiricRetaliation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 127238132561137664
+    m_Key: UpgradeCharacterCard_Reward_VampiricRetaliation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 127238133668433920
+    m_Key: UpgradeCharacterCard_Risk_VampiricRetaliation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 127238135555870720
+    m_Key: UpgradeCharacterCard_Name_BulletTime
+    m_Metadata:
+      m_Items: []
+  - m_Id: 127238136675749888
+    m_Key: UpgradeCharacterCard_Reward_BulletTime
+    m_Metadata:
+      m_Items: []
+  - m_Id: 127238137636245504
+    m_Key: UpgradeCharacterCard_Risk_BulletTime
+    m_Metadata:
+      m_Items: []
+  - m_Id: 127238139565625344
+    m_Key: UpgradeCharacterCard_Name_LastStand
+    m_Metadata:
+      m_Items: []
+  - m_Id: 127238140605812736
+    m_Key: UpgradeCharacterCard_Reward_LastStand
+    m_Metadata:
+      m_Items: []
+  - m_Id: 127238141713108992
+    m_Key: UpgradeCharacterCard_Risk_LastStand
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 863550156298518528
+  references:
+    version: 2
+    RefIds:
+    - rid: 863550156298518528
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1752465786239

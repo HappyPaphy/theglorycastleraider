@@ -12,6 +12,61 @@ public class PlayerController : PlayerEntity
     [SerializeField] private PlayerMeleeAttack playerMeleeAttack;
     [SerializeField] private WeaponSway weaponSway;
 
+    [Header("Input Actions")]
+    public PlayerInputActions playerControls;
+    [SerializeField] private InputAction input_Jump;
+    [SerializeField] private InputAction input_Sprint;
+    [SerializeField] private InputAction input_Move;
+    [SerializeField] private InputAction input_Look;
+    [SerializeField] private InputAction input_Interact;
+    [SerializeField] private InputAction input_Reload;
+    [SerializeField] private InputAction input_Dash;
+    [SerializeField] private InputAction input_Minimap;
+    [SerializeField] private InputAction input_Pause;
+    [SerializeField] private InputAction input_SwitchWeapon_Up;
+    [SerializeField] private InputAction input_SwitchWeapon_Right;
+    [SerializeField] private InputAction input_SwitchWeapon_Down;
+    [SerializeField] private InputAction input_SwitchWeapon_Left;
+    public InputAction input_Kick;
+    public InputAction input_Attack;
+    public InputAction input_Block;
+
+    public Sprite InteractSprite_Keyboard;
+    public Sprite InteractSprite_XBox;
+
+    [HideInInspector] public bool IsInteractHeld = false;
+    [HideInInspector] public bool IsInteractPressed = false;
+    private bool isDashHeld = false;
+    private bool isDashPressed = false;
+    [HideInInspector] public bool IsMinimapHeld = false;
+    [HideInInspector] public bool IsMinimapPressed = false;
+    [HideInInspector] public bool IsPauseHeld = false;
+    [HideInInspector] public bool IsPausePressed = false;
+    [HideInInspector] public bool IsSwitchWeaponPressed_Up = false;
+    [HideInInspector] public bool IsSwitchWeaponPressed_Right = false;
+    [HideInInspector] public bool IsSwitchWeaponPressed_Down = false;
+    [HideInInspector] public bool IsSwitchWeaponPressed_Left = false;
+    [HideInInspector] public bool IsSwitchWeaponHeld_Up = false;
+    [HideInInspector] public bool IsSwitchWeaponHeld_Right = false;
+    [HideInInspector] public bool IsSwitchWeaponHeld_Down = false;
+    [HideInInspector] public bool IsSwitchWeaponHeld_Left = false;
+
+    [HideInInspector] public bool isMouseVisible = false;
+
+    [Header("Combat")]
+    [HideInInspector] public bool isJumpHeld = false;
+    [HideInInspector] public bool isJumpPressed = false;
+    [HideInInspector] public bool isSprintHeld = false;
+    [HideInInspector] public bool isSprintPressed = false;
+    [HideInInspector] public bool isKickHeld = false;
+    [HideInInspector] public bool isKickPressed = false;
+    [HideInInspector] public bool isAttackHeld = false;
+    [HideInInspector] public bool isAttackPressed = false;
+    [HideInInspector] public bool isBlockHeld = false;
+    [HideInInspector] public bool isBlockPressed = false;
+    [HideInInspector] public bool IsReloadHeld = false;
+    [HideInInspector] public bool IsReloadPressed = false;
+
     [Header("Movement Settings")]
     [SerializeField] private float walkSpeed = 6f;
     [SerializeField] private float sprintSpeed = 10f;
@@ -64,9 +119,311 @@ public class PlayerController : PlayerEntity
 
     public static PlayerController instance;
 
+    private void OnEnable()
+    {
+        // 1. Subscribe to the binding update event
+        RebindSaveLoad.OnBindingsLoaded += ApplyLoadedBindings;
+
+        // 2. Load the overrides immediately into playerControls before maps are activated
+        ApplyLoadedBindings();
+
+        // 3. Set up and enable actions normally
+        input_Move = playerControls.Player.Move;
+        input_Move.Enable();
+
+        input_Look = playerControls.Player.Look;
+        input_Look.Enable();
+
+        input_Jump = playerControls.Player.Jump;
+        input_Jump.Enable();
+        input_Jump.performed += OnJumpPerformed;
+        input_Jump.canceled += OnJumpCanceled;
+
+        input_Sprint = playerControls.Player.Sprint;
+        input_Sprint.Enable();
+        input_Sprint.performed += OnSprintPerformed;
+        input_Sprint.canceled += OnSprintCanceled;
+
+
+        input_Kick = playerControls.Player.Kick;
+        input_Kick.Enable();
+        input_Kick.performed += OnKickPerformed;
+        input_Kick.canceled += OnKickCanceled;
+
+        input_Attack = playerControls.Player.Attack;
+        input_Attack.Enable();
+        input_Attack.performed += OnAttackPerformed;
+        input_Attack.canceled += OnAttackCanceled;
+
+        input_Block = playerControls.Player.Block;
+        input_Block.Enable();
+        input_Block.performed += OnBlockPerformed;
+        input_Block.canceled += OnBlockCanceled;
+
+        input_Interact = playerControls.Player.Interact;
+        input_Interact.Enable();
+        input_Interact.performed += OnInteractPerformed;
+        input_Interact.canceled += OnInteractCanceled;
+
+        input_Reload = playerControls.Player.Reload;
+        input_Reload.Enable();
+        input_Reload.performed += OnReloadPerformed;
+        input_Reload.canceled += OnReloadCanceled;
+
+        input_Dash = playerControls.Player.Dash;
+        input_Dash.Enable();
+        input_Dash.performed += OnDashPerformed;
+        input_Dash.canceled += OnDashCanceled;
+
+        input_Minimap = playerControls.Player.Minimap;
+        input_Minimap.Enable();
+        input_Minimap.performed += OnMinimapPerformed;
+        input_Minimap.canceled += OnMinimapCanceled;
+
+        input_Pause = playerControls.Player.Pause;
+        input_Pause.Enable();
+        input_Pause.performed += OnPausePerformed;
+        input_Pause.canceled += OnPauseCanceled;
+
+        input_SwitchWeapon_Up = playerControls.Player.SwitchWeaponUp;
+        input_SwitchWeapon_Up.Enable();
+        input_SwitchWeapon_Up.performed += OnSwitchWeaponUpPerformed;
+        input_SwitchWeapon_Up.canceled += OnSwitchWeaponUpCanceled;
+
+        input_SwitchWeapon_Right = playerControls.Player.SwitchWeaponRight;
+        input_SwitchWeapon_Right.Enable();
+        input_SwitchWeapon_Right.performed += OnSwitchWeaponRightPerformed;
+        input_SwitchWeapon_Right.canceled += OnSwitchWeaponRightCanceled;
+
+        input_SwitchWeapon_Down = playerControls.Player.SwitchWeaponDown;
+        input_SwitchWeapon_Down.Enable();
+        input_SwitchWeapon_Down.performed += OnSwitchWeaponDownPerformed;
+        input_SwitchWeapon_Down.canceled += OnSwitchWeaponDownCanceled;
+
+        input_SwitchWeapon_Left = playerControls.Player.SwitchWeaponLeft;
+        input_SwitchWeapon_Left.Enable();
+        input_SwitchWeapon_Left.performed += OnSwitchWeaponLeftPerformed;
+        input_SwitchWeapon_Left.canceled += OnSwitchWeaponLeftCanceled;
+    }
+
+    private void OnDisable()
+    {
+        // Unsubscribe from the event to avoid memory leaks
+        RebindSaveLoad.OnBindingsLoaded -= ApplyLoadedBindings;
+
+        input_Move.Disable();
+        input_Look.Disable();
+        input_Jump.Disable();
+        input_Sprint.Disable();
+        input_Kick.Disable();
+        input_Attack.Disable();
+        input_Block.Disable();
+        input_Interact.Disable();
+        input_Reload.Disable();
+        input_Dash.Disable();
+        input_Minimap.Disable();
+        input_Pause.Disable();
+        input_SwitchWeapon_Up.Disable();
+        input_SwitchWeapon_Right.Disable();
+        input_SwitchWeapon_Down.Disable();
+        input_SwitchWeapon_Left.Disable();
+    }
+
+    private void ApplyLoadedBindings()
+    {
+        if (playerControls == null) return;
+
+        // Pull the key directly from your active RebindSaveLoad instance, or default back to a safe fallback string
+        string key = RebindSaveLoad.instance != null ? RebindSaveLoad.instance.playerPreferenceKey : "YOUR_DEFAULT_PREF_KEY";
+
+        string rebinds = PlayerPrefs.GetString(key);
+        if (!string.IsNullOrEmpty(rebinds))
+        {
+            // If bindings are modified mid-game, input maps must cycle off and on to apply changes cleanly
+            bool wasEnabled = playerControls.asset.enabled;
+            if (wasEnabled) playerControls.Disable();
+
+            playerControls.LoadBindingOverridesFromJson(rebinds);
+
+            if (wasEnabled) playerControls.Enable();
+        }
+    }
+
+    private void OnJumpPerformed(InputAction.CallbackContext context)
+    {
+        isJumpHeld = true;
+        isJumpPressed = true;
+    }
+
+    private void OnJumpCanceled(InputAction.CallbackContext context)
+    {
+        isJumpHeld = false;
+    }
+    private void OnSprintPerformed(InputAction.CallbackContext context)
+    {
+        isSprintHeld = true;
+        isSprintPressed = true;
+    }
+
+    private void OnSprintCanceled(InputAction.CallbackContext context)
+    {
+        isSprintHeld = false;
+    }
+
+    private void OnKickPerformed(InputAction.CallbackContext context)
+    {
+        isKickHeld = true;
+        isKickPressed = true;
+    }
+
+    private void OnKickCanceled(InputAction.CallbackContext context)
+    {
+        isKickHeld = false;
+    }
+
+    private void OnAttackPerformed(InputAction.CallbackContext context)
+    {
+        isAttackHeld = true;
+        isAttackPressed = true;
+    }
+
+    private void OnAttackCanceled(InputAction.CallbackContext context)
+    {
+        isAttackHeld = false;
+    }
+
+    private void OnBlockPerformed(InputAction.CallbackContext context)
+    {
+        isBlockHeld = true;
+        isBlockPressed = true;
+    }
+
+    private void OnBlockCanceled(InputAction.CallbackContext context)
+    {
+        isBlockHeld = false;
+    }
+
+    private void OnInteractPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        // When the button is first pressed down
+        IsInteractHeld = true;
+        IsInteractPressed = true;
+    }
+
+    private void OnInteractCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        // When the button is released
+        IsInteractHeld = false;
+    }
+
+    private void OnDashPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        // When the button is first pressed down
+        isDashHeld = true;
+        isDashPressed = true;
+    }
+
+    private void OnDashCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        // When the button is released
+        isDashHeld = false;
+    }
+
+    private void OnMinimapPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        // When the button is first pressed down
+        IsMinimapHeld = true;
+        IsMinimapPressed = true;
+    }
+
+    private void OnMinimapCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        // When the button is released
+        IsMinimapHeld = false;
+    }
+
+    private void OnReloadPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        // When the button is first pressed down
+        IsReloadHeld = true;
+        IsReloadPressed = true;
+    }
+
+    private void OnReloadCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        // When the button is released
+        IsReloadHeld = false;
+    }
+
+    private void OnPausePerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        // When the button is first pressed down
+        IsPauseHeld = true;
+        IsPausePressed = true;
+    }
+
+    private void OnPauseCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        // When the button is released
+        IsPauseHeld = false;
+    }
+
+    private void OnSwitchWeaponUpPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        // When the button is first pressed down
+        IsSwitchWeaponPressed_Up = true;
+        IsSwitchWeaponHeld_Up = true;
+    }
+
+    private void OnSwitchWeaponUpCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        // When the button is released
+        IsSwitchWeaponHeld_Up = false;
+    }
+
+    private void OnSwitchWeaponRightPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        // When the button is first pressed down
+        IsSwitchWeaponPressed_Right = true;
+        IsSwitchWeaponHeld_Right = true;
+    }
+
+    private void OnSwitchWeaponRightCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        // When the button is released
+        IsSwitchWeaponHeld_Right = false;
+    }
+    private void OnSwitchWeaponDownPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        // When the button is first pressed down
+        IsSwitchWeaponPressed_Down = true;
+        IsSwitchWeaponHeld_Down = true;
+    }
+
+    private void OnSwitchWeaponDownCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        // When the button is released
+        IsSwitchWeaponHeld_Down = false;
+    }
+    private void OnSwitchWeaponLeftPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        // When the button is first pressed down
+        IsSwitchWeaponPressed_Left = true;
+        IsSwitchWeaponHeld_Left = true;
+    }
+
+    private void OnSwitchWeaponLeftCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        // When the button is released
+        IsSwitchWeaponHeld_Left = false;
+    }
+
+
     protected override void Awake()
     {
         instance = this;
+
+        playerControls = new PlayerInputActions();
 
         base.Awake();
     }
@@ -95,15 +452,26 @@ public class PlayerController : PlayerEntity
         base.Update();
     }
 
+    private void LateUpdate()
+    {
+        ResetActionInputPressed();
+    }
+
     private void HandleMouseLook()
     {
         if(!isExecuting)
         {
-            Vector2 mouseDelta = Mouse.current != null ? Mouse.current.delta.ReadValue() : Vector2.zero;
-            float adjustedSensitivity = mouseSensitivity * 0.1f;
+            Vector2 lookValue = input_Look.ReadValue<Vector2>();
 
-            float mouseX = mouseDelta.x * adjustedSensitivity;
-            float mouseY = mouseDelta.y * adjustedSensitivity;
+            float adjustedSensitivity = mouseSensitivity;
+
+            if (InputSchemeManager.instance.CurrentInputMode == InputMode.PC)
+            {
+                adjustedSensitivity *= 0.05f;
+            }
+
+            float mouseX = lookValue.x * adjustedSensitivity;
+            float mouseY = lookValue.y * adjustedSensitivity;
 
             verticalRotation -= mouseY;
             verticalRotation = Mathf.Clamp(verticalRotation, -maxLookAngle, maxLookAngle);
@@ -139,27 +507,19 @@ public class PlayerController : PlayerEntity
             velocity.y = -2f;
         }
 
-        // 1. Check WASD Inputs (ONLY if not locked by an attack)
-        float x = 0f;
-        float z = 0f;
-
-        if (Keyboard.current != null && !isAttacking && !isExecuting)
+        Vector2 moveValue = Vector2.zero;
+        if (!isAttacking && !isExecuting)
         {
-            if (Keyboard.current.dKey.isPressed) x += 1f;
-            if (Keyboard.current.aKey.isPressed) x -= 1f;
-            if (Keyboard.current.wKey.isPressed) z += 1f;
-            if (Keyboard.current.sKey.isPressed) z -= 1f;
+            moveValue = input_Move.ReadValue<Vector2>();
         }
 
-        Vector3 standardMove = transform.right * x + transform.forward * z;
+        Vector3 standardMove = transform.right * moveValue.x + transform.forward * moveValue.y;
 
-        // 2. Slide Activation Logic (Disabled while attacking)
-        bool cPressed = Keyboard.current != null && Keyboard.current.cKey.wasPressedThisFrame;
-
-        if (cPressed && isGrounded && !isSliding && !isAttacking && !isExecuting && standardMove.sqrMagnitude > 0.01f)
+        if (isDashPressed && isGrounded && !isSliding && !isAttacking && !isExecuting && standardMove.sqrMagnitude > 0.01f)
         {
             if(CharacterStaminaComponent.CurrentStamina > 0f)
             {
+                RumbleManager.instance.RumblePulse(1f, 1.5f, slideDuration);
                 StaminaDepleted(slideStaminaCost);
                 isSliding = true;
                 slideTimer = slideDuration;
@@ -176,10 +536,7 @@ public class PlayerController : PlayerEntity
 
         if (isAttacking)
         {
-            // Count down the attack lock
             attackLockTimer -= Time.deltaTime;
-
-            // Smoothly decay the physical lunge momentum over time
             attackLungeVelocity = Vector3.Lerp(attackLungeVelocity, Vector3.zero, Time.deltaTime * 10f);
 
             finalMove = attackLungeVelocity;
@@ -204,12 +561,9 @@ public class PlayerController : PlayerEntity
         }
         else
         {
-            bool isSprinting = Keyboard.current != null && Keyboard.current.leftShiftKey.isPressed && CharacterStaminaComponent.CurrentStamina > 0f;
+            bool isSprinting = isSprintHeld && CharacterStaminaComponent.CurrentStamina > 0f;
 
-            if (isSprinting && (Keyboard.current.dKey.isPressed 
-                || Keyboard.current.sKey.isPressed 
-                || Keyboard.current.aKey.isPressed 
-                || Keyboard.current.wKey.isPressed))
+            if (isSprinting && moveValue.sqrMagnitude > 0.01f)
             {
                 currentSpeed = sprintSpeed;
                 StaminaDepleted(sprintStaminaCost);
@@ -224,9 +578,7 @@ public class PlayerController : PlayerEntity
 
         controller.Move(finalMove * currentSpeed * Time.deltaTime);
 
-        // 4. Jump Logic (Disabled while sliding or attacking)
-        bool jumpPressed = Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame;
-        if (jumpPressed && isGrounded && !isSliding && !isAttacking)
+        if (isJumpPressed && isGrounded && !isSliding && !isAttacking)
         {
             weaponSway.TriggerJumpImpulse();
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
@@ -246,9 +598,11 @@ public class PlayerController : PlayerEntity
         {
             //SoundManager.instance.ParriedSound();
             enemy.GotParried();
-            SoundManager.instance.ParriedSound();
+            SoundManager.instance.ParriedSound(transform.position);
             BlockedOrParriedEffect(enemy.eyesTransform.position);
             StaminaDepleted(enemy.staminaDamage / 3);
+            RumbleManager.instance.RumblePulse(1f, 3f, 0.4f);
+            cameraBob.TriggerShake(0.293f, 0.05f);
         }
         else
         {
@@ -258,18 +612,20 @@ public class PlayerController : PlayerEntity
             {
                 BlockedOrParriedEffect(enemy.eyesTransform.position);
                 playerMeleeAttack.PerformBlock();
-                SoundManager.instance.SwordSound_Metal();
+                SoundManager.instance.SwordSound_Metal(transform.position);
                 cameraBob.TriggerShake(0.293f, 0.05f);
                 StaminaDepleted(enemy.staminaDamage);
+                RumbleManager.instance.RumblePulse(1f, 3f, 0.4f);
             }
             else
             {
                 postProcressEffect.TriggerDamageEffect();
-                SoundManager.instance.SwordSound_Flesh();
-                SoundManager.instance.PlayerHurtSound();
+                SoundManager.instance.SwordSound_Flesh(transform.position);
+                SoundManager.instance.PlayerHurtSound(transform.position);
                 cameraBob.TriggerShake(0.293f, 0.1f);
                 CharacterHealthComponent.TakeDamage(enemy.attackDamage);
                 TriggerMeleeJolt(new Vector3(30f, 0f, 0f));
+                RumbleManager.instance.RumblePulse(1f, 2.5f, 0.2f);
             }
         }
     }
@@ -278,8 +634,11 @@ public class PlayerController : PlayerEntity
     {
         if (playerMeleeAttack.currentParry > 0f)
         {
-            SoundManager.instance.ParriedSound();
+            BlockedOrParriedEffect(arrow.gameObject.transform.position);
+            SoundManager.instance.ParriedSound(transform.position);
             StaminaDepleted(arrow.staminaCost / 3);
+            RumbleManager.instance.RumblePulse(1f, 2.5f, 0.1f);
+            cameraBob.TriggerShake(0.293f, 0.05f);
         }
         else
         {
@@ -287,18 +646,21 @@ public class PlayerController : PlayerEntity
             {
                 BlockedOrParriedEffect(arrow.gameObject.transform.position);
                 playerMeleeAttack.PerformBlock();
-                SoundManager.instance.SwordSound_Metal();
+                SoundManager.instance.SwordSound_Metal(transform.position);
                 cameraBob.TriggerShake(0.293f, 0.05f);
                 StaminaDepleted(arrow.staminaCost);
+                RumbleManager.instance.RumblePulse(1f, 2.5f, 0.1f);
             }
             else
             {
                 postProcressEffect.TriggerDamageEffect();
-                SoundManager.instance.SwordSound_Flesh();
-                SoundManager.instance.PlayerHurtSound();
+                SoundManager.instance.SwordSound_Flesh(transform.position);
+                SoundManager.instance.BowSound_Hit(transform.position);
+                SoundManager.instance.PlayerHurtSound(transform.position);
                 cameraBob.TriggerShake(0.293f, 0.1f);
                 CharacterHealthComponent.TakeDamage(arrow.damage);
                 TriggerMeleeJolt(new Vector3(30f, 0f, 0f));
+                RumbleManager.instance.RumblePulse(1f, 2.5f, 0.1f);
             }
         }
     }
@@ -379,5 +741,23 @@ public class PlayerController : PlayerEntity
 
         // Prevent the lunge from pushing the player up into the air or down into the floor
         attackLungeVelocity.y = 0f;
+    }
+
+    private void ResetActionInputPressed()
+    {
+        IsInteractPressed = false;
+        isDashPressed = false;
+        IsMinimapPressed = false;
+        IsReloadPressed = false;
+        IsPausePressed = false;
+        IsSwitchWeaponPressed_Up = false;
+        IsSwitchWeaponPressed_Right = false;
+        IsSwitchWeaponPressed_Down = false;
+        IsSwitchWeaponPressed_Left = false;
+        isBlockPressed = false;
+        isAttackPressed = false;
+        isKickPressed = false;
+        isJumpPressed = false;
+        isSprintPressed = false;
     }
 }

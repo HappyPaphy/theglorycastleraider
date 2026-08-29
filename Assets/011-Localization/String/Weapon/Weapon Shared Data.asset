@@ -1,0 +1,104 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Weapon Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: Weapon
+  m_TableCollectionNameGuidString: 6c81a8c884c523348ba41b48a1c03060
+  m_Entries:
+  - m_Id: 7380979712
+    m_Key: WeaponName_AK47
+    m_Metadata:
+      m_Items: []
+  - m_Id: 105997455360
+    m_Key: WeaponName_Pump-Shotgun
+    m_Metadata:
+      m_Items: []
+  - m_Id: 213342277632
+    m_Key: WeaponName_Uzi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 301091311616
+    m_Key: WeaponName_M16A1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 402048208896
+    m_Key: WeaponName_Minigun
+    m_Metadata:
+      m_Items: []
+  - m_Id: 475826016256
+    m_Key: WeaponName_MP5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 577001017344
+    m_Key: WeaponName_P90
+    m_Metadata:
+      m_Items: []
+  - m_Id: 718378422272
+    m_Key: WeaponName_Scar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 770945634304
+    m_Key: WeaponName_M16A4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 851476271104
+    m_Key: WeaponName_Riot-Shotgun
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1041159475200
+    m_Key: WeaponName_P1911
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1113037262848
+    m_Key: WeaponName_DesertEagle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1235708071936
+    m_Key: WeaponName_Red9
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1288824737792
+    m_Key: WeaponName_Revolver
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1339798114304
+    m_Key: WeaponName_M1Garand
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1445968531456
+    m_Key: WeaponName_VSS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1507838709760
+    m_Key: WeaponName_SawedOff-Shotgun
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1862068654080
+    m_Key: WeaponName_AutoShotgun
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18391517281439744
+    m_Key: WeaponName_ShortSword
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 4137897096074756104
+  references:
+    version: 2
+    RefIds:
+    - rid: 4137897096074756104
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1771860016252

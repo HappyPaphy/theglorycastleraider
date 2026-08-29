@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: KeyBinding_en
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 8b33716e30b3b5944b8b4a2ff32e4c2e, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 4621127680
+    m_Localized: Movement
+    m_Metadata:
+      m_Items: []
+  - m_Id: 93058027520
+    m_Localized: Fire
+    m_Metadata:
+      m_Items: []
+  - m_Id: 210771169280
+    m_Localized: Melee
+    m_Metadata:
+      m_Items: []
+  - m_Id: 334784155648
+    m_Localized: Reload
+    m_Metadata:
+      m_Items: []
+  - m_Id: 363540303872
+    m_Localized: Interact
+    m_Metadata:
+      m_Items: []
+  - m_Id: 403218419712
+    m_Localized: Dash
+    m_Metadata:
+      m_Items: []
+  - m_Id: 435833327616
+    m_Localized: Weapon 1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 457266221056
+    m_Localized: Weapon 2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464174239744
+    m_Localized: Weapon 3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 473338793984
+    m_Localized: Weapon 4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1348526460928
+    m_Localized: Reset
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15340741382144
+    m_Localized: Reset All
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16600479617024
+    m_Localized: Keyboard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16669052293120
+    m_Localized: Gamepad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35294047948800
+    m_Localized: Apply
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45934242222080
+    m_Localized: Return
+    m_Metadata:
+      m_Items: []
+  - m_Id: 280521773993984
+    m_Localized: Aim
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

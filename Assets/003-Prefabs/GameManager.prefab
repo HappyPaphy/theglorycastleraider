@@ -1,0 +1,163 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8148180855469415424
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1955701498589951469}
+  - component: {fileID: 7411133707959285392}
+  - component: {fileID: 6208284861752380741}
+  - component: {fileID: 8235768346859379138}
+  - component: {fileID: 4204224526721519685}
+  - component: {fileID: 3982992093126580887}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1955701498589951469
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8148180855469415424}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.43758, y: 1.3182, z: -0.29733}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7411133707959285392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8148180855469415424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e86cdf236dd30d4f9ede686c9406fd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraPostProcessEffect
+  postProcessVolume: {fileID: 0}
+  colorVignette: {r: 1, g: 0, b: 0, a: 1}
+  vignetteIntensity: 0.65
+  defaultVignetteIntensity: 0
+  recoverySpeed: 0.8
+--- !u!114 &6208284861752380741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8148180855469415424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 855034214b7ec464fb50f50831a599b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InputSchemeManager
+  currentInputMode: 0
+  uiNavigations: []
+--- !u!114 &8235768346859379138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8148180855469415424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ea75e640223f304ebb10e981d98c33e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RumbleManager
+--- !u!114 &4204224526721519685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8148180855469415424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cc9954e4e4c79041a295ecbc9fd61dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedFontChangerManager
+  localizedFont:
+    m_TableReference:
+      m_TableCollectionName: GUID:5674ec37da97be64ca15406c8f9b0a04
+    m_TableEntryReference:
+      m_KeyId: 23130591232
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+  allTextMeshes: []
+  blackFadeUI: {fileID: 0}
+--- !u!114 &3982992093126580887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8148180855469415424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfcbcaca012a65143b400353c023f3ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  eventSystem: {fileID: 0}
+  navigationMode: 0
+  gameDifficultyState: 0
+  gameDifficultyIndex: 1
+  enemyAnimationSpeed: 1
+  enemyMoveSpeed: 1
+  enemyAttackSpeed: 1
+  playerTakeDamage: 1
+  goldGained: 0
+  powerUpIndex_MaxHealth: 0
+  powerUpIndex_RegenHealth: 0
+  powerUpIndex_FireRate: 0
+  powerUpIndex_FirePower: 0
+  powerUpIndex_MaxStamina: 0
+  powerUpIndex_MoveSpeed: 0
+  powerUpIndex_MagazineCapacity: 0
+  powerUpIndex_MaxUltimate: 0
+  powerUpIndexCalculate_MaxHealth: 0
+  powerUpIndexCalculate_RegenHealth: 0
+  powerUpIndexCalculate_FireRate: 0
+  powerUpIndexCalculate_FirePower: 0
+  powerUpIndexCalculate_MaxStamina: 0
+  powerUpIndexCalculate_MoveSpeed: 0
+  powerUpIndexCalculate_MagazineCapacity: 0
+  powerUpIndexCalculate_MaxUltimate: 0
+  enemyHealthMultiplier: 1
+  enemyAttackPowerMultiplier: 1
+  playerBaseMaxHealth: 100
+  playerMaxHealth: 100
+  playerMaxStamina: 100
+  playerBaseMaxUltimate: 100
+  playerMaxUltimate: 100
+  playerCurrentUltimate: 0
+  playerMaxHealthMultiplier: 1
+  playerStaminaCostMultiplier: 1
+  playerAttackPowerMultiplier: 1
+  playerAttackSpeedMultiplier: 1
+  playerMoveSpeedMultiplier: 1
+  playerMaxUltimateMultiplier: 1
+  enemyHealthMultiplier_Curse: 0.5
+  enemyAttackPowerMultiplier_Curse: 0.5
+  enemyMoveSpeedMultiplier_Curse: 1
+  isFlashLightUltimateIsUnlock: 0
+  isInvisibleUltimateIsUnlock: 0
+  flashLightUltimateDuration: 10
+  invisibleUltimateDuration: 4
+  kickDamage: 0
+  isMagicBodyShield: 0

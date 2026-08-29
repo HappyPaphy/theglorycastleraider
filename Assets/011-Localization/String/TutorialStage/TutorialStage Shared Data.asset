@@ -1,0 +1,132 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: TutorialStage Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: TutorialStage
+  m_TableCollectionNameGuidString: d76dfecea0ce34247a082bf3d882732a
+  m_Entries:
+  - m_Id: 5506125824
+    m_Key: TutorialStage_01A_01
+    m_Metadata:
+      m_Items: []
+  - m_Id: 412735295488
+    m_Key: TutorialStage_01A_02
+    m_Metadata:
+      m_Items: []
+  - m_Id: 543442391040
+    m_Key: TutorialStage_01A_03
+    m_Metadata:
+      m_Items: []
+  - m_Id: 766449340416
+    m_Key: TutorialStage_01A_04
+    m_Metadata:
+      m_Items: []
+  - m_Id: 895797481472
+    m_Key: TutorialStage_01A_05
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27667322687488
+    m_Key: 'TutorialStage_01B_01
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27911921913856
+    m_Key: 'TutorialStage_01B_02
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28068688220160
+    m_Key: 'TutorialStage_01C_01
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28173952667648
+    m_Key: TutorialStage_01C_02
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28451951136768
+    m_Key: TutorialStage_01C_03
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28737893617664
+    m_Key: TutorialStage_01C_04
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28866474201088
+    m_Key: TutorialStage_01C_05
+    m_Metadata:
+      m_Items: []
+  - m_Id: 426537814904832
+    m_Key: 'TutorialStage_01D_01
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 426582492631040
+    m_Key: TutorialStage_01D_02
+    m_Metadata:
+      m_Items: []
+  - m_Id: 426590449225728
+    m_Key: TutorialStage_01D_03
+    m_Metadata:
+      m_Items: []
+  - m_Id: 426599106269184
+    m_Key: TutorialStage_01D_04
+    m_Metadata:
+      m_Items: []
+  - m_Id: 426688793071616
+    m_Key: TutorialStage_01D_05
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504968174948352
+    m_Key: TutorialStage_01E_01
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504991784685568
+    m_Key: TutorialStage_01E_02
+    m_Metadata:
+      m_Items: []
+  - m_Id: 504995920269312
+    m_Key: TutorialStage_01E_03
+    m_Metadata:
+      m_Items: []
+  - m_Id: 505014400372736
+    m_Key: 'TutorialStage_01E_04
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 505024332484608
+    m_Key: TutorialStage_01E_05
+    m_Metadata:
+      m_Items: []
+  - m_Id: 505044364480512
+    m_Key: 'TutorialStage_01E_06
+
+'
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 5626513283952148626
+  references:
+    version: 2
+    RefIds:
+    - rid: 5626513283952148626
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1775023882808

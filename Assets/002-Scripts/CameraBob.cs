@@ -17,6 +17,7 @@ public class CameraBob : MonoBehaviour
     private float currentShakeMagnitude = 0f;
 
     [Header("References")]
+    [SerializeField] private PlayerController playerController;
     [SerializeField] private Camera[] allCameras;
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private CharacterController controller;
@@ -41,20 +42,21 @@ public class CameraBob : MonoBehaviour
     private void HandleMovementBob()
     {
         // 1. Check if any movement keys are actively pressed
-        bool isMoving = false;
-        if (Keyboard.current != null)
+        Vector2 moveValue = Vector2.zero;
+        bool isSprinting = false;
+
+        // Ensure playerController is assigned and active before reading
+        if (playerController != null && playerController.playerControls != null)
         {
-            isMoving = Keyboard.current.wKey.isPressed ||
-                       Keyboard.current.aKey.isPressed ||
-                       Keyboard.current.sKey.isPressed ||
-                       Keyboard.current.dKey.isPressed;
+            moveValue = playerController.playerControls.Player.Move.ReadValue<Vector2>();
+            isSprinting = playerController.isSprintHeld;
         }
 
-        // 2. Only bob if grounded AND pressing movement keys
+        bool isMoving = moveValue.sqrMagnitude > 0.01f;
+
+        // 2. Only bob if grounded AND actively moving
         if (controller.isGrounded && isMoving)
         {
-            bool isSprinting = Keyboard.current != null && Keyboard.current.leftShiftKey.isPressed;
-
             float currentFreq = isSprinting ? sprintFrequency : walkFrequency;
             float currentAmp = isSprinting ? sprintAmplitude : walkAmplitude;
 

@@ -1,0 +1,23 @@
+{
+    "name": "DunGen.Sample.Basic",
+    "rootNamespace": "",
+    "references": [
+        "GUID:4a9bf1e8b4c15964d8b0f8fe202c7e54",
+        "GUID:75469ad4d38634e559750d17036d5f7c"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.inputsystem",
+            "expression": "",
+            "define": "HAS_UNITY_INPUT_SYSTEM"
+        }
+    ],
+    "noEngineReferences": false
+}

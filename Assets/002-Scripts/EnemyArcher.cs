@@ -79,20 +79,21 @@ public class EnemyArcher : EnemyEntity
 
     private void HandleState()
     {
-        if (isDied || isExecuted || isStunned) return;
+        if (isDied) { return; }
+        if (isExecuted || isStunned) { return; }
 
         // Tick down cooldowns
         if (currentCooldown > 0f) currentCooldown -= Time.deltaTime;
         if (stateTimer > 0f)
         {
             stateTimer -= Time.deltaTime;
-            if (stateTimer <= 0f) currentState = EnemyArcherState.Idle;
+            if (stateTimer <= 0f && !isDied) currentState = EnemyArcherState.Idle;
         }
 
         switch (currentState)
         {
             case EnemyArcherState.Idle:
-                agent.isStopped = true;
+                SafeStopAgent(true);
                 if (isPlayerDetected && stateTimer <= 0f)
                 {
                     currentState = EnemyArcherState.Reposition;
@@ -100,7 +101,7 @@ public class EnemyArcher : EnemyEntity
                 break;
 
             case EnemyArcherState.Reposition:
-                agent.isStopped = false;
+                SafeStopAgent(false);
                 isShootingOnce = false;
 
                 if (playerTransform != null)
@@ -119,16 +120,16 @@ public class EnemyArcher : EnemyEntity
                     if (distanceToPlayer < retreatDistance)
                     {
                         Vector3 retreatPos = transform.position - (lookDir * 5f);
-                        agent.SetDestination(retreatPos);
+                        SafeSetDestination(retreatPos);
                     }
                     else if (distanceToPlayer > preferredDistance)
                     {
-                        agent.SetDestination(playerTransform.position);
+                        SafeSetDestination(playerTransform.position);
                     }
                     else
                     {
                         // In the "Goldilocks" zone - stop moving and shoot
-                        agent.isStopped = true;
+                        SafeStopAgent(true);
 
                         // Raycast to ensure we aren't shooting a wall[cite: 6]
                         if (currentCooldown <= 0f && !Physics.Raycast(eyesTransform.position, lookDir, distanceToPlayer, obstacleLayer))
@@ -140,7 +141,7 @@ public class EnemyArcher : EnemyEntity
                 break;
 
             case EnemyArcherState.Attack:
-                agent.isStopped = true;
+                SafeStopAgent(true);
 
                 if (!isShootingOnce)
                 {
@@ -175,21 +176,39 @@ public class EnemyArcher : EnemyEntity
             }
         }
 
-        if (!isKicked && !isStunned && !isExecuted)
+        if (!isKicked && !isStunned && !isExecuted && !isDied)
         {
             currentState = EnemyArcherState.Reposition;
         }
     }
 
+    private void SafeStopAgent(bool stopStatus)
+    {
+        if (agent != null && agent.isActiveAndEnabled && agent.isOnNavMesh)
+        {
+            agent.isStopped = stopStatus;
+        }
+    }
+
+    private void SafeSetDestination(Vector3 targetPosition)
+    {
+        if (agent != null && agent.isActiveAndEnabled && agent.isOnNavMesh)
+        {
+            agent.SetDestination(targetPosition);
+        }
+    }
+
     private IEnumerator ShootSequence()
     {
+        if(isDied) { yield break; }
+
         // 1. Pre-attack: Draw the bow (Aiming phase)
-        SoundManager.instance.BowSound_String();
+        SoundManager.instance.BowSound_String(sprRndr.transform.position);
 
         yield return new WaitForSeconds(preAttackDuration);
 
         // 2. Fire if not interrupted by damage/death
-        if (currentState == EnemyArcherState.Attack && playerTransform != null)
+        if (!isDied && currentState == EnemyArcherState.Attack && playerTransform != null)
         {
             // Calculate direction to player's center/chest
             Vector3 targetPos = playerTransform.position + Vector3.up * 1f;
@@ -225,10 +244,10 @@ public class EnemyArcher : EnemyEntity
             stateTimer = damageStunDuration;
         }
 
-        agent.isStopped = true;
+        SafeStopAgent(true);
         Instantiate(bloodEffect, eyesTransform.position, Quaternion.identity);
-        SoundManager.instance.SwordSound_Flesh();
-        SoundManager.instance.HumanSound_Grunt();
+        SoundManager.instance.SwordSound_Flesh(sprRndr.transform.position);
+        SoundManager.instance.HumanSound_Grunt(sprRndr.transform.position);
         ApplyKnockback(damageKnockbackForce);
 
         TakeDamage(damageValue); // Derived from EnemyEntity[cite: 6]
@@ -239,7 +258,7 @@ public class EnemyArcher : EnemyEntity
         currentState = EnemyArcherState.Stunned;
         isStunned = true;
         stunTimer = stunRecoveryTime;
-        agent.isStopped = true;
+        SafeStopAgent(true);
     }
 
     public override void GotKicked(Vector3 hitPoint, float damageValue)
@@ -251,13 +270,13 @@ public class EnemyArcher : EnemyEntity
             kickTimer = kickRecoveryTime;
         }
 
-        agent.isStopped = true;
+        SafeStopAgent(true);
 
         ApplyKnockback(damageKnockbackForce);
 
         GameObject bloodObj = Instantiate(bloodEffect);
         bloodObj.transform.position = eyesTransform.position;
-        SoundManager.instance.HumanSound_Grunt();
+        SoundManager.instance.HumanSound_Grunt(sprRndr.transform.position);
 
         TakeDamage(damageValue);
     }
@@ -267,7 +286,7 @@ public class EnemyArcher : EnemyEntity
     {
         currentState = EnemyArcherState.Executed;
         isExecuted = true;
-        agent.isStopped = true;
+        SafeStopAgent(true);
     }
 
     private void HandleExecute()
@@ -283,8 +302,8 @@ public class EnemyArcher : EnemyEntity
             if (executeTimer <= 0f)
             {
                 isExecutedOnce = true;
-                SoundManager.instance.SwordSound_Flesh();
-                SoundManager.instance.SwordSound_Execute();
+                SoundManager.instance.SwordSound_Flesh(sprRndr.transform.position);
+                SoundManager.instance.SwordSound_Execute(sprRndr.transform.position);
                 Instantiate(bloodEffect, headSpawnTransform.position, Quaternion.identity);
                 CharacterHealthComponent.SetHP(0f);
             }
@@ -297,6 +316,8 @@ public class EnemyArcher : EnemyEntity
 
     public override void Die()
     {
+        StopAllCoroutines();
+
         if (!isDiedOnce)
         {
             isDied = true;
@@ -308,7 +329,7 @@ public class EnemyArcher : EnemyEntity
             if (!isExecuted)
             {
                 currentState = EnemyArcherState.Died;
-                SoundManager.instance.HumanSound_Died();
+                SoundManager.instance.HumanSound_Died(sprRndr.transform.position);
             }
         }
         base.Die();

@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: ItemDescription_en
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 77c2d19b7936932408d019b62b670f1d, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 6894440448
+    m_Localized: Receive 30% less damage.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 145063202816
+    m_Localized: Receive 40% less damage.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 192274288640
+    m_Localized: Receive 50% less damage.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 236901683200
+    m_Localized: +50% Critical Damage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 290890764288
+    m_Localized: x2 Kick Power
+    m_Metadata:
+      m_Items: []
+  - m_Id: 341830586368
+    m_Localized: +30% Damage to Parried Enemy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 368602828800
+    m_Localized: After Execute enemy gain move speed and fire rate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399271579648
+    m_Localized: +35% Critical Chance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 434675699712
+    m_Localized: Every 60 picked up Gloric, Gain 1 Max HP.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 457853423616
+    m_Localized: +50 Max HP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3371787407360
+    m_Localized: +1 Weapon Capacity
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3706539003904
+    m_Localized: +25% Heal from Max HP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3787732340736
+    m_Localized: +50% Heal from Max HP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3807261020160
+    m_Localized: +75% Heal from Max HP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31198767624540160
+    m_Localized: After Perfect Reload, Grant temp Fire Rate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31198768949940224
+    m_Localized: Increase Melee Damage and Speed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34059888354185216
+    m_Localized: Revive +1 time
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

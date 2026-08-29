@@ -245,7 +245,7 @@ public class EnemyThief : EnemyEntity
         parryTimer = parryRecoveryTime;
         currentHitCount = 0;
 
-        SoundManager.instance.HumanSound_Parried();
+        SoundManager.instance.HumanSound_Parried(sprRndr.transform.position);
 
         agent.isStopped = true;
 
@@ -289,8 +289,8 @@ public class EnemyThief : EnemyEntity
             {
                 isExecutedOnce = true;
 
-                SoundManager.instance.SwordSound_Flesh();
-                SoundManager.instance.SwordSound_Execute();
+                SoundManager.instance.SwordSound_Flesh(sprRndr.transform.position);
+                SoundManager.instance.SwordSound_Execute(sprRndr.transform.position);
 
                 GameObject bloodObj = Instantiate(bloodEffect);
                 bloodObj.transform.position = headSpawnTransform.position;
@@ -332,7 +332,7 @@ public class EnemyThief : EnemyEntity
 
         GameObject bloodObj = Instantiate(bloodEffect);
         bloodObj.transform.position = eyesTransform.position;
-        SoundManager.instance.HumanSound_Grunt();
+        SoundManager.instance.HumanSound_Grunt(sprRndr.transform.position);
 
         TakeDamage(damageValue);
     }
@@ -350,8 +350,8 @@ public class EnemyThief : EnemyEntity
 
         GameObject bloodObj = Instantiate(bloodEffect);
         bloodObj.transform.position = eyesTransform.position;
-        SoundManager.instance.SwordSound_Flesh();
-        SoundManager.instance.HumanSound_Grunt();
+        SoundManager.instance.SwordSound_Flesh(sprRndr.transform.position);
+        SoundManager.instance.HumanSound_Grunt(sprRndr.transform.position);
 
         agent.isStopped = true;
         ApplyKnockback(damageKnockbackForce);
@@ -378,7 +378,7 @@ public class EnemyThief : EnemyEntity
             if (!isExecuted)
             {
                 currentState = EnemyThiefState.Died;
-                SoundManager.instance.HumanSound_Died();
+                SoundManager.instance.HumanSound_Died(sprRndr.transform.position);
             }
         }
 
@@ -394,7 +394,7 @@ public class EnemyThief : EnemyEntity
 
         GameObject sparkObj = Instantiate(sparkEffect);
         sparkObj.transform.position = eyesTransform.position;
-        SoundManager.instance.SwordSound_Metal();
+        SoundManager.instance.SwordSound_Metal(sprRndr.transform.position);
 
         agent.isStopped = true;
 
@@ -577,7 +577,7 @@ public class EnemyThief : EnemyEntity
 
     private IEnumerator AttackSequence()
     {
-        SoundManager.instance.HumanSound_Attack();
+        SoundManager.instance.HumanSound_Attack(sprRndr.transform.position);
 
         yield return new WaitForSeconds(preAttackDuration);
 

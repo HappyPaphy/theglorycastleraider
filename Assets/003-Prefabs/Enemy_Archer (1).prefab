@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4452330985566056080}
+  - component: {fileID: 3472543421309095374}
   - component: {fileID: 2971637515779346058}
   - component: {fileID: 1141512163243296553}
   m_Layer: 7
@@ -36,6 +37,70 @@ Transform:
   - {fileID: 482324574376791486}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3472543421309095374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1742776970562387968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6c2629724bde5e43aa4f4c956ef5007, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyArcher
+  CharacterHealthComponent:
+    _maxHP: 70
+    _currentHP: 70
+    _executePercentage: 0.4
+  slider_HP: {fileID: 0}
+  faceToCamera: {fileID: 6605675104170769090}
+  executeTransform: {fileID: 482324574376791486}
+  goreSprite_34HP: {fileID: 1120836982495257028}
+  goreSprite_67HP: {fileID: 1569376556562704644}
+  animGore34: {fileID: 7620875348692328258}
+  animGore67: {fileID: 8121104169884513463}
+  agent: {fileID: 2971637515779346058}
+  damageKnockbackForce: 8
+  blockKnockbackForce: 3
+  knockbackDecay: 10
+  maxBalance: 100
+  currentBalance: 100
+  balanceRecoveryRate: 4
+  attackDamage: 8
+  staminaDamage: 18
+  detectionRadius: 15
+  viewAngle: 360
+  eyesTransform: {fileID: 8134560505041046601}
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  backstabAngle: 60
+  backstabRange: 2
+  backstabDamage: 100
+  isStunned: 0
+  isDied: 0
+  isDiedOnce: 0
+  capsuleCol: {fileID: 1141512163243296553}
+  anim: {fileID: 5086979034720345345}
+  sprRndr: {fileID: 2840626006574473545}
+  moveSpeed: 1
+  arrowPrefab: {fileID: 1990478163757156409, guid: 91cb837268c3ff84ba0ebf17fb1d7c08, type: 3}
+  firePoint: {fileID: 8134560505041046601}
+  preferredDistance: 8
+  retreatDistance: 4
+  shootCooldown: 2.5
+  preAttackDuration: 0.5
+  isKicked: 0
+  kickRecoveryTime: 0.8
+  currentState: 0
+  damageStunDuration: 0.5
+  stunRecoveryTime: 4
+  bloodEffect: {fileID: 6317032364392488945, guid: b462f72f433bde146b3c942ccc0215ab, type: 3}
+  headSpawnTransform: {fileID: 482324574376791486}
 --- !u!195 &2971637515779346058
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -124,7 +189,7 @@ GameObject:
   - component: {fileID: 1120836982495257028}
   - component: {fileID: 7620875348692328258}
   m_Layer: 7
-  m_Name: BloodStain(34HP)
+  m_Name: BloodStain(34Blood)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -139,7 +204,7 @@ Transform:
   m_GameObject: {fileID: 3653558777149733531}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.005}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -192,7 +257,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 750696458, guid: 13d5ae0ac331c4144bbfff803e9d9f5d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -214,7 +279,7 @@ Animator:
   m_GameObject: {fileID: 3653558777149733531}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: afcdf10fdffe7ee4fa0c6a305f9b0b1d, type: 2}
+  m_Controller: {fileID: 9100000, guid: a86f9e080f742d440833d8cb5253787e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -269,7 +334,7 @@ GameObject:
   - component: {fileID: 1569376556562704644}
   - component: {fileID: 8121104169884513463}
   m_Layer: 7
-  m_Name: BloodStain(67HP)
+  m_Name: BloodStain(67Blood)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -284,7 +349,7 @@ Transform:
   m_GameObject: {fileID: 6574618732610615365}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.005}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -337,7 +402,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -1746406356, guid: 35b498710e410a544b1e78288e3d2c13, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -359,7 +424,7 @@ Animator:
   m_GameObject: {fileID: 6574618732610615365}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ca780bdc4e7ead041bb4b05041ef6d84, type: 2}
+  m_Controller: {fileID: 9100000, guid: abcdd549bce498e4c904cd8212a3cce5, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -423,13 +488,14 @@ MonoBehaviour:
   sprRndr: {fileID: 2840626006574473545}
   obj_RotateObject: {fileID: 8546795109187691609}
   anim: {fileID: 5086979034720345345}
+  isFaceToPlayer: 1
   isFaceYAxis: 0
   spr_Front: {fileID: 0}
   spr_FrontSide: {fileID: 0}
   spr_Side: {fileID: 0}
   spr_BackSide: {fileID: 0}
   spr_Back: {fileID: 0}
-  animController_Front: {fileID: 9100000, guid: c87caf90d06d9c34f8f9734188dcb498, type: 2}
+  animController_Front: {fileID: 9100000, guid: 95c3f3116f2756743b84ecdef4d6c4d1, type: 2}
   animController_FrontSide: {fileID: 0}
   animController_Side: {fileID: 0}
   animController_BackSide: {fileID: 0}
@@ -483,7 +549,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -1151419281, guid: f57e32be39b46e64abd0cf9423be2a9c, type: 3}
+  m_Sprite: {fileID: 1065324677, guid: b342fa93731c119459ff857396d37561, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -503,7 +569,7 @@ Animator:
   m_GameObject: {fileID: 8546795109187691609}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c87caf90d06d9c34f8f9734188dcb498, type: 2}
+  m_Controller: {fileID: 9100000, guid: 95c3f3116f2756743b84ecdef4d6c4d1, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

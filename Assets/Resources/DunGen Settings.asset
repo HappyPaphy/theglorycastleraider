@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad1ebb4e3aa3b474d849bc53fbe48191, type: 3}
+  m_Name: DunGen Settings
+  m_EditorClassIdentifier: DunGen::DunGen.DunGenSettings
+  BoundsCalculationsIgnoreSprites: 0
+  BoundsCalculator:
+    rid: 5241307731144212789
+  BroadphaseSettings:
+    rid: 5241307731144212790
+  RecalculateTileBoundsOnSave: 1
+  EnableTilePooling: 0
+  DisplayFailureReportWindow: 1
+  CheckForUnusedFiles: 1
+  CollisionThreshold: 0.001
+  defaultSocket: {fileID: 0}
+  tagManager:
+    keys: 
+    values: []
+  fileVersion: 2
+  migrationWarningVersion: 1
+  references:
+    version: 2
+    RefIds:
+    - rid: 5241307731144212789
+      type: {class: DefaultTileBoundsCalculator, ns: DunGen.TileBounds, asm: DunGen}
+      data:
+        IncludeRenderers: 1
+        IncludeSpriteRenderers: 1
+        IncludeColliders: 1
+        IncludeTriggerColliders: 0
+        IncludeTerrain: 1
+        IncludeInactive: 0
+        LayerMask:
+          serializedVersion: 2
+          m_Bits: 4294967295
+    - rid: 5241307731144212790
+      type: {class: SpatialHashBroadphaseSettings, ns: DunGen.Collision, asm: DunGen}
+      data:
+        CellSize: 40
+--- !u!114 &8333446818657149009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59296c11d75e7024ebd73d93f5babf99, type: 3}
+  m_Name: Default
+  m_EditorClassIdentifier: DunGen::DunGen.DoorwaySocket
+  size: {x: 1, y: 2}

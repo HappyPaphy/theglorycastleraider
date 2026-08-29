@@ -1,0 +1,116 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Equipment Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: Equipment
+  m_TableCollectionNameGuidString: 0225f3a3330a49b45ac42e1de7edddba
+  m_Entries:
+  - m_Id: 7867518976
+    m_Key: Equipment_LeatherArmor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 66860404736
+    m_Key: Equipment_SilverArmor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 234292826112
+    m_Key: Equipment_TitaniteArmor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 373480804352
+    m_Key: Equipment_LeatherHat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 563264671744
+    m_Key: Equipment_BloodHoundMask
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1032959610880
+    m_Key: Equipment_ExecutionerHood
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1255693930496
+    m_Key: Equipment_LeatherBoots
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1423570948096
+    m_Key: Equipment_SpikeBoots
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1507247312896
+    m_Key: Equipment_LifeRing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1623077212160
+    m_Key: Equipment_GloricRing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1742296109056
+    m_Key: Equipment_RecoveryRing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1824206671872
+    m_Key: Equipment_SkullRing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10256594817024
+    m_Key: EquipmentSlot_Head
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10328619405312
+    m_Key: "EquipmentSlot_\u0E3ABody"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10360122822656
+    m_Key: EquipmentSlot_Boots
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10382503628800
+    m_Key: EquipmentSlot_Ring1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10547423662080
+    m_Key: EquipmentSlot_Ring2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10555145375744
+    m_Key: EquipmentSlot_Necklace
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35735299362443264
+    m_Key: Equipment_ReplacingRingHeader
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35735436549738496
+    m_Key: Equipment_ReplacingEquipmentHeader
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35736535109259264
+    m_Key: Equipment_Confirm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39127029294092288
+    m_Key: Equipment_TriggerFingerNecklace
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 4986701999127396358
+  references:
+    version: 2
+    RefIds:
+    - rid: 4986701999127396358
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1772437901564

@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89377a5c2dcb66b40af385ad8492cda9, type: 3}
+  m_Name: 2D Archetype
+  m_EditorClassIdentifier: 
+  StraightenChance: 0
+  TileSets:
+  - {fileID: 11400000, guid: 6e732dd9c9f27844c831f6d57c2e913d, type: 2}
+  BranchStartTileSets: []
+  BranchStartType: 0
+  BranchCapTileSets: []
+  BranchCapType: 1
+  BranchingDepth:
+    Min: 2
+    Max: 4
+  BranchCount:
+    Min: 1
+    Max: 2
+  StraighteningSettings:
+    OverrideStraightenChance: 0
+    StraightenChance: 0
+    OverrideCanStraightenMainPath: 0
+    CanStraightenMainPath: 1
+    OverrideCanStraightenBranchPaths: 0
+    CanStraightenBranchPaths: 0
+  Unique: 0
+  fileVersion: 1

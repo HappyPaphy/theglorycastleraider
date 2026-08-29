@@ -48,8 +48,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FaceToCamera
   sprRndr: {fileID: 2683355806736445876}
   obj_RotateObject: {fileID: 8720998025604073231}
-  spr_FrontTorch: {fileID: -362583778, guid: b34fd52dd8795574eb486adfe0e13676, type: 3}
-  spr_SideTorch: {fileID: -424638590, guid: 2d8c139336cbdfb4dba5b59e5ddc34f4, type: 3}
+  anim: {fileID: 0}
+  isFaceToPlayer: 1
+  isFaceYAxis: 0
+  spr_Front: {fileID: 0}
+  spr_FrontSide: {fileID: 0}
+  spr_Side: {fileID: 0}
+  spr_BackSide: {fileID: 0}
+  spr_Back: {fileID: 0}
+  animController_Front: {fileID: 0}
+  animController_FrontSide: {fileID: 0}
+  animController_Side: {fileID: 0}
+  animController_BackSide: {fileID: 0}
+  animController_Back: {fileID: 0}
 --- !u!1 &8671353181961750234
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,8 +105,8 @@ Light:
   serializedVersion: 12
   m_Type: 2
   m_Color: {r: 1, g: 0.6039216, b: 0.2627451, a: 1}
-  m_Intensity: 0.25
-  m_Range: 5
+  m_Intensity: 1
+  m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize2D: {x: 0.5, y: 0.5}

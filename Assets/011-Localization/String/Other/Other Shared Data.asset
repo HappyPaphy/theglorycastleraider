@@ -1,0 +1,128 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Other Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: Other
+  m_TableCollectionNameGuidString: 9d404745ae4d52a44b64dff3f1bc052e
+  m_Entries:
+  - m_Id: 5434822656
+    m_Key: Other_GoDown
+    m_Metadata:
+      m_Items: []
+  - m_Id: 369459180130304
+    m_Key: GameEnd_NextLevel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106246230122745856
+    m_Key: Combat_Parry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106246297902698496
+    m_Key: Combat_Execute
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106250092124622848
+    m_Key: Combat_Kick
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106252903872778240
+    m_Key: Combat_Reload!!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106252982641807360
+    m_Key: Combat_FireRateUp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106253679407976448
+    m_Key: Combat_ReloadFailed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106254251339075584
+    m_Key: GemReplacing_SelectSlot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106265855204052992
+    m_Key: GemReplacing_SelectWeapon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106266368779800576
+    m_Key: GemReplacing_GemtoReplace
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106266433774735360
+    m_Key: GemReplacing_GemYouHave
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106266762746580992
+    m_Key: 'GemReplacing_Warning
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106322103593127936
+    m_Key: Combat_Parried
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106340779759292416
+    m_Key: Interact_UseKey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106977114283102208
+    m_Key: 'EnemyName_GuardTongue
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 106977299553898496
+    m_Key: 'EnemyName_KingTongue
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 112407040050122752
+    m_Key: 'EnemyName_Wiguard
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 116009007980793856
+    m_Key: EnemyName_TheShieldBoy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 121421237379452928
+    m_Key: EnemyName_CoolGolem
+    m_Metadata:
+      m_Items: []
+  - m_Id: 125781441588023296
+    m_Key: EnemyName_MagicKnight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 125781857621037056
+    m_Key: EnemyName_TheGloryRaider
+    m_Metadata:
+      m_Items: []
+  - m_Id: 129782469438263296
+    m_Key: Combat_ReloadSuccess
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 7347578302289149986
+  references:
+    version: 2
+    RefIds:
+    - rid: 7347578302289149986
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1750910344551

@@ -34,7 +34,7 @@ public class ArrowProjectile : MonoBehaviour
             Destroy(gameObject); // Destroy arrow on hit
         }
         // 2. Destroy on walls/environment (assuming they aren't on the Enemy layer)
-        else if (other.gameObject.layer != LayerMask.NameToLayer("Player"))
+        else if (other.gameObject.layer != LayerMask.NameToLayer("Enemy"))
         {
             Destroy(gameObject);
         }

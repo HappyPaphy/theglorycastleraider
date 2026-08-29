@@ -40,8 +40,8 @@ public class EnemyEntity : CharacterEntity
     [Header("State")]
     [HideInInspector] public bool isStunned = false;
     protected bool isPlayerDetected = false;
-    protected bool isDied = false;
-    protected bool isDiedOnce = false; 
+    [SerializeField] protected bool isDied = false;
+    [SerializeField] protected bool isDiedOnce = false; 
 
     protected Transform playerTransform;
 

@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Tips_LoadingScreen Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: Tips_LoadingScreen
+  m_TableCollectionNameGuidString: 84ebff4fb32403a4ebea7c50dee91511
+  m_Entries:
+  - m_Id: 9050312704
+    m_Key: Tips_LoadingScreen_0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 117997359104
+    m_Key: Tips_LoadingScreen_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 129674301440
+    m_Key: Tips_LoadingScreen_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137249214464
+    m_Key: Tips_LoadingScreen_3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 121729306269372416
+    m_Key: Tips_LoadingScreen_4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 121729808885403648
+    m_Key: Tips_LoadingScreen_5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 121730255268401152
+    m_Key: Tips_LoadingScreen_6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 121730797604491264
+    m_Key: Tips_LoadingScreen_7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 121736885498335232
+    m_Key: Tips_NextTips
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122938979483963392
+    m_Key: Tips_LimitedAmmoWeapon
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 863550092032344066
+  references:
+    version: 2
+    RefIds:
+    - rid: 863550092032344066
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1752220750816

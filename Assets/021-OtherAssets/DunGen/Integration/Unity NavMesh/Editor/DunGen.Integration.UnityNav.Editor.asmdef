@@ -1,0 +1,27 @@
+{
+    "name": "DunGen.Integration.UnityNav.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:4a9bf1e8b4c15964d8b0f8fe202c7e54",
+        "GUID:661be64c0659d50459147ff9e84afa98",
+        "GUID:9e5c1b6367ec6e2408e9ebacdacb361c",
+        "GUID:86c9d8e67265f41469be06142c397d17"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.ai.navigation",
+            "expression": "",
+            "define": "UNITY_NAVIGATION_COMPONENTS"
+        }
+    ],
+    "noEngineReferences": false
+}

@@ -31,29 +31,21 @@ public class WeaponSway : MonoBehaviour
 
     void Update()
     {
-        // 1. Calculate Mouse Look Sway
-        Vector2 mouseDelta = Mouse.current != null ? Mouse.current.delta.ReadValue() : Vector2.zero;
+        Vector2 lookDelta = playerController.playerControls.Player.Look.ReadValue<Vector2>();
 
-        float moveX = Mathf.Clamp(-mouseDelta.x * swayMultiplier, -maxSway, maxSway);
-        float moveY = Mathf.Clamp(-mouseDelta.y * swayMultiplier, -maxSway, maxSway);
+        float moveX = Mathf.Clamp(-lookDelta.x * swayMultiplier, -maxSway, maxSway);
+        float moveY = Mathf.Clamp(-lookDelta.y * swayMultiplier, -maxSway, maxSway);
 
         Vector3 lookSwayPosition = new Vector3(moveX, moveY, 0);
 
         // 2. Calculate Movement Bob (Figure-8 pattern)
         Vector3 movementBobPosition = Vector3.zero;
 
-        bool isMoving = false;
-        bool isSprinting = false;
+        Vector2 moveValue = playerController.playerControls.Player.Move.ReadValue<Vector2>();
+        bool isMoving = moveValue.sqrMagnitude > 0.01f;
 
-        if (Keyboard.current != null)
-        {
-            isMoving = Keyboard.current.wKey.isPressed ||
-                       Keyboard.current.aKey.isPressed ||
-                       Keyboard.current.sKey.isPressed ||
-                       Keyboard.current.dKey.isPressed;
-
-            isSprinting = Keyboard.current.leftShiftKey.isPressed;
-        }
+        // Read the sprint bool directly from the controller
+        bool isSprinting = playerController.isSprintHeld;
 
         if (isMoving && !playerController.isAttacking && playerController.isGrounded && !playerController.isSliding)
         {

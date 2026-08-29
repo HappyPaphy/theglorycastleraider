@@ -1,0 +1,122 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: ItemDescription Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: ItemDescription
+  m_TableCollectionNameGuidString: 77c2d19b7936932408d019b62b670f1d
+  m_Entries:
+  - m_Id: 6894440448
+    m_Key: ItemDescription_LeatherArmor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 145063202816
+    m_Key: ItemDescription_SilverArmor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 192274288640
+    m_Key: ItemDescription_TitaniteArmor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 236901683200
+    m_Key: 'ItemDescription_LeatherBoots
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 290890764288
+    m_Key: 'ItemDescription_SpikeBoots
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 341830586368
+    m_Key: ItemDescription_BloodHoundMask
+    m_Metadata:
+      m_Items: []
+  - m_Id: 368602828800
+    m_Key: 'ItemDescription_ExecutionerHood
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 399271579648
+    m_Key: 'ItemDescription_LeatherHat
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 434675699712
+    m_Key: 'ItemDescription_GloricRing
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 457853423616
+    m_Key: 'ItemDescription_LifeRing
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 490275393536
+    m_Key: 'ItemDescription_RecoveryRing
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 521481015296
+    m_Key: 'ItemDescription_SkullRing
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3371787407360
+    m_Key: 'ItemDescription_WeaponbagSlot
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3706539003904
+    m_Key: ItemDescription_SmallHealthPotion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3787732340736
+    m_Key: ItemDescription_BigHealthPotion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3807261020160
+    m_Key: ItemDescription_GiganticHealthPotion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31198767624540160
+    m_Key: ItemDescription_TriggerFingerNecklace
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31198768949940224
+    m_Key: ItemDescription_SwordFragment
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34059888354185216
+    m_Key: ItemDescription_ReviveTotem
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 4986702472921481310
+  references:
+    version: 2
+    RefIds:
+    - rid: 4986702472921481310
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1774243702039

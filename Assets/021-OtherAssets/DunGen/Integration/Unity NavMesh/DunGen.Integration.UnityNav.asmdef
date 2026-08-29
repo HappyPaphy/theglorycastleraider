@@ -1,0 +1,23 @@
+{
+    "name": "DunGen.Integration.UnityNav",
+    "rootNamespace": "",
+    "references": [
+        "GUID:4a9bf1e8b4c15964d8b0f8fe202c7e54",
+        "GUID:8c4dd21966739024fbd72155091d199e"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.ai.navigation",
+            "expression": "",
+            "define": "UNITY_NAVIGATION_COMPONENTS"
+        }
+    ],
+    "noEngineReferences": false
+}

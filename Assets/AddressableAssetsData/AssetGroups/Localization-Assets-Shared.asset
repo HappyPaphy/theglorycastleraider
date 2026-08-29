@@ -1,0 +1,112 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Localization-Assets-Shared
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: Localization-Assets-Shared
+  m_GUID: 36153e3a3007f484f8ae887d6d431bf7
+  m_SerializeEntries:
+  - m_GUID: 0225f3a3330a49b45ac42e1de7edddba
+    m_Address: Assets/011-Localization/String/Equipment/Equipment Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1072aa07b9b04fc4ab8a9865fd098412
+    m_Address: Assets/011-Localization/String/Item/Item Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2738a8758d03c034db3ebc1962911340
+    m_Address: Assets/011-Localization/String/UpgradeCharacterCard/UpgradeCharacterCard
+      Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 27d0942533844224798c0ced8b3b35b4
+    m_Address: Assets/011-Localization/String/PauseMenu/PauseMenu Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 54ebb250d39573a46b7a511ca6221a67
+    m_Address: Assets/011-Localization/String/EndlessMode_A/EndlessMode Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5674ec37da97be64ca15406c8f9b0a04
+    m_Address: Assets/011-Localization/FontAsset/FontAsset Table Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6c81a8c884c523348ba41b48a1c03060
+    m_Address: Assets/011-Localization/String/Weapon/Weapon Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 77c2d19b7936932408d019b62b670f1d
+    m_Address: Assets/011-Localization/String/ItemDescription/ItemDescription Shared
+      Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 84ebff4fb32403a4ebea7c50dee91511
+    m_Address: Assets/011-Localization/String/Tips_LoadingScreen/Tips_LoadingScreen
+      Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8b33716e30b3b5944b8b4a2ff32e4c2e
+    m_Address: Assets/011-Localization/String/KeyBinding/KeyBinding Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9683e0e008b867a4d80354f76e3e6537
+    m_Address: Assets/011-Localization/String/WeaponMod/WeaponMod Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 96bdc564fc224e74e93ff2c51574ba7e
+    m_Address: Assets/011-Localization/String/Shop/Shop Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9d404745ae4d52a44b64dff3f1bc052e
+    m_Address: Assets/011-Localization/String/Other/Other Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c083b92ead7699943adc6eb370998822
+    m_Address: Assets/011-Localization/String/UIButton/UIButton Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ca19dcb1c2845954e9e461b7f19ee61a
+    m_Address: Assets/011-Localization/String/Control/Control_Tips Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d76dfecea0ce34247a082bf3d882732a
+    m_Address: Assets/011-Localization/String/TutorialStage/TutorialStage Shared
+      Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ee007d460ccfcb34cab5b718be77ea77
+    m_Address: Assets/011-Localization/String/Mainmenu/Menu labels Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 1
+  m_Settings: {fileID: 11400000, guid: b315679677c9198418267d7a7da0aae4, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: cefe338a2bd929549b310d9f63df693a, type: 2}
+    - {fileID: 11400000, guid: aec923d9b46b5ea49a91504ce71b68a0, type: 2}
