@@ -119,11 +119,11 @@ public class EnemyArcher : EnemyEntity
                     if (distanceToPlayer < retreatDistance)
                     {
                         Vector3 retreatPos = transform.position - (lookDir * 5f);
-                        SafeSetDestination(retreatPos);
+                        SafeSetDesitinationAgent(retreatPos);
                     }
                     else if (distanceToPlayer > preferredDistance)
                     {
-                        SafeSetDestination(playerTransform.position);
+                        SafeSetDesitinationAgent(playerTransform.position);
                     }
                     else
                     {
@@ -180,14 +180,6 @@ public class EnemyArcher : EnemyEntity
         if (!isKicked && !isStunned && !isExecuted && !isDied)
         {
             currentState = EnemyArcherState.Reposition;
-        }
-    }
-
-    private void SafeSetDestination(Vector3 targetPosition)
-    {
-        if (agent != null && agent.isActiveAndEnabled && agent.isOnNavMesh)
-        {
-            agent.SetDestination(targetPosition);
         }
     }
 

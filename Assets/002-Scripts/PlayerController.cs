@@ -602,7 +602,7 @@ public class PlayerController : PlayerEntity
             enemy.GotParried();
             SoundManager.instance.ParriedSound(transform.position);
             BlockedOrParriedEffect(enemy.eyesTransform.position);
-            StaminaDepleted(enemy.staminaDamage / 3);
+            StaminaDepleted(enemy.staminaDamage / 3 * GameManager.instance.playerTakeStaminaDamage);
             RumbleManager.instance.RumblePulse(1f, 3f, 0.4f);
             cameraBob.TriggerShake(0.293f, 0.05f);
         }
@@ -616,7 +616,7 @@ public class PlayerController : PlayerEntity
                 playerMeleeAttack.PerformBlock();
                 SoundManager.instance.SwordSound_Metal(transform.position);
                 cameraBob.TriggerShake(0.293f, 0.05f);
-                StaminaDepleted(enemy.staminaDamage);
+                StaminaDepleted(enemy.staminaDamage * GameManager.instance.playerTakeStaminaDamage);
                 RumbleManager.instance.RumblePulse(1f, 3f, 0.4f);
             }
             else
@@ -625,7 +625,7 @@ public class PlayerController : PlayerEntity
                 SoundManager.instance.SwordSound_Flesh(transform.position);
                 SoundManager.instance.PlayerHurtSound(transform.position);
                 cameraBob.TriggerShake(0.293f, 0.1f);
-                CharacterHealthComponent.TakeDamage(enemy.attackDamage);
+                CharacterHealthComponent.TakeDamage(enemy.attackDamage * GameManager.instance.playerTakeHPDamage);
                 TriggerMeleeJolt(new Vector3(30f, 0f, 0f));
                 RumbleManager.instance.RumblePulse(1f, 2.5f, 0.2f);
             }
@@ -638,7 +638,7 @@ public class PlayerController : PlayerEntity
         {
             BlockedOrParriedEffect(arrow.gameObject.transform.position);
             SoundManager.instance.ParriedSound(transform.position);
-            StaminaDepleted(arrow.staminaCost / 3);
+            StaminaDepleted(arrow.staminaCost / 3 * GameManager.instance.playerTakeStaminaDamage);
             RumbleManager.instance.RumblePulse(1f, 2.5f, 0.1f);
             cameraBob.TriggerShake(0.293f, 0.05f);
         }
@@ -650,7 +650,7 @@ public class PlayerController : PlayerEntity
                 playerMeleeAttack.PerformBlock();
                 SoundManager.instance.SwordSound_Metal(transform.position);
                 cameraBob.TriggerShake(0.293f, 0.05f);
-                StaminaDepleted(arrow.staminaCost);
+                StaminaDepleted(arrow.staminaCost * GameManager.instance.playerTakeStaminaDamage);
                 RumbleManager.instance.RumblePulse(1f, 2.5f, 0.1f);
             }
             else
@@ -660,7 +660,7 @@ public class PlayerController : PlayerEntity
                 SoundManager.instance.BowSound_Hit(transform.position);
                 SoundManager.instance.PlayerHurtSound(transform.position);
                 cameraBob.TriggerShake(0.293f, 0.1f);
-                CharacterHealthComponent.TakeDamage(arrow.damage);
+                CharacterHealthComponent.TakeDamage(arrow.damage * GameManager.instance.playerTakeHPDamage);
                 TriggerMeleeJolt(new Vector3(30f, 0f, 0f));
                 RumbleManager.instance.RumblePulse(1f, 2.5f, 0.1f);
             }

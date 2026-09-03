@@ -92,6 +92,7 @@ public class EnemyThief : EnemyEntity
 
     protected override void Start()
     {
+        moveSpeed *= GameManager.instance.enemyMoveSpeed;
         executeTimer = executeDuration;
         faceToCamera.isFaceYAxis = false;
         base.Start();
@@ -477,7 +478,7 @@ public class EnemyThief : EnemyEntity
                     if (PlayerController.instance != null)
                     {
                         Transform target = PlayerController.instance.transform;
-                        agent.SetDestination(target.position);
+                        SafeSetDesitinationAgent(target.position);
 
                         Vector3 lookDir = (target.position - transform.position).normalized;
                         lookDir.y = 0;
@@ -535,13 +536,13 @@ public class EnemyThief : EnemyEntity
                         if (Vector3.Distance(transform.position, target.position) < 3f)
                         {
                             Vector3 retreatPos = transform.position - lookDir * 4f; // Push destination backward
-                            agent.SetDestination(retreatPos);
+                            SafeSetDesitinationAgent(retreatPos);
                         }
                         else
                         {
                             // Normal Strafe Logic
                             flankTimer -= Time.deltaTime;
-                            if (flankTimer <= 0f || agent.remainingDistance < 1f)
+                            if (flankTimer <= 0f || SafeGetRemainingDistance() < 1f)
                             {
                                 float randomAngleOffset = Random.Range(-80f, 80f);
                                 float randomRadius = Random.Range(3, 5);
@@ -554,7 +555,7 @@ public class EnemyThief : EnemyEntity
 
                                 flankTimer = Random.Range(1.8f, 2.5f);
                             }
-                            agent.SetDestination(currentFlankDestination);
+                            SafeSetDesitinationAgent(currentFlankDestination);
                         }
                     }
                 }

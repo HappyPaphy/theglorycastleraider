@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEditor.PlayerSettings;
 
 public class EnemyEntity : CharacterEntity
 {
@@ -38,6 +39,7 @@ public class EnemyEntity : CharacterEntity
     [SerializeField] protected int backstabDamage = 100;        // Instant kill or massive damage
 
     [Header("State")]
+    [SerializeField] protected bool isEnableAgentOnStartOnce = false;
     [HideInInspector] public bool isStunned = false;
     protected bool isPlayerDetected = false;
     [SerializeField] protected bool isDied = false;
@@ -68,16 +70,27 @@ public class EnemyEntity : CharacterEntity
 
     private void EnableAgent()
     {
-        agent.enabled = true;
+        if (agent != null)
+        {
+            if (!isEnableAgentOnStartOnce)
+            {
+                isEnableAgentOnStartOnce = true;
+            }
+
+            agent.enabled = true;
+        }
     }
 
     protected override void Awake()
     {
-        if(RoguelikeManager.instance != null)
+        if (RoguelikeManager.instance != null)
         {
-            agent.enabled = false;
+            if (!RoguelikeManager.IsDungeonReady)
+            {
+                agent.enabled = false;
+            }
         }
-
+            
         base.Awake();
     }
 
@@ -99,6 +112,11 @@ public class EnemyEntity : CharacterEntity
 
     protected override void Update()
     {
+        if (RoguelikeManager.IsDungeonReady && agent.enabled == false && !isEnableAgentOnStartOnce)
+        {
+            EnableAgent();
+        }
+
         HandleGoreSprite();
         CheckPlayerVision();
         HandleKnockback();
@@ -132,6 +150,32 @@ public class EnemyEntity : CharacterEntity
         {
             agent.isStopped = stopStatus;
         }
+    }
+
+    protected void SafeMoveAgent(Vector3 offset)
+    {
+        if (agent != null && agent.isActiveAndEnabled && agent.isOnNavMesh)
+        {
+            agent.Move(offset);
+        }
+    }
+
+    protected void SafeSetDesitinationAgent(Vector3 pos)
+    {
+        if (agent != null && agent.isActiveAndEnabled && agent.isOnNavMesh)
+        {
+            agent.SetDestination(pos);
+        }
+    }
+
+    protected float SafeGetRemainingDistance()
+    {
+        if (agent != null && agent.isActiveAndEnabled && agent.isOnNavMesh)
+        {
+            return agent.remainingDistance;
+        }
+
+        return 0f;
     }
 
     protected void HandleGoreSprite()
@@ -177,7 +221,8 @@ public class EnemyEntity : CharacterEntity
 
         if (currentKnockback.magnitude > 0.1f)
         {
-            agent.Move(currentKnockback * Time.deltaTime);
+            SafeMoveAgent(currentKnockback * Time.deltaTime);
+
             currentKnockback = Vector3.Lerp(currentKnockback, Vector3.zero, Time.deltaTime * knockbackDecay);
         }
     }

@@ -51,7 +51,7 @@ public class UIButtonPrompt : MonoBehaviour
 
     public void UpdateIcon()
     {
-        if (actionReference == null || InputIconDatabase.instance == null)
+        if (actionReference == null || InputIconDatabase.instance == null || InputSchemeManager.instance == null)
             return;
 
         // 1. Load the player's preferred InputMode from your save system

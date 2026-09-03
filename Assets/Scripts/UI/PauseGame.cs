@@ -92,7 +92,7 @@ public class PauseGame : MonoBehaviour
 
     void Update()
     {
-        if (PlayerController.instance.IsPausePressed && !isPaused && !isHowToPlayOn && !isReadingScroll /*&& !EquipmentManager.instance.isReplacePanelActive*/ && !isThisMainmenu)
+        if (PlayerController.instance.IsPausePressed && !isPaused && !isHowToPlayOn && !isReadingScroll /*&& !EquipmentManager.instance.isReplacePanelActive*/ && !isThisMainmenu && !GameOver.instance.isTriggerOnce)
         {
             PlayerController.instance.IsPausePressed = false;
 

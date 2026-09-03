@@ -1,9 +1,11 @@
-using System;
+using DG.Tweening;
 using DunGen;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
-using System.Collections.Generic;
+using static UnityEngine.Audio.GeneratorInstance;
 
 public class RoguelikeManager : MonoBehaviour
 {
@@ -18,6 +20,10 @@ public class RoguelikeManager : MonoBehaviour
     public List<Tile> allDungeonTiles = new List<Tile>();
     public Tile currentActiveTile;
 
+    [SerializeField] private CanvasGroup canvasGroup_ProceedNextFloor;
+    [SerializeField] private CanvasGroup canvasGroup_BlackFadeUI;
+
+    [HideInInspector] public bool isPlayerInTheLastRoom = false;
     public static RoguelikeManager instance;
 
     private void Awake()
@@ -42,14 +48,54 @@ public class RoguelikeManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        isPlayerInTheLastRoom = false; 
+
+        SetUpUI();
+    }
+
     private void Update()
     {
-        if(PlayerController.instance.IsMinimapPressed)
+        if(isPlayerInTheLastRoom)
         {
-            PlayerController.instance.IsMinimapPressed = false;
-            allDungeonTiles.Clear();
-            runtimeDungeon.Generate();
+            if (canvasGroup_ProceedNextFloor.alpha == 0f)
+            {
+                canvasGroup_ProceedNextFloor.DOFade(1f, 0.3f).SetUpdate(false);
+            }
+            else if(canvasGroup_ProceedNextFloor.alpha == 1f)
+            {
+                canvasGroup_ProceedNextFloor.DOFade(0f, 0.3f).SetUpdate(false);
+            }
+
+            if (PlayerController.instance.IsMinimapPressed)
+            {
+                PlayerController.instance.IsMinimapPressed = false;
+                StartCoroutine(ProceedToNextFloor());
+            }
         }
+        else
+        {
+            canvasGroup_ProceedNextFloor.DOKill();
+            canvasGroup_ProceedNextFloor.DOFade(0f, 0.3f).SetUpdate(false);
+        }
+        
+    }
+
+    private IEnumerator ProceedToNextFloor()
+    {
+        IsDungeonReady = false;
+        canvasGroup_ProceedNextFloor.DOKill();
+        canvasGroup_ProceedNextFloor.DOFade(0f, 0.3f).SetUpdate(false);
+        canvasGroup_BlackFadeUI.DOFade(1f, 0.5f).SetUpdate(false);
+
+        yield return new WaitForSeconds(1f);
+
+        canvasGroup_ProceedNextFloor.alpha = 0f;
+
+        allDungeonTiles.Clear();
+        runtimeDungeon.Generate();
+        isPlayerInTheLastRoom = false;
     }
 
     private void HandleGenerationStatusChanged(DungeonGenerator generator, GenerationStatus status)
@@ -65,11 +111,14 @@ public class RoguelikeManager : MonoBehaviour
         {
             StartCoroutine(TeleportPlayerSafe());
 
+            IsDungeonReady = true;
+
             if (EnemyDirector.instance != null)
             {
                 EnemyDirector.instance.ResetDirector();
             }
 
+            canvasGroup_BlackFadeUI.DOFade(0f, 0.5f).SetUpdate(false);
             BakeDungeonNavMesh();
         }
     }
@@ -150,5 +199,11 @@ public class RoguelikeManager : MonoBehaviour
         {
             rend.enabled = state;
         }
+    }
+
+    private void SetUpUI()
+    {
+        canvasGroup_BlackFadeUI.alpha = 1f;
+        canvasGroup_ProceedNextFloor.alpha = 0f;
     }
 }

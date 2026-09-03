@@ -1,0 +1,211 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4691650520708370426
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9014325870298026892}
+  - component: {fileID: 3176878366715031554}
+  m_Layer: 0
+  m_Name: GameManager TGDR
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9014325870298026892
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4691650520708370426}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3176878366715031554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4691650520708370426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9b6b048ad9c61542b3de865f838141d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InputIconDatabase
+  pcIcons:
+  - controlPath: <Keyboard>/downArrow
+    iconSprite: {fileID: 21300000, guid: f0307a000bcb5e34cabe02a4ae80458b, type: 3}
+  - controlPath: <Keyboard>/leftArrow
+    iconSprite: {fileID: 21300000, guid: dcea8cb5a3a4bca48ad4e251da667b1d, type: 3}
+  - controlPath: <Mouse>/leftButton
+    iconSprite: {fileID: 21300000, guid: 648d0ab2e3a9ac144b6612eb6794842e, type: 3}
+  - controlPath: <Keyboard>/rightArrow
+    iconSprite: {fileID: 21300000, guid: cdeb04efc36113c4d8a2b96b30423c67, type: 3}
+  - controlPath: <Mouse>/rightButton
+    iconSprite: {fileID: 21300000, guid: 40b99c6e6e32b354ca6e567cb7dbcd78, type: 3}
+  - controlPath: <Keyboard>/upArrow
+    iconSprite: {fileID: 21300000, guid: fc8db2b3614cd6e468110b8d1bc2781e, type: 3}
+  - controlPath: <Keyboard>/0
+    iconSprite: {fileID: 21300000, guid: df651c1e544ddb04ea7c9001b72684d1, type: 3}
+  - controlPath: <Keyboard>/1
+    iconSprite: {fileID: 21300000, guid: fbfe6719b3a4d594d8d102f925875271, type: 3}
+  - controlPath: <Keyboard>/2
+    iconSprite: {fileID: 21300000, guid: 243ab43cfec56b54dae34278071a4220, type: 3}
+  - controlPath: <Keyboard>/3
+    iconSprite: {fileID: 21300000, guid: e213e74c93d97044b90b52cced033823, type: 3}
+  - controlPath: <Keyboard>/4
+    iconSprite: {fileID: 21300000, guid: eab1b583d59fa9241abc2a80e3ba091c, type: 3}
+  - controlPath: <Keyboard>/5
+    iconSprite: {fileID: 21300000, guid: 930ff9f94e40dde49a56a30d39555652, type: 3}
+  - controlPath: <Keyboard>/6
+    iconSprite: {fileID: 21300000, guid: b61bc9648e215fc458de8466ef00305b, type: 3}
+  - controlPath: <Keyboard>/7
+    iconSprite: {fileID: 21300000, guid: f86d86259082e8d4ba8833acb4690a0e, type: 3}
+  - controlPath: <Keyboard>/8
+    iconSprite: {fileID: 21300000, guid: c0da9ceca8408f647a11897125dca1e0, type: 3}
+  - controlPath: <Keyboard>/9
+    iconSprite: {fileID: 21300000, guid: faac4bea2ae2df945ac4fe219d434527, type: 3}
+  - controlPath: <Keyboard>/a
+    iconSprite: {fileID: 21300000, guid: a16bdc022bb69714b8d1da273a77d292, type: 3}
+  - controlPath: <Keyboard>/alt
+    iconSprite: {fileID: 21300000, guid: 39802d9fedfaf334fa320942a2a4306a, type: 3}
+  - controlPath: <Keyboard>/b
+    iconSprite: {fileID: 21300000, guid: 99198e4a33cc5e14fb7673bc16e2c502, type: 3}
+  - controlPath: <Keyboard>/c
+    iconSprite: {fileID: 21300000, guid: 56e277ca083354949866add8cf73fd10, type: 3}
+  - controlPath: <Keyboard>/capsLock
+    iconSprite: {fileID: 21300000, guid: 2fcc44e5327bc684fab9a70b6112c6f4, type: 3}
+  - controlPath: <Keyboard>/ctrl
+    iconSprite: {fileID: 21300000, guid: d10863d4b8691e54eafc93d47a9984f1, type: 3}
+  - controlPath: <Keyboard>/d
+    iconSprite: {fileID: 21300000, guid: 9e3a6cd48626aed41a1cf56c317a5214, type: 3}
+  - controlPath: <Keyboard>/e
+    iconSprite: {fileID: 21300000, guid: 4fcdc4d9f62ee8848b303cab3c0d5ffa, type: 3}
+  - controlPath: <Keyboard>/f
+    iconSprite: {fileID: 21300000, guid: 610c45f7ec070a646b9256e239440289, type: 3}
+  - controlPath: <Keyboard>/g
+    iconSprite: {fileID: 21300000, guid: 4ced15adbb8b2cd499e0a7c1717716cb, type: 3}
+  - controlPath: <Keyboard>/h
+    iconSprite: {fileID: 21300000, guid: 9ca5fc9fd234e05459ed1b405684754f, type: 3}
+  - controlPath: <Keyboard>/i
+    iconSprite: {fileID: 21300000, guid: 4d4226b946be2e644944f2eaca118998, type: 3}
+  - controlPath: <Keyboard>/j
+    iconSprite: {fileID: 21300000, guid: 6cfb98ae69a28894f91262ebe4b06518, type: 3}
+  - controlPath: <Keyboard>/k
+    iconSprite: {fileID: 21300000, guid: 085ef333788178140beeee1d31c6b7f4, type: 3}
+  - controlPath: <Keyboard>/l
+    iconSprite: {fileID: 21300000, guid: a70c849790a335f4391ac4e6d727589b, type: 3}
+  - controlPath: <Keyboard>/m
+    iconSprite: {fileID: 21300000, guid: b947902355f768d4a80f330ac241fabb, type: 3}
+  - controlPath: <Keyboard>/n
+    iconSprite: {fileID: 21300000, guid: 25ea59aada4dc994b83aafdcb4899ffc, type: 3}
+  - controlPath: <Keyboard>/o
+    iconSprite: {fileID: 21300000, guid: ebd220e979ef18a4f8fe934df00dc067, type: 3}
+  - controlPath: <Keyboard>/p
+    iconSprite: {fileID: 21300000, guid: df6693791f9be854da416cbc3075634b, type: 3}
+  - controlPath: <Keyboard>/q
+    iconSprite: {fileID: 21300000, guid: eb8acfc7f416d7a40a7b09d81046f340, type: 3}
+  - controlPath: <Keyboard>/r
+    iconSprite: {fileID: 21300000, guid: 964fc416187d21c4e8f07400c35ee7c7, type: 3}
+  - controlPath: <Keyboard>/s
+    iconSprite: {fileID: 21300000, guid: 04b9270b221d5fe4983c34713ad19470, type: 3}
+  - controlPath: <Keyboard>/leftShift
+    iconSprite: {fileID: 21300000, guid: e2ebeecc2797c554f9a2adc12f1855ec, type: 3}
+  - controlPath: <Keyboard>/space
+    iconSprite: {fileID: 21300000, guid: 9b963ececa69609448b7b40762834f45, type: 3}
+  - controlPath: <Keyboard>/t
+    iconSprite: {fileID: 21300000, guid: 34f7538cc58ad2646bdaa6ea33d07d3a, type: 3}
+  - controlPath: <Keyboard>/tab
+    iconSprite: {fileID: 21300000, guid: c0398bbf693148b47b8ad83a1e94d96f, type: 3}
+  - controlPath: <Keyboard>/u
+    iconSprite: {fileID: 21300000, guid: a7ffa29d3be345e4682a57689623be47, type: 3}
+  - controlPath: <Keyboard>/v
+    iconSprite: {fileID: 21300000, guid: d20d87f7cf234014b9bb322ca72ca3ab, type: 3}
+  - controlPath: <Keyboard>/w
+    iconSprite: {fileID: 21300000, guid: 3b6861e48a348e248b612b5f874c2ef1, type: 3}
+  - controlPath: <Keyboard>/x
+    iconSprite: {fileID: 21300000, guid: c5126c3b86786c545b3c9bd17b0b3c61, type: 3}
+  - controlPath: <Keyboard>/y
+    iconSprite: {fileID: 21300000, guid: b1e9a9e1f5b78d2418773b488efe3292, type: 3}
+  - controlPath: <Keyboard>/z
+    iconSprite: {fileID: 21300000, guid: c76b396159af6c6489bacd2638ea6d61, type: 3}
+  - controlPath: <Mouse>/middleButton
+    iconSprite: {fileID: 21300000, guid: 28b9b3f9e9ed6d04e831f1fd884751b9, type: 3}
+  xboxIcons:
+  - controlPath: <Gamepad>/leftStick
+    iconSprite: {fileID: 21300000, guid: 139b83464b859cd429d0370dc816028c, type: 3}
+  - controlPath: <Gamepad>/rightStick
+    iconSprite: {fileID: 21300000, guid: 9c61f7c9d0b7b8b4f9d2350b73289e23, type: 3}
+  - controlPath: <Gamepad>/rightTrigger
+    iconSprite: {fileID: 21300000, guid: 9469f5d39b8429f489771acd0a4e9a4f, type: 3}
+  - controlPath: <Gamepad>/leftTrigger
+    iconSprite: {fileID: 21300000, guid: a3feaa259f0e6ab49b3b5267ababca0f, type: 3}
+  - controlPath: <Gamepad>/rightShoulder
+    iconSprite: {fileID: 21300000, guid: 48a7fef0fbd187640ae79dd2d6fa2a14, type: 3}
+  - controlPath: <Gamepad>/leftShoulder
+    iconSprite: {fileID: 21300000, guid: 3ce17ab35957a4e4db12c887a33ea6eb, type: 3}
+  - controlPath: <Gamepad>/buttonSouth
+    iconSprite: {fileID: 21300000, guid: 347c925ff89d74542ba1096c92ecff34, type: 3}
+  - controlPath: <Gamepad>/buttonEast
+    iconSprite: {fileID: 21300000, guid: 6921f3f00f3eec548903cbebf1b6a334, type: 3}
+  - controlPath: <Gamepad>/buttonWest
+    iconSprite: {fileID: 21300000, guid: c8a5c145190d7c54ab41278e12c12012, type: 3}
+  - controlPath: <Gamepad>/buttonNorth
+    iconSprite: {fileID: 21300000, guid: a43b60ed14ff06c4b9fc5ffa974f8547, type: 3}
+  - controlPath: <Gamepad>/dpad/down
+    iconSprite: {fileID: 21300000, guid: 3fc0fc4573df477438db02c946b784d4, type: 3}
+  - controlPath: <Gamepad>/dpad/left
+    iconSprite: {fileID: 21300000, guid: 9eec70380e3d3d945b047f38b30a9fbd, type: 3}
+  - controlPath: <Gamepad>/dpad/right
+    iconSprite: {fileID: 21300000, guid: 412a0d8ba31b7194b8ddc549dfc8287c, type: 3}
+  - controlPath: <Gamepad>/dpad/up
+    iconSprite: {fileID: 21300000, guid: a019a415883616e4ebf6a61251d0eadc, type: 3}
+  - controlPath: <Gamepad>/leftStickPress
+    iconSprite: {fileID: 21300000, guid: 2f74a7ea17421c64c97195ef7c981d46, type: 3}
+  - controlPath: <Gamepad>/rightStickPress
+    iconSprite: {fileID: 21300000, guid: bced8ade888948342a36b9442ee40e97, type: 3}
+  playStationIcons:
+  - controlPath: <Gamepad>/leftStick
+    iconSprite: {fileID: 21300000, guid: 139b83464b859cd429d0370dc816028c, type: 3}
+  - controlPath: <Gamepad>/rightStick
+    iconSprite: {fileID: 21300000, guid: 9c61f7c9d0b7b8b4f9d2350b73289e23, type: 3}
+  - controlPath: <Gamepad>/rightTrigger
+    iconSprite: {fileID: 21300000, guid: 87dce22414624c74d90f8bfc4bf3582f, type: 3}
+  - controlPath: <Gamepad>/leftTrigger
+    iconSprite: {fileID: 21300000, guid: f920addac480add4c99e64df920b61a3, type: 3}
+  - controlPath: <Gamepad>/rightShoulder
+    iconSprite: {fileID: 21300000, guid: 22b97dfa5af0d1947a62312c31e633e5, type: 3}
+  - controlPath: <Gamepad>/leftShoulder
+    iconSprite: {fileID: 21300000, guid: 7eaab648006558044a9680311037b8f9, type: 3}
+  - controlPath: <Gamepad>/buttonSouth
+    iconSprite: {fileID: 21300000, guid: e20fa85915cbf97458fb66f23a48cd9f, type: 3}
+  - controlPath: <Gamepad>/buttonEast
+    iconSprite: {fileID: 21300000, guid: fd55bc0e9e7d6d3439c596b5b020e1d7, type: 3}
+  - controlPath: <Gamepad>/buttonWest
+    iconSprite: {fileID: 21300000, guid: 296e7d3d4ee646243b963b3b0be7c9a1, type: 3}
+  - controlPath: <Gamepad>/buttonNorth
+    iconSprite: {fileID: 21300000, guid: dee8fd97b801f2248a14ef817b0107b2, type: 3}
+  - controlPath: <Gamepad>/dpad/down
+    iconSprite: {fileID: 21300000, guid: 3fc0fc4573df477438db02c946b784d4, type: 3}
+  - controlPath: <Gamepad>/dpad/left
+    iconSprite: {fileID: 21300000, guid: 9eec70380e3d3d945b047f38b30a9fbd, type: 3}
+  - controlPath: <Gamepad>/dpad/right
+    iconSprite: {fileID: 21300000, guid: 412a0d8ba31b7194b8ddc549dfc8287c, type: 3}
+  - controlPath: <Gamepad>/dpad/up
+    iconSprite: {fileID: 21300000, guid: a019a415883616e4ebf6a61251d0eadc, type: 3}
+  - controlPath: <Gamepad>/leftStickPress
+    iconSprite: {fileID: 21300000, guid: 2f74a7ea17421c64c97195ef7c981d46, type: 3}
+  - controlPath: <Gamepad>/rightStickPress
+    iconSprite: {fileID: 21300000, guid: bced8ade888948342a36b9442ee40e97, type: 3}

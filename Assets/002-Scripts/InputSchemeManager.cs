@@ -114,7 +114,7 @@ public class InputSchemeManager : MonoBehaviour
                     }
                     else
                     {
-                        if(GameManager.instance.navigationMode == UINavigtionMode.Pointer || !isNotPaused)
+                        if(GameManager.instance.navigationMode == UINavigtionMode.Pointer && !isNotPaused)
                         {
                             Cursor.visible = true;
                             Cursor.lockState = CursorLockMode.None;

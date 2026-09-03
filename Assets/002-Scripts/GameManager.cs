@@ -36,55 +36,10 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public float enemyAnimationSpeed = 1f;
     [HideInInspector] public float enemyMoveSpeed = 1f;
     [HideInInspector] public float enemyAttackSpeed = 1f;
-    [HideInInspector] public float playerTakeDamage = 1f;
+    [HideInInspector] public float playerTakeHPDamage = 1f;
+    [HideInInspector] public float playerTakeStaminaDamage = 1f;
     [HideInInspector] public int goldGained = 0;
 
-    public int powerUpIndex_MaxHealth = 0;
-    public int powerUpIndex_RegenHealth = 0;
-    public int powerUpIndex_FireRate = 0;
-    public int powerUpIndex_FirePower = 0;
-    public int powerUpIndex_MaxStamina = 0;
-    public int powerUpIndex_MoveSpeed = 0;
-    public int powerUpIndex_MagazineCapacity = 0;
-    public int powerUpIndex_MaxUltimate = 0;
-
-    public int powerUpIndexCalculate_MaxHealth = 0;
-    public int powerUpIndexCalculate_RegenHealth = 0;
-    public int powerUpIndexCalculate_FireRate = 0;
-    public int powerUpIndexCalculate_FirePower = 0;
-    public int powerUpIndexCalculate_MaxStamina = 0;
-    public int powerUpIndexCalculate_MoveSpeed = 0;
-    public int powerUpIndexCalculate_MagazineCapacity = 0;
-    public int powerUpIndexCalculate_MaxUltimate = 0;
-
-    public float enemyHealthMultiplier = 1f;
-    public float enemyAttackPowerMultiplier = 1f;
-
-    public float playerBaseMaxHealth = 100f;
-    public float playerMaxHealth = 100f;
-    public float playerMaxStamina = 100f;
-    public float playerBaseMaxUltimate = 100f;
-    public float playerMaxUltimate = 100f;
-    public float playerCurrentUltimate = 0f;
-
-    public float playerMaxHealthMultiplier = 1f;
-    public float playerStaminaCostMultiplier = 1f;
-    public float playerAttackPowerMultiplier = 1f;
-    public float playerAttackSpeedMultiplier = 1f;
-    public float playerMoveSpeedMultiplier = 1f;
-    public float playerMaxUltimateMultiplier = 1f;
-
-    public float enemyHealthMultiplier_Curse = 0.5f;
-    public float enemyAttackPowerMultiplier_Curse = 0.5f;
-    public float enemyMoveSpeedMultiplier_Curse = 1f;
-
-    public bool isFlashLightUltimateIsUnlock = false;
-    public bool isInvisibleUltimateIsUnlock = false;
-    public float flashLightUltimateDuration = 10f;
-    public float invisibleUltimateDuration = 4f;
-
-    public float kickDamage;
-    public bool isMagicBodyShield = false;
 
     private void OnDisable()
     {
@@ -229,7 +184,8 @@ public class GameManager : MonoBehaviour
                 {
                     gameDifficultyState = GameDifficultyState.Easy;
 
-                    playerTakeDamage = 0.1f;
+                    playerTakeHPDamage = 0.5f;
+                    playerTakeStaminaDamage = 0.5f;
                     enemyAnimationSpeed = 0.75f;
                     enemyMoveSpeed = 0.75f;
                     enemyAttackSpeed = 1.25f;
@@ -241,7 +197,8 @@ public class GameManager : MonoBehaviour
                 {
                     gameDifficultyState = GameDifficultyState.Medium;
 
-                    playerTakeDamage = 0.15f;
+                    playerTakeHPDamage = 1f;
+                    playerTakeStaminaDamage = 1f;
                     enemyAnimationSpeed = 1f;
                     enemyMoveSpeed = 1f;
                     enemyAttackSpeed = 1f;
@@ -253,7 +210,8 @@ public class GameManager : MonoBehaviour
                 {
                     gameDifficultyState = GameDifficultyState.Hard;
 
-                    playerTakeDamage = 0.25f;
+                    playerTakeHPDamage = 1.5f;
+                    playerTakeStaminaDamage = 1.5f;
                     enemyAnimationSpeed = 1.15f;
                     enemyMoveSpeed = 1.15f;
                     enemyAttackSpeed = 0.85f;
@@ -265,7 +223,8 @@ public class GameManager : MonoBehaviour
                 {
                     gameDifficultyState = GameDifficultyState.Impossible;
 
-                    playerTakeDamage = 0.35f;
+                    playerTakeHPDamage = 2f;
+                    playerTakeStaminaDamage = 2f;
                     enemyAnimationSpeed = 1.3f;
                     enemyMoveSpeed = 1.3f;
                     enemyAttackSpeed = 0.7f;
