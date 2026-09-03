@@ -31,12 +31,24 @@ public class CameraPostProcessEffect : MonoBehaviour
         // Smoothly fade the vignette intensity back to normal over time
         if (vignette != null)
         {
+            if (PlayerController.instance.CharacterHealthComponent.CurrentHP <= 0)
+            {
+                defaultVignetteIntensity = 0.8f;
+            }
+
             vignette.intensity.value = Mathf.Lerp(vignette.intensity.value, defaultVignetteIntensity, Time.deltaTime * recoverySpeed);
         }
 
         if(lensDistortion != null)
         {
-            lensDistortion.intensity.value = Mathf.Lerp(lensDistortion.intensity.value, 0f, Time.deltaTime * recoverySpeed);
+            if (PlayerController.instance.CharacterHealthComponent.CurrentHP > 0)
+            {
+                lensDistortion.intensity.value = Mathf.Lerp(lensDistortion.intensity.value, 0f, Time.deltaTime * recoverySpeed);
+            }
+            else
+            {
+                lensDistortion.intensity.value = Mathf.Lerp(lensDistortion.intensity.value, -0.75f, Time.deltaTime * recoverySpeed);
+            }
         }
     }
 

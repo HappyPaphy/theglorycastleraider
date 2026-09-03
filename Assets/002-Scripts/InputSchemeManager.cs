@@ -96,24 +96,34 @@ public class InputSchemeManager : MonoBehaviour
             }
             else if (IsAnyKeyOnKeyboardPressed() || IsAnyMouseInputActive())
             {
-                bool instancesValid = /*GameResultRoguelike.instance != null &&
-                          PauseGame.instance != null &&*/
+                bool instancesValid = /*GameResultRoguelike.instance != null &&*/
+                          PauseGame.instance != null &&
                           PlayerController.instance != null;
 
                 if (instancesValid)
                 {
                     //bool isIdle = GameResultRoguelike.instance.currentState == GameResultState.Idle;
-                    //bool isNotPaused = !PauseGame.instance.IsPaused;
+                    bool isNotPaused = !PauseGame.instance.IsPaused;
                     bool isAlive = PlayerController.instance.CharacterHealthComponent.CurrentHP > 0f;
 
-                    if (/*isIdle && isNotPaused &&*/ isAlive)
+                    if (/*isIdle &&*/ isNotPaused && isAlive && !PauseGame.instance.isThisMainmenu)
                     {
                         //Cursor.visible = PlayerController.instance.isMouseVisible;
                         Cursor.visible = false;
+                        Cursor.lockState = CursorLockMode.Locked;
                     }
                     else
                     {
-                        Cursor.visible = true;
+                        if(GameManager.instance.navigationMode == UINavigtionMode.Pointer || !isNotPaused)
+                        {
+                            Cursor.visible = true;
+                            Cursor.lockState = CursorLockMode.None;
+                        }
+                        else
+                        {
+                            Cursor.visible = false;
+                            Cursor.lockState = CursorLockMode.Locked;
+                        }
                     }
                 }
                 else

@@ -44,8 +44,19 @@ MonoBehaviour:
     LockID: 0
   TileTagConnectionMode: 0
   TileConnectionTags: []
+  DoorwayTagConnectionMode: 0
+  OverrideDoorwaySockets: 0
+  DoorwayConnectionTags: []
   BranchTagPruneMode: 1
   BranchPruneTags: []
+  GlobalStraighteningSettings:
+    OverrideStraightenChance: 0
+    StraightenChance: 0
+    OverrideCanStraightenMainPath: 0
+    CanStraightenMainPath: 1
+    OverrideCanStraightenBranchPaths: 0
+    CanStraightenBranchPaths: 0
+  CustomPipeline: {fileID: 0}
   Nodes:
   - Graph: {fileID: 11400000}
     TileSets:
@@ -56,6 +67,13 @@ MonoBehaviour:
     Keys: []
     Locks: []
     LockPlacement: 1
+    StraighteningSettings:
+      OverrideStraightenChance: 0
+      StraightenChance: 0
+      OverrideCanStraightenMainPath: 0
+      CanStraightenMainPath: 1
+      OverrideCanStraightenBranchPaths: 0
+      CanStraightenBranchPaths: 0
   - Graph: {fileID: 11400000}
     TileSets:
     - {fileID: 11400000, guid: a79f34864b8431748aa2b5721781663c, type: 2}
@@ -69,6 +87,13 @@ MonoBehaviour:
         Min: 0
         Max: 1
     LockPlacement: 1
+    StraighteningSettings:
+      OverrideStraightenChance: 0
+      StraightenChance: 0
+      OverrideCanStraightenMainPath: 0
+      CanStraightenMainPath: 1
+      OverrideCanStraightenBranchPaths: 0
+      CanStraightenBranchPaths: 0
   - Graph: {fileID: 11400000}
     TileSets:
     - {fileID: 11400000, guid: eba38cb505b2c274fb9bcfab93cb095c, type: 2}
@@ -78,6 +103,13 @@ MonoBehaviour:
     Keys: []
     Locks: []
     LockPlacement: 1
+    StraighteningSettings:
+      OverrideStraightenChance: 0
+      StraightenChance: 0
+      OverrideCanStraightenMainPath: 0
+      CanStraightenMainPath: 1
+      OverrideCanStraightenBranchPaths: 0
+      CanStraightenBranchPaths: 0
   - Graph: {fileID: 11400000}
     TileSets:
     - {fileID: 11400000, guid: 5867a3b713c060e419b7ee3d128262bf, type: 2}
@@ -95,6 +127,13 @@ MonoBehaviour:
         Min: 0
         Max: 1
     LockPlacement: 1
+    StraighteningSettings:
+      OverrideStraightenChance: 0
+      StraightenChance: 0
+      OverrideCanStraightenMainPath: 0
+      CanStraightenMainPath: 1
+      OverrideCanStraightenBranchPaths: 0
+      CanStraightenBranchPaths: 0
   Lines:
   - Graph: {fileID: 11400000}
     DungeonArchetypes:

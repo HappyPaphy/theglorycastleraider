@@ -4,11 +4,11 @@ public class CameraFollow : MonoBehaviour
 {
     [Header("Tracking Target")]
     [Tooltip("Drag the CameraPos empty GameObject here")]
-    [SerializeField] private Transform cameraPos;
+    public Transform cameraPos;
 
     [Header("Smoothing Settings")]
     [Tooltip("Lower numbers mean faster snapping. 0.05 to 0.15 is ideal.")]
-    [SerializeField] private float normalSmoothTime = 0.08f;
+    public float normalSmoothTime = 0.08f;
     [HideInInspector] public bool isSmoothing = true;
 
     private float yVelocity = 0.0f;
@@ -16,6 +16,7 @@ public class CameraFollow : MonoBehaviour
     void LateUpdate()
     {
         if (cameraPos == null) return;
+        if (PauseGame.instance.IsPaused) return;
 
         float smoothTime = normalSmoothTime;
 

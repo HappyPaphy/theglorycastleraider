@@ -24,8 +24,6 @@ public class EnemyThief : EnemyEntity
 {
     [SerializeField] private CapsuleCollider capsuleCol;
 
-    [SerializeField] private GameObject bloodEffect;
-    [SerializeField] private GameObject sparkEffect;
     [SerializeField] private SpriteRenderer sprRndr;
     [SerializeField] private EnemyThiefState currentState;
     [SerializeField] private Animator anim;
@@ -113,6 +111,7 @@ public class EnemyThief : EnemyEntity
     {
         if (isDied) { return; }
         if (playerTransform == null) { return; }
+        if (PlayerController.instance.CharacterHealthComponent.CurrentHP <= 0) { return; }
 
         Collider[] hits = Physics.OverlapSphere(transform.position, preAttackRadius, playerLayer);
 
@@ -247,7 +246,7 @@ public class EnemyThief : EnemyEntity
 
         SoundManager.instance.HumanSound_Parried(sprRndr.transform.position);
 
-        agent.isStopped = true;
+        SafeStopAgent(true);
 
         ApplyKnockback(damageKnockbackForce);
     }
@@ -257,7 +256,7 @@ public class EnemyThief : EnemyEntity
         currentState = EnemyThiefState.Executed;
         isExecuted = true;
 
-        agent.isStopped = true;
+        SafeStopAgent(true);
     }
 
     public override void GotStunned()
@@ -267,12 +266,12 @@ public class EnemyThief : EnemyEntity
         stunTimer = stunRecoveryTime;
         currentHitCount = 0;
 
-        if (EnemyDirector.Instance != null)
+        if (EnemyDirector.instance != null)
         {
-            EnemyDirector.Instance.UnregisterEnemy(this);
+            EnemyDirector.instance.UnregisterEnemy(this);
         }
 
-        agent.isStopped = true;
+        SafeStopAgent(true);
     }
 
     private void HandleExecute()
@@ -292,8 +291,10 @@ public class EnemyThief : EnemyEntity
                 SoundManager.instance.SwordSound_Flesh(sprRndr.transform.position);
                 SoundManager.instance.SwordSound_Execute(sprRndr.transform.position);
 
-                GameObject bloodObj = Instantiate(bloodEffect);
-                bloodObj.transform.position = headSpawnTransform.position;
+                if (ObjectPoolingManager.instance != null)
+                {
+                    ObjectPoolingManager.instance.SpawnObject("Blood", headSpawnTransform.position);
+                }
 
                 /*GameObject headObj = Instantiate(headPrefab);
                 headObj.transform.position = headSpawnTransform.position;
@@ -326,12 +327,15 @@ public class EnemyThief : EnemyEntity
             }
         }
 
-        agent.isStopped = true;
+        SafeStopAgent(true);
 
         ApplyKnockback(damageKnockbackForce);
 
-        GameObject bloodObj = Instantiate(bloodEffect);
-        bloodObj.transform.position = eyesTransform.position;
+        if (ObjectPoolingManager.instance != null)
+        {
+            ObjectPoolingManager.instance.SpawnObject("Blood", eyesTransform.position);
+        }
+
         SoundManager.instance.HumanSound_Grunt(sprRndr.transform.position);
 
         TakeDamage(damageValue);
@@ -346,14 +350,18 @@ public class EnemyThief : EnemyEntity
             currentState = isLeft ? EnemyThiefState.DamageLeft : EnemyThiefState.DamageRight;
             stateTimer = damageStunDuration;
         }
-        
 
-        GameObject bloodObj = Instantiate(bloodEffect);
-        bloodObj.transform.position = eyesTransform.position;
+
+        if (ObjectPoolingManager.instance != null)
+        {
+            ObjectPoolingManager.instance.SpawnObject("Blood", eyesTransform.position);
+        }
+
         SoundManager.instance.SwordSound_Flesh(sprRndr.transform.position);
         SoundManager.instance.HumanSound_Grunt(sprRndr.transform.position);
 
-        agent.isStopped = true;
+        SafeStopAgent(true);
+
         ApplyKnockback(damageKnockbackForce);
 
         TakeDamage(damageValue);
@@ -370,9 +378,9 @@ public class EnemyThief : EnemyEntity
             capsuleCol.enabled = false;
             agent.enabled = false;
 
-            if (EnemyDirector.Instance != null)
+            if (EnemyDirector.instance != null)
             {
-                EnemyDirector.Instance.UnregisterEnemy(this);
+                EnemyDirector.instance.UnregisterEnemy(this);
             }
 
             if (!isExecuted)
@@ -392,11 +400,14 @@ public class EnemyThief : EnemyEntity
         currentState = isLeft ? EnemyThiefState.BlockLeft : EnemyThiefState.BlockRight;
         stateTimer = blockDuration;
 
-        GameObject sparkObj = Instantiate(sparkEffect);
-        sparkObj.transform.position = eyesTransform.position;
+        if (ObjectPoolingManager.instance != null)
+        {
+            ObjectPoolingManager.instance.SpawnObject("Spark", eyesTransform.position);
+        }
+
         SoundManager.instance.SwordSound_Metal(sprRndr.transform.position);
 
-        agent.isStopped = true;
+        SafeStopAgent(true);
 
         // Apply Light Knockback (sliding backward while blocking)
         ApplyKnockback(blockKnockbackForce);
@@ -432,11 +443,11 @@ public class EnemyThief : EnemyEntity
         {
             case EnemyThiefState.Idle:
                 {
-                    agent.isStopped = true;
+                    SafeStopAgent(true);
 
                     if (isPlayerDetected)
                     {
-                        if (EnemyDirector.Instance != null && EnemyDirector.Instance.RequestAttackPermission(this))
+                        if (EnemyDirector.instance != null && EnemyDirector.instance.RequestAttackPermission(this))
                         {
                             engagementTimer = Random.Range(5f, 8f);
                             currentState = EnemyThiefState.Run;
@@ -452,7 +463,8 @@ public class EnemyThief : EnemyEntity
 
             case EnemyThiefState.Run:
                 {
-                    agent.isStopped = false;
+                    SafeStopAgent(false);
+
                     isPreAttackOnce = false;
 
                     engagementTimer -= Time.deltaTime;
@@ -497,10 +509,10 @@ public class EnemyThief : EnemyEntity
 
             case EnemyThiefState.Flank:
                 {
-                    agent.isStopped = false;
+                    SafeStopAgent(false);
 
                     // Periodically check if an attacker slot has opened up
-                    if (turnCooldownTimer <= 0f && EnemyDirector.Instance != null && EnemyDirector.Instance.RequestAttackPermission(this))
+                    if (turnCooldownTimer <= 0f && EnemyDirector.instance != null && EnemyDirector.instance.RequestAttackPermission(this))
                     {
                         engagementTimer = Random.Range(5f, 8f);
                         currentState = EnemyThiefState.Run;
@@ -550,7 +562,7 @@ public class EnemyThief : EnemyEntity
 
             case EnemyThiefState.Attack:
                 {
-                    agent.isStopped = false;
+                    SafeStopAgent(false);
                     engagementTimer -= Time.deltaTime;
 
                     if (!isPreAttackOnce)
@@ -565,10 +577,10 @@ public class EnemyThief : EnemyEntity
 
     private void YieldTurn()
     {
-        if (EnemyDirector.Instance != null)
+        if (EnemyDirector.instance != null)
         {
             // FIX: Always release the slot so the next enemy can take their turn!
-            EnemyDirector.Instance.ReleaseAttackPermission(this);
+            EnemyDirector.instance.ReleaseAttackPermission(this);
         }
 
         currentState = EnemyThiefState.Flank;

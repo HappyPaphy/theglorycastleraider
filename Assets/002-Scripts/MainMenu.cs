@@ -111,6 +111,9 @@ public class MainMenu : MonoBehaviour
 
     void Start()
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
         canvasGroup_BlackfadeUI.DOFade(0f, 0.5f).SetUpdate(true);
         StartCoroutine(SetCanvasGroupActive(canvasGroup_MainMenu, 1.5f));
         StartCoroutine(SetMenuElementActive(menuElement_Characters, true, 1f));

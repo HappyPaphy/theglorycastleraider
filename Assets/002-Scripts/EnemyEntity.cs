@@ -45,6 +45,42 @@ public class EnemyEntity : CharacterEntity
 
     protected Transform playerTransform;
 
+    protected void OnEnable()
+    {
+        if (RoguelikeManager.instance != null)
+        {
+            if (RoguelikeManager.IsDungeonReady)
+            {
+                EnableAgent();
+            }
+            else
+            {
+                RoguelikeManager.OnDungeonReady += EnableAgent;
+            }
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (RoguelikeManager.instance != null)
+            RoguelikeManager.OnDungeonReady -= EnableAgent;
+    }
+
+    private void EnableAgent()
+    {
+        agent.enabled = true;
+    }
+
+    protected override void Awake()
+    {
+        if(RoguelikeManager.instance != null)
+        {
+            agent.enabled = false;
+        }
+
+        base.Awake();
+    }
+
     protected override void Start()
     {
         GameObject playerObj = PlayerController.instance.gameObject;
@@ -90,23 +126,49 @@ public class EnemyEntity : CharacterEntity
 
     }
 
+    protected void SafeStopAgent(bool stopStatus)
+    {
+        if (agent != null && agent.isActiveAndEnabled && agent.isOnNavMesh)
+        {
+            agent.isStopped = stopStatus;
+        }
+    }
+
     protected void HandleGoreSprite()
     {
-        if (CharacterHealthComponent.CurrentHP <= CharacterHealthComponent.MaxHP * 0.67f)
-        {
-            if (!goreSprite_67HP.enabled)
-            {
-                goreSprite_67HP.enabled = true;
-            }
-        }
-
         if (CharacterHealthComponent.CurrentHP <= CharacterHealthComponent.MaxHP * 0.34f)
         {
             if (!goreSprite_34HP.enabled)
             {
                 goreSprite_34HP.enabled = true;
             }
+
+            if (!goreSprite_67HP.enabled)
+            {
+                goreSprite_67HP.enabled = true;
+            }
         }
+        else if (CharacterHealthComponent.CurrentHP <= CharacterHealthComponent.MaxHP * 0.67f)
+        {
+            if (!goreSprite_67HP.enabled)
+            {
+                goreSprite_67HP.enabled = true;
+            }
+
+            if (goreSprite_34HP.enabled)
+            {
+                goreSprite_34HP.enabled = false;
+            }
+        }
+        else if(CharacterHealthComponent.CurrentHP > CharacterHealthComponent.MaxHP * 0.67f)
+        {
+            if (goreSprite_67HP.enabled || goreSprite_34HP.enabled)
+            {
+                goreSprite_34HP.enabled = false;
+                goreSprite_67HP.enabled = false;
+            }
+        }
+        
     }
 
     protected virtual void HandleKnockback()

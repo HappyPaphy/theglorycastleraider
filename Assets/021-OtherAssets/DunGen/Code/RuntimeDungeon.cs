@@ -20,7 +20,7 @@ namespace DunGen
 
 		public void Generate(DungeonGenerationRequest request = null)
 		{
-			if (Root != null)
+            if (Root != null)
 				Generator.Root = Root;
 
 			if (!Generator.IsGenerating)

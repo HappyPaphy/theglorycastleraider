@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyDirector : MonoBehaviour
@@ -7,14 +8,28 @@ public class EnemyDirector : MonoBehaviour
     [Tooltip("Maximum number of enemies allowed to aggressively chase and attack the player at the same time.")]
     public int maxActiveAttackers = 2;
 
-    private List<EnemyThief> registeredEnemies = new List<EnemyThief>();
-    [HideInInspector] public List<EnemyThief> activeAttackers = new List<EnemyThief>();
+    [SerializeField] private List<EnemyThief> registeredEnemies = new List<EnemyThief>();
+    public List<EnemyThief> activeAttackers = new List<EnemyThief>();
 
-    public static EnemyDirector Instance;
+    public static EnemyDirector instance;
+
     private void Awake()
     {
-        if (Instance == null) Instance = this;
+        if (instance == null) instance = this;
         else Destroy(gameObject);
+    }
+
+    private void Update()
+    {
+        //ResetDirector();
+    }
+
+    public void ResetDirector()
+    {
+        registeredEnemies.RemoveAll(item => item = null);
+        activeAttackers.RemoveAll(item => item = null);
+
+        activeAttackers.Clear();
     }
 
     public void RegisterEnemy(EnemyThief enemy)

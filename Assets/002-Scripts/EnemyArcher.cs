@@ -47,7 +47,6 @@ public class EnemyArcher : EnemyEntity
     [SerializeField] private float stunRecoveryTime = 4f;
 
     [Header("Gore & Execution")]
-    [SerializeField] private GameObject bloodEffect;
     [SerializeField] private Transform headSpawnTransform;
     private bool isExecuted = false;
     private bool isExecutedOnce = false;
@@ -143,6 +142,8 @@ public class EnemyArcher : EnemyEntity
             case EnemyArcherState.Attack:
                 SafeStopAgent(true);
 
+                if (PlayerController.instance.CharacterHealthComponent.CurrentHP <= 0) { return; }
+
                 if (!isShootingOnce)
                 {
                     isShootingOnce = true;
@@ -182,14 +183,6 @@ public class EnemyArcher : EnemyEntity
         }
     }
 
-    private void SafeStopAgent(bool stopStatus)
-    {
-        if (agent != null && agent.isActiveAndEnabled && agent.isOnNavMesh)
-        {
-            agent.isStopped = stopStatus;
-        }
-    }
-
     private void SafeSetDestination(Vector3 targetPosition)
     {
         if (agent != null && agent.isActiveAndEnabled && agent.isOnNavMesh)
@@ -211,7 +204,9 @@ public class EnemyArcher : EnemyEntity
         if (!isDied && currentState == EnemyArcherState.Attack && playerTransform != null)
         {
             // Calculate direction to player's center/chest
-            Vector3 targetPos = playerTransform.position + Vector3.up * 1f;
+            Vector3 targetPos = playerTransform.position;
+            targetPos.y = firePoint.position.y;
+
             Vector3 shootDir = (targetPos - firePoint.position).normalized;
 
             GameObject arrowObj = Instantiate(arrowPrefab, firePoint.position, Quaternion.LookRotation(shootDir));
@@ -245,7 +240,12 @@ public class EnemyArcher : EnemyEntity
         }
 
         SafeStopAgent(true);
-        Instantiate(bloodEffect, eyesTransform.position, Quaternion.identity);
+
+        if (ObjectPoolingManager.instance != null)
+        {
+            ObjectPoolingManager.instance.SpawnObject("Blood", eyesTransform.position);
+        }
+
         SoundManager.instance.SwordSound_Flesh(sprRndr.transform.position);
         SoundManager.instance.HumanSound_Grunt(sprRndr.transform.position);
         ApplyKnockback(damageKnockbackForce);
@@ -274,8 +274,11 @@ public class EnemyArcher : EnemyEntity
 
         ApplyKnockback(damageKnockbackForce);
 
-        GameObject bloodObj = Instantiate(bloodEffect);
-        bloodObj.transform.position = eyesTransform.position;
+        if (ObjectPoolingManager.instance != null)
+        {
+            ObjectPoolingManager.instance.SpawnObject("Blood", eyesTransform.position);
+        }
+
         SoundManager.instance.HumanSound_Grunt(sprRndr.transform.position);
 
         TakeDamage(damageValue);
@@ -304,7 +307,12 @@ public class EnemyArcher : EnemyEntity
                 isExecutedOnce = true;
                 SoundManager.instance.SwordSound_Flesh(sprRndr.transform.position);
                 SoundManager.instance.SwordSound_Execute(sprRndr.transform.position);
-                Instantiate(bloodEffect, headSpawnTransform.position, Quaternion.identity);
+
+                if (ObjectPoolingManager.instance != null)
+                {
+                    ObjectPoolingManager.instance.SpawnObject("Blood", headSpawnTransform.position);
+                }
+
                 CharacterHealthComponent.SetHP(0f);
             }
             else

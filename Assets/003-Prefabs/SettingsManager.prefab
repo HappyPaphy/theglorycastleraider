@@ -5788,27 +5788,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e62ce9e232705f48be202044aac1a28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SettingManager
-  screenSetting: {fileID: 0}
-  soundSetting: {fileID: 0}
-  languageSetting: {fileID: 0}
-  rebindSetting: {fileID: 0}
-  button_ScreenSetting: {fileID: 0}
-  button_SoundSetting: {fileID: 0}
-  button_LanguageSetting: {fileID: 0}
-  button_RebindSetting: {fileID: 0}
-  button_ResLeft: {fileID: 0}
-  button_ResRight: {fileID: 0}
-  button_QuaLeft: {fileID: 0}
-  button_QuaRight: {fileID: 0}
-  button_ApplyGraphic: {fileID: 0}
-  fullScreenTog: {fileID: 0}
-  vsyncTog: {fileID: 0}
+  screenSetting: {fileID: 3357685015822079527}
+  soundSetting: {fileID: 7416743725135343254}
+  languageSetting: {fileID: 4861098507435267239}
+  rebindSetting: {fileID: 98865238609384736}
+  button_ScreenSetting: {fileID: 4026704254421678401}
+  button_SoundSetting: {fileID: 3111734859729870640}
+  button_LanguageSetting: {fileID: 5323023882344242510}
+  button_RebindSetting: {fileID: 7416722705825909687}
+  button_ResLeft: {fileID: 8298020279575115018}
+  button_ResRight: {fileID: 5450187048989673344}
+  button_QuaLeft: {fileID: 4064170383704424919}
+  button_QuaRight: {fileID: 4663597666723574845}
+  button_ApplyGraphic: {fileID: 9028403973297686796}
+  fullScreenTog: {fileID: 3224283455074521710}
+  vsyncTog: {fileID: 7094832171911638424}
   resolutions: []
   qualities: []
-  resolutionLabel: {fileID: 0}
-  qualityLabel: {fileID: 0}
-  xboxSwitchTab: {fileID: 0}
-  playstationSwitchTab: {fileID: 0}
+  resolutionLabel: {fileID: 717213555948394695}
+  qualityLabel: {fileID: 554749994030922619}
+  xboxSwitchTab: {fileID: 3904201279537564729}
+  playstationSwitchTab: {fileID: 2241621286442784496}
   isLanguageChangable: 0
   isSettingActive: 0
 --- !u!225 &7032119943278214239
@@ -15292,7 +15292,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8758277758935324815, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_text
-      value: D-Pad Right
+      value: D-Pad/Right
       objectReference: {fileID: 0}
     - target: {fileID: 8758277758935324815, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_fontAsset
@@ -19997,7 +19997,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8758277758935324815, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_text
-      value: D-Pad Left
+      value: D-Pad/Left
       objectReference: {fileID: 0}
     - target: {fileID: 8758277758935324815, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_fontAsset
@@ -23330,7 +23330,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8758277758935324815, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_text
-      value: D-Pad Down
+      value: D-Pad/Down
       objectReference: {fileID: 0}
     - target: {fileID: 8758277758935324815, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_fontAsset
@@ -27385,7 +27385,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8758277758935324815, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_text
-      value: D-Pad Up
+      value: D-Pad/Up
       objectReference: {fileID: 0}
     - target: {fileID: 8758277758935324815, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_fontAsset

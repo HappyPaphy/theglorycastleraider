@@ -21,6 +21,7 @@ public class PlayerEntity : CharacterEntity
     public float curMaxHPLevelIndex;
     public float curMaxStaminaLevelIndex;
 
+    protected bool isDiedOnce = false;
     private float takeDamage_DifficultyModifier;
 
     protected override void Awake()
@@ -80,6 +81,13 @@ public class PlayerEntity : CharacterEntity
         }*/
 
         base.Update();
+    }
+
+    public override void Die()
+    {
+        isDiedOnce = true;
+
+        base.Die();
     }
 
     public virtual void SetNewMaxHP(float maxHPMultiplier)

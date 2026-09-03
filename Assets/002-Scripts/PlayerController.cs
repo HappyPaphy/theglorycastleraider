@@ -7,6 +7,8 @@ using UnityEngine.Playables;
 public class PlayerController : PlayerEntity
 {
     [Header("Components")]
+    [SerializeField] private CameraFollow cameraFollow;
+    [SerializeField] private GameObject deadCamPrefab;
     [SerializeField] private CameraPostProcessEffect postProcressEffect;
     [SerializeField] private CameraBob cameraBob;
     [SerializeField] private PlayerMeleeAttack playerMeleeAttack;
@@ -82,6 +84,7 @@ public class PlayerController : PlayerEntity
     [SerializeField] private float slideHeight = 1f;
 
     [Header("Look Settings")]
+    public bool isThisMainmenu = false;
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private float mouseSensitivity = 2f;
     [SerializeField] private float maxLookAngle = 85f;
@@ -114,8 +117,6 @@ public class PlayerController : PlayerEntity
     [HideInInspector] public bool isSliding = false;
     private float slideTimer = 0f;
     private Vector3 slideDirection;
-
-    [SerializeField] private GameObject sparkEffect;
 
     public static PlayerController instance;
 
@@ -431,8 +432,6 @@ public class PlayerController : PlayerEntity
     protected override void Start()
     {
         controller = GetComponent<CharacterController>();
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
 
         if (cameraTransform == null)
             cameraTransform = GetComponentInChildren<Camera>().transform;
@@ -444,10 +443,13 @@ public class PlayerController : PlayerEntity
 
     protected override void Update()
     {
-        HandleMouseLook();
-        HandleMovement();
-        RecoverFromJolt();
-        StaminaRecover();
+        if(!PauseGame.instance.IsPaused && CharacterHealthComponent.CurrentHP > 0)
+        {
+            HandleMouseLook();
+            HandleMovement();
+            RecoverFromJolt();
+            StaminaRecover();
+        }
 
         base.Update();
     }
@@ -707,8 +709,10 @@ public class PlayerController : PlayerEntity
 
     private void BlockedOrParriedEffect(Vector3 pos)
     {
-        GameObject sparkObj = Instantiate(sparkEffect);
-        sparkObj.transform.position = pos;
+        if(ObjectPoolingManager.instance != null)
+        {
+            ObjectPoolingManager.instance.SpawnObject("Spark", pos);
+        }
     }
 
     public void TriggerMeleeJolt(Vector3 joltAngles)
@@ -741,6 +745,19 @@ public class PlayerController : PlayerEntity
 
         // Prevent the lunge from pushing the player up into the air or down into the floor
         attackLungeVelocity.y = 0f;
+    }
+
+    public override void Die()
+    {
+        if(isDiedOnce) { return; }
+
+        //controller.enabled = false;
+        GameObject deadCam = Instantiate(deadCamPrefab, cameraTransform.transform.position, 
+        cameraTransform.transform.rotation * Quaternion.Euler(-55f, 0f, 40f));
+        cameraFollow.cameraPos = deadCam.transform;
+        
+
+        base.Die();
     }
 
     private void ResetActionInputPressed()

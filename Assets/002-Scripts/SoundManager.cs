@@ -29,6 +29,10 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioSource sfx_BowSound_String;
     [SerializeField] private AudioSource sfx_BowSound_Hit;
 
+    [Header("Destructable")]
+    [SerializeField] private AudioSource[] sfx_Wooden_Hit;
+    [SerializeField] private AudioSource[] sfx_Wooden_Break;
+
     [Header("FootStep")]
     [SerializeField] private AudioSource sfx_FootStep_Brick;
 
@@ -183,5 +187,17 @@ public class SoundManager : MonoBehaviour
     public void ChickenSound(int index)
     {
         sfx_Chicken[index].Play();
+    }
+
+    public void WoodenSound_Hit(Vector3 soundPosition)
+    {
+        int rndIndex = Random.Range(0, sfx_Wooden_Hit.Length);
+        PlaySound(sfx_Wooden_Hit[rndIndex], soundPosition, 100f);
+    }
+
+    public void WoodenSound_Break(Vector3 soundPosition)
+    {
+        int rndIndex = Random.Range(0, sfx_Wooden_Break.Length);
+        PlaySound(sfx_Wooden_Break[rndIndex], soundPosition, 100f);
     }
 }

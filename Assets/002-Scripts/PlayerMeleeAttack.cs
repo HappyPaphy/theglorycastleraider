@@ -29,15 +29,15 @@ public class PlayerMeleeAttack : MonoBehaviour
     [SerializeField] private float meleeDamage = 10f;
     [SerializeField] private float kickDamage = 5f;
     [SerializeField] private float attackRange = 1.8f;
-    [SerializeField] private float attackRadius = 1f; // Size of the hit detection sphere
+    [SerializeField] private float attackRadius = 1f;
     [SerializeField] private float attackCooldown = 0.6f;
     [SerializeField] private float lungeForce = 12f;
 
     [Tooltip("Set this to the layer your enemies are on")]
-    [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private LayerMask attackLayerMask;
 
     [Header("References")]
-    [SerializeField] private Transform cameraTransform; // Where the cast originates
+    [SerializeField] private Transform cameraTransform;
     [SerializeField] private PlayerController playerController;
 
     private float lastAttackTime;
@@ -58,6 +58,8 @@ public class PlayerMeleeAttack : MonoBehaviour
 
     void Update()
     {
+        if (PauseGame.instance.IsPaused || playerController.CharacterHealthComponent.CurrentHP <= 0) return;
+
         ChooseAnimation();
 
         if(currentBlockCooldown > 0f)
@@ -232,7 +234,7 @@ public class PlayerMeleeAttack : MonoBehaviour
         Ray rayAttack = new Ray(castStart, cameraTransform.forward);
         float totalRange = attackRange + attackRadius;
 
-        if (Physics.SphereCast(rayAttack, attackRadius, out RaycastHit hit, totalRange, enemyLayer))
+        if (Physics.SphereCast(rayAttack, attackRadius, out RaycastHit hit, totalRange, attackLayerMask))
         {
             return hit.collider.GetComponent<EnemyEntity>();
         }
@@ -253,26 +255,41 @@ public class PlayerMeleeAttack : MonoBehaviour
 
         float totalRange = attackRange + attackRadius;
 
-        RaycastHit[] hits = Physics.SphereCastAll(rayAttack, attackRadius, totalRange, enemyLayer);
+        RaycastHit[] hits = Physics.SphereCastAll(rayAttack, attackRadius, totalRange, attackLayerMask);
+        bool hitSomething = false;
 
         if (hits.Length > 0)
         {
             // Keep track of enemies we've already hit in this swing so we don't double-hit them
-            HashSet<EnemyEntity> processedEnemies = new HashSet<EnemyEntity>();
+            HashSet<Component> processedTargets = new HashSet<Component>();
 
             foreach (RaycastHit hit in hits)
             {
                 EnemyEntity targetEnemy = hit.collider.GetComponent<EnemyEntity>();
+                Fracture destructible = hit.collider.GetComponent<Fracture>();
+                FractureTrigger fractureTrigger = hit.collider.GetComponent<FractureTrigger>();
 
-                // If it's a valid enemy and we haven't processed them yet on this swing...
-                if (targetEnemy != null && processedEnemies.Add(targetEnemy))
+                if (targetEnemy != null && processedTargets.Add(targetEnemy))
                 {
                     SoundManager.instance.KickSound_Human(transform.position);
                     targetEnemy.GotKicked(hit.point, kickDamage);
+                    hitSomething = true;
+                }
+                else if (destructible != null && processedTargets.Add(destructible))
+                {
+                    // Fracture Hit
+                    destructible.TakeDamage(kickDamage, hit.collider, hit.point);
+                    hitSomething = true;
+
+                    if (fractureTrigger != null)
+                    {
+                        fractureTrigger.TriggerMaterialSound_Hit();
+                    }
                 }
             }
         }
-        else
+
+        if (!hitSomething)
         {
             SoundManager.instance.KickSound_Air(transform.position);
         }
@@ -341,25 +358,39 @@ public class PlayerMeleeAttack : MonoBehaviour
                 break;*/
         }
 
-        RaycastHit[] hits = Physics.SphereCastAll(rayAttack, attackRadius, totalRange, enemyLayer);
+        RaycastHit[] hits = Physics.SphereCastAll(rayAttack, attackRadius, totalRange, attackLayerMask);
+        bool hitSomething = false;
 
         if (hits.Length > 0)
         {
             // Keep track of enemies we've already hit in this swing so we don't double-hit them
-            HashSet<EnemyEntity> processedEnemies = new HashSet<EnemyEntity>();
+            HashSet<Component> processedTargets = new HashSet<Component>();
 
             foreach (RaycastHit hit in hits)
             {
                 EnemyEntity targetEnemy = hit.collider.GetComponent<EnemyEntity>();
+                Fracture destructible = hit.collider.GetComponent<Fracture>();
+                FractureTrigger fractureTrigger = hit.collider.GetComponent<FractureTrigger>();
 
-                // If it's a valid enemy and we haven't processed them yet on this swing...
-                if (targetEnemy != null && processedEnemies.Add(targetEnemy))
+                if (targetEnemy != null && processedTargets.Add(targetEnemy))
                 {
                     targetEnemy.TakeSwordHit(isLeftAttack, hit.point, meleeDamage);
+                    hitSomething = true;
+                }
+                else if (destructible != null && processedTargets.Add(destructible))
+                {
+                    destructible.TakeDamage(meleeDamage, hit.collider, hit.point);
+                    hitSomething = true;
+
+                    if(fractureTrigger != null)
+                    {
+                        fractureTrigger.TriggerMaterialSound_Hit();
+                    }
                 }
             }
         }
-        else
+
+        if (!hitSomething)
         {
             SoundManager.instance.SwordSound_Air(transform.position);
         }

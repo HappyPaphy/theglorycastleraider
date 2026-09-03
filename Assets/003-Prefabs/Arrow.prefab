@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8594416758309467472}
   - component: {fileID: 7073664422940142376}
   - component: {fileID: 3219806046238297536}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,12 +47,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d6307359fe6a34c8f8bb26e5023df5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ArrowProjectile
+  damage: 8
+  staminaCost: 8
   speed: 20
   lifeTime: 4
   playerLayer:
     serializedVersion: 2
     m_Bits: 64
-  shooterReference: {fileID: 0}
 --- !u!65 &7073664422940142376
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -111,7 +112,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8288855003314109514}
   - component: {fileID: 1399610424822242958}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sprite (Arrow Head)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -202,7 +203,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5188644701580936650}
   - component: {fileID: 3409283776924023357}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -13,7 +13,7 @@ namespace DunGen.Demo
 
 		private readonly StringBuilder infoText = new StringBuilder();
 		private IDemoInputBridge inputBridge;
-		private bool showStats = true;
+		private bool showStats = false;
 		private float keypressDelay = 0.1f;
 		private float timeSinceLastPress;
 		private bool allowHold;

@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 8235768346859379138}
   - component: {fileID: 4204224526721519685}
   - component: {fileID: 3982992093126580887}
+  - component: {fileID: 877122309306610778}
+  - component: {fileID: 3677687745922054245}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -161,3 +163,37 @@ MonoBehaviour:
   invisibleUltimateDuration: 4
   kickDamage: 0
   isMagicBodyShield: 0
+--- !u!114 &877122309306610778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8148180855469415424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b34bb36623f74974f8c908e9e6911777, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyDirector
+  maxActiveAttackers: 2
+  registeredEnemies: []
+  activeAttackers: []
+--- !u!114 &3677687745922054245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8148180855469415424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c8c48a81baafe94493137337ca159b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectPoolingManager
+  pools:
+  - poolName: Blood
+    prefab: {fileID: 6317032364392488945, guid: b462f72f433bde146b3c942ccc0215ab, type: 3}
+    initialSize: 10
+  - poolName: Spark
+    prefab: {fileID: 6317032364392488945, guid: 05ee21720c12c844788ffb522a97b9f6, type: 3}
+    initialSize: 10

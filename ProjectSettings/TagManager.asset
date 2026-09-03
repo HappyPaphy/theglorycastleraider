@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Projectile
+  - Obstacle
   layers:
   - Default
   - TransparentFX
@@ -15,9 +17,9 @@ TagManager:
   - Enemy
   - Obstacle
   - Particle
-  - 
-  - 
-  - 
+  - Destructable
+  - Destructed
+  - Invisible
   - 
   - 
   - 

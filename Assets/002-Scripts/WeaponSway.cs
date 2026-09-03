@@ -31,6 +31,8 @@ public class WeaponSway : MonoBehaviour
 
     void Update()
     {
+        if(playerController.CharacterHealthComponent.CurrentHP <= 0f) { return; }
+
         Vector2 lookDelta = playerController.playerControls.Player.Look.ReadValue<Vector2>();
 
         float moveX = Mathf.Clamp(-lookDelta.x * swayMultiplier, -maxSway, maxSway);

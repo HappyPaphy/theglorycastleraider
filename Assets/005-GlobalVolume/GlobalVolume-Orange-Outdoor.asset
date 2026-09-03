@@ -65,13 +65,13 @@ MonoBehaviour:
   active: 1
   color:
     m_OverrideState: 1
-    m_Value: {r: 1, g: 0.39047804, b: 0, a: 1}
+    m_Value: {r: 1, g: 0, b: 0.028639793, a: 1}
   center:
     m_OverrideState: 0
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.391
+    m_Value: 0
   smoothness:
     m_OverrideState: 0
     m_Value: 0.2
@@ -88,7 +88,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d7fd9488000d3734a9e00ee676215985, type: 3}
-  m_Name: GlobalVolume-Orange
+  m_Name: GlobalVolume-Orange-Outdoor
   m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.VolumeProfile
   components:
   - {fileID: -9022832277923202074}

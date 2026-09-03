@@ -21,14 +21,18 @@ MonoBehaviour:
   BranchCount:
     Min: 1
     Max: 5
-  GlobalProps: []
+  GlobalProps:
+  - ID: 1
+    Count:
+      Min: 40
+      Max: 75
   KeyManager: {fileID: 0}
   DoorwayConnectionChance: 0
   RestrictConnectionToSameSection: 0
   TileInjectionRules: []
   TileTagConnectionMode: 0
   TileConnectionTags: []
-  DoorwayTagConnectionMode: 0
+  DoorwayTagConnectionMode: 1
   OverrideDoorwaySockets: 0
   DoorwayConnectionTags: []
   BranchTagPruneMode: 1
@@ -37,7 +41,7 @@ MonoBehaviour:
     OverrideStraightenChance: 0
     StraightenChance: 0
     OverrideCanStraightenMainPath: 0
-    CanStraightenMainPath: 1
+    CanStraightenMainPath: 0
     OverrideCanStraightenBranchPaths: 0
     CanStraightenBranchPaths: 0
   CustomPipeline: {fileID: 0}
@@ -60,7 +64,7 @@ MonoBehaviour:
       CanStraightenBranchPaths: 0
   - Graph: {fileID: 11400000}
     TileSets:
-    - {fileID: 11400000, guid: 9847c596ecac8a247a6fecbc515b78ef, type: 2}
+    - {fileID: 11400000, guid: a4775b6bff1764d4b90916feb4b5421e, type: 2}
     NodeType: 2
     Position: 1
     Label: Goal
