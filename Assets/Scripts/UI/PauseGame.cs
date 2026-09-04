@@ -92,8 +92,15 @@ public class PauseGame : MonoBehaviour
 
     void Update()
     {
-        if (PlayerController.instance.IsPausePressed && !isPaused && !isHowToPlayOn && !isReadingScroll /*&& !EquipmentManager.instance.isReplacePanelActive*/ && !isThisMainmenu && !GameOver.instance.isTriggerOnce)
+        if (PlayerController.instance.IsPausePressed && !isPaused && !isHowToPlayOn && !isReadingScroll 
+            /*&& !EquipmentManager.instance.isReplacePanelActive*/ && !isThisMainmenu && !GameOver.instance.isTriggerOnce
+            )
         {
+            if(TutorialManager.instance != null)
+            {
+                if (TutorialManager.instance.currentState != TutorialState.Idle) { return; }
+            }
+
             PlayerController.instance.IsPausePressed = false;
 
             if (RoguelikeManager.instance != null)
@@ -325,7 +332,7 @@ public class PauseGame : MonoBehaviour
         StartCoroutine(ChangeScene(3));
     }
 
-    private IEnumerator ChangeScene(int index) // 0 = StartScene, 1 = NextLevel, 2 = Restart, 3 = MainMenu
+    public IEnumerator ChangeScene(int index) // 0 = StartScene, 1 = NextLevel, 2 = Restart, 3 = MainMenu
     {
         switch (index)
         {
@@ -334,7 +341,7 @@ public class PauseGame : MonoBehaviour
                 break;
 
             case 1:
-                AsyncLoaderManager.instance.LoadLevel(SceneManager.GetActiveScene().buildIndex + 1, true);
+                AsyncLoaderManager.instance.LoadLevel(SceneManager.GetActiveScene().buildIndex + 1, false);
                 //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
                 break;
 
@@ -424,10 +431,13 @@ public class PauseGame : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(button_Resume.gameObject);
         });
 
-        button_Setting.onClick.AddListener(() => {
-            SettingManager.instance.isSettingActive = true;
-            StartCoroutine(MakeCanvasGroupActive(true, canvasGroup_Setting));
-        });
+        if(button_Setting != null)
+        {
+            button_Setting.onClick.AddListener(() => {
+                SettingManager.instance.isSettingActive = true;
+                StartCoroutine(MakeCanvasGroupActive(true, canvasGroup_Setting));
+            });
+        }
 
         button_ReturnFromSettingToPauseMenu.onClick.AddListener(() => {
             SettingManager.instance.isSettingActive = false;

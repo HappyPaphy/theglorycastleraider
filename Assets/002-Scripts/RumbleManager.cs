@@ -19,6 +19,12 @@ public class RumbleManager : MonoBehaviour
         instance = this;
     }
 
+    private void Start()
+    {
+        pad_lowFrequency = 0f;
+        pad_highFrequency = 0f;
+    }
+
     void Update()
     {
         if (pad != null)

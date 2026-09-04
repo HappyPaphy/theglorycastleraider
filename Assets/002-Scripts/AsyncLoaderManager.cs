@@ -35,7 +35,7 @@ public class AsyncLoaderManager : MonoBehaviour
     [SerializeField] private Slider slider_LoadlingSlider;
 
     private bool isReadyToActivate = false;
-    private bool isTransitioning = false;
+    [HideInInspector] public bool isTransitioning = false;
     private float timer = 0f;
 
     public static AsyncLoaderManager instance;

@@ -64,7 +64,8 @@ public class UIFeedback : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
             case UISelectType.FillPanel:
                 {
-                    originalScale = text.GetComponent<RectTransform>().localScale;
+                    if(text != null)
+                        originalScale = text.GetComponent<RectTransform>().localScale;
                 }
                 break;
         }
@@ -84,7 +85,8 @@ public class UIFeedback : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
             case UISelectType.FillPanel:
                 {
-                    text.GetComponent<RectTransform>().localScale = Vector3.Lerp(text.GetComponent<RectTransform>().localScale, targetScale, Time.unscaledDeltaTime * scaleSpeed);
+                    if (text != null)
+                        text.GetComponent<RectTransform>().localScale = Vector3.Lerp(text.GetComponent<RectTransform>().localScale, targetScale, Time.unscaledDeltaTime * scaleSpeed);
                 }
                 break;
         }

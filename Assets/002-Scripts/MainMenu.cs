@@ -45,6 +45,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private List<GifSpriteCharacter> characterGifs;
 
     [SerializeField] private Button button_Start;
+    [SerializeField] private Button button_GameplayLoop;
     [SerializeField] private Button button_Setting;
     [SerializeField] private Button button_Extras;
     [SerializeField] private Button button_Credit;
@@ -131,6 +132,7 @@ public class MainMenu : MonoBehaviour
     private void HandleButton()
     {
         InputSchemeManager.instance.MakeButtonInteracable(button_Start, (currentState == MainmenuState.MainMenu));
+        InputSchemeManager.instance.MakeButtonInteracable(button_GameplayLoop, (currentState == MainmenuState.MainMenu));
         InputSchemeManager.instance.MakeButtonInteracable(button_Setting, (currentState == MainmenuState.MainMenu));
         InputSchemeManager.instance.MakeButtonInteracable(button_Extras, (currentState == MainmenuState.MainMenu));
         InputSchemeManager.instance.MakeButtonInteracable(button_Credit, (currentState == MainmenuState.MainMenu));
@@ -177,6 +179,11 @@ public class MainMenu : MonoBehaviour
             StartCoroutine(SetCanvasGroupActive(canvasGroup_Start, 0.525f));
             StartCoroutine(SetMenuElementActive(menuElement_MainMenu, false));
             StartCoroutine(SetMenuElementActive(menuElement_Start, true, 0.375f, MainmenuState.Start));
+        });
+
+        button_GameplayLoop.onClick.AddListener(() => {
+            canvasGroup_AllElements.DOFade(0f, 0.5f).SetUpdate(true);
+            AsyncLoaderManager.instance.LoadLevel("GameplayLoop", false);
         });
 
         button_Credit.onClick.AddListener(() => {

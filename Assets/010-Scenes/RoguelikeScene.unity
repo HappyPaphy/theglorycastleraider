@@ -745,6 +745,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6490454998542146218, guid: ecd860a052dae994ea53373e2f222267, type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6840268090981024860, guid: ecd860a052dae994ea53373e2f222267, type: 3}
       propertyPath: m_Name
       value: AsyncLoaderManager
@@ -854,7 +858,7 @@ MonoBehaviour:
         Enabled: 0
         ShowCollision: 1
         ShowPathColours: 0
-      LengthMultiplier: 0.5
+      LengthMultiplier: 1
       TriggerPlacement: 0
       TileTriggerLayer: 8
       GenerateAsynchronously: 0
@@ -1195,9 +1199,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!114 &1483945326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1230,7 +1236,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Press     To Proceed to the next floor
+  m_text: Press          To Proceed to the next floor
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ca31f275b0392334c83bfcabc8c0f9fd, type: 2}
   m_sharedMaterial: {fileID: 1350395717946834147, guid: ca31f275b0392334c83bfcabc8c0f9fd, type: 2}
@@ -1257,7 +1263,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 57.4
+  m_fontSize: 51.45
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1602,6 +1608,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoundManager
       objectReference: {fileID: 0}
+    - target: {fileID: 6952665776938900328, guid: 4dc35c658294c594aa3bdc1a1789d4ca, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: 85de09705f47f4b46bf265c29512f451, type: 3}
     - target: {fileID: 8452014473725637853, guid: 4dc35c658294c594aa3bdc1a1789d4ca, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.43758
@@ -1755,10 +1765,6 @@ PrefabInstance:
     - target: {fileID: 1843449813169481331, guid: 6c6a70510cadb9547a1d6247c6cbe4b4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5566337412767027796, guid: 6c6a70510cadb9547a1d6247c6cbe4b4, type: 3}
-      propertyPath: m_Mass
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5994806411166218576, guid: 6c6a70510cadb9547a1d6247c6cbe4b4, type: 3}
       propertyPath: m_AnchorMax.x

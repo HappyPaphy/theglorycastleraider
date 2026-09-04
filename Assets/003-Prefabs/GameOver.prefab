@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4843848176528556339}
   - component: {fileID: 5042533590690619552}
   - component: {fileID: 1466332949263654061}
+  - component: {fileID: 6762888937842592294}
   m_Layer: 5
   m_Name: Text (You Died)
   m_TagString: Untagged
@@ -173,9 +174,51 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 3
+--- !u!114 &6762888937842592294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981500360184334617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Components.LocalizeStringEvent
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:ee007d460ccfcb34cab5b718be77ea77
+    m_TableEntryReference:
+      m_KeyId: 124676444884357120
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4843848176528556339}
+        m_TargetAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &4026043665778193756
 GameObject:
   m_ObjectHideFlags: 0
@@ -524,6 +567,7 @@ GameObject:
   - component: {fileID: 4532489516435388852}
   - component: {fileID: 1648432840097098311}
   - component: {fileID: 2695311525476612876}
+  - component: {fileID: 7645009167640958542}
   m_Layer: 5
   m_Name: Text (Restart)
   m_TagString: Untagged
@@ -685,9 +729,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 3
 --- !u!225 &2695311525476612876
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -700,3 +746,43 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!114 &7645009167640958542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8343203445435334253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Components.LocalizeStringEvent
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:9d404745ae4d52a44b64dff3f1bc052e
+    m_TableEntryReference:
+      m_KeyId: 157524119576956928
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5108479178237420335}
+        m_TargetAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  references:
+    version: 2
+    RefIds: []

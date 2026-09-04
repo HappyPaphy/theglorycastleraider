@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.Playables;
 
@@ -7,6 +8,7 @@ using UnityEngine.Playables;
 public class PlayerController : PlayerEntity
 {
     [Header("Components")]
+    [SerializeField] private Image image_Hands;
     [SerializeField] private CameraFollow cameraFollow;
     [SerializeField] private GameObject deadCamPrefab;
     [SerializeField] private CameraPostProcessEffect postProcressEffect;
@@ -443,12 +445,18 @@ public class PlayerController : PlayerEntity
 
     protected override void Update()
     {
-        if(!PauseGame.instance.IsPaused && CharacterHealthComponent.CurrentHP > 0)
+        if(CharacterHealthComponent.CurrentHP > 0)
         {
-            HandleMouseLook();
-            HandleMovement();
-            RecoverFromJolt();
-            StaminaRecover();
+            if(PauseGame.instance != null)
+            {
+                if (!PauseGame.instance.IsPaused)
+                {
+                    HandleMouseLook();
+                    HandleMovement();
+                    RecoverFromJolt();
+                    StaminaRecover();
+                }
+            }
         }
 
         base.Update();
@@ -621,6 +629,11 @@ public class PlayerController : PlayerEntity
             }
             else
             {
+                if (AsyncLoaderManager.instance != null)
+                {
+                    if (AsyncLoaderManager.instance.isTransitioning) { return; }
+                }
+
                 postProcressEffect.TriggerDamageEffect();
                 SoundManager.instance.SwordSound_Flesh(transform.position);
                 SoundManager.instance.PlayerHurtSound(transform.position);
@@ -655,6 +668,11 @@ public class PlayerController : PlayerEntity
             }
             else
             {
+                if(AsyncLoaderManager.instance != null)
+                {
+                    if(AsyncLoaderManager.instance.isTransitioning) { return; }
+                }
+
                 postProcressEffect.TriggerDamageEffect();
                 SoundManager.instance.SwordSound_Flesh(transform.position);
                 SoundManager.instance.BowSound_Hit(transform.position);
@@ -755,7 +773,7 @@ public class PlayerController : PlayerEntity
         GameObject deadCam = Instantiate(deadCamPrefab, cameraTransform.transform.position, 
         cameraTransform.transform.rotation * Quaternion.Euler(-55f, 0f, 40f));
         cameraFollow.cameraPos = deadCam.transform;
-        
+        image_Hands.enabled = false;
 
         base.Die();
     }

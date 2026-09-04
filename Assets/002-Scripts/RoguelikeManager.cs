@@ -91,8 +91,6 @@ public class RoguelikeManager : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        canvasGroup_ProceedNextFloor.alpha = 0f;
-
         allDungeonTiles.Clear();
         runtimeDungeon.Generate();
         isPlayerInTheLastRoom = false;
@@ -118,6 +116,7 @@ public class RoguelikeManager : MonoBehaviour
                 EnemyDirector.instance.ResetDirector();
             }
 
+            canvasGroup_ProceedNextFloor.alpha = 0f;
             canvasGroup_BlackFadeUI.DOFade(0f, 0.5f).SetUpdate(false);
             BakeDungeonNavMesh();
         }

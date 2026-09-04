@@ -51,7 +51,7 @@ public class GameOver : MonoBehaviour
         }
     }
 
-    private IEnumerator TriggerGameOver()
+    public IEnumerator TriggerGameOver()
     {
         yield return new WaitForSecondsRealtime(1f);
 

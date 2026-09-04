@@ -98,7 +98,7 @@ public class LocalizedFontChangerManager : MonoBehaviour
             if (locale.Identifier.Code == languageCode)
             {
                 LocalizationSettings.SelectedLocale = locale;
-                AsyncLoaderManager.instance.LoadLevel(SceneManager.GetActiveScene().buildIndex, false);
+                //AsyncLoaderManager.instance.LoadLevel(SceneManager.GetActiveScene().buildIndex, false);
                 yield break;
             }
         }
