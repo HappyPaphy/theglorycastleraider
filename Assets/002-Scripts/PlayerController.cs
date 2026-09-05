@@ -64,10 +64,10 @@ public class PlayerController : PlayerEntity
     [HideInInspector] public bool isSprintPressed = false;
     [HideInInspector] public bool isKickHeld = false;
     [HideInInspector] public bool isKickPressed = false;
-    [HideInInspector] public bool isAttackHeld = false;
-    [HideInInspector] public bool isAttackPressed = false;
-    [HideInInspector] public bool isBlockHeld = false;
-    [HideInInspector] public bool isBlockPressed = false;
+    [HideInInspector] public bool isRightHandHeld = false;
+    [HideInInspector] public bool isRightHandPressed = false;
+    [HideInInspector] public bool isLeftHandHeld = false;
+    [HideInInspector] public bool isLeftHandPressed = false;
     [HideInInspector] public bool IsReloadHeld = false;
     [HideInInspector] public bool IsReloadPressed = false;
 
@@ -155,13 +155,13 @@ public class PlayerController : PlayerEntity
 
         input_Attack = playerControls.Player.Attack;
         input_Attack.Enable();
-        input_Attack.performed += OnAttackPerformed;
-        input_Attack.canceled += OnAttackCanceled;
+        input_Attack.performed += OnRightHandPerformed;
+        input_Attack.canceled += OnRightHandCanceled;
 
         input_Block = playerControls.Player.Block;
         input_Block.Enable();
-        input_Block.performed += OnBlockPerformed;
-        input_Block.canceled += OnBlockCanceled;
+        input_Block.performed += OnLeftHandPerformed;
+        input_Block.canceled += OnLeftHandCanceled;
 
         input_Interact = playerControls.Player.Interact;
         input_Interact.Enable();
@@ -284,26 +284,26 @@ public class PlayerController : PlayerEntity
         isKickHeld = false;
     }
 
-    private void OnAttackPerformed(InputAction.CallbackContext context)
+    private void OnRightHandPerformed(InputAction.CallbackContext context)
     {
-        isAttackHeld = true;
-        isAttackPressed = true;
+        isRightHandHeld = true;
+        isRightHandPressed = true;
     }
 
-    private void OnAttackCanceled(InputAction.CallbackContext context)
+    private void OnRightHandCanceled(InputAction.CallbackContext context)
     {
-        isAttackHeld = false;
+        isRightHandHeld = false;
     }
 
-    private void OnBlockPerformed(InputAction.CallbackContext context)
+    private void OnLeftHandPerformed(InputAction.CallbackContext context)
     {
-        isBlockHeld = true;
-        isBlockPressed = true;
+        isLeftHandHeld = true;
+        isLeftHandPressed = true;
     }
 
-    private void OnBlockCanceled(InputAction.CallbackContext context)
+    private void OnLeftHandCanceled(InputAction.CallbackContext context)
     {
-        isBlockHeld = false;
+        isLeftHandHeld = false;
     }
 
     private void OnInteractPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
@@ -789,8 +789,8 @@ public class PlayerController : PlayerEntity
         IsSwitchWeaponPressed_Right = false;
         IsSwitchWeaponPressed_Down = false;
         IsSwitchWeaponPressed_Left = false;
-        isBlockPressed = false;
-        isAttackPressed = false;
+        isRightHandPressed = false;
+        isLeftHandPressed = false;
         isKickPressed = false;
         isJumpPressed = false;
         isSprintPressed = false;

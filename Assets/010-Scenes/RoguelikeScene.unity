@@ -749,6 +749,10 @@ PrefabInstance:
       propertyPath: m_Alpha
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6825395333752653797, guid: ecd860a052dae994ea53373e2f222267, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -57.437744
+      objectReference: {fileID: 0}
     - target: {fileID: 6840268090981024860, guid: ecd860a052dae994ea53373e2f222267, type: 3}
       propertyPath: m_Name
       value: AsyncLoaderManager
@@ -1316,17 +1320,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1483945322}
   m_CullTransparentMesh: 1
---- !u!114 &1541487731 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7411133707959285392, guid: 439e65dcb3b64ed4f9c617d464ed7471, type: 3}
-  m_PrefabInstance: {fileID: 507299280}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e86cdf236dd30d4f9ede686c9406fd3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CameraPostProcessEffect
 --- !u!1 &1623637234
 GameObject:
   m_ObjectHideFlags: 0
@@ -1774,10 +1767,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6252371824048329371, guid: 6c6a70510cadb9547a1d6247c6cbe4b4, type: 3}
-      propertyPath: postProcressEffect
-      value: 
-      objectReference: {fileID: 1541487731}
     - target: {fileID: 8554896289012606016, guid: 6c6a70510cadb9547a1d6247c6cbe4b4, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

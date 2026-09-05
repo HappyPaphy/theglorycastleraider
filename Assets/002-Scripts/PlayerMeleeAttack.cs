@@ -4,13 +4,15 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Playables;
 
-public enum MeleeAttackState
+public enum PerformActionState
 {
     Idle,
-    Attack1,
-    Attack2,
-    Attack3,
-    Block,
+    Press1,
+    Press2,
+    Press3,
+    Hold1,
+    Hold2,
+    Hold3,
     Kick,
     Execute
 }
@@ -19,8 +21,14 @@ public class PlayerMeleeAttack : MonoBehaviour
 {
     [SerializeField] private CameraFollow cameraFollow;
     [SerializeField] private CameraBob cameraBob;
-    [SerializeField] private MeleeAttackState meleeAttackState;
-    [SerializeField] private Animator anim;
+    [SerializeField] private PerformActionState currentState_LeftHand;
+    [SerializeField] private PerformActionState currentState_Righthand;
+
+    [SerializeField] private Animator anim_LeftHand;
+    [SerializeField] private Animator anim_RightHand;
+
+    [SerializeField] private Weapon rightHandWeapon;
+    [SerializeField] private Weapon leftHandWeapon;
 
     [Header("Melee Settings")]
     [SerializeField] private float executeStaminaCost = 20f;
@@ -30,7 +38,6 @@ public class PlayerMeleeAttack : MonoBehaviour
     [SerializeField] private float kickDamage = 5f;
     [SerializeField] private float attackRange = 1.8f;
     [SerializeField] private float attackRadius = 1f;
-    [SerializeField] private float attackCooldown = 0.6f;
     [SerializeField] private float lungeForce = 12f;
 
     [Tooltip("Set this to the layer your enemies are on")]
@@ -40,69 +47,46 @@ public class PlayerMeleeAttack : MonoBehaviour
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private PlayerController playerController;
 
-    private float lastAttackTime;
-    private int comboStep = 0;
-    private float attackStateResetTimer = 0f;
+    private float lastAttackTimeRight;
+    private float lastAttackTimeLeft;
+    private int comboStepRight = 0;
+    private int comboStepLeft = 0;
+    private float attackStateResetTimerRight = 0f;
+    private float attackStateResetTimerLeft = 0f;
 
-    [HideInInspector] public bool isBlocking = false;
-    [HideInInspector] public float currentParry = 0f;
+    [HideInInspector] public bool isBlockingRight = false;
+    [HideInInspector] public bool isBlockingLeft = false;
+    [HideInInspector] public float currentParryRight = 0f;
+    [HideInInspector] public float currentParryLeft = 0f;
+
     private float parryDuration = 0.3f;
     private float blockCooldownDuration = 0.15f;
-    private float currentBlockCooldown = 0f;
+    private float currentBlockCooldownRight = 0f;
+    private float currentBlockCooldownLeft = 0f;
     private bool isKicking = false;
 
     private void Start()
     {
-        meleeAttackState = MeleeAttackState.Idle;
+        currentState_LeftHand = PerformActionState.Idle;
+        currentState_Righthand = PerformActionState.Idle;
     }
 
     void Update()
     {
         if (PauseGame.instance.IsPaused || playerController.CharacterHealthComponent.CurrentHP <= 0) return;
 
-        ChooseAnimation();
+        ChooseAnimations();
 
-        if(currentBlockCooldown > 0f)
-        {
-            currentBlockCooldown -= Time.deltaTime;
-        }
+        if (currentBlockCooldownRight > 0f) currentBlockCooldownRight -= Time.deltaTime;
+        if (currentBlockCooldownLeft > 0f) currentBlockCooldownLeft -= Time.deltaTime;
+        if (currentParryRight > 0f) currentParryRight -= Time.deltaTime;
+        if (currentParryLeft > 0f) currentParryLeft -= Time.deltaTime;
 
-        if (currentParry > 0f)
-        {
-            currentParry -= Time.deltaTime;
-        }
+        HandleRightHandInput();
+        HandleLeftHandInput();
 
-        if (playerController.isAttackPressed && currentBlockCooldown <= 0f && !isKicking)
-        {
-            if (playerController.CharacterStaminaComponent.CurrentStamina > 0f)
-            {
-                if (Time.time >= lastAttackTime + attackCooldown)
-                {
-                    PerformAttack();
-                }
-            }
-        }
 
-        if (playerController.isBlockPressed && currentBlockCooldown <= 0f && !isBlocking && !isKicking)
-        {
-            if (playerController.CharacterStaminaComponent.CurrentStamina > 0f)
-            {
-                RumbleManager.instance.RumblePulse(1f, 2f, 0.15f);
-                isBlocking = true;
-                meleeAttackState = MeleeAttackState.Block;
-                anim.speed = 1f;
-                currentParry = parryDuration;
-            }
-        }
-
-        if (!playerController.isBlockHeld && isBlocking)
-        {
-            anim.speed = 1f;
-            isBlocking = false;
-            currentBlockCooldown = blockCooldownDuration;
-        }
-
-        if (playerController.isKickPressed && meleeAttackState == MeleeAttackState.Idle && !isKicking)
+        if (playerController.isKickPressed && !isKicking && currentState_Righthand == PerformActionState.Idle && currentState_LeftHand == PerformActionState.Idle)
         {
             if (playerController.CharacterStaminaComponent.CurrentStamina > 0f)
             {
@@ -117,58 +101,173 @@ public class PlayerMeleeAttack : MonoBehaviour
                 else
                 {
                     isKicking = true;
-                    meleeAttackState = MeleeAttackState.Kick;
+                    currentState_Righthand = PerformActionState.Kick;
                     StartCoroutine(KickSequence());
                 }
             }
         }
 
-        if (meleeAttackState != MeleeAttackState.Idle && !isBlocking && !isKicking && !playerController.isExecuting)
+        // State Reset Timers
+        if (currentState_Righthand != PerformActionState.Idle && currentState_Righthand != PerformActionState.Hold1 && !isKicking && !playerController.isExecuting)
         {
-            attackStateResetTimer -= Time.deltaTime;
-            if (attackStateResetTimer <= 0f && currentBlockCooldown <= 0f)
+            attackStateResetTimerRight -= Time.deltaTime;
+            if (attackStateResetTimerRight <= 0f && currentBlockCooldownRight <= 0f)
             {
-                meleeAttackState = MeleeAttackState.Idle;
+                currentState_Righthand = PerformActionState.Idle;
+            }
+        }
+
+        if (currentState_LeftHand != PerformActionState.Idle && currentState_LeftHand != PerformActionState.Hold1 && !isKicking && !playerController.isExecuting)
+        {
+            attackStateResetTimerLeft -= Time.deltaTime;
+            if (attackStateResetTimerLeft <= 0f && currentBlockCooldownLeft <= 0f)
+            {
+                currentState_LeftHand = PerformActionState.Idle;
+            }
+        }
+    }
+
+    private void HandleRightHandInput()
+    {
+        if (rightHandWeapon == null) return;
+
+        // Shield / Blocking logic uses Hold1
+        bool holdingShieldRight = rightHandWeapon.weaponCategory == WeaponCategory.Shield && playerController.isRightHandHeld;
+        if (holdingShieldRight && currentBlockCooldownRight <= 0f && !isKicking)
+        {
+            if (playerController.CharacterStaminaComponent.CurrentStamina > 0f && !isBlockingRight)
+            {
+                RumbleManager.instance.RumblePulse(1f, 2f, 0.15f);
+                isBlockingRight = true;
+                currentState_Righthand = PerformActionState.Hold1;
+                if (anim_RightHand != null) anim_RightHand.speed = 1f;
+                currentParryRight = parryDuration;
+            }
+        }
+        else if (!playerController.isRightHandHeld && isBlockingRight)
+        {
+            if (anim_RightHand != null) anim_RightHand.speed = 1f;
+            isBlockingRight = false;
+            currentBlockCooldownRight = blockCooldownDuration;
+            currentState_Righthand = PerformActionState.Idle;
+        }
+
+        // Pyromancy / Magic logic uses Press1 (on press) and Hold1 (while holding)
+        if (rightHandWeapon.weaponCategory == WeaponCategory.PyromancyFlame)
+        {
+            if (playerController.isRightHandPressed && currentBlockCooldownRight <= 0f && !isKicking)
+            {
+                if (playerController.CharacterStaminaComponent.CurrentStamina > 0f)
+                    PerformPyromancy(rightHandWeapon, isLeftHand: false, isHold: false);
+            }
+            else if (playerController.isRightHandHeld && currentState_Righthand == PerformActionState.Press1)
+            {
+                // Transition or maintain magic channel state via Hold1 if desired
+                currentState_Righthand = PerformActionState.Hold1;
+            }
+            else if (!playerController.isRightHandHeld && currentState_Righthand == PerformActionState.Hold1)
+            {
+                currentState_Righthand = PerformActionState.Idle;
+            }
+        }
+
+        // Melee Attack Logic
+        if (rightHandWeapon.weaponCategory == WeaponCategory.Melee && playerController.isRightHandPressed && currentBlockCooldownRight <= 0f && !isKicking)
+        {
+            if (playerController.CharacterStaminaComponent.CurrentStamina > 0f)
+            {
+                if (Time.time >= lastAttackTimeRight + rightHandWeapon.attackCooldown)
+                {
+                    PerformAttack(rightHandWeapon, isLeftHand: false);
+                }
+            }
+        }
+    }
+
+    private void HandleLeftHandInput()
+    {
+        if (leftHandWeapon == null) return;
+
+        // Shield / Blocking logic uses Hold1
+        bool holdingShieldLeft = leftHandWeapon.weaponCategory == WeaponCategory.Shield && playerController.isLeftHandHeld;
+        if (holdingShieldLeft && currentBlockCooldownLeft <= 0f && !isKicking)
+        {
+            if (playerController.CharacterStaminaComponent.CurrentStamina > 0f && !isBlockingLeft)
+            {
+                RumbleManager.instance.RumblePulse(1f, 2f, 0.15f);
+                isBlockingLeft = true;
+                currentState_LeftHand = PerformActionState.Hold1;
+                if (anim_LeftHand != null) anim_LeftHand.speed = 1f;
+                currentParryLeft = parryDuration;
+            }
+        }
+        else if (!playerController.isLeftHandHeld && isBlockingLeft)
+        {
+            if (anim_LeftHand != null) anim_LeftHand.speed = 1f;
+            isBlockingLeft = false;
+            currentBlockCooldownLeft = blockCooldownDuration;
+            currentState_LeftHand = PerformActionState.Idle;
+        }
+
+        // Pyromancy / Magic logic uses Press1 (on press) and Hold1 (while holding)
+        if (leftHandWeapon.weaponCategory == WeaponCategory.PyromancyFlame)
+        {
+            if (playerController.isLeftHandPressed && currentBlockCooldownLeft <= 0f && !isKicking)
+            {
+                if (playerController.CharacterStaminaComponent.CurrentStamina > 0f)
+                {
+                    PerformPyromancy(leftHandWeapon, isLeftHand: true, isHold: false);
+                }
+            }
+            else if (playerController.isLeftHandHeld && currentState_LeftHand == PerformActionState.Press1)
+            {
+                currentState_LeftHand = PerformActionState.Hold1;
+            }
+            else if (!playerController.isLeftHandHeld && currentState_LeftHand == PerformActionState.Hold1)
+            {
+                currentState_LeftHand = PerformActionState.Idle;
+            }
+        }
+
+        // Melee Attack Logic
+        if (leftHandWeapon.weaponCategory == WeaponCategory.Melee && playerController.isLeftHandPressed && currentBlockCooldownLeft <= 0f && !isKicking)
+        {
+            if (playerController.CharacterStaminaComponent.CurrentStamina > 0f)
+            {
+                if (Time.time >= lastAttackTimeLeft + leftHandWeapon.attackCooldown)
+                {
+                    PerformAttack(leftHandWeapon, isLeftHand: true);
+                }
             }
         }
     }
 
     private IEnumerator ExecutionSequence(EnemyEntity targetEnemy)
     {
-        // 1. Lock the player state so they can't attack or WASD move
         playerController.isAttacking = true;
         playerController.isExecuting = true;
 
-        // 2. Calculate the Execution Position (1.2 units directly in front of the enemy)
         Vector3 directionToPlayer = (transform.position - targetEnemy.transform.position).normalized;
-        directionToPlayer.y = 0; // Keep dash purely horizontal
+        directionToPlayer.y = 0;
 
-        // Use executeTransform if it exists, otherwise fallback to the enemy's root
         Vector3 executeCenter = targetEnemy.executeTransform != null ? targetEnemy.executeTransform.position : targetEnemy.transform.position;
         Vector3 targetPos = executeCenter + (directionToPlayer * 1.2f);
 
-        // 3. Calculate PERFECT YAW for Player Body (Left/Right only)
         float startYaw = transform.eulerAngles.y;
         Vector3 dirToEnemyBody = executeCenter - targetPos;
-        dirToEnemyBody.y = 0; // Force it to be perfectly flat!
+        dirToEnemyBody.y = 0;
         float targetYaw = Quaternion.LookRotation(dirToEnemyBody).eulerAngles.y;
 
-        // 4. Calculate PERFECT PITCH for Camera (Up/Down only)
         float startPitch = playerController.verticalRotation;
-
-        // FIX 1: Tell the camera to look exactly at the executeTransform!
         Vector3 lookTargetPos = targetEnemy.executeTransform != null ? targetEnemy.executeTransform.position : targetEnemy.transform.position + (Vector3.up * 1.5f);
 
-        // FIX 2: Calculate the angle from where the camera WILL be at the end of the dash!
         float cameraHeight = cameraTransform.position.y - transform.position.y;
         Vector3 finalCameraPos = targetPos + (Vector3.up * cameraHeight);
 
         Vector3 dirToLookTarget = (lookTargetPos - finalCameraPos).normalized;
-
         float targetPitch = Quaternion.LookRotation(dirToLookTarget).eulerAngles.x;
-        if (targetPitch > 180f) targetPitch -= 360f; // Fixes wrapping issues
+        if (targetPitch > 180f) targetPitch -= 360f;
 
-        // 5. Smoothly Dash and Look over 0.2 seconds
         float dashDuration = 0.2f;
         float elapsed = 0f;
         CharacterController charController = playerController.GetComponent<CharacterController>();
@@ -178,16 +277,13 @@ public class PlayerMeleeAttack : MonoBehaviour
             elapsed += Time.deltaTime;
             float t = elapsed / dashDuration;
 
-            // Apply Position via CharacterController
             Vector3 currentLerpPos = Vector3.Lerp(transform.position, targetPos, t);
             Vector3 moveDelta = currentLerpPos - transform.position;
             charController.Move(moveDelta);
 
-            // Apply ISOLATED Rotations
             float currentYaw = Mathf.LerpAngle(startYaw, targetYaw, t);
             transform.eulerAngles = new Vector3(0f, currentYaw, 0f);
 
-            // Camera only rotates vertically
             playerController.verticalRotation = Mathf.LerpAngle(startPitch, targetPitch, t);
 
             yield return null;
@@ -196,26 +292,52 @@ public class PlayerMeleeAttack : MonoBehaviour
         transform.eulerAngles = new Vector3(0f, targetYaw, 0f);
         playerController.verticalRotation = targetPitch;
 
-        // 5. Trigger the Execution Logic!
-        // Play your execution animation here
-        // anim.Play("Execute");
-        meleeAttackState = MeleeAttackState.Execute;
+        currentState_Righthand = PerformActionState.Execute;
 
-        Debug.Log("EXECUTED ENEMY!");
-
-        // Example: Deal massive damage, or call a specific Execute() method on the enemy
         targetEnemy.GotExecuted();
         cameraFollow.isSmoothing = false;
         cameraBob.TriggerShake(0.293f, 0.05f);
         cameraBob.TriggerZoomEffect(40f, 0.293f, 0.25f);
-        // Wait for your execution animation to finish before returning control to the player
+
         yield return new WaitForSeconds(0.293f);
 
-        // 6. Release the player back to normal
         cameraFollow.isSmoothing = false;
         playerController.isExecuting = false;
         playerController.isAttacking = false;
-        meleeAttackState = MeleeAttackState.Idle;
+        currentState_Righthand = PerformActionState.Idle;
+    }
+
+    public bool HasPyromancyEquipped()
+    {
+        bool rightIsPyro = rightHandWeapon != null && rightHandWeapon.weaponCategory == WeaponCategory.PyromancyFlame;
+        bool leftIsPyro = leftHandWeapon != null && leftHandWeapon.weaponCategory == WeaponCategory.PyromancyFlame;
+        return rightIsPyro || leftIsPyro;
+    }
+
+    private void PerformPyromancy(Weapon weapon, bool isLeftHand, bool isHold)
+    {
+        playerController.StaminaDepleted(weapon.staminaCost);
+
+        if (isHold)
+        {
+            if (isLeftHand) currentState_LeftHand = PerformActionState.Hold1;
+            else currentState_Righthand = PerformActionState.Hold1;
+        }
+        else
+        {
+            if (isLeftHand)
+            {
+                lastAttackTimeLeft = Time.time;
+                currentState_LeftHand = PerformActionState.Press1;
+                attackStateResetTimerLeft = weapon.attackCooldown;
+            }
+            else
+            {
+                lastAttackTimeRight = Time.time;
+                currentState_Righthand = PerformActionState.Press1;
+                attackStateResetTimerRight = weapon.attackCooldown;
+            }
+        }
     }
 
     private IEnumerator KickSequence()
@@ -225,7 +347,8 @@ public class PlayerMeleeAttack : MonoBehaviour
 
         yield return new WaitForSeconds(0.225f);
         isKicking = false;
-        meleeAttackState = MeleeAttackState.Idle;
+        currentState_LeftHand = PerformActionState.Idle;
+        currentState_Righthand = PerformActionState.Idle;
     }
 
     private EnemyEntity GetEnemyInFront()
@@ -247,20 +370,16 @@ public class PlayerMeleeAttack : MonoBehaviour
         RumbleManager.instance.RumblePulse(1f, 2.5f, 0.1f);
         playerController.StaminaDepleted(kickStaminaCost);
 
-        Vector3 joltDirection = Vector3.zero;
-        joltDirection = new Vector3(-20f, 0f, 0f);
-
+        Vector3 joltDirection = new Vector3(-20f, 0f, 0f);
         Vector3 castStart = cameraTransform.position - (cameraTransform.forward * attackRadius);
         Ray rayAttack = new Ray(castStart, cameraTransform.forward);
 
         float totalRange = attackRange + attackRadius;
-
         RaycastHit[] hits = Physics.SphereCastAll(rayAttack, attackRadius, totalRange, attackLayerMask);
         bool hitSomething = false;
 
         if (hits.Length > 0)
         {
-            // Keep track of enemies we've already hit in this swing so we don't double-hit them
             HashSet<Component> processedTargets = new HashSet<Component>();
 
             foreach (RaycastHit hit in hits)
@@ -277,7 +396,6 @@ public class PlayerMeleeAttack : MonoBehaviour
                 }
                 else if (destructible != null && processedTargets.Add(destructible))
                 {
-                    // Fracture Hit
                     destructible.TakeDamage(kickDamage, hit.collider, hit.point);
                     hitSomething = true;
 
@@ -297,65 +415,64 @@ public class PlayerMeleeAttack : MonoBehaviour
         playerController.TriggerMeleeJolt(joltDirection);
     }
 
-    public void PerformBlock()
+    private void PerformAttack(Weapon weapon, bool isLeftHand)
     {
-        anim.Play("Block", -1, 0f);
-        anim.speed = 1f;
+        if (!playerController.isGrounded || playerController.isSliding) { return; }
+
+        ApplyAttackJolt(weapon, isLeftHand);
+
+        playerController.TriggerAttackMovement(weapon.attackCooldown, lungeForce);
+
+        if (isLeftHand)
+        {
+            lastAttackTimeLeft = Time.time;
+            attackStateResetTimerLeft = weapon.attackCooldown;
+        }
+        else
+        {
+            lastAttackTimeRight = Time.time;
+            attackStateResetTimerRight = weapon.attackCooldown;
+        }
     }
 
-    private void PerformAttack()
-    {
-        if(!playerController.isGrounded || playerController.isSliding) { return; }
-
-        // 1. Determine swing type and apply the physical Camera Jolt
-        ApplyAttackJolt();
-
-        playerController.TriggerAttackMovement(attackCooldown, lungeForce);
-        
-        lastAttackTime = Time.time;
-
-        attackStateResetTimer = attackCooldown;
-    }
-
-    private void ApplyAttackJolt()
+    private void ApplyAttackJolt(Weapon weapon, bool isLeftHand)
     {
         RumbleManager.instance.RumblePulse(1f, 2.5f, 0.2f);
-        playerController.StaminaDepleted(kickStaminaCost);
+        playerController.StaminaDepleted(weapon.staminaCost);
 
-        // Reset combo back to step 1 if the player pauses their attacks
-        if (Time.time > lastAttackTime + attackCooldown + 0.5f)
+        if (isLeftHand)
         {
-            comboStep = 0;
+            if (Time.time > lastAttackTimeLeft + weapon.attackCooldown + 0.5f) comboStepLeft = 0;
+        }
+        else
+        {
+            if (Time.time > lastAttackTimeRight + weapon.attackCooldown + 0.5f) comboStepRight = 0;
         }
 
         Vector3 joltDirection = Vector3.zero;
-
         Vector3 castStart = cameraTransform.position - (cameraTransform.forward * attackRadius);
         Ray rayAttack = new Ray(castStart, cameraTransform.forward);
         float totalRange = attackRange + attackRadius;
-        bool isLeftAttack = false;
+        bool isLeftAttack = isLeftHand;
+        int currentCombo = isLeftHand ? comboStepLeft : comboStepRight;
 
-        switch (comboStep)
+        switch (currentCombo)
         {
-            case 0: // Right to Left sweep
-                {
-                    joltDirection = new Vector3(2f, -6f, 3f);
-                    meleeAttackState = MeleeAttackState.Attack1;
-                    isLeftAttack = false;
-                }
+            case 0:
+                joltDirection = new Vector3(2f, -6f, 3f);
+                if (isLeftHand) currentState_LeftHand = PerformActionState.Press1;
+                else currentState_Righthand = PerformActionState.Press1;
                 break;
-
-            case 1: // Left to Right sweep
-                {
-                    joltDirection = new Vector3(2f, 6f, -3f);
-                    meleeAttackState = MeleeAttackState.Attack2;
-                    isLeftAttack = true;
-                }
+            case 1:
+                joltDirection = new Vector3(2f, 6f, -3f);
+                if (isLeftHand) currentState_LeftHand = PerformActionState.Press2;
+                else currentState_Righthand = PerformActionState.Press2;
                 break;
-
-            /*case 2: // Heavy Overhead Chop
-             
-                break;*/
+            case 2:
+                joltDirection = new Vector3(5f, 0f, 0f);
+                if (isLeftHand) currentState_LeftHand = PerformActionState.Press3;
+                else currentState_Righthand = PerformActionState.Press3;
+                break;
         }
 
         RaycastHit[] hits = Physics.SphereCastAll(rayAttack, attackRadius, totalRange, attackLayerMask);
@@ -363,7 +480,6 @@ public class PlayerMeleeAttack : MonoBehaviour
 
         if (hits.Length > 0)
         {
-            // Keep track of enemies we've already hit in this swing so we don't double-hit them
             HashSet<Component> processedTargets = new HashSet<Component>();
 
             foreach (RaycastHit hit in hits)
@@ -374,15 +490,15 @@ public class PlayerMeleeAttack : MonoBehaviour
 
                 if (targetEnemy != null && processedTargets.Add(targetEnemy))
                 {
-                    targetEnemy.TakeSwordHit(isLeftAttack, hit.point, meleeDamage);
+                    targetEnemy.TakeSwordHit(isLeftAttack, hit.point, weapon.damage);
                     hitSomething = true;
                 }
                 else if (destructible != null && processedTargets.Add(destructible))
                 {
-                    destructible.TakeDamage(meleeDamage, hit.collider, hit.point);
+                    destructible.TakeDamage(weapon.damage, hit.collider, hit.point);
                     hitSomething = true;
 
-                    if(fractureTrigger != null)
+                    if (fractureTrigger != null)
                     {
                         fractureTrigger.TriggerMaterialSound_Hit();
                     }
@@ -397,37 +513,56 @@ public class PlayerMeleeAttack : MonoBehaviour
 
         playerController.TriggerMeleeJolt(joltDirection);
 
-        // Advance combo to the next swing, looping back to 0 after the chop
-        comboStep++;
-        if (comboStep > 1) comboStep = 0;
+        if (isLeftHand)
+        {
+            comboStepLeft++;
+            if (comboStepLeft > 2) comboStepLeft = 0;
+        }
+        else
+        {
+            comboStepRight++;
+            if (comboStepRight > 2) comboStepRight = 0;
+        }
     }
 
-    private static readonly Dictionary<MeleeAttackState, int> StateToHash = new Dictionary<MeleeAttackState, int>
+    private static readonly Dictionary<PerformActionState, int> StateToHash = new Dictionary<PerformActionState, int>
     {
-        { MeleeAttackState.Idle, Animator.StringToHash("IsIdle") },
-        { MeleeAttackState.Attack1, Animator.StringToHash("IsAttack1") },
-        { MeleeAttackState.Attack2, Animator.StringToHash("IsAttack2") },
-        { MeleeAttackState.Attack3, Animator.StringToHash("IsAttack3") },
-        { MeleeAttackState.Block, Animator.StringToHash("IsBlock") },
-        { MeleeAttackState.Kick, Animator.StringToHash("IsKick") },
-        { MeleeAttackState.Execute, Animator.StringToHash("IsExecute") }
+        { PerformActionState.Idle, Animator.StringToHash("IsIdle") },
+        { PerformActionState.Press1, Animator.StringToHash("IsPress1") },
+        { PerformActionState.Press2, Animator.StringToHash("IsPress2") },
+        { PerformActionState.Press3, Animator.StringToHash("IsPress3") },
+        { PerformActionState.Hold1, Animator.StringToHash("IsHold1") },
+        { PerformActionState.Hold2, Animator.StringToHash("IsHold2") },
+        { PerformActionState.Hold3, Animator.StringToHash("IsHold3") },
+        { PerformActionState.Kick, Animator.StringToHash("IsKick") },
+        { PerformActionState.Execute, Animator.StringToHash("IsExecute") }
     };
 
-    private int lastStateHash; // Keep track of the last active hash
+    private int lastLeftStateHash;
+    private int lastRightStateHash;
 
-    private void ChooseAnimation()
+    private void ChooseAnimations()
     {
-        // 1. Get the hash for the current state
-        if (StateToHash.TryGetValue(meleeAttackState, out int currentHash))
+        // Handle Left Hand Animator
+        if (StateToHash.TryGetValue(currentState_LeftHand, out int leftHash))
         {
-            // 2. Only update if the state actually changed
-            if (currentHash == lastStateHash) return;
+            if (leftHash != lastLeftStateHash)
+            {
+                if (lastLeftStateHash != 0 && anim_LeftHand != null) anim_LeftHand.SetBool(lastLeftStateHash, false);
+                if (anim_LeftHand != null) anim_LeftHand.SetBool(leftHash, true);
+                lastLeftStateHash = leftHash;
+            }
+        }
 
-            // 3. Reset the previous animation and set the new one
-            if (lastStateHash != 0) anim.SetBool(lastStateHash, false);
-
-            anim.SetBool(currentHash, true);
-            lastStateHash = currentHash;
+        // Handle Right Hand Animator
+        if (StateToHash.TryGetValue(currentState_Righthand, out int rightHash))
+        {
+            if (rightHash != lastRightStateHash)
+            {
+                if (lastRightStateHash != 0 && anim_RightHand != null) anim_RightHand.SetBool(lastRightStateHash, false);
+                if (anim_RightHand != null) anim_RightHand.SetBool(rightHash, true);
+                lastRightStateHash = rightHash;
+            }
         }
     }
 
@@ -437,17 +572,12 @@ public class PlayerMeleeAttack : MonoBehaviour
 
         Gizmos.color = Color.red;
 
-        // FIX: Visualize the pulled-back raycast accurately in the scene view
         Vector3 castStart = cameraTransform.position - (cameraTransform.forward * attackRadius);
         float totalRange = attackRange + attackRadius;
 
-        // 1. Draw the center line showing the direction and max range
         Gizmos.DrawRay(castStart, cameraTransform.forward * totalRange);
-
-        // 2. Draw the sphere at the starting position (Now safely behind the camera!)
         Gizmos.DrawWireSphere(castStart, attackRadius);
 
-        // 3. Draw the sphere at the maximum attack range
         Vector3 endPosition = castStart + (cameraTransform.forward * totalRange);
         Gizmos.DrawWireSphere(endPosition, attackRadius);
     }
