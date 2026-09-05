@@ -1,0 +1,763 @@
+fileFormatVersion: 2
+guid: 901bdaca10d389e4d8bf56f63df874fa
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 16384
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: PixelArt_Shield_OneHanded_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1086
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5e6085397200a749af23ca69919ddfc
+      internalID: 1062849867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Shield_OneHanded_1
+      rect:
+        serializedVersion: 2
+        x: 722
+        y: 1086
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10fe5b117fa48014b8ab427a796de9e0
+      internalID: -381082254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Shield_OneHanded_2
+      rect:
+        serializedVersion: 2
+        x: 1444
+        y: 1086
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4eb0e43813270d94fbc8d38b4e0c94dc
+      internalID: -964861406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Shield_OneHanded_3
+      rect:
+        serializedVersion: 2
+        x: 2166
+        y: 1086
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25ceccc4ae04c8649ab0ed208aea74d8
+      internalID: -404306051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Shield_OneHanded_4
+      rect:
+        serializedVersion: 2
+        x: 2888
+        y: 1086
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 305155cf762ca5843b2bfb5c53bf150f
+      internalID: -902046878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Shield_OneHanded_5
+      rect:
+        serializedVersion: 2
+        x: 3610
+        y: 1086
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46a5c08ff4520d646a7cb725798f45a1
+      internalID: 1668632690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Shield_OneHanded_6
+      rect:
+        serializedVersion: 2
+        x: 4332
+        y: 1086
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e1442bb1973dfa4ba6cc45ab96105ae
+      internalID: -1532424571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Shield_OneHanded_7
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 543
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e39b8c9ccdd6b334e95d90257c73648a
+      internalID: -1351991813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Shield_OneHanded_8
+      rect:
+        serializedVersion: 2
+        x: 722
+        y: 543
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a11d42cfbc380bd479eaf263e4a29b99
+      internalID: -592429852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Shield_OneHanded_9
+      rect:
+        serializedVersion: 2
+        x: 1444
+        y: 543
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0651b361d4af63e4987824b9706f08c8
+      internalID: 259741639
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Shield_OneHanded_10
+      rect:
+        serializedVersion: 2
+        x: 2166
+        y: 543
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e866ff42a8a3cbd499c0c2c4c29890c7
+      internalID: 135674557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Shield_OneHanded_11
+      rect:
+        serializedVersion: 2
+        x: 2888
+        y: 543
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e82f3420d63ecf44e9d3de05d5774de5
+      internalID: 428320848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Shield_OneHanded_12
+      rect:
+        serializedVersion: 2
+        x: 3610
+        y: 543
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad38c690463ed29469c462968e2ca86d
+      internalID: 1441028000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Shield_OneHanded_13
+      rect:
+        serializedVersion: 2
+        x: 4332
+        y: 543
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 505d05173c54d7d4db65961db50492eb
+      internalID: 1616372896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Shield_OneHanded_14
+      rect:
+        serializedVersion: 2
+        x: 5054
+        y: 543
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c3cec15aaa5b534589a205086f70550
+      internalID: -1533818768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Shield_OneHanded_15
+      rect:
+        serializedVersion: 2
+        x: 5776
+        y: 543
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc56136d414af494894845437a2e7686
+      internalID: 2138310268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Shield_OneHanded_16
+      rect:
+        serializedVersion: 2
+        x: 6498
+        y: 543
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0763282ec4401f4eae615eec3919df2
+      internalID: -105701317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Shield_OneHanded_17
+      rect:
+        serializedVersion: 2
+        x: 7220
+        y: 543
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: feee076090e2c09459c4ca42fd69ad9b
+      internalID: -1687802732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Shield_OneHanded_18
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b82dc7082fb26d4dba0a797857840be
+      internalID: 1259572341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Shield_OneHanded_19
+      rect:
+        serializedVersion: 2
+        x: 722
+        y: 0
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d7463ec5206e784882b3b216714c48e
+      internalID: -1635077236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Shield_OneHanded_20
+      rect:
+        serializedVersion: 2
+        x: 1444
+        y: 0
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a87af7a0850bfb4bbd77f47de9f79ee
+      internalID: 419812772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Shield_OneHanded_21
+      rect:
+        serializedVersion: 2
+        x: 2166
+        y: 0
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65eddc0b8a61c6e4ca1c2b03996b55fc
+      internalID: 1445127731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Shield_OneHanded_22
+      rect:
+        serializedVersion: 2
+        x: 2888
+        y: 0
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a94cbc313d2e755459bb531b1530f067
+      internalID: -1170828183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Shield_OneHanded_23
+      rect:
+        serializedVersion: 2
+        x: 3610
+        y: 0
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: abc5eb343fe82b046b0fbf393ff6cf31
+      internalID: -1906858996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Shield_OneHanded_24
+      rect:
+        serializedVersion: 2
+        x: 4332
+        y: 0
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0698f217f11a984b9f6baa517dc95a3
+      internalID: -1612672702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Shield_OneHanded_25
+      rect:
+        serializedVersion: 2
+        x: 5054
+        y: 0
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b7a035fced5dc5945b7efffbb35e0915
+      internalID: 1792633795
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Shield_OneHanded_26
+      rect:
+        serializedVersion: 2
+        x: 5776
+        y: 0
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 95150854d5956c64a81284c0bb8f3630
+      internalID: -1826979087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Shield_OneHanded_27
+      rect:
+        serializedVersion: 2
+        x: 6498
+        y: 0
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0cf898eab7d73bf4faebcde2f3125f40
+      internalID: 1026137391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: abdfe98d3d1aa9b4092d9affb317d49d
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":11.0,"y":3.0},"gridSpriteSize":{"x":722.0,"y":543.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      PixelArt_Shield_OneHanded_0: 1062849867
+      PixelArt_Shield_OneHanded_1: -381082254
+      PixelArt_Shield_OneHanded_10: 135674557
+      PixelArt_Shield_OneHanded_11: 428320848
+      PixelArt_Shield_OneHanded_12: 1441028000
+      PixelArt_Shield_OneHanded_13: 1616372896
+      PixelArt_Shield_OneHanded_14: -1533818768
+      PixelArt_Shield_OneHanded_15: 2138310268
+      PixelArt_Shield_OneHanded_16: -105701317
+      PixelArt_Shield_OneHanded_17: -1687802732
+      PixelArt_Shield_OneHanded_18: 1259572341
+      PixelArt_Shield_OneHanded_19: -1635077236
+      PixelArt_Shield_OneHanded_2: -964861406
+      PixelArt_Shield_OneHanded_20: 419812772
+      PixelArt_Shield_OneHanded_21: 1445127731
+      PixelArt_Shield_OneHanded_22: -1170828183
+      PixelArt_Shield_OneHanded_23: -1906858996
+      PixelArt_Shield_OneHanded_24: -1612672702
+      PixelArt_Shield_OneHanded_25: 1792633795
+      PixelArt_Shield_OneHanded_26: -1826979087
+      PixelArt_Shield_OneHanded_27: 1026137391
+      PixelArt_Shield_OneHanded_3: -404306051
+      PixelArt_Shield_OneHanded_4: -902046878
+      PixelArt_Shield_OneHanded_5: 1668632690
+      PixelArt_Shield_OneHanded_6: -1532424571
+      PixelArt_Shield_OneHanded_7: -1351991813
+      PixelArt_Shield_OneHanded_8: -592429852
+      PixelArt_Shield_OneHanded_9: 259741639
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

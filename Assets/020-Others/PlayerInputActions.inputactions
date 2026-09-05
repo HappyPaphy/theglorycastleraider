@@ -34,7 +34,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Attack",
+                    "name": "RightHand",
                     "type": "Button",
                     "id": "815952a4-2999-4313-86a9-62af9eea4032",
                     "expectedControlType": "",
@@ -43,7 +43,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Block",
+                    "name": "LeftHand",
                     "type": "Button",
                     "id": "d704ae29-ba63-4371-a312-66af73bca764",
                     "expectedControlType": "",
@@ -55,6 +55,15 @@
                     "name": "Interact",
                     "type": "Button",
                     "id": "09e36be7-ff8d-4745-97ca-c705166cb573",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ToggleTwoHanded",
+                    "type": "Button",
+                    "id": "fc6d2966-ac4a-4e1e-80b1-74ac89e7ef2c",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -280,29 +289,29 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "Attack",
+                    "action": "RightHand",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "05f6913d-c316-48b2-a6bb-e225f14c7960",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Attack",
+                    "action": "RightHand",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "aa555016-e04a-4a9e-95d8-b0b621dbbeb0",
-                    "path": "<Mouse>/rightButton",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Block",
+                    "action": "LeftHand",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -313,7 +322,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "Block",
+                    "action": "LeftHand",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -336,6 +345,28 @@
                     "processors": "",
                     "groups": ";Gamepad",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "20ac5569-e4e0-4f46-929b-38bb6c86854b",
+                    "path": "<Mouse>/middleButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "ToggleTwoHanded",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a0d78d26-a079-4e64-a722-e769876a8a53",
+                    "path": "<Gamepad>/rightStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "ToggleTwoHanded",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

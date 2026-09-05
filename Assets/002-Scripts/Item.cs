@@ -13,36 +13,40 @@ public enum ItemType
 public class Item : MonoBehaviour
 {
     [SerializeField] private ItemType itemType;
-    [SerializeField] private float pickupRadius = 1.5f;
-    [SerializeField] private LayerMask playerLayer;
-    [SerializeField] private Vector3 spawnOffSet;
+    [SerializeField] protected float pickupRadius = 1.5f;
+    [SerializeField] protected LayerMask playerLayer;
+    [SerializeField] protected Vector3 spawnOffSet;
 
-    [SerializeField] private GameObject obj_RotateObject;
-    [SerializeField] private GameObject pickupEffect;
-    [SerializeField] private AudioClip pickupSound;
+    [SerializeField] protected GameObject obj_RotateObject;
+    [SerializeField] protected GameObject pickupEffect;
+    [SerializeField] protected AudioClip pickupSound;
 
-    [SerializeField] private GameObject uiButtonPrompt;
+    [SerializeField] protected GameObject uiButtonPrompt;
 
-    private float rotationSpeed = 90f; // Degrees it spins per second
-    private float hoverSpeed = 2f;     // How fast it moves up and down
-    private float hoverHeight = 0.14f; // How high/low it moves from its center
-    private Vector3 startPos;
+    protected bool isCollected = false;
 
-    private void Start()
+    protected float rotationSpeed = 90f; // Degrees it spins per second
+    protected float hoverSpeed = 2f;     // How fast it moves up and down
+    protected float hoverHeight = 0.14f; // How high/low it moves from its center
+    protected Vector3 startPos;
+
+    protected virtual void Start()
     {
         transform.position += spawnOffSet;
         startPos = transform.position;
         uiButtonPrompt.SetActive(false);
     }
 
-    void Update()
+    protected virtual void Update()
     {
         HandleCollect();
         AnimateItem();
     }
 
-    private void AnimateItem()
+    protected virtual void AnimateItem()
     {
+        if(isCollected) { return; }
+
         // Rotate the item continuously around its Y axis
         transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime, Space.World);
 
@@ -53,8 +57,10 @@ public class Item : MonoBehaviour
         transform.position = new Vector3(transform.position.x, newY, transform.position.z);
     }
 
-    private void HandleCollect()
+    protected virtual void HandleCollect()
     {
+        if (isCollected) { return; }
+
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, pickupRadius, playerLayer);
 
         if (hitColliders.Length > 0)
@@ -64,13 +70,18 @@ public class Item : MonoBehaviour
             if(PlayerController.instance.IsInteractPressed)
             {
                 PlayerController.instance.IsInteractPressed = false;
-                CollectItem();
+                Collecting();
             }
         }
         else
         {
             uiButtonPrompt.SetActive(false);
         }
+    }
+
+    protected virtual void Collecting()
+    {
+        CollectItem();
     }
 
     private void CollectItem()
@@ -117,7 +128,7 @@ public class Item : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnDrawGizmosSelected()
+    protected void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, pickupRadius);

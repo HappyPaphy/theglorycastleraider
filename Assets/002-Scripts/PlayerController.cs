@@ -1,19 +1,26 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.Playables;
+using UnityEngine.UI;
+
+public enum FootState
+{
+    Idle,
+    Kick,
+    Slide
+}
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : PlayerEntity
 {
     [Header("Components")]
-    [SerializeField] private Image image_Hands;
     [SerializeField] private CameraFollow cameraFollow;
     [SerializeField] private GameObject deadCamPrefab;
     [SerializeField] private CameraPostProcessEffect postProcressEffect;
     [SerializeField] private CameraBob cameraBob;
-    [SerializeField] private PlayerMeleeAttack playerMeleeAttack;
+    [SerializeField] private PlayerWeaponManager playerWeaponManager;
     [SerializeField] private WeaponSway weaponSway;
 
     [Header("Input Actions")]
@@ -27,13 +34,14 @@ public class PlayerController : PlayerEntity
     [SerializeField] private InputAction input_Dash;
     [SerializeField] private InputAction input_Minimap;
     [SerializeField] private InputAction input_Pause;
+    [SerializeField] private InputAction input_ToggleTwoHanded;
     [SerializeField] private InputAction input_SwitchWeapon_Up;
     [SerializeField] private InputAction input_SwitchWeapon_Right;
     [SerializeField] private InputAction input_SwitchWeapon_Down;
     [SerializeField] private InputAction input_SwitchWeapon_Left;
     public InputAction input_Kick;
-    public InputAction input_Attack;
-    public InputAction input_Block;
+    public InputAction input_PerformRightHand;
+    public InputAction input_PerformLeftHand;
 
     public Sprite InteractSprite_Keyboard;
     public Sprite InteractSprite_XBox;
@@ -57,6 +65,14 @@ public class PlayerController : PlayerEntity
 
     [HideInInspector] public bool isMouseVisible = false;
 
+    [Header("Kick")]
+    public FootState footState;
+    [SerializeField] private float kickRange = 1f;
+    [SerializeField] private float kickRadius = 0.5f;
+    [SerializeField] private LayerMask kickLayerMask;
+    [SerializeField] private Image image_Foot;
+    [SerializeField] private Animator anim_Foot;
+
     [Header("Combat")]
     [HideInInspector] public bool isJumpHeld = false;
     [HideInInspector] public bool isJumpPressed = false;
@@ -70,6 +86,8 @@ public class PlayerController : PlayerEntity
     [HideInInspector] public bool isLeftHandPressed = false;
     [HideInInspector] public bool IsReloadHeld = false;
     [HideInInspector] public bool IsReloadPressed = false;
+    [HideInInspector] public bool IsToggleTwoHandedHeld = false;
+    [HideInInspector] public bool IsToggleTwoHandedPressed = false;
 
     [Header("Movement Settings")]
     [SerializeField] private float walkSpeed = 6f;
@@ -79,6 +97,8 @@ public class PlayerController : PlayerEntity
     [SerializeField] private float jumpHeight = 1.5f;
 
     [Header("Slide Settings")]
+    [SerializeField] private float kickStaminaCost = 15f;
+    [SerializeField] private float kickDamage = 5f;
     [SerializeField] private float slideStaminaCost = 10f;
     [SerializeField] private float slideSpeed = 15f;
     [SerializeField] private float slideDuration = 0.6f;
@@ -120,6 +140,8 @@ public class PlayerController : PlayerEntity
     private float slideTimer = 0f;
     private Vector3 slideDirection;
 
+    public bool isKicking = false;
+
     public static PlayerController instance;
 
     private void OnEnable()
@@ -147,21 +169,25 @@ public class PlayerController : PlayerEntity
         input_Sprint.performed += OnSprintPerformed;
         input_Sprint.canceled += OnSprintCanceled;
 
+        input_ToggleTwoHanded = playerControls.Player.ToggleTwoHanded;
+        input_ToggleTwoHanded.Enable();
+        input_ToggleTwoHanded.performed += OnToggleTwoHandedPerformed;
+        input_ToggleTwoHanded.canceled += OnToggleTwoHandedCanceled;
 
         input_Kick = playerControls.Player.Kick;
         input_Kick.Enable();
         input_Kick.performed += OnKickPerformed;
         input_Kick.canceled += OnKickCanceled;
 
-        input_Attack = playerControls.Player.Attack;
-        input_Attack.Enable();
-        input_Attack.performed += OnRightHandPerformed;
-        input_Attack.canceled += OnRightHandCanceled;
+        input_PerformRightHand = playerControls.Player.RightHand;
+        input_PerformRightHand.Enable();
+        input_PerformRightHand.performed += OnRightHandPerformed;
+        input_PerformRightHand.canceled += OnRightHandCanceled;
 
-        input_Block = playerControls.Player.Block;
-        input_Block.Enable();
-        input_Block.performed += OnLeftHandPerformed;
-        input_Block.canceled += OnLeftHandCanceled;
+        input_PerformLeftHand = playerControls.Player.LeftHand;
+        input_PerformLeftHand.Enable();
+        input_PerformLeftHand.performed += OnLeftHandPerformed;
+        input_PerformLeftHand.canceled += OnLeftHandCanceled;
 
         input_Interact = playerControls.Player.Interact;
         input_Interact.Enable();
@@ -219,13 +245,14 @@ public class PlayerController : PlayerEntity
         input_Jump.Disable();
         input_Sprint.Disable();
         input_Kick.Disable();
-        input_Attack.Disable();
-        input_Block.Disable();
+        input_PerformLeftHand.Disable();
+        input_PerformRightHand.Disable();
         input_Interact.Disable();
         input_Reload.Disable();
         input_Dash.Disable();
         input_Minimap.Disable();
         input_Pause.Disable();
+        input_ToggleTwoHanded.Disable();
         input_SwitchWeapon_Up.Disable();
         input_SwitchWeapon_Right.Disable();
         input_SwitchWeapon_Down.Disable();
@@ -371,6 +398,19 @@ public class PlayerController : PlayerEntity
         IsPauseHeld = false;
     }
 
+    private void OnToggleTwoHandedPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        // When the button is first pressed down
+        IsToggleTwoHandedHeld = true;
+        IsToggleTwoHandedPressed = true;
+    }
+
+    private void OnToggleTwoHandedCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        // When the button is released
+        IsToggleTwoHandedHeld = false;
+    }
+
     private void OnSwitchWeaponUpPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
         // When the button is first pressed down
@@ -439,6 +479,7 @@ public class PlayerController : PlayerEntity
             cameraTransform = GetComponentInChildren<Camera>().transform;
 
         controller.height = normalHeight;
+        image_Foot.enabled = false;
 
         base.Start();
     }
@@ -451,6 +492,8 @@ public class PlayerController : PlayerEntity
             {
                 if (!PauseGame.instance.IsPaused)
                 {
+                    ChooseAnimations();
+                    HandleKick();
                     HandleMouseLook();
                     HandleMovement();
                     RecoverFromJolt();
@@ -466,6 +509,86 @@ public class PlayerController : PlayerEntity
     {
         ResetActionInputPressed();
     }
+
+    private void HandleKick()
+    {
+        if (isKickPressed && !isKicking && PlayerWeaponManager.instance.currentState_Righthand == PerformActionState.Idle 
+            && PlayerWeaponManager.instance.currentState_LeftHand == PerformActionState.Idle)
+        {
+            if (CharacterStaminaComponent.CurrentStamina > 0f)
+            {
+                image_Foot.enabled = true;
+                isKicking = true;
+                anim_Foot.Play("Kick", 0, 0f);
+                footState = FootState.Kick;
+                StartCoroutine(KickSequence());
+            }
+        }
+    }
+
+    private IEnumerator KickSequence()
+    {
+        yield return new WaitForSeconds(0.213f);
+        PerformKick();
+
+        yield return new WaitForSeconds(0.225f);
+        isKicking = false;
+        PlayerWeaponManager.instance.currentState_LeftHand = PerformActionState.Idle;
+        PlayerWeaponManager.instance.currentState_Righthand = PerformActionState.Idle;
+        image_Foot.enabled = false;
+    }
+
+    private void PerformKick()
+    {
+        RumbleManager.instance.RumblePulse(1f, 2.5f, 0.1f);
+        StaminaDepleted(kickStaminaCost);
+
+        Vector3 joltDirection = new Vector3(-20f, 0f, 0f);
+        Vector3 castStart = cameraTransform.position - (cameraTransform.forward * kickRadius);
+        Ray rayAttack = new Ray(castStart, cameraTransform.forward);
+
+        float totalRange = kickRange + kickRadius;
+        RaycastHit[] hits = Physics.SphereCastAll(rayAttack, kickRadius, totalRange, kickLayerMask);
+        bool hitSomething = false;
+
+        if (hits.Length > 0)
+        {
+            HashSet<Component> processedTargets = new HashSet<Component>();
+
+            foreach (RaycastHit hit in hits)
+            {
+                EnemyEntity targetEnemy = hit.collider.GetComponent<EnemyEntity>();
+                Fracture destructible = hit.collider.GetComponent<Fracture>();
+                FractureTrigger fractureTrigger = hit.collider.GetComponent<FractureTrigger>();
+
+                if (targetEnemy != null && processedTargets.Add(targetEnemy))
+                {
+                    SoundManager.instance.KickSound_Human(transform.position);
+                    targetEnemy.GotKicked(hit.point, kickDamage);
+                    hitSomething = true;
+                }
+                else if (destructible != null && processedTargets.Add(destructible))
+                {
+                    destructible.TakeDamage(kickDamage, hit.collider, hit.point);
+                    hitSomething = true;
+
+                    if (fractureTrigger != null)
+                    {
+                        fractureTrigger.TriggerMaterialSound_Hit();
+                    }
+                }
+            }
+        }
+
+        if (!hitSomething)
+        {
+            SoundManager.instance.KickSound_Air(transform.position);
+        }
+
+        TriggerMeleeJolt(joltDirection);
+    }
+
+    
 
     private void HandleMouseLook()
     {
@@ -604,7 +727,7 @@ public class PlayerController : PlayerEntity
 
     public void TakeSwordHit(EnemyEntity enemy)
     {
-        if (playerMeleeAttack.currentParry > 0f)
+        if (playerWeaponManager.currentParry > 0f)
         {
             //SoundManager.instance.ParriedSound();
             enemy.GotParried();
@@ -618,10 +741,10 @@ public class PlayerController : PlayerEntity
         {
             enemy.AttackSuccessful();
 
-            if (playerMeleeAttack.isBlocking)
+            if (playerWeaponManager.isBlocking)
             {
                 BlockedOrParriedEffect(enemy.eyesTransform.position);
-                playerMeleeAttack.PerformBlock();
+                //playerWeaponManager.PerformBlock();
                 SoundManager.instance.SwordSound_Metal(transform.position);
                 cameraBob.TriggerShake(0.293f, 0.05f);
                 StaminaDepleted(enemy.staminaDamage * GameManager.instance.playerTakeStaminaDamage);
@@ -647,7 +770,7 @@ public class PlayerController : PlayerEntity
 
     public void TakeArrowHit(ArrowProjectile arrow)
     {
-        if (playerMeleeAttack.currentParry > 0f)
+        if (playerWeaponManager.currentParry > 0f)
         {
             BlockedOrParriedEffect(arrow.gameObject.transform.position);
             SoundManager.instance.ParriedSound(transform.position);
@@ -657,10 +780,10 @@ public class PlayerController : PlayerEntity
         }
         else
         {
-            if (playerMeleeAttack.isBlocking)
+            if (playerWeaponManager.isBlocking)
             {
                 BlockedOrParriedEffect(arrow.gameObject.transform.position);
-                playerMeleeAttack.PerformBlock();
+                //playerWeaponManager.PerformBlock();
                 SoundManager.instance.SwordSound_Metal(transform.position);
                 cameraBob.TriggerShake(0.293f, 0.05f);
                 StaminaDepleted(arrow.staminaCost * GameManager.instance.playerTakeStaminaDamage);
@@ -773,7 +896,8 @@ public class PlayerController : PlayerEntity
         GameObject deadCam = Instantiate(deadCamPrefab, cameraTransform.transform.position, 
         cameraTransform.transform.rotation * Quaternion.Euler(-55f, 0f, 40f));
         cameraFollow.cameraPos = deadCam.transform;
-        image_Hands.enabled = false;
+        playerWeaponManager.image_LeftHand.enabled = false;
+        playerWeaponManager.image_RightHand.enabled = false;
 
         base.Die();
     }
@@ -794,5 +918,29 @@ public class PlayerController : PlayerEntity
         isKickPressed = false;
         isJumpPressed = false;
         isSprintPressed = false;
+        IsToggleTwoHandedPressed = false;
+    }
+
+    private static readonly Dictionary<FootState, int> StateToHash = new Dictionary<FootState, int>
+    {
+        { FootState.Idle, Animator.StringToHash("IsIdle") },
+        { FootState.Kick, Animator.StringToHash("IsKick") },
+        { FootState.Slide, Animator.StringToHash("IsSlide") }
+    };
+
+    private int lastKickStateHash;
+
+    private void ChooseAnimations()
+    {
+        // Handle Left Hand Animator
+        if (StateToHash.TryGetValue(footState, out int lastHash))
+        {
+            if (lastHash != lastKickStateHash)
+            {
+                if (lastKickStateHash != 0 && anim_Foot != null) anim_Foot.SetBool(lastKickStateHash, false);
+                if (anim_Foot != null) anim_Foot.SetBool(lastHash, true);
+                lastKickStateHash = lastHash;
+            }
+        }
     }
 }

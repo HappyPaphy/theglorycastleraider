@@ -1,0 +1,796 @@
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.Playables;
+using UnityEngine.UI;
+
+public enum PerformActionState
+{
+    Idle,
+    Press1,
+    Press2,
+    Press3,
+    Hold1,
+    Hold2,
+    Hold3,
+    Block,
+    Execute
+}
+
+public class PlayerWeaponManager : MonoBehaviour
+{
+    [SerializeField] private Image image_LeftHandWeaponIcon;
+    [SerializeField] private Image image_RightHandWeaponIcon;
+    [SerializeField] private Image image_Spell;
+    [SerializeField] private Image image_Item;
+
+    [SerializeField] private CameraFollow cameraFollow;
+    [SerializeField] private CameraBob cameraBob;
+    public PerformActionState currentState_LeftHand;
+    public PerformActionState currentState_Righthand;
+
+    public Image image_LeftHand;
+    public Image image_RightHand;
+
+    [SerializeField] private Animator anim_LeftHand;
+    [SerializeField] private Animator anim_RightHand;
+
+    public Weapon rightHandWeapon;
+    public Weapon leftHandWeapon;
+
+    [HideInInspector] public bool isTwoHanding = false;
+
+    [Header("Melee Settings")]
+    [SerializeField] private float executeStaminaCost = 20f;
+    [SerializeField] private float meleeStaminaCost = 18f;
+    [SerializeField] private float meleeDamage = 10f;
+    [SerializeField] private float attackRange = 1.8f;
+    [SerializeField] private float attackRadius = 1f;
+    [SerializeField] private float lungeForce = 12f;
+
+    [Tooltip("Set this to the layer your enemies are on")]
+    [SerializeField] private LayerMask attackLayerMask;
+
+    [Header("References")]
+    [SerializeField] private Transform cameraTransform;
+    [SerializeField] private PlayerController playerController;
+
+    private float lastAttackTimeRight;
+    private float lastAttackTimeLeft;
+    private int comboStepRight = 0;
+    private int comboStepLeft = 0;
+    private float attackStateResetTimerRight = 0f;
+    private float attackStateResetTimerLeft = 0f;
+
+    [HideInInspector] public bool isBlocking = false;
+    [HideInInspector] public float currentParry = 0f;
+
+    private float parryDuration = 0.3f;
+    private float blockCooldownDuration = 0.15f;
+    private float currentBlockCooldownRight = 0f;
+    private float currentBlockCooldownLeft = 0f;
+
+    public static PlayerWeaponManager instance;
+
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
+    private void Start()
+    {
+        currentState_LeftHand = PerformActionState.Idle;
+        currentState_Righthand = PerformActionState.Idle;
+    }
+
+    void Update()
+    {
+        if (PauseGame.instance.IsPaused || playerController.CharacterHealthComponent.CurrentHP <= 0) return;
+
+        ChooseAnimations();
+
+        if (currentBlockCooldownRight > 0f) currentBlockCooldownRight -= Time.deltaTime;
+        if (currentBlockCooldownLeft > 0f) currentBlockCooldownLeft -= Time.deltaTime;
+        if (currentParry > 0f) currentParry -= Time.deltaTime;
+
+        HandleHandSprite();
+        HandleRightHandInput();
+        HandleLeftHandInput();
+
+        if(playerController.IsToggleTwoHandedPressed)
+        {
+            playerController.IsToggleTwoHandedPressed = false;
+            ToggleTwoHandedStance();    
+        }
+
+
+        if (playerController.isKickPressed && !playerController.isKicking 
+            && currentState_Righthand == PerformActionState.Idle && currentState_LeftHand == PerformActionState.Idle)
+        {
+            if (playerController.CharacterStaminaComponent.CurrentStamina > 0f)
+            {
+                EnemyEntity targetEnemy = GetEnemyInFront();
+
+                if (targetEnemy != null && targetEnemy.isStunned)
+                {
+                    RumbleManager.instance.RumblePulse(1f, 2.5f, 0.3f);
+                    playerController.StaminaDepleted(executeStaminaCost);
+                    StartCoroutine(ExecutionSequence(targetEnemy));
+                }
+            }
+        }
+
+        // State Reset Timers
+        if (currentState_Righthand != PerformActionState.Idle && currentState_Righthand != PerformActionState.Hold1 && currentState_Righthand != PerformActionState.Block && !playerController.isKicking && !playerController.isExecuting)
+        {
+            attackStateResetTimerRight -= Time.deltaTime;
+            if (attackStateResetTimerRight <= 0f && currentBlockCooldownRight <= 0f)
+            {
+                currentState_Righthand = PerformActionState.Idle;
+            }
+        }
+
+        if (currentState_LeftHand != PerformActionState.Idle && currentState_LeftHand != PerformActionState.Hold1 && currentState_Righthand != PerformActionState.Block && !playerController.isKicking && !playerController.isExecuting)
+        {
+            attackStateResetTimerLeft -= Time.deltaTime;
+            if (attackStateResetTimerLeft <= 0f && currentBlockCooldownLeft <= 0f)
+            {
+                currentState_LeftHand = PerformActionState.Idle;
+            }
+        }
+    }
+
+    public void EquipWeapon(Weapon weapon, bool isLeftHand)
+    {
+        if (isLeftHand)
+        {
+            leftHandWeapon = weapon;
+            if (!isTwoHanding && anim_LeftHand != null && weapon.animController_OneHanded != null)
+            {
+                anim_LeftHand.runtimeAnimatorController = weapon.animController_OneHanded;
+                anim_LeftHand.Play("IsIdle", -1, 0f);
+            }
+        }
+        else
+        {
+            rightHandWeapon = weapon;
+            if (anim_RightHand != null)
+            {
+                RuntimeAnimatorController targetController = (isTwoHanding && weapon.animController_TwoHanded != null) ? weapon.animController_OneHanded : weapon.animController_OneHanded;
+                if (targetController != null)
+                {
+                    anim_RightHand.runtimeAnimatorController = targetController;
+                    anim_RightHand.Play("IsIdle", -1, 0f);
+                }
+            }
+        }
+    }
+
+    public void ToggleTwoHandedStance()
+    {
+        if (rightHandWeapon == null) return;
+
+        if (isBlocking)
+        {
+            isBlocking = false;
+            currentBlockCooldownRight = blockCooldownDuration;
+            currentBlockCooldownLeft = blockCooldownDuration;
+            currentState_Righthand = PerformActionState.Idle;
+            currentState_LeftHand = PerformActionState.Idle;
+        }
+
+        isTwoHanding = !isTwoHanding;
+
+        if (isTwoHanding)
+        {
+            if (anim_RightHand != null && rightHandWeapon.animController_TwoHanded != null)
+            {
+                anim_RightHand.runtimeAnimatorController = rightHandWeapon.animController_TwoHanded;
+                anim_RightHand.Play("IsIdle", -1, 0f);
+            }
+
+            currentState_LeftHand = PerformActionState.Idle;
+            image_LeftHand.enabled = false;
+            image_LeftHandWeaponIcon.enabled = false;
+        }
+        else
+        {
+            if (anim_RightHand != null && rightHandWeapon.animController_OneHanded != null)
+            {
+                anim_RightHand.runtimeAnimatorController = rightHandWeapon.animController_OneHanded;
+                anim_RightHand.Play("IsIdle", -1, 0f);
+            }
+
+            if (leftHandWeapon != null)
+            {
+                image_LeftHand.enabled = true;
+                image_LeftHandWeaponIcon.enabled = true;
+                if (anim_LeftHand != null && leftHandWeapon.animController_OneHanded != null)
+                {
+                    anim_LeftHand.runtimeAnimatorController = leftHandWeapon.animController_OneHanded;
+                    anim_LeftHand.Play("IsIdle", -1, 0f);
+                }
+            }
+        }
+    }
+
+    private void HandleHandSprite()
+    {
+        // Left hand sprite respects the isTwoHanding stance
+        if (leftHandWeapon != null && !isTwoHanding)
+        {
+            if (image_LeftHandWeaponIcon.sprite != leftHandWeapon.spr_Weapon)
+            {
+                image_LeftHandWeaponIcon.sprite = leftHandWeapon.spr_Weapon;
+            }
+
+            if (image_LeftHand.enabled == false)
+            {
+                image_LeftHandWeaponIcon.enabled = true;
+                image_LeftHand.enabled = true;
+
+                if (anim_LeftHand != null && leftHandWeapon.animController_OneHanded != null)
+                    anim_LeftHand.runtimeAnimatorController = leftHandWeapon.animController_OneHanded;
+            }
+        }
+        else
+        {
+            if (image_LeftHand.enabled == true)
+            {
+                image_LeftHandWeaponIcon.enabled = false;
+                image_LeftHand.enabled = false;
+            }
+        }
+
+        // Right hand sprite logic
+        if (rightHandWeapon != null)
+        {
+            if(image_RightHandWeaponIcon.sprite != rightHandWeapon.spr_Weapon)
+            {
+                image_RightHandWeaponIcon.sprite = rightHandWeapon.spr_Weapon;
+            }
+
+            if (image_RightHand.enabled == false)
+            {
+                image_RightHandWeaponIcon.enabled = true;
+                image_RightHand.enabled = true;
+
+                RuntimeAnimatorController targetController = (isTwoHanding && rightHandWeapon.animController_TwoHanded != null) ? rightHandWeapon.animController_TwoHanded : rightHandWeapon.animController_OneHanded;
+                if (anim_RightHand != null && targetController != null)
+                    anim_RightHand.runtimeAnimatorController = targetController;
+            }
+        }
+        else
+        {
+            if (image_RightHand.enabled == true)
+            {
+                image_RightHandWeaponIcon.enabled = false;
+                image_RightHand.enabled = false;
+            }
+        }
+    }
+
+    private void HandleRightHandInput()
+    {
+        if (rightHandWeapon == null) return;
+
+        switch (rightHandWeapon.weaponCategory)
+        {
+            case WeaponCategory.Shield:
+                HandleShieldInput(rightHandWeapon, isLeftHand: false);
+                break;
+            case WeaponCategory.Melee:
+                HandleMeleeInput(rightHandWeapon, isLeftHand: false);
+                break;
+            case WeaponCategory.Bow:
+                HandleBowInput(rightHandWeapon, isLeftHand: false);
+                break;
+            case WeaponCategory.PyromancyFlame:
+                HandlePyromancyInput(rightHandWeapon, isLeftHand: false);
+                break;
+            case WeaponCategory.SorceryCatalyst:
+                HandleMagicInput(rightHandWeapon, isLeftHand: false);
+                break;
+        }
+    }
+
+    private void HandleLeftHandInput()
+    {
+        if (isTwoHanding || leftHandWeapon == null) return;
+
+        switch (leftHandWeapon.weaponCategory)
+        {
+            case WeaponCategory.Shield:
+                HandleShieldInput(leftHandWeapon, isLeftHand: true);
+                break;
+            case WeaponCategory.Melee:
+                HandleMeleeInput(leftHandWeapon, isLeftHand: true);
+                break;
+            case WeaponCategory.Bow:
+                HandleBowInput(leftHandWeapon, isLeftHand: true);
+                break;
+            case WeaponCategory.PyromancyFlame:
+                HandlePyromancyInput(leftHandWeapon, isLeftHand: true);
+                break;
+            case WeaponCategory.SorceryCatalyst:
+                HandleMagicInput(leftHandWeapon, isLeftHand: true);
+                break;
+        }
+    }
+
+    private void HandleShieldInput(Weapon weapon, bool isLeftHand)
+    {
+        bool isHeld = isLeftHand ? playerController.isLeftHandHeld : playerController.isRightHandHeld;
+        ref float blockCooldown = ref (isLeftHand ? ref currentBlockCooldownLeft : ref currentBlockCooldownRight);
+
+        if (isHeld && blockCooldown <= 0f && !playerController.isKicking)
+        {
+            if (playerController.CharacterStaminaComponent.CurrentStamina > 0f && !isBlocking)
+            {
+                RumbleManager.instance.RumblePulse(1f, 2f, 0.15f);
+                isBlocking = true;
+                if (isLeftHand) currentState_LeftHand = PerformActionState.Hold1;
+                else currentState_Righthand = PerformActionState.Hold1;
+
+                currentParry = parryDuration;
+            }
+        }
+        else if (!isHeld && isBlocking)
+        {
+            isBlocking = false;
+            blockCooldown = blockCooldownDuration;
+            if (isLeftHand) currentState_LeftHand = PerformActionState.Idle;
+            else currentState_Righthand = PerformActionState.Idle;
+        }
+    }
+
+    private void HandleMeleeInput(Weapon weapon, bool isLeftHand)
+    {
+        bool isPressed = isLeftHand ? playerController.isLeftHandPressed : playerController.isRightHandPressed;
+        ref float lastAttackTime = ref (isLeftHand ? ref lastAttackTimeLeft : ref lastAttackTimeRight);
+
+        if (isTwoHanding)
+        {
+            bool isBlockHeld = playerController.isLeftHandHeld;
+            ref float blockCooldown = ref currentBlockCooldownRight;
+
+            if (isBlockHeld && blockCooldown <= 0f && !playerController.isKicking)
+            {
+                if (playerController.CharacterStaminaComponent.CurrentStamina > 0f && !isBlocking)
+                {
+                    RumbleManager.instance.RumblePulse(1f, 2f, 0.15f);
+                    isBlocking = true;
+                    currentState_Righthand = PerformActionState.Block;
+                    currentParry = parryDuration;
+                }
+            }
+            else if (!isBlockHeld && isBlocking)
+            {
+                isBlocking = false;
+                blockCooldown = blockCooldownDuration;
+                currentState_Righthand = PerformActionState.Idle;
+            }
+        }
+
+        if (isBlocking) return;
+
+        if (isPressed && !playerController.isKicking)
+        {
+            if (playerController.CharacterStaminaComponent.CurrentStamina > 0f)
+            {
+                if (Time.time >= lastAttackTime + weapon.attackCooldown)
+                {
+                    PerformAttack(weapon, isLeftHand);
+                }
+            }
+        }
+    }
+
+    private void HandleBowInput(Weapon weapon, bool isLeftHand)
+    {
+        bool isHeld = isLeftHand ? playerController.isLeftHandHeld : playerController.isRightHandHeld;
+        bool isPressed = isLeftHand ? playerController.isLeftHandPressed : playerController.isRightHandPressed;
+
+        // Press to draw string (Hold1), release to shoot (Press1)
+        if (isHeld)
+        {
+            if (isLeftHand) currentState_LeftHand = PerformActionState.Hold1;
+            else currentState_Righthand = PerformActionState.Hold1;
+        }
+        else if (!isHeld && (isLeftHand ? currentState_LeftHand == PerformActionState.Hold1 : currentState_Righthand == PerformActionState.Hold1))
+        {
+            // Release arrow logic here
+            playerController.StaminaDepleted(weapon.staminaCost);
+            if (isLeftHand) currentState_LeftHand = PerformActionState.Press1;
+            else currentState_Righthand = PerformActionState.Press1;
+        }
+    }
+
+    private void HandlePyromancyInput(Weapon weapon, bool isLeftHand)
+    {
+        bool isPressed = isLeftHand ? playerController.isLeftHandPressed : playerController.isRightHandPressed;
+        bool isHeld = isLeftHand ? playerController.isLeftHandHeld : playerController.isRightHandHeld;
+        ref float lastAttackTime = ref (isLeftHand ? ref lastAttackTimeLeft : ref lastAttackTimeRight);
+        ref float attackResetTimer = ref (isLeftHand ? ref attackStateResetTimerLeft : ref attackStateResetTimerRef(isLeftHand));
+
+        // When first pressed, execute the Cast animation state (Press1) and deplete stamina[cite: 14]
+        if (isPressed && !playerController.isKicking)
+        {
+            if (playerController.CharacterStaminaComponent.CurrentStamina > 0f)
+            {
+                if (Time.time >= lastAttackTime + weapon.attackCooldown)
+                {
+                    playerController.StaminaDepleted(weapon.staminaCost);
+                    lastAttackTime = Time.time;
+
+                    if (isLeftHand)
+                    {
+                        currentState_LeftHand = PerformActionState.Press1;
+                        attackStateResetTimerLeft = weapon.attackCooldown;
+                    }
+                    else
+                    {
+                        currentState_Righthand = PerformActionState.Press1;
+                        attackStateResetTimerRight = weapon.attackCooldown;
+                    }
+                }
+            }
+        }
+        // While continuing to hold the button down, switch to charging/channeling state (Hold1)[cite: 14]
+        else if (isHeld)
+        {
+            PerformActionState currentState = isLeftHand ? currentState_LeftHand : currentState_Righthand;
+
+            // Allow transition to Hold1 after the initial press or directly if channeled
+            if (currentState == PerformActionState.Press1 || currentState == PerformActionState.Idle)
+            {
+                if (isLeftHand) currentState_LeftHand = PerformActionState.Hold1;
+                else currentState_Righthand = PerformActionState.Hold1;
+            }
+        }
+        // When released from a hold state, return to Idle
+        else
+        {
+            PerformActionState currentState = isLeftHand ? currentState_LeftHand : currentState_Righthand;
+            if (currentState == PerformActionState.Hold1)
+            {
+                if (isLeftHand) currentState_LeftHand = PerformActionState.Idle;
+                else currentState_Righthand = PerformActionState.Idle;
+            }
+        }
+    }
+
+    private ref float attackStateResetTimerRef(bool isLeftHand)
+    {
+        return ref (isLeftHand ? ref attackStateResetTimerLeft : ref attackStateResetTimerRight);
+    }
+
+    private void HandleMagicInput(Weapon weapon, bool isLeftHand)
+    {
+        bool isPressed = isLeftHand ? playerController.isLeftHandPressed : playerController.isRightHandPressed;
+        bool isHeld = isLeftHand ? playerController.isLeftHandHeld : playerController.isRightHandHeld;
+
+        if (isPressed)
+        {
+            if (playerController.CharacterStaminaComponent.CurrentStamina > 0f)
+                PerformMagicCast(weapon, isLeftHand, isHold: false);
+        }
+        else if (isHeld)
+        {
+            PerformMagicCast(weapon, isLeftHand, isHold: true);
+        }
+        else
+        {
+            if (isLeftHand && currentState_LeftHand == PerformActionState.Hold1) currentState_LeftHand = PerformActionState.Idle;
+            else if (!isLeftHand && currentState_Righthand == PerformActionState.Hold1) currentState_Righthand = PerformActionState.Idle;
+        }
+    }
+
+    private void PerformMagicCast(Weapon weapon, bool isLeftHand, bool isHold)
+    {
+        playerController.StaminaDepleted(weapon.staminaCost);
+
+        if (isHold)
+        {
+            if (isLeftHand) currentState_LeftHand = PerformActionState.Hold1;
+            else currentState_Righthand = PerformActionState.Hold1;
+        }
+        else
+        {
+            if (isLeftHand)
+            {
+                lastAttackTimeLeft = Time.time;
+                currentState_LeftHand = PerformActionState.Press1;
+                attackStateResetTimerLeft = weapon.attackCooldown;
+            }
+            else
+            {
+                lastAttackTimeRight = Time.time;
+                currentState_Righthand = PerformActionState.Press1;
+                attackStateResetTimerRight = weapon.attackCooldown;
+            }
+        }
+    }
+
+    private IEnumerator ExecutionSequence(EnemyEntity targetEnemy)
+    {
+        playerController.isAttacking = true;
+        playerController.isExecuting = true;
+
+        Vector3 directionToPlayer = (transform.position - targetEnemy.transform.position).normalized;
+        directionToPlayer.y = 0;
+
+        Vector3 executeCenter = targetEnemy.executeTransform != null ? targetEnemy.executeTransform.position : targetEnemy.transform.position;
+        Vector3 targetPos = executeCenter + (directionToPlayer * 1.2f);
+
+        float startYaw = transform.eulerAngles.y;
+        Vector3 dirToEnemyBody = executeCenter - targetPos;
+        dirToEnemyBody.y = 0;
+        float targetYaw = Quaternion.LookRotation(dirToEnemyBody).eulerAngles.y;
+
+        float startPitch = playerController.verticalRotation;
+        Vector3 lookTargetPos = targetEnemy.executeTransform != null ? targetEnemy.executeTransform.position : targetEnemy.transform.position + (Vector3.up * 1.5f);
+
+        float cameraHeight = cameraTransform.position.y - transform.position.y;
+        Vector3 finalCameraPos = targetPos + (Vector3.up * cameraHeight);
+
+        Vector3 dirToLookTarget = (lookTargetPos - finalCameraPos).normalized;
+        float targetPitch = Quaternion.LookRotation(dirToLookTarget).eulerAngles.x;
+        if (targetPitch > 180f) targetPitch -= 360f;
+
+        float dashDuration = 0.2f;
+        float elapsed = 0f;
+        CharacterController charController = playerController.GetComponent<CharacterController>();
+
+        while (elapsed < dashDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / dashDuration;
+
+            Vector3 currentLerpPos = Vector3.Lerp(transform.position, targetPos, t);
+            Vector3 moveDelta = currentLerpPos - transform.position;
+            charController.Move(moveDelta);
+
+            float currentYaw = Mathf.LerpAngle(startYaw, targetYaw, t);
+            transform.eulerAngles = new Vector3(0f, currentYaw, 0f);
+
+            playerController.verticalRotation = Mathf.LerpAngle(startPitch, targetPitch, t);
+
+            yield return null;
+        }
+
+        transform.eulerAngles = new Vector3(0f, targetYaw, 0f);
+        playerController.verticalRotation = targetPitch;
+
+        currentState_Righthand = PerformActionState.Execute;
+
+        targetEnemy.GotExecuted();
+        cameraFollow.isSmoothing = false;
+        cameraBob.TriggerShake(0.293f, 0.05f);
+        cameraBob.TriggerZoomEffect(40f, 0.293f, 0.25f);
+
+        yield return new WaitForSeconds(0.293f);
+
+        cameraFollow.isSmoothing = false;
+        playerController.isExecuting = false;
+        playerController.isAttacking = false;
+        currentState_Righthand = PerformActionState.Idle;
+    }
+
+    public bool HasPyromancyEquipped()
+    {
+        bool rightIsPyro = rightHandWeapon != null && rightHandWeapon.weaponCategory == WeaponCategory.PyromancyFlame;
+        bool leftIsPyro = leftHandWeapon != null && leftHandWeapon.weaponCategory == WeaponCategory.PyromancyFlame;
+        return rightIsPyro || leftIsPyro;
+    }
+
+    private void PerformPyromancy(Weapon weapon, bool isLeftHand, bool isHold)
+    {
+        playerController.StaminaDepleted(weapon.staminaCost);
+
+        if (isHold)
+        {
+            if (isLeftHand) currentState_LeftHand = PerformActionState.Hold1;
+            else currentState_Righthand = PerformActionState.Hold1;
+        }
+        else
+        {
+            if (isLeftHand)
+            {
+                lastAttackTimeLeft = Time.time;
+                currentState_LeftHand = PerformActionState.Press1;
+                attackStateResetTimerLeft = weapon.attackCooldown;
+            }
+            else
+            {
+                lastAttackTimeRight = Time.time;
+                currentState_Righthand = PerformActionState.Press1;
+                attackStateResetTimerRight = weapon.attackCooldown;
+            }
+        }
+    }
+
+    private EnemyEntity GetEnemyInFront()
+    {
+        Vector3 castStart = cameraTransform.position - (cameraTransform.forward * attackRadius);
+        Ray rayAttack = new Ray(castStart, cameraTransform.forward);
+        float totalRange = attackRange + attackRadius;
+
+        if (Physics.SphereCast(rayAttack, attackRadius, out RaycastHit hit, totalRange, attackLayerMask))
+        {
+            return hit.collider.GetComponent<EnemyEntity>();
+        }
+
+        return null;
+    }
+
+    private void PerformAttack(Weapon weapon, bool isLeftHand)
+    {
+        if (!playerController.isGrounded || playerController.isSliding) { return; }
+
+        ApplyAttackJolt(weapon, isLeftHand);
+
+        playerController.TriggerAttackMovement(weapon.attackCooldown, lungeForce);
+
+        if (isLeftHand)
+        {
+            lastAttackTimeLeft = Time.time;
+            attackStateResetTimerLeft = weapon.attackCooldown;
+        }
+        else
+        {
+            lastAttackTimeRight = Time.time;
+            attackStateResetTimerRight = weapon.attackCooldown;
+        }
+    }
+
+    private void ApplyAttackJolt(Weapon weapon, bool isLeftHand)
+    {
+        RumbleManager.instance.RumblePulse(1f, 2.5f, 0.2f);
+        playerController.StaminaDepleted(weapon.staminaCost);
+
+        if (isLeftHand)
+        {
+            if (Time.time > lastAttackTimeLeft + weapon.attackCooldown + 0.5f) comboStepLeft = 0;
+        }
+        else
+        {
+            if (Time.time > lastAttackTimeRight + weapon.attackCooldown + 0.5f) comboStepRight = 0;
+        }
+
+        Vector3 joltDirection = Vector3.zero;
+        Vector3 castStart = cameraTransform.position - (cameraTransform.forward * attackRadius);
+        Ray rayAttack = new Ray(castStart, cameraTransform.forward);
+        float totalRange = attackRange + attackRadius;
+        bool isLeftAttack = isLeftHand;
+        int currentCombo = isLeftHand ? comboStepLeft : comboStepRight;
+
+        switch (currentCombo)
+        {
+            case 0:
+                joltDirection = new Vector3(2f, -6f, 3f);
+                if (isLeftHand) currentState_LeftHand = PerformActionState.Press1;
+                else currentState_Righthand = PerformActionState.Press1;
+                break;
+            case 1:
+                joltDirection = new Vector3(2f, 6f, -3f);
+                if (isLeftHand) currentState_LeftHand = PerformActionState.Press2;
+                else currentState_Righthand = PerformActionState.Press2;
+                break;
+            case 2:
+                joltDirection = new Vector3(5f, 0f, 0f);
+                if (isLeftHand) currentState_LeftHand = PerformActionState.Press3;
+                else currentState_Righthand = PerformActionState.Press3;
+                break;
+        }
+
+        RaycastHit[] hits = Physics.SphereCastAll(rayAttack, attackRadius, totalRange, attackLayerMask);
+        bool hitSomething = false;
+
+        if (hits.Length > 0)
+        {
+            HashSet<Component> processedTargets = new HashSet<Component>();
+
+            foreach (RaycastHit hit in hits)
+            {
+                EnemyEntity targetEnemy = hit.collider.GetComponent<EnemyEntity>();
+                Fracture destructible = hit.collider.GetComponent<Fracture>();
+                FractureTrigger fractureTrigger = hit.collider.GetComponent<FractureTrigger>();
+
+                if (targetEnemy != null && processedTargets.Add(targetEnemy))
+                {
+                    targetEnemy.TakeSwordHit(isLeftAttack, hit.point, weapon.damage);
+                    hitSomething = true;
+                }
+                else if (destructible != null && processedTargets.Add(destructible))
+                {
+                    destructible.TakeDamage(weapon.damage, hit.collider, hit.point);
+                    hitSomething = true;
+
+                    if (fractureTrigger != null)
+                    {
+                        fractureTrigger.TriggerMaterialSound_Hit();
+                    }
+                }
+            }
+        }
+
+        if (!hitSomething)
+        {
+            SoundManager.instance.SwordSound_Air(transform.position);
+        }
+
+        playerController.TriggerMeleeJolt(joltDirection);
+
+        if (isLeftHand)
+        {
+            comboStepLeft++;
+            if (comboStepLeft > 1) comboStepLeft = 0;
+        }
+        else
+        {
+            comboStepRight++;
+            if (comboStepRight > 1) comboStepRight = 0;
+        }
+    }
+
+    private static readonly Dictionary<PerformActionState, int> StateToHash = new Dictionary<PerformActionState, int>
+    {
+        { PerformActionState.Idle, Animator.StringToHash("IsIdle") },
+        { PerformActionState.Press1, Animator.StringToHash("IsPress1") },
+        { PerformActionState.Press2, Animator.StringToHash("IsPress2") },
+        { PerformActionState.Press3, Animator.StringToHash("IsPress3") },
+        { PerformActionState.Hold1, Animator.StringToHash("IsHold1") },
+        { PerformActionState.Hold2, Animator.StringToHash("IsHold2") },
+        { PerformActionState.Hold3, Animator.StringToHash("IsHold3") },
+        { PerformActionState.Block, Animator.StringToHash("IsBlock") },
+        { PerformActionState.Execute, Animator.StringToHash("IsExecute") }
+    };
+
+    private int lastLeftStateHash;
+    private int lastRightStateHash;
+
+    private void ChooseAnimations()
+    {
+        // Handle Left Hand Animator
+        if (StateToHash.TryGetValue(currentState_LeftHand, out int leftHash))
+        {
+            if (leftHash != lastLeftStateHash)
+            {
+                if (lastLeftStateHash != 0 && anim_LeftHand != null) anim_LeftHand.SetBool(lastLeftStateHash, false);
+                if (anim_LeftHand != null) anim_LeftHand.SetBool(leftHash, true);
+                lastLeftStateHash = leftHash;
+            }
+        }
+
+        // Handle Right Hand Animator
+        if (StateToHash.TryGetValue(currentState_Righthand, out int rightHash))
+        {
+            if (rightHash != lastRightStateHash)
+            {
+                if (lastRightStateHash != 0 && anim_RightHand != null) anim_RightHand.SetBool(lastRightStateHash, false);
+                if (anim_RightHand != null) anim_RightHand.SetBool(rightHash, true);
+                lastRightStateHash = rightHash;
+            }
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (cameraTransform == null) return;
+
+        Gizmos.color = Color.red;
+
+        Vector3 castStart = cameraTransform.position - (cameraTransform.forward * attackRadius);
+        float totalRange = attackRange + attackRadius;
+
+        Gizmos.DrawRay(castStart, cameraTransform.forward * totalRange);
+        Gizmos.DrawWireSphere(castStart, attackRadius);
+
+        Vector3 endPosition = castStart + (cameraTransform.forward * totalRange);
+        Gizmos.DrawWireSphere(endPosition, attackRadius);
+    }
+}

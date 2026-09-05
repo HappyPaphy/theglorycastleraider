@@ -101,8 +101,8 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 77
-        width: 52
+        y: 0
+        width: 104
         height: 77
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -112,8 +112,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cd7fd4012c949e542b0d9d5380d93b10
-      internalID: 1488404828
+      spriteID: 71697447e67c46041a2c0be0fd28d3d6
+      internalID: -2085894017
       vertices: []
       indices: 
       edges: []
@@ -122,9 +122,9 @@ TextureImporter:
       name: EquipmentFrame_1
       rect:
         serializedVersion: 2
-        x: 52
-        y: 77
-        width: 52
+        x: 104
+        y: 0
+        width: 104
         height: 77
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -134,8 +134,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1864b56a3c13b2a43ba357270ff89e5c
-      internalID: 2041151089
+      spriteID: 084c10efdf9f255448654e4e8ea921b8
+      internalID: 1732242641
       vertices: []
       indices: 
       edges: []
@@ -144,9 +144,9 @@ TextureImporter:
       name: EquipmentFrame_2
       rect:
         serializedVersion: 2
-        x: 104
-        y: 77
-        width: 52
+        x: 208
+        y: 0
+        width: 104
         height: 77
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -156,8 +156,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c4aec1c1ae419fc428dd7cebdc04040f
-      internalID: -1639196479
+      spriteID: ed720e0b887e65f499e185f1cac0e6e1
+      internalID: 1976551183
       vertices: []
       indices: 
       edges: []
@@ -166,9 +166,9 @@ TextureImporter:
       name: EquipmentFrame_3
       rect:
         serializedVersion: 2
-        x: 156
-        y: 77
-        width: 52
+        x: 312
+        y: 0
+        width: 104
         height: 77
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -178,8 +178,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c656e7deac548474d909a2b934bcdeb3
-      internalID: -1194067836
+      spriteID: 032099f1428ad254286cd1f9078fde4a
+      internalID: 302748542
       vertices: []
       indices: 
       edges: []
@@ -188,9 +188,9 @@ TextureImporter:
       name: EquipmentFrame_4
       rect:
         serializedVersion: 2
-        x: 0
+        x: 416
         y: 0
-        width: 52
+        width: 104
         height: 77
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -200,8 +200,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 73734a56f5c8d6549b1eb093310153dd
-      internalID: -770865398
+      spriteID: 5f0582955bc47b145beaed4daff3b11e
+      internalID: -1032916297
       vertices: []
       indices: 
       edges: []
@@ -210,9 +210,9 @@ TextureImporter:
       name: EquipmentFrame_5
       rect:
         serializedVersion: 2
-        x: 52
+        x: 520
         y: 0
-        width: 52
+        width: 104
         height: 77
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -222,8 +222,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7d2640040a6e0554cb4d9c43587094bd
-      internalID: 1485360850
+      spriteID: 3c5c62623877fa5439da17d44e60357d
+      internalID: -886609857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EquipmentFrame_6
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 0
+        width: 104
+        height: 77
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0aa368f0690a5d4459b0440fa0e54009
+      internalID: 1798449701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EquipmentFrame_7
+      rect:
+        serializedVersion: 2
+        x: 728
+        y: 0
+        width: 104
+        height: 77
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ffe3cc2c0c93c7048a7d5fc00c2a5282
+      internalID: 817308019
       vertices: []
       indices: 
       edges: []
@@ -232,7 +276,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: e2e74345bc1ef424c8573ef0e68248d6
+    spriteID: 8da058508bbba164aad8bb35a4b9afd8
     internalID: 0
     vertices: []
     indices: 
@@ -242,14 +286,16 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":4.0,"y":2.0},"gridSpriteSize":{"x":52.0,"y":77.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":8.0,"y":1.0},"gridSpriteSize":{"x":104.0,"y":77.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      EquipmentFrame_0: 1488404828
-      EquipmentFrame_1: 2041151089
-      EquipmentFrame_2: -1639196479
-      EquipmentFrame_3: -1194067836
-      EquipmentFrame_4: -770865398
-      EquipmentFrame_5: 1485360850
+      EquipmentFrame_0: -2085894017
+      EquipmentFrame_1: 1732242641
+      EquipmentFrame_2: 1976551183
+      EquipmentFrame_3: 302748542
+      EquipmentFrame_4: -1032916297
+      EquipmentFrame_5: -886609857
+      EquipmentFrame_6: 1798449701
+      EquipmentFrame_7: 817308019
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
