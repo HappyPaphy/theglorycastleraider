@@ -64,8 +64,10 @@ public class PlayerWeaponManager : MonoBehaviour
     private float attackStateResetTimerRight = 0f;
     private float attackStateResetTimerLeft = 0f;
 
-    [HideInInspector] public bool isBlocking = false;
-    [HideInInspector] public float currentParry = 0f;
+    [HideInInspector] public bool isBlockingRight = false;
+    [HideInInspector] public bool isBlockingLeft = false;
+    [HideInInspector] public float currentParryRight = 0f;
+    [HideInInspector] public float currentParryLeft = 0f;
 
     private float parryDuration = 0.3f;
     private float blockCooldownDuration = 0.15f;
@@ -94,7 +96,8 @@ public class PlayerWeaponManager : MonoBehaviour
 
         if (currentBlockCooldownRight > 0f) currentBlockCooldownRight -= Time.deltaTime;
         if (currentBlockCooldownLeft > 0f) currentBlockCooldownLeft -= Time.deltaTime;
-        if (currentParry > 0f) currentParry -= Time.deltaTime;
+        if (currentParryRight > 0f) currentParryRight -= Time.deltaTime;
+        if (currentParryLeft > 0f) currentParryLeft -= Time.deltaTime;
 
         HandleHandSprite();
         HandleRightHandInput();
@@ -173,9 +176,10 @@ public class PlayerWeaponManager : MonoBehaviour
     {
         if (rightHandWeapon == null) return;
 
-        if (isBlocking)
+        if (isBlockingRight || isBlockingLeft)
         {
-            isBlocking = false;
+            isBlockingRight = false;
+            isBlockingLeft = false;
             currentBlockCooldownRight = blockCooldownDuration;
             currentBlockCooldownLeft = blockCooldownDuration;
             currentState_Righthand = PerformActionState.Idle;
@@ -325,6 +329,8 @@ public class PlayerWeaponManager : MonoBehaviour
     {
         bool isHeld = isLeftHand ? playerController.isLeftHandHeld : playerController.isRightHandHeld;
         ref float blockCooldown = ref (isLeftHand ? ref currentBlockCooldownLeft : ref currentBlockCooldownRight);
+        ref bool isBlocking = ref (isLeftHand ? ref isBlockingLeft : ref isBlockingRight);
+        ref float currentParry = ref (isLeftHand ? ref currentParryLeft : ref currentParryRight);
 
         if (isHeld && blockCooldown <= 0f && !playerController.isKicking)
         {
@@ -359,23 +365,24 @@ public class PlayerWeaponManager : MonoBehaviour
 
             if (isBlockHeld && blockCooldown <= 0f && !playerController.isKicking)
             {
-                if (playerController.CharacterStaminaComponent.CurrentStamina > 0f && !isBlocking)
+                if (playerController.CharacterStaminaComponent.CurrentStamina > 0f && !isBlockingRight)
                 {
                     RumbleManager.instance.RumblePulse(1f, 2f, 0.15f);
-                    isBlocking = true;
+                    isBlockingRight = true;
                     currentState_Righthand = PerformActionState.Block;
-                    currentParry = parryDuration;
+                    currentParryRight = parryDuration;
                 }
             }
-            else if (!isBlockHeld && isBlocking)
+            else if (!isBlockHeld && isBlockingRight)
             {
-                isBlocking = false;
+                isBlockingRight = false;
                 blockCooldown = blockCooldownDuration;
                 currentState_Righthand = PerformActionState.Idle;
             }
         }
 
-        if (isBlocking) return;
+        bool isThisHandBlocking = isLeftHand ? isBlockingLeft : isBlockingRight;
+        if (isThisHandBlocking) return;
 
         if (isPressed && !playerController.isKicking)
         {
@@ -671,19 +678,26 @@ public class PlayerWeaponManager : MonoBehaviour
         switch (currentCombo)
         {
             case 0:
-                joltDirection = new Vector3(2f, -6f, 3f);
-                if (isLeftHand) currentState_LeftHand = PerformActionState.Press1;
-                else currentState_Righthand = PerformActionState.Press1;
+                {
+                    joltDirection = new Vector3(2f, -6f, 3f);
+                    if (isLeftHand) currentState_LeftHand = PerformActionState.Press1;
+                    else currentState_Righthand = PerformActionState.Press1;
+                }
                 break;
             case 1:
-                joltDirection = new Vector3(2f, 6f, -3f);
-                if (isLeftHand) currentState_LeftHand = PerformActionState.Press2;
-                else currentState_Righthand = PerformActionState.Press2;
+                {
+                    isLeftAttack = !isLeftAttack;
+                    joltDirection = new Vector3(2f, 6f, -3f);
+                    if (isLeftHand) currentState_LeftHand = PerformActionState.Press2;
+                    else currentState_Righthand = PerformActionState.Press2;
+                }
                 break;
             case 2:
-                joltDirection = new Vector3(5f, 0f, 0f);
-                if (isLeftHand) currentState_LeftHand = PerformActionState.Press3;
-                else currentState_Righthand = PerformActionState.Press3;
+                {
+                    joltDirection = new Vector3(5f, 0f, 0f);
+                    if (isLeftHand) currentState_LeftHand = PerformActionState.Press3;
+                    else currentState_Righthand = PerformActionState.Press3;
+                }
                 break;
         }
 

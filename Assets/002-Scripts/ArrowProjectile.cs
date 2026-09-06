@@ -3,7 +3,7 @@ using UnityEngine;
 public class ArrowProjectile : MonoBehaviour
 {
     public float damage = 8f;
-    public float staminaCost = 8f;
+    public float staminaDamage = 8f;
     [SerializeField] private float speed = 25f;
     [SerializeField] private float lifeTime = 4f;
     [SerializeField] private LayerMask playerLayer;

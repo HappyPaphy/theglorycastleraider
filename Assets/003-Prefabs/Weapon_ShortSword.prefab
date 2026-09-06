@@ -63,6 +63,13 @@ MonoBehaviour:
   damage: 18
   attackCooldown: 0.6
   staminaCost: 8
+  blockStaminaDamage: 8
+  audioClips_BlockSound:
+  - {fileID: 8300000, guid: 9b51803bf4ca0744b8ec79f0696d2867, type: 3}
+  - {fileID: 8300000, guid: f2bc45810b6e0df44b0f0b991f12b58a, type: 3}
+  - {fileID: 8300000, guid: b20bf6d7d62c3bd42aebeaf09bdd035b, type: 3}
+  audioClips_ParrySound:
+  - {fileID: 8300000, guid: 3f7fdfc3796e8b8439360a9b79fb63cf, type: 3}
   spr_Weapon: {fileID: -2085894017, guid: 061137b5a6b2b4c43b0bd8cc01e15662, type: 3}
   animController_OneHanded: {fileID: 9100000, guid: b1dd4e21bb34d7f409d8aaa9f5d82f05, type: 2}
   animController_TwoHanded: {fileID: 9100000, guid: 6d727605931cd5643bfe8be6aa293f15, type: 2}

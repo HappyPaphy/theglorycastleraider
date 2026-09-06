@@ -727,28 +727,44 @@ public class PlayerController : PlayerEntity
 
     public void TakeSwordHit(EnemyEntity enemy)
     {
-        if (playerWeaponManager.currentParry > 0f)
+        if (playerWeaponManager.currentParryLeft > 0f || playerWeaponManager.currentParryRight > 0f)
         {
-            //SoundManager.instance.ParriedSound();
             enemy.GotParried();
-            SoundManager.instance.ParriedSound(transform.position);
             BlockedOrParriedEffect(enemy.eyesTransform.position);
-            StaminaDepleted(enemy.staminaDamage / 3 * GameManager.instance.playerTakeStaminaDamage);
             RumbleManager.instance.RumblePulse(1f, 3f, 0.4f);
             cameraBob.TriggerShake(0.293f, 0.05f);
+
+            if (playerWeaponManager.currentParryLeft > 0f)
+            {
+                SoundManager.instance.BlockOrParrySound(playerWeaponManager.leftHandWeapon.audioClips_ParrySound, transform.position);
+            }
+            else if (playerWeaponManager.currentParryRight > 0f)
+            {
+                SoundManager.instance.BlockOrParrySound(playerWeaponManager.rightHandWeapon.audioClips_ParrySound, transform.position);
+            }
         }
         else
         {
             enemy.AttackSuccessful();
 
-            if (playerWeaponManager.isBlocking)
+            if (playerWeaponManager.isBlockingLeft || playerWeaponManager.isBlockingRight)
             {
                 BlockedOrParriedEffect(enemy.eyesTransform.position);
                 //playerWeaponManager.PerformBlock();
-                SoundManager.instance.SwordSound_Metal(transform.position);
                 cameraBob.TriggerShake(0.293f, 0.05f);
-                StaminaDepleted(enemy.staminaDamage * GameManager.instance.playerTakeStaminaDamage);
+                
                 RumbleManager.instance.RumblePulse(1f, 3f, 0.4f);
+
+                if(playerWeaponManager.isBlockingLeft)
+                {
+                    StaminaDepleted(enemy.staminaDamage * playerWeaponManager.leftHandWeapon.blockStaminaDamageModifier * GameManager.instance.playerTakeStaminaDamage);
+                    SoundManager.instance.BlockOrParrySound(playerWeaponManager.leftHandWeapon.audioClips_BlockSound ,transform.position);
+                }
+                else if(playerWeaponManager.isBlockingRight)
+                {
+                    StaminaDepleted(enemy.staminaDamage * playerWeaponManager.rightHandWeapon.blockStaminaDamageModifier * GameManager.instance.playerTakeStaminaDamage);
+                    SoundManager.instance.BlockOrParrySound(playerWeaponManager.rightHandWeapon.audioClips_BlockSound, transform.position);
+                }
             }
             else
             {
@@ -770,24 +786,40 @@ public class PlayerController : PlayerEntity
 
     public void TakeArrowHit(ArrowProjectile arrow)
     {
-        if (playerWeaponManager.currentParry > 0f)
+        if (playerWeaponManager.currentParryLeft > 0f || playerWeaponManager.currentParryRight > 0f)
         {
             BlockedOrParriedEffect(arrow.gameObject.transform.position);
-            SoundManager.instance.ParriedSound(transform.position);
-            StaminaDepleted(arrow.staminaCost / 3 * GameManager.instance.playerTakeStaminaDamage);
             RumbleManager.instance.RumblePulse(1f, 2.5f, 0.1f);
             cameraBob.TriggerShake(0.293f, 0.05f);
+
+            if (playerWeaponManager.currentParryLeft > 0f)
+            {
+                SoundManager.instance.BlockOrParrySound(playerWeaponManager.leftHandWeapon.audioClips_ParrySound, transform.position);
+            }
+            else if(playerWeaponManager.currentParryRight > 0f)
+            {
+                SoundManager.instance.BlockOrParrySound(playerWeaponManager.rightHandWeapon.audioClips_ParrySound, transform.position);
+            }
         }
         else
         {
-            if (playerWeaponManager.isBlocking)
+            if (playerWeaponManager.isBlockingLeft ||playerWeaponManager.isBlockingRight)
             {
                 BlockedOrParriedEffect(arrow.gameObject.transform.position);
                 //playerWeaponManager.PerformBlock();
-                SoundManager.instance.SwordSound_Metal(transform.position);
                 cameraBob.TriggerShake(0.293f, 0.05f);
-                StaminaDepleted(arrow.staminaCost * GameManager.instance.playerTakeStaminaDamage);
                 RumbleManager.instance.RumblePulse(1f, 2.5f, 0.1f);
+
+                if(playerWeaponManager.isBlockingLeft)
+                {
+                    StaminaDepleted(arrow.staminaDamage * playerWeaponManager.leftHandWeapon.blockStaminaDamageModifier * GameManager.instance.playerTakeStaminaDamage);
+                    SoundManager.instance.BlockOrParrySound(playerWeaponManager.leftHandWeapon.audioClips_BlockSound ,transform.position);
+                }
+                else if(playerWeaponManager.isBlockingRight)
+                {
+                    StaminaDepleted(arrow.staminaDamage * playerWeaponManager.rightHandWeapon.blockStaminaDamageModifier * GameManager.instance.playerTakeStaminaDamage);
+                    SoundManager.instance.BlockOrParrySound(playerWeaponManager.rightHandWeapon.audioClips_BlockSound, transform.position);
+                }
             }
             else
             {

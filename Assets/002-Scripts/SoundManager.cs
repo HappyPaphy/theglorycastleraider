@@ -25,7 +25,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioSource[] sfx_SwordSwing_Flesh;
     [SerializeField] private AudioSource[] sfx_SwordSwing_Metal;
     [SerializeField] private AudioSource[] sfx_SwordSound_Execute;
-    [SerializeField] private AudioSource sfx_Parried; 
+    [SerializeField] private AudioSource sfx_BlockAndParried; 
     [SerializeField] private AudioSource sfx_BowSound_String;
     [SerializeField] private AudioSource sfx_BowSound_Hit;
 
@@ -147,6 +147,13 @@ public class SoundManager : MonoBehaviour
         PlaySound(sfx_SwordSwing_Metal[rndIndex], soundPosition, 100f);
     }
 
+    public void BlockOrParrySound(AudioClip[] clips,Vector3 soundPosition)
+    {
+        int rndIndex = Random.Range(0, clips.Length);
+        sfx_BlockAndParried.clip = clips[rndIndex];
+        PlaySound(sfx_BlockAndParried, soundPosition, 100f);
+    }
+
     public void SwordSound_Execute(Vector3 soundPosition)
     {
         int rndIndex = Random.Range(0, sfx_SwordSound_Execute.Length);
@@ -161,11 +168,6 @@ public class SoundManager : MonoBehaviour
     public void BowSound_Hit(Vector3 soundPosition)
     {
         PlaySound(sfx_BowSound_Hit, soundPosition, 100f);
-    }
-
-    public void ParriedSound(Vector3 soundPosition)
-    {
-        PlaySound(sfx_Parried, soundPosition, 100f);
     }
 
     public void KickSound_Human(Vector3 soundPosition)

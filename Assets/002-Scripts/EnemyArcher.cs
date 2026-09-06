@@ -207,7 +207,7 @@ public class EnemyArcher : EnemyEntity
             if (arrow != null)
             {
                 arrow.damage = attackDamage;
-                arrow.staminaCost = staminaDamage;
+                arrow.staminaDamage = staminaDamage;
             }
 
             // Optional: Play bow string sound

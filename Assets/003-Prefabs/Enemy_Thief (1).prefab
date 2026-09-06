@@ -81,17 +81,17 @@ MonoBehaviour:
   backstabAngle: 60
   backstabRange: 2
   backstabDamage: 100
+  isEnableAgentOnStartOnce: 0
   isStunned: 0
   isDied: 0
   isDiedOnce: 0
   capsuleCol: {fileID: 1141512163243296553}
-  bloodEffect: {fileID: 6317032364392488945, guid: b462f72f433bde146b3c942ccc0215ab, type: 3}
-  sparkEffect: {fileID: 6317032364392488945, guid: 05ee21720c12c844788ffb522a97b9f6, type: 3}
   sprRndr: {fileID: 2840626006574473545}
   currentState: 0
   anim: {fileID: 5086979034720345345}
   moveSpeed: 2
   maxHitsBeforeBlock: 2
+  maxBlocksBeforeHit: 4
   currentHitCount: 0
   comboResetTime: 1.5
   attackRadius: 0.5

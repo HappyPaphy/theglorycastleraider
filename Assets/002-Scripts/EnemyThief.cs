@@ -30,7 +30,8 @@ public class EnemyThief : EnemyEntity
     [SerializeField] private float moveSpeed;
 
     [Header("Combat Dynamics")]
-    [SerializeField] private int maxHitsBeforeBlock = 3; // X times enemy can be hit before blocking
+    [SerializeField] private int maxHitsBeforeBlock = 2; // X times enemy can be hit before blocking
+    [SerializeField] private int maxBlocksBeforeHit = 2; // X times enemy can be hit before blocking
     [SerializeField] private int currentHitCount = 0;
     [SerializeField] private float comboResetTime = 1.5f; // How long before the hit counter resets
     [SerializeField] private float attackRadius = 0.5f;
@@ -70,6 +71,8 @@ public class EnemyThief : EnemyEntity
     [SerializeField] private float damageStunDuration = 0.5f; // How long the damage animation plays
     [SerializeField] private float blockDuration = 1f;        // How long the block animation plays
     private float stateTimer = 0f;
+
+    private bool isBlockingActive = false;
 
     [Header("Turn-Swapping Settings")]
     [SerializeField] private float turnCooldownDuration = 3f;   // Cooldown before they can volunteer to attack again
@@ -151,7 +154,7 @@ public class EnemyThief : EnemyEntity
             hitResetTimer -= Time.deltaTime;
             if (hitResetTimer <= 0)
             {
-                currentHitCount = 0; // Reset the hit counter
+                //currentHitCount = 0; // Reset the hit counter
             }
         }
 
@@ -221,16 +224,36 @@ public class EnemyThief : EnemyEntity
         }
         else
         {
-            if (currentHitCount >= maxHitsBeforeBlock)
+            if(!isBlockingActive)
             {
-                // Enemy has taken X hits and will now block
-                ApplyBlockState(isLeft);
+                if (currentHitCount >= maxHitsBeforeBlock && maxHitsBeforeBlock > 0)
+                {
+                    currentHitCount = maxBlocksBeforeHit;
+                    maxBlocksBeforeHit--;
+                    isBlockingActive = true;
+
+                    currentHitCount--;
+                    ApplyBlockState(isLeft);
+                }
+                else
+                {
+                    // Enemy takes the hit and increments the counter
+                    currentHitCount++;
+                    ApplyDamageState(isLeft, hitPoint, damageValue);
+                }
             }
             else
             {
-                // Enemy takes the hit and increments the counter
-                currentHitCount++;
-                ApplyDamageState(isLeft, hitPoint, damageValue);
+                if (currentHitCount > 0)
+                {
+                    currentHitCount--;
+                    ApplyBlockState(isLeft);
+                }
+                else
+                {
+                    isBlockingActive = false;
+                    ApplyDamageState(isLeft, hitPoint, damageValue);
+                }
             }
         }
     }
@@ -321,11 +344,6 @@ public class EnemyThief : EnemyEntity
         if (currentHitCount > 0)
         {
             currentHitCount -= 2;
-
-            if (currentHitCount < 0)
-            {
-                currentHitCount = 0;
-            }
         }
 
         SafeStopAgent(true);

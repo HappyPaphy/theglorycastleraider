@@ -41,6 +41,9 @@ public class Weapon : Item
     public float damage = 0f;
     public float attackCooldown = 0.6f;
     public float staminaCost = 10f;
+    public float blockStaminaDamageModifier = 1f;
+    public AudioClip[] audioClips_BlockSound;
+    public AudioClip[] audioClips_ParrySound;
 
     [Header("Visuals")]
     public Sprite spr_Weapon;

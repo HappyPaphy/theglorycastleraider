@@ -269,7 +269,7 @@ GameObject:
   - component: {fileID: 2574448509835844419}
   - component: {fileID: 1809643580138116508}
   m_Layer: 0
-  m_Name: ParriedSound
+  m_Name: Block&ParriedSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -925,7 +925,7 @@ MonoBehaviour:
   - {fileID: 3952077299308630085}
   sfx_SwordSound_Execute:
   - {fileID: 1892990036788035279}
-  sfx_Parried: {fileID: 1809643580138116508}
+  sfx_BlockAndParried: {fileID: 1809643580138116508}
   sfx_BowSound_String: {fileID: 425427855364251157}
   sfx_BowSound_Hit: {fileID: 7520968360510602359}
   sfx_Wooden_Hit:
