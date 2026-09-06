@@ -15,9 +15,17 @@ public enum EquipmentSlotType
 
 public class EquipmentLoadOut : MonoBehaviour
 {
-    [SerializeField] private GameObject obj_Loadout;
+    [SerializeField] private GameObject panel_Loadout;
+    [SerializeField] private GameObject panel_Inventory;
     [SerializeField] private GameObject firstSelected_Loadout;
     [HideInInspector] public bool isPanelActive = false;
+
+    [Header("Inventory Scroll Views & Text")]
+    public TextMeshProUGUI text_CategoryName; // Maps to "Text (Category Name)"
+    public GameObject scrollView_Weapons;
+    public GameObject scrollView_Items;
+    public GameObject scrollView_Rings;
+    public GameObject scrollView_Spells;
 
     [Header("UI Slot Images (Icons)")]
     public Image[] rightHandSlots = new Image[2];
@@ -36,14 +44,18 @@ public class EquipmentLoadOut : MonoBehaviour
 
     [Header("UI Details Panel (Right Side)")]
     public Image detailLargeIcon;
-    public TMP_Text detailCategoryText;    // Maps to "Equipment Category"
-    public TMP_Text detailNameLeftText;    // Maps to "Equipment Name +1"
-    public TMP_Text detailNameRightText;   // Maps to "Equipment Name" (above description)
-    public TMP_Text detailDescriptionText; // Maps to the long description text
+    public TextMeshProUGUI detailCategoryText;    // Maps to "Equipment Category"
+    public TextMeshProUGUI detailNameLeftText;    // Maps to "Equipment Name +1"
+    public TextMeshProUGUI detailNameRightText;   // Maps to "Equipment Name" (above description)
+    public TextMeshProUGUI detailDescriptionText; // Maps to the long description text
 
     [Header("Events")]
     [Tooltip("Fires when a slot is clicked. Use this to open your Inventory Selection menu.")]
     public UnityEvent<EquipmentSlotType, int> onSlotClicked;
+
+    [HideInInspector] public bool isInInventoryMenu = false;
+    [HideInInspector] public EquipmentSlotType pendingSlotType;
+    [HideInInspector] public int pendingSlotIndex;
 
     public static EquipmentLoadOut instance;
 
@@ -54,7 +66,9 @@ public class EquipmentLoadOut : MonoBehaviour
     private void Start()
     {
         isPanelActive = false;
-        obj_Loadout.SetActive(false);
+        isInInventoryMenu = false;
+        panel_Loadout.SetActive(false);
+        panel_Inventory.SetActive(false);
     }
 
     private void Update()
@@ -68,19 +82,27 @@ public class EquipmentLoadOut : MonoBehaviour
         {
             PlayerController.instance.IsToggleLoadoutPressed = false;
 
-            if(!obj_Loadout.activeInHierarchy)
+            if (panel_Inventory.activeInHierarchy)
+            {
+                CloseInventoryCategory();
+
+                EventSystem.current.SetSelectedGameObject(firstSelected_Loadout);
+            }
+            else if (!panel_Loadout.activeInHierarchy)
             {
                 Time.timeScale = 0f;
                 RefreshUI();
                 ClearDetailsPanel();
-                obj_Loadout.SetActive(true);
+
+                panel_Loadout.SetActive(true);
+
                 isPanelActive = true;
                 EventSystem.current.SetSelectedGameObject(firstSelected_Loadout);
             }
-            else
+            else if(panel_Loadout.activeInHierarchy)
             {
                 Time.timeScale = 1f;
-                obj_Loadout.SetActive(false);
+                panel_Loadout.SetActive(false);
                 isPanelActive = false;
             }
         }
@@ -146,6 +168,56 @@ public class EquipmentLoadOut : MonoBehaviour
         }
     }
 
+    public void OpenInventoryCategory(EquipmentSlotType type, int index)
+    {
+        isInInventoryMenu = true;
+        pendingSlotType = type;
+        pendingSlotIndex = index;
+
+        // Swap the left-side panels
+        panel_Loadout.SetActive(false);
+        panel_Inventory.SetActive(true);
+
+        // Turn off all scroll views initially
+        scrollView_Weapons.SetActive(false);
+        scrollView_Items.SetActive(false);
+        scrollView_Rings.SetActive(false);
+        scrollView_Spells.SetActive(false);
+
+        // Activate the correct scroll view and update the title text
+        switch (type)
+        {
+            case EquipmentSlotType.RightHand:
+            case EquipmentSlotType.LeftHand:
+                text_CategoryName.text = "WEAPONS";
+                scrollView_Weapons.SetActive(true);
+                // TODO: Set EventSystem.current.SetSelectedGameObject to the first item in the weapon scroll view
+                break;
+            case EquipmentSlotType.Item:
+                text_CategoryName.text = "ITEMS";
+                scrollView_Items.SetActive(true);
+                break;
+            case EquipmentSlotType.Ring:
+                text_CategoryName.text = "RINGS";
+                scrollView_Rings.SetActive(true);
+                break;
+            case EquipmentSlotType.Spell:
+                text_CategoryName.text = "SPELLS";
+                scrollView_Spells.SetActive(true);
+                break;
+        }
+    }
+
+    public void CloseInventoryCategory()
+    {
+        isInInventoryMenu = false;
+        panel_Inventory.SetActive(false);
+        panel_Loadout.SetActive(true);
+
+        // Reset focus back to the loadout grid
+        EventSystem.current.SetSelectedGameObject(firstSelected_Loadout);
+    }
+
     // ==========================================
     // UI BUTTON HOVER METHODS (Map to UIFeedback -> On Hover)
     // ==========================================
@@ -158,11 +230,11 @@ public class EquipmentLoadOut : MonoBehaviour
     // ==========================================
     // UI BUTTON CLICK METHODS (Map to UIFeedback -> On Click)
     // ==========================================
-    public void OnRightHandSlotClicked(int index) => onSlotClicked?.Invoke(EquipmentSlotType.RightHand, index);
-    public void OnLeftHandSlotClicked(int index) => onSlotClicked?.Invoke(EquipmentSlotType.LeftHand, index);
-    public void OnItemSlotClicked(int index) => onSlotClicked?.Invoke(EquipmentSlotType.Item, index);
-    public void OnSpellSlotClicked(int index) => onSlotClicked?.Invoke(EquipmentSlotType.Spell, index);
-    public void OnRingSlotClicked(int index) => onSlotClicked?.Invoke(EquipmentSlotType.Ring, index);
+    public void OnRightHandSlotClicked(int index) => HandleSlotClick(EquipmentSlotType.RightHand, index);
+    public void OnLeftHandSlotClicked(int index) => HandleSlotClick(EquipmentSlotType.LeftHand, index);
+    public void OnItemSlotClicked(int index) => HandleSlotClick(EquipmentSlotType.Item, index);
+    public void OnSpellSlotClicked(int index) => HandleSlotClick(EquipmentSlotType.Spell, index);
+    public void OnRingSlotClicked(int index) => HandleSlotClick(EquipmentSlotType.Ring, index);
 
 
 public void PreviewItemDetails(EquipmentSlotType slotType, int index)
@@ -215,5 +287,14 @@ public void PreviewItemDetails(EquipmentSlotType slotType, int index)
         detailNameLeftText.text = "";
         detailNameRightText.text = "";
         detailDescriptionText.text = "";
+    }
+
+    private void HandleSlotClick(EquipmentSlotType type, int index)
+    {
+        // 1. Fire the event (if anything else needs to listen to it)
+        onSlotClicked?.Invoke(type, index);
+
+        // 2. Automatically transition the UI to the correct Inventory category
+        OpenInventoryCategory(type, index);
     }
 }
