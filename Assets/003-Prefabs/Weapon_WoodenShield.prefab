@@ -46,7 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62f50db142357e5418bac12b597e14c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Weapon
+  itemCategory: 4
   itemType: 0
+  spr_Icon: {fileID: 0}
   pickupRadius: 1.5
   playerLayer:
     serializedVersion: 2

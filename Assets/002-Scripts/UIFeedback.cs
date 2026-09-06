@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -12,7 +13,7 @@ public enum UISelectType
     FillPanel
 }
 
-public class UIFeedback : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, ISelectHandler, IDeselectHandler
+public class UIFeedback : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, ISelectHandler, IDeselectHandler, ISubmitHandler
 {
     [SerializeField] private UISelectType selectType = UISelectType.Scale;
 
@@ -22,6 +23,10 @@ public class UIFeedback : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     [SerializeField] private GameObject text;
     [SerializeField] private Byte alpha = 60;
     [SerializeField] private GameObject activeGameObjectOnHover;
+
+    [Header("Custom UI Events")]
+    public UnityEvent onHover;
+    public UnityEvent onClick;
 
     private bool isSelected = false;
     private bool isHovered = false;
@@ -201,6 +206,7 @@ public class UIFeedback : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
         EventSystem.current.SetSelectedGameObject(gameObject);
         isHovered = true;
+        onHover?.Invoke();
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -214,6 +220,8 @@ public class UIFeedback : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             audioSource.PlayOneShot(clickSound);
         }
+
+        onClick?.Invoke();
     }
     public void OnSelect(BaseEventData eventData)
     {
@@ -221,11 +229,22 @@ public class UIFeedback : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
         EventSystem.current.SetSelectedGameObject(gameObject);
         isSelected = true;
+        onHover?.Invoke();
     }
 
     // SELECTION LOST: Fires when selection moves to another object
     public void OnDeselect(BaseEventData eventData)
     {
         isSelected = false;
+    }
+
+    public void OnSubmit(BaseEventData eventData)
+    {
+        if (clickSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(clickSound);
+        }
+
+        onClick?.Invoke();
     }
 }

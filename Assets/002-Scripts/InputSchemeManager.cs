@@ -103,7 +103,7 @@ public class InputSchemeManager : MonoBehaviour
                 if (instancesValid)
                 {
                     //bool isIdle = GameResultRoguelike.instance.currentState == GameResultState.Idle;
-                    bool isNotPaused = !PauseGame.instance.IsPaused;
+                    bool isNotPaused = !PauseGame.instance.IsPaused && !EquipmentLoadOut.instance.isPanelActive;
                     bool isAlive = PlayerController.instance.CharacterHealthComponent.CurrentHP > 0f;
 
                     if (/*isIdle &&*/ isNotPaused && isAlive && !PauseGame.instance.isThisMainmenu)

@@ -201,6 +201,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Loadout"",
+                    ""type"": ""Button"",
+                    ""id"": ""9bfcc98d-c8f3-4b22-9632-f8c13c5795d9"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Pause"",
                     ""type"": ""Button"",
                     ""id"": ""f9e68b17-b875-49e8-ac75-79368d746c0e"",
@@ -563,6 +572,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""Minimap"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6449d58f-d97f-4893-8a6c-a4f58508168f"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Loadout"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""43496d60-7f34-48ae-8726-de03abcbb6db"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Loadout"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1356,6 +1387,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
         m_Player_Minimap = m_Player.FindAction("Minimap", throwIfNotFound: true);
+        m_Player_Loadout = m_Player.FindAction("Loadout", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
         m_Player_SwitchWeaponUp = m_Player.FindAction("SwitchWeaponUp", throwIfNotFound: true);
         m_Player_SwitchWeaponRight = m_Player.FindAction("SwitchWeaponRight", throwIfNotFound: true);
@@ -1468,6 +1500,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Reload;
     private readonly InputAction m_Player_Minimap;
+    private readonly InputAction m_Player_Loadout;
     private readonly InputAction m_Player_Pause;
     private readonly InputAction m_Player_SwitchWeaponUp;
     private readonly InputAction m_Player_SwitchWeaponRight;
@@ -1532,6 +1565,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Minimap".
         /// </summary>
         public InputAction @Minimap => m_Wrapper.m_Player_Minimap;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Loadout".
+        /// </summary>
+        public InputAction @Loadout => m_Wrapper.m_Player_Loadout;
         /// <summary>
         /// Provides access to the underlying input action "Player/Pause".
         /// </summary>
@@ -1614,6 +1651,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Minimap.started += instance.OnMinimap;
             @Minimap.performed += instance.OnMinimap;
             @Minimap.canceled += instance.OnMinimap;
+            @Loadout.started += instance.OnLoadout;
+            @Loadout.performed += instance.OnLoadout;
+            @Loadout.canceled += instance.OnLoadout;
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
@@ -1676,6 +1716,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Minimap.started -= instance.OnMinimap;
             @Minimap.performed -= instance.OnMinimap;
             @Minimap.canceled -= instance.OnMinimap;
+            @Loadout.started -= instance.OnLoadout;
+            @Loadout.performed -= instance.OnLoadout;
+            @Loadout.canceled -= instance.OnLoadout;
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
@@ -2097,6 +2140,13 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMinimap(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Loadout" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnLoadout(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "Pause" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

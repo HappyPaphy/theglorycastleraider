@@ -115,6 +115,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Loadout",
+                    "type": "Button",
+                    "id": "9bfcc98d-c8f3-4b22-9632-f8c13c5795d9",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Pause",
                     "type": "Button",
                     "id": "f9e68b17-b875-49e8-ac75-79368d746c0e",
@@ -477,6 +486,28 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Minimap",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6449d58f-d97f-4893-8a6c-a4f58508168f",
+                    "path": "<Gamepad>/select",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Loadout",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "43496d60-7f34-48ae-8726-de03abcbb6db",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Loadout",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

@@ -1,7 +1,9 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
+
 public enum EquipmentSlotType
 {
     RightHand,
@@ -13,7 +15,9 @@ public enum EquipmentSlotType
 
 public class EquipmentLoadOut : MonoBehaviour
 {
-    public static EquipmentLoadOut instance;
+    [SerializeField] private GameObject obj_Loadout;
+    [SerializeField] private GameObject firstSelected_Loadout;
+    [HideInInspector] public bool isPanelActive = false;
 
     [Header("UI Slot Images (Icons)")]
     public Image[] rightHandSlots = new Image[2];
@@ -41,16 +45,45 @@ public class EquipmentLoadOut : MonoBehaviour
     [Tooltip("Fires when a slot is clicked. Use this to open your Inventory Selection menu.")]
     public UnityEvent<EquipmentSlotType, int> onSlotClicked;
 
+    public static EquipmentLoadOut instance;
+
     private void Awake()
     {
-        if (instance == null) instance = this;
+        instance = this;
+    }
+    private void Start()
+    {
+        isPanelActive = false;
+        obj_Loadout.SetActive(false);
     }
 
-    private void OnEnable()
+    private void Update()
     {
-        // Automatically refresh the UI whenever the loadout menu is opened
-        RefreshUI();
-        ClearDetailsPanel();
+        HandleToggleLoadoutPanel();
+    }
+
+    private void HandleToggleLoadoutPanel()
+    {
+        if(PlayerController.instance.IsToggleLoadoutPressed)
+        {
+            PlayerController.instance.IsToggleLoadoutPressed = false;
+
+            if(!obj_Loadout.activeInHierarchy)
+            {
+                Time.timeScale = 0f;
+                RefreshUI();
+                ClearDetailsPanel();
+                obj_Loadout.SetActive(true);
+                isPanelActive = true;
+                EventSystem.current.SetSelectedGameObject(firstSelected_Loadout);
+            }
+            else
+            {
+                Time.timeScale = 1f;
+                obj_Loadout.SetActive(false);
+                isPanelActive = false;
+            }
+        }
     }
 
     /// <summary>
@@ -114,22 +147,25 @@ public class EquipmentLoadOut : MonoBehaviour
     }
 
     // ==========================================
-    // UI BUTTON CLICK METHODS
+    // UI BUTTON HOVER METHODS (Map to UIFeedback -> On Hover)
     // ==========================================
-    // Link these methods in the Unity Inspector to the OnClick() event of the specific slot buttons.
-
-    public void OnRightHandSlotClicked(int index) => HandleSlotInteraction(EquipmentSlotType.RightHand, index);
-    public void OnLeftHandSlotClicked(int index) => HandleSlotInteraction(EquipmentSlotType.LeftHand, index);
-    public void OnItemSlotClicked(int index) => HandleSlotInteraction(EquipmentSlotType.Item, index);
-    public void OnSpellSlotClicked(int index) => HandleSlotInteraction(EquipmentSlotType.Spell, index);
-    public void OnRingSlotClicked(int index) => HandleSlotInteraction(EquipmentSlotType.Ring, index);
+    public void OnRightHandSlotHovered(int index) => PreviewItemDetails(EquipmentSlotType.RightHand, index);
+    public void OnLeftHandSlotHovered(int index) => PreviewItemDetails(EquipmentSlotType.LeftHand, index);
+    public void OnItemSlotHovered(int index) => PreviewItemDetails(EquipmentSlotType.Item, index);
+    public void OnSpellSlotHovered(int index) => PreviewItemDetails(EquipmentSlotType.Spell, index);
+    public void OnRingSlotHovered(int index) => PreviewItemDetails(EquipmentSlotType.Ring, index);
 
     // ==========================================
-    // ASSIGNMENT METHODS (DATA SAVING)
+    // UI BUTTON CLICK METHODS (Map to UIFeedback -> On Click)
     // ==========================================
-    // Call these from your Inventory UI when an item is chosen for a specific slot.
+    public void OnRightHandSlotClicked(int index) => onSlotClicked?.Invoke(EquipmentSlotType.RightHand, index);
+    public void OnLeftHandSlotClicked(int index) => onSlotClicked?.Invoke(EquipmentSlotType.LeftHand, index);
+    public void OnItemSlotClicked(int index) => onSlotClicked?.Invoke(EquipmentSlotType.Item, index);
+    public void OnSpellSlotClicked(int index) => onSlotClicked?.Invoke(EquipmentSlotType.Spell, index);
+    public void OnRingSlotClicked(int index) => onSlotClicked?.Invoke(EquipmentSlotType.Ring, index);
 
-    public void PreviewItemDetails(EquipmentSlotType slotType, int index)
+
+public void PreviewItemDetails(EquipmentSlotType slotType, int index)
     {
         Item targetItem = null;
 
@@ -179,11 +215,5 @@ public class EquipmentLoadOut : MonoBehaviour
         detailNameLeftText.text = "";
         detailNameRightText.text = "";
         detailDescriptionText.text = "";
-    }
-
-    private void HandleSlotInteraction(EquipmentSlotType type, int index)
-    {
-        PreviewItemDetails(type, index);
-        onSlotClicked?.Invoke(type, index);
     }
 }

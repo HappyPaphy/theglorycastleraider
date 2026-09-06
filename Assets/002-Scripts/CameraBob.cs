@@ -34,7 +34,7 @@ public class CameraBob : MonoBehaviour
 
     void Update()
     {
-        if (PauseGame.instance.IsPaused || playerController.CharacterHealthComponent.CurrentHP <= 0) return;
+        if (PauseGame.instance.IsPaused || EquipmentLoadOut.instance.isPanelActive || playerController.CharacterHealthComponent.CurrentHP <= 0) return;
 
         HandleMovementBob();
         RecoverFromAttack();

@@ -39,6 +39,7 @@ public class PlayerController : PlayerEntity
     [SerializeField] private InputAction input_SwitchWeapon_Right;
     [SerializeField] private InputAction input_SwitchWeapon_Down;
     [SerializeField] private InputAction input_SwitchWeapon_Left;
+    [SerializeField] private InputAction input_ToggleLoadout;
     public InputAction input_Kick;
     public InputAction input_PerformRightHand;
     public InputAction input_PerformLeftHand;
@@ -88,6 +89,8 @@ public class PlayerController : PlayerEntity
     [HideInInspector] public bool IsReloadPressed = false;
     [HideInInspector] public bool IsToggleTwoHandedHeld = false;
     [HideInInspector] public bool IsToggleTwoHandedPressed = false;
+    [HideInInspector] public bool IsToggleLoadoutHeld = false;
+    [HideInInspector] public bool IsToggleLoadoutPressed = false;
 
     [Header("Movement Settings")]
     [SerializeField] private float walkSpeed = 6f;
@@ -233,6 +236,11 @@ public class PlayerController : PlayerEntity
         input_SwitchWeapon_Left.Enable();
         input_SwitchWeapon_Left.performed += OnSwitchWeaponLeftPerformed;
         input_SwitchWeapon_Left.canceled += OnSwitchWeaponLeftCanceled;
+
+        input_ToggleLoadout = playerControls.Player.Loadout;
+        input_ToggleLoadout.Enable();
+        input_ToggleLoadout.performed += OnToggleLoadoutPerformed;
+        input_ToggleLoadout.canceled += OnToggleLoadoutCanceled;
     }
 
     private void OnDisable()
@@ -257,6 +265,7 @@ public class PlayerController : PlayerEntity
         input_SwitchWeapon_Right.Disable();
         input_SwitchWeapon_Down.Disable();
         input_SwitchWeapon_Left.Disable();
+        input_ToggleLoadout.Disable();
     }
 
     private void ApplyLoadedBindings()
@@ -289,6 +298,18 @@ public class PlayerController : PlayerEntity
     {
         isJumpHeld = false;
     }
+
+    private void OnToggleLoadoutPerformed(InputAction.CallbackContext context)
+    {
+        IsToggleLoadoutHeld = true;
+        IsToggleLoadoutPressed = true;
+    }
+
+    private void OnToggleLoadoutCanceled(InputAction.CallbackContext context)
+    {
+        IsToggleLoadoutHeld = false;
+    }
+
     private void OnSprintPerformed(InputAction.CallbackContext context)
     {
         isSprintHeld = true;
@@ -488,9 +509,9 @@ public class PlayerController : PlayerEntity
     {
         if(CharacterHealthComponent.CurrentHP > 0)
         {
-            if(PauseGame.instance != null)
+            if(PauseGame.instance != null && EquipmentLoadOut.instance != null)
             {
-                if (!PauseGame.instance.IsPaused)
+                if (!PauseGame.instance.IsPaused && !EquipmentLoadOut.instance.isPanelActive)
                 {
                     ChooseAnimations();
                     HandleKick();
@@ -951,6 +972,7 @@ public class PlayerController : PlayerEntity
         isJumpPressed = false;
         isSprintPressed = false;
         IsToggleTwoHandedPressed = false;
+        IsToggleLoadoutPressed = false;
     }
 
     private static readonly Dictionary<FootState, int> StateToHash = new Dictionary<FootState, int>
