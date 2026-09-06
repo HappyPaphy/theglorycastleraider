@@ -1,18 +1,43 @@
 using UnityEngine;
 
+public enum ItemCategory
+{
+    Consumable,
+    Ring,
+    Pyromancy,
+    Magic,
+    Weapon // Used by your inheriting Weapon class
+}
+
 public enum ItemType
 {
+    // Consumables (Max 99)
     HealthPotion_Small,
     HealthPotion_Medium,
     HealthPotion_Big,
     ManaPotion_Small,
     ManaPotion_Medium,
-    ManaPotion_Big
+    ManaPotion_Big,
+
+    // Rings (Max 1)
+    RingOfVitality,
+    RingOfStamina,
+
+    // Pyromancies (Max 1)
+    Fireball,
+    Combustion,
+
+    // Magics (Max 1)
+    SoulArrow,
+    MagicWeapon
 }
 
 public class Item : MonoBehaviour
 {
-    [SerializeField] private ItemType itemType;
+    public ItemCategory itemCategory;
+    public ItemType itemType;
+    public Sprite spr_Icon;
+
     [SerializeField] protected float pickupRadius = 1.5f;
     [SerializeField] protected LayerMask playerLayer;
     [SerializeField] protected Vector3 spawnOffSet;
@@ -23,8 +48,8 @@ public class Item : MonoBehaviour
 
     [SerializeField] protected GameObject uiButtonPrompt;
 
-    protected bool isCollected = false;
 
+    protected bool isCollected = false;
     protected float rotationSpeed = 90f; // Degrees it spins per second
     protected float hoverSpeed = 2f;     // How fast it moves up and down
     protected float hoverHeight = 0.14f; // How high/low it moves from its center
@@ -86,43 +111,16 @@ public class Item : MonoBehaviour
 
     private void CollectItem()
     {
-        switch(itemType)
+        if (InventoryManager.instance.TryAddGeneralItem(this))
         {
-            case ItemType.HealthPotion_Small:
-                {
-                    PlayerController.instance.CharacterHealthComponent.Heal(20);
-                }
-                break;
-
-            case ItemType.HealthPotion_Medium:
-                {
-                    PlayerController.instance.CharacterHealthComponent.Heal(40);
-                }
-                break;
-
-            case ItemType.HealthPotion_Big:
-                {
-                    PlayerController.instance.CharacterHealthComponent.Heal(60);
-                }
-                break;
-
-            case ItemType.ManaPotion_Small:
-                {
-                    PlayerController.instance.CharacterUltimateComponent.GainUltimate(20);
-                }
-                break;
-
-            case ItemType.ManaPotion_Medium:
-                {
-                    PlayerController.instance.CharacterUltimateComponent.GainUltimate(40);
-                }
-                break;
-
-            case ItemType.ManaPotion_Big:
-                {
-                    PlayerController.instance.CharacterUltimateComponent.GainUltimate(60);
-                }
-                break;
+            isCollected = true;
+            uiButtonPrompt.SetActive(false);
+            if (obj_RotateObject != null) obj_RotateObject.SetActive(false);
+        }
+        else
+        {
+            Debug.Log("Inventory full for this item type!");
+            // Optional: Play a "Cannot pick up" sound or UI message here
         }
 
         Destroy(gameObject);

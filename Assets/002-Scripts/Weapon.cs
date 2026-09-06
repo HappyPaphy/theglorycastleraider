@@ -73,22 +73,21 @@ public class Weapon : Item
 
     protected override void Collecting()
     {
-        if(PlayerWeaponManager.instance.rightHandWeapon == null)
+        // 1. Try to find an empty Right Hand slot first
+        if (InventoryManager.instance.TryAddWeapon(this))
         {
-            PlayerWeaponManager.instance.rightHandWeapon = this;
-            PlayerWeaponManager.instance.EquipWeapon(this, false);
-            Collected();
-        }
-        else if(PlayerWeaponManager.instance.leftHandWeapon == null)
-        {
-            PlayerWeaponManager.instance.leftHandWeapon = this;
-            PlayerWeaponManager.instance.EquipWeapon(this, true);
-            Collected();
+            // 2. Hide the object from the world since it is now safely stored
+            if (obj_RotateObject != null) obj_RotateObject.SetActive(false);
+            uiButtonPrompt.SetActive(false);
+            isCollected = true;
         }
         else
         {
-            //Open WeaponSwapUI
+            Debug.Log("You cannot carry any more of this specific weapon type!");
+            // Leave it on the ground if the player already has 2 of them
         }
+
+        Collected();
     }
 
     private void Collected()

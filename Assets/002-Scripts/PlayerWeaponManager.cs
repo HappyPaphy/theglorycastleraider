@@ -37,8 +37,14 @@ public class PlayerWeaponManager : MonoBehaviour
     [SerializeField] private Animator anim_LeftHand;
     [SerializeField] private Animator anim_RightHand;
 
-    public Weapon rightHandWeapon;
-    public Weapon leftHandWeapon;
+    public Weapon[] rightHandWeapons = new Weapon[2];
+    public Weapon[] leftHandWeapons = new Weapon[2];
+
+    [HideInInspector] public int activeRightSlot = 0;
+    [HideInInspector] public int activeLeftSlot = 0;
+
+    public Weapon rightHandWeapon => rightHandWeapons[activeRightSlot];
+    public Weapon leftHandWeapon => leftHandWeapons[activeLeftSlot];
 
     [HideInInspector] public bool isTwoHanding = false;
 
@@ -74,6 +80,12 @@ public class PlayerWeaponManager : MonoBehaviour
     private float currentBlockCooldownRight = 0f;
     private float currentBlockCooldownLeft = 0f;
 
+    [Header("Other Equipment Loadouts")]
+    public Item[] equippedItems = new Item[5];
+    public Item[] equippedRings = new Item[4];
+    public Item[] equippedSpells = new Item[4];
+    [HideInInspector] public int activeSpellSlot = 0;
+
     public static PlayerWeaponManager instance;
 
 
@@ -100,10 +112,11 @@ public class PlayerWeaponManager : MonoBehaviour
         if (currentParryLeft > 0f) currentParryLeft -= Time.deltaTime;
 
         HandleHandSprite();
+        HandleWeaponSwitching();
         HandleRightHandInput();
         HandleLeftHandInput();
 
-        if(playerController.IsToggleTwoHandedPressed)
+        if (playerController.IsToggleTwoHandedPressed)
         {
             playerController.IsToggleTwoHandedPressed = false;
             ToggleTwoHandedStance();    
@@ -146,29 +159,55 @@ public class PlayerWeaponManager : MonoBehaviour
         }
     }
 
-    public void EquipWeapon(Weapon weapon, bool isLeftHand)
+    private void HandleWeaponSwitching()
     {
+        // Right D-Pad: Cycle Right Hand
+        if (playerController.IsSwitchWeaponPressed_Right)
+        {
+            playerController.IsSwitchWeaponPressed_Right = false;
+            CycleWeapon(ref activeRightSlot, rightHandWeapons, false);
+        }
+
+        // Left D-Pad: Cycle Left Hand
+        if (playerController.IsSwitchWeaponPressed_Left)
+        {
+            playerController.IsSwitchWeaponPressed_Left = false;
+            CycleWeapon(ref activeLeftSlot, leftHandWeapons, true);
+        }
+
+        // Up D-Pad: Cycle Spells (Combine Pyro and Magic logic here as needed)
+        // Down D-Pad: Cycle Items
+    }
+
+    private void CycleWeapon(ref int currentSlot, Weapon[] weaponArray, bool isLeftHand)
+    {
+        // Cancel two-handed stance if we switch weapons
+        if (isTwoHanding) ToggleTwoHandedStance();
+
+        // Cancel any active blocks
+        if (isLeftHand && isBlockingLeft) { isBlockingLeft = false; currentState_LeftHand = PerformActionState.Idle; }
+        if (!isLeftHand && isBlockingRight) { isBlockingRight = false; currentState_Righthand = PerformActionState.Idle; }
+
+        currentSlot++;
+        if (currentSlot >= weaponArray.Length) currentSlot = 0;
+
+        // Force the animator to update to the newly selected weapon immediately
+        UpdateAnimatorControllers(isLeftHand);
+    }
+
+    public void EquipWeaponToSlot(Weapon weapon, bool isLeftHand, int slotIndex)
+    {
+        if (slotIndex < 0 || slotIndex >= 3) return;
+
         if (isLeftHand)
         {
-            leftHandWeapon = weapon;
-            if (!isTwoHanding && anim_LeftHand != null && weapon.animController_OneHanded != null)
-            {
-                anim_LeftHand.runtimeAnimatorController = weapon.animController_OneHanded;
-                anim_LeftHand.Play("IsIdle", -1, 0f);
-            }
+            leftHandWeapons[slotIndex] = weapon;
+            if (slotIndex == activeLeftSlot) UpdateAnimatorControllers(true);
         }
         else
         {
-            rightHandWeapon = weapon;
-            if (anim_RightHand != null)
-            {
-                RuntimeAnimatorController targetController = (isTwoHanding && weapon.animController_TwoHanded != null) ? weapon.animController_OneHanded : weapon.animController_OneHanded;
-                if (targetController != null)
-                {
-                    anim_RightHand.runtimeAnimatorController = targetController;
-                    anim_RightHand.Play("IsIdle", -1, 0f);
-                }
-            }
+            rightHandWeapons[slotIndex] = weapon;
+            if (slotIndex == activeRightSlot) UpdateAnimatorControllers(false);
         }
     }
 
@@ -788,6 +827,40 @@ public class PlayerWeaponManager : MonoBehaviour
                 if (lastRightStateHash != 0 && anim_RightHand != null) anim_RightHand.SetBool(lastRightStateHash, false);
                 if (anim_RightHand != null) anim_RightHand.SetBool(rightHash, true);
                 lastRightStateHash = rightHash;
+            }
+        }
+    }
+
+    private void UpdateAnimatorControllers(bool isLeftHand)
+    {
+        if (isLeftHand)
+        {
+            if (anim_LeftHand != null)
+            {
+                if (leftHandWeapon != null && leftHandWeapon.animController_OneHanded != null)
+                {
+                    anim_LeftHand.runtimeAnimatorController = leftHandWeapon.animController_OneHanded;
+                    anim_LeftHand.Play("IsIdle", -1, 0f);
+                }
+                else
+                {
+                    anim_LeftHand.runtimeAnimatorController = null;
+                }
+            }
+        }
+        else
+        {
+            if (anim_RightHand != null)
+            {
+                if (rightHandWeapon != null && rightHandWeapon.animController_OneHanded != null)
+                {
+                    anim_RightHand.runtimeAnimatorController = rightHandWeapon.animController_OneHanded;
+                    anim_RightHand.Play("IsIdle", -1, 0f);
+                }
+                else
+                {
+                    anim_RightHand.runtimeAnimatorController = null;
+                }
             }
         }
     }
