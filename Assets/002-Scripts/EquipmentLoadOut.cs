@@ -1,5 +1,8 @@
 using TMPro;
 using UnityEngine;
+using System;
+using System.Linq;
+using System.Collections.Generic;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -18,6 +21,12 @@ public class EquipmentLoadOut : MonoBehaviour
     [SerializeField] private GameObject panel_Loadout;
     [SerializeField] private GameObject panel_Inventory;
     [SerializeField] private GameObject firstSelected_Loadout;
+
+    private GameObject firstSelected_Inventory_Weapons;
+    private GameObject firstSelected_Inventory_Items;
+    private GameObject firstSelected_Inventory_Rings;
+    private GameObject firstSelected_Inventory_Spells;
+
     [HideInInspector] public bool isPanelActive = false;
 
     [Header("Inventory Scroll Views & Text")]
@@ -26,6 +35,16 @@ public class EquipmentLoadOut : MonoBehaviour
     public GameObject scrollView_Items;
     public GameObject scrollView_Rings;
     public GameObject scrollView_Spells;
+
+    [Header("Scroll View Content Holders")]
+    [Tooltip("The 'Content' transform inside your Scroll Views where slots are spawned")]
+    public Transform content_Weapons;
+    public Transform content_Items;
+    public Transform content_Rings;
+    public Transform content_Spells;
+
+    [Header("Prefabs")]
+    public GameObject inventorySlotPrefab; // Assign the prefab with InventorySlotUI.cs here
 
     [Header("UI Slot Images (Icons)")]
     public Image[] rightHandSlots = new Image[2];
@@ -43,11 +62,15 @@ public class EquipmentLoadOut : MonoBehaviour
     public Sprite emptySpellSprite;
 
     [Header("UI Details Panel (Right Side)")]
-    public Image detailLargeIcon;
-    public TextMeshProUGUI detailCategoryText;    // Maps to "Equipment Category"
-    public TextMeshProUGUI detailNameLeftText;    // Maps to "Equipment Name +1"
-    public TextMeshProUGUI detailNameRightText;   // Maps to "Equipment Name" (above description)
-    public TextMeshProUGUI detailDescriptionText; // Maps to the long description text
+    public Image detailLargeIcon_Loadout;
+    public TextMeshProUGUI detailCategoryText_Loadout;    // Maps to "Equipment Category"
+    public TextMeshProUGUI detailNameLeftText_Loadout;    // Maps to "Equipment Name +1"
+    public TextMeshProUGUI detailNameRightText_Loadout;   // Maps to "Equipment Name" (above description)
+    public TextMeshProUGUI detailDescriptionText_Loadout; // Maps to the long description text
+
+    public Image detailLargeIcon_Inventory;
+    public TextMeshProUGUI detailNameRightText_Inventory;   // Maps to "Equipment Name" (above description)
+    public TextMeshProUGUI detailDescriptionText_Inventory; // Maps to the long description text
 
     [Header("Events")]
     [Tooltip("Fires when a slot is clicked. Use this to open your Inventory Selection menu.")]
@@ -120,6 +143,7 @@ public class EquipmentLoadOut : MonoBehaviour
         {
             Weapon w = PlayerWeaponManager.instance.rightHandWeapons[i];
             rightHandSlots[i].sprite = (w != null && w.spr_Weapon != null) ? w.spr_Weapon : emptyWeaponSprite;
+            rightHandSlots[i].SetNativeSize();
         }
 
         // 2. Left Hand Weapons
@@ -127,6 +151,7 @@ public class EquipmentLoadOut : MonoBehaviour
         {
             Weapon w = PlayerWeaponManager.instance.leftHandWeapons[i];
             leftHandSlots[i].sprite = (w != null && w.spr_Weapon != null) ? w.spr_Weapon : emptyWeaponSprite;
+            leftHandSlots[i].SetNativeSize();
         }
 
         // 3. Items & Quantities
@@ -136,6 +161,7 @@ public class EquipmentLoadOut : MonoBehaviour
             if (item != null && item.spr_Icon != null)
             {
                 itemSlots[i].sprite = item.spr_Icon;
+                itemSlots[i].SetNativeSize();
 
                 // Fetch quantity from InventoryManager dictionary
                 int quantity = 0;
@@ -149,6 +175,7 @@ public class EquipmentLoadOut : MonoBehaviour
             else
             {
                 itemSlots[i].sprite = emptyItemSprite;
+                itemSlots[i].SetNativeSize();
                 itemQuantityTexts[i].gameObject.SetActive(false);
             }
         }
@@ -158,6 +185,7 @@ public class EquipmentLoadOut : MonoBehaviour
         {
             Item spell = PlayerWeaponManager.instance.equippedSpells[i];
             spellSlots[i].sprite = (spell != null && spell.spr_Icon != null) ? spell.spr_Icon : emptySpellSprite;
+            spellSlots[i].SetNativeSize();
         }
 
         // 5. Rings
@@ -165,6 +193,7 @@ public class EquipmentLoadOut : MonoBehaviour
         {
             Item ring = PlayerWeaponManager.instance.equippedRings[i];
             ringSlots[i].sprite = (ring != null && ring.spr_Icon != null) ? ring.spr_Icon : emptyRingSprite;
+            ringSlots[i].SetNativeSize();
         }
     }
 
@@ -191,21 +220,149 @@ public class EquipmentLoadOut : MonoBehaviour
             case EquipmentSlotType.LeftHand:
                 text_CategoryName.text = "WEAPONS";
                 scrollView_Weapons.SetActive(true);
-                // TODO: Set EventSystem.current.SetSelectedGameObject to the first item in the weapon scroll view
+                PopulateGrid(content_Weapons, InventoryManager.instance.weapons.Cast<Item>().ToList(), type);
                 break;
             case EquipmentSlotType.Item:
                 text_CategoryName.text = "ITEMS";
                 scrollView_Items.SetActive(true);
+                PopulateGrid(content_Items, InventoryManager.instance.consumablesList, type);
                 break;
             case EquipmentSlotType.Ring:
                 text_CategoryName.text = "RINGS";
                 scrollView_Rings.SetActive(true);
+                PopulateGrid(content_Rings, InventoryManager.instance.rings, type);
                 break;
             case EquipmentSlotType.Spell:
                 text_CategoryName.text = "SPELLS";
                 scrollView_Spells.SetActive(true);
+                List<Item> allSpells = InventoryManager.instance.magics.Concat(InventoryManager.instance.pyromancies).ToList();
+                PopulateGrid(content_Spells, allSpells, type);
                 break;
         }
+    }
+
+    private void PopulateGrid(Transform contentParent, List<Item> itemsToDisplay, EquipmentSlotType slotType)
+    {
+        // 1. Clear existing slots
+        foreach (Transform child in contentParent)
+        {
+            Destroy(child.gameObject);
+        }
+
+        GameObject firstSlot = null;
+
+        // 2. Instantiate a slot for every item
+        foreach (Item item in itemsToDisplay)
+        {
+            GameObject slotObj = Instantiate(inventorySlotPrefab, contentProviderCheck(contentParent));
+            InventorySlotUI slotUI = slotObj.GetComponent<InventorySlotUI>();
+
+            bool isEquipped = CheckIfEquipped(item, slotType);
+            slotUI.SetupSlot(item, isEquipped, 1);
+
+            if (firstSlot == null) firstSlot = slotObj;
+        }
+
+        // CRITICAL FIX: Force Unity to calculate grid positions immediately 
+        // so automatic navigation detects adjacent neighbors
+        Canvas.ForceUpdateCanvases();
+        if (contentParent is RectTransform rectTransform)
+        {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
+        }
+
+        // 3. Assign to the respective category reference and select it if available
+        if (firstSlot != null)
+        {
+            switch (slotType)
+            {
+                case EquipmentSlotType.RightHand:
+                case EquipmentSlotType.LeftHand:
+                    firstSelected_Inventory_Weapons = firstSlot;
+                    break;
+                case EquipmentSlotType.Item:
+                    firstSelected_Inventory_Items = firstSlot;
+                    break;
+                case EquipmentSlotType.Ring:
+                    firstSelected_Inventory_Rings = firstSlot;
+                    break;
+                case EquipmentSlotType.Spell:
+                    firstSelected_Inventory_Spells = firstSlot;
+                    break;
+            }
+
+            EventSystem.current.SetSelectedGameObject(firstSlot);
+            firstSlot.GetComponent<InventorySlotUI>().OnSlotHovered();
+        }
+        else
+        {
+            switch (slotType)
+            {
+                case EquipmentSlotType.RightHand:
+                case EquipmentSlotType.LeftHand:
+                    firstSelected_Inventory_Weapons = null;
+                    break;
+                case EquipmentSlotType.Item:
+                    firstSelected_Inventory_Items = null;
+                    break;
+                case EquipmentSlotType.Ring:
+                    firstSelected_Inventory_Rings = null;
+                    break;
+                case EquipmentSlotType.Spell:
+                    firstSelected_Inventory_Spells = null;
+                    break;
+            }
+            ClearDetailsPanel();
+        }
+    }
+
+    private Transform contentProviderCheck(Transform t) => t; // Helper wrapper if needed
+
+    private bool CheckIfEquipped(Item item, EquipmentSlotType slotType)
+    {
+        if (PlayerWeaponManager.instance == null) return false;
+
+        switch (slotType)
+        {
+            case EquipmentSlotType.RightHand:
+            case EquipmentSlotType.LeftHand:
+                return PlayerWeaponManager.instance.rightHandWeapons.Contains(item as Weapon) ||
+                       PlayerWeaponManager.instance.leftHandWeapons.Contains(item as Weapon);
+            case EquipmentSlotType.Ring:
+                return PlayerWeaponManager.instance.equippedRings.Contains(item);
+            case EquipmentSlotType.Spell:
+                return PlayerWeaponManager.instance.equippedSpells.Contains(item);
+            case EquipmentSlotType.Item:
+                return PlayerWeaponManager.instance.equippedItems.Contains(item);
+            default:
+                return false;
+        }
+    }
+
+    public void PreviewInventoryItem(Item item)
+    {
+        if (item != null)
+        {
+            detailLargeIcon_Inventory.gameObject.SetActive(true);
+
+            detailLargeIcon_Inventory.sprite = item.spr_Icon;
+            detailLargeIcon_Inventory.SetNativeSize();
+            detailNameRightText_Inventory.text = item.equipmentName;
+            detailDescriptionText_Inventory.text = "Description mapped from Item data...";
+        }
+        else
+        {
+            ClearDetailsPanel();
+        }
+    }
+
+    public void EquipSelectedItem(Item itemToEquip)
+    {
+        // Route through PlayerWeaponManager to handle duplicate checks and un-equipping
+        PlayerWeaponManager.instance.EquipItem(itemToEquip, pendingSlotType, pendingSlotIndex);
+
+        CloseInventoryCategory();
+        RefreshUI();
     }
 
     public void CloseInventoryCategory()
@@ -272,7 +429,14 @@ public void PreviewItemDetails(EquipmentSlotType slotType, int index)
             // detailDescriptionText.text = "Description mapped from Item data...";
 
             // Enable the large icon image component
-            detailLargeIcon.gameObject.SetActive(true);
+            detailLargeIcon_Loadout.gameObject.SetActive(true);
+
+            detailLargeIcon_Loadout.sprite = targetItem.spr_Icon;
+            detailLargeIcon_Loadout.SetNativeSize();
+            detailCategoryText_Loadout.text = targetItem.itemCategory.ToString();
+            detailNameLeftText_Loadout.text = targetItem.equipmentName; // Can append upgrade levels later
+            detailNameRightText_Loadout.text = targetItem.equipmentName;
+            detailDescriptionText_Loadout.text = "Description mapped from Item data...";
         }
         else
         {
@@ -280,13 +444,18 @@ public void PreviewItemDetails(EquipmentSlotType slotType, int index)
         }
     }
 
+
     private void ClearDetailsPanel()
     {
-        detailLargeIcon.gameObject.SetActive(false);
-        detailCategoryText.text = "";
-        detailNameLeftText.text = "";
-        detailNameRightText.text = "";
-        detailDescriptionText.text = "";
+        detailLargeIcon_Loadout.gameObject.SetActive(false);
+        detailCategoryText_Loadout.text = "";
+        detailNameLeftText_Loadout.text = "";
+        detailNameRightText_Loadout.text = "";
+        detailDescriptionText_Loadout.text = "";
+
+        detailLargeIcon_Inventory.gameObject.SetActive(false);
+        detailNameRightText_Inventory.text = "";
+        detailDescriptionText_Inventory.text = "";
     }
 
     private void HandleSlotClick(EquipmentSlotType type, int index)

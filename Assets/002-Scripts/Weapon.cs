@@ -37,10 +37,10 @@ public class Weapon : Item
     public ShieldType shieldType;
     public BowType bowType;
 
-
     public float damage = 0f;
     public float attackCooldown = 0.6f;
     public float staminaCost = 10f;
+    public float manaCost = 10f;
     public float blockStaminaDamageModifier = 1f;
     public AudioClip[] audioClips_BlockSound;
     public AudioClip[] audioClips_ParrySound;
@@ -80,14 +80,13 @@ public class Weapon : Item
             if (obj_RotateObject != null) obj_RotateObject.SetActive(false);
             uiButtonPrompt.SetActive(false);
             isCollected = true;
+            Collected();
         }
         else
         {
             Debug.Log("You cannot carry any more of this specific weapon type!");
             // Leave it on the ground if the player already has 2 of them
         }
-
-        Collected();
     }
 
     private void Collected()

@@ -13,8 +13,8 @@ public class InventoryManager : MonoBehaviour
     public List<Item> magics = new List<Item>();
 
     [Header("Consumables (Max 99)")]
-    // Dictionary to track quantities. Key is the ItemType, Value is the count (0-99).
-    public Dictionary<ItemType, int> consumables = new Dictionary<ItemType, int>();
+    public List<Item> consumablesList = new List<Item>(); // Stores unique item templates for UI display
+    public Dictionary<ItemType, int> consumables = new Dictionary<ItemType, int>(); // Tracks 1-99 quantities
 
     private void Awake()
     {
@@ -63,16 +63,23 @@ public class InventoryManager : MonoBehaviour
     {
         if (!consumables.ContainsKey(consumable.itemType))
         {
-            consumables[consumable.itemType] = 0;
-        }
-
-        if (consumables[consumable.itemType] < 99)
-        {
-            consumables[consumable.itemType]++;
-            // Consumables are just data numbers, so we destroy the physical 3D drop
-            Destroy(consumable.gameObject);
+            // First time collecting this consumable type: Store its reference and set count to 1
+            consumables[consumable.itemType] = 1;
+            consumablesList.Add(consumable);
+            StoreItemSafely(consumable);
             return true;
         }
+        else
+        {
+            if (consumables[consumable.itemType] < 99)
+            {
+                // Already have it: increment stack count and destroy the extra world drop
+                consumables[consumable.itemType]++;
+                Destroy(consumable.gameObject);
+                return true;
+            }
+        }
+
         return false;
     }
 

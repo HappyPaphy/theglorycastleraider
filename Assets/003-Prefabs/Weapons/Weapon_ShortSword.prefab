@@ -46,7 +46,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62f50db142357e5418bac12b597e14c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Weapon
+  itemCategory: 4
   itemType: 0
+  spr_Icon: {fileID: -2085894017, guid: 061137b5a6b2b4c43b0bd8cc01e15662, type: 3}
+  equipmentName: ShortHand Sword
   pickupRadius: 1.5
   playerLayer:
     serializedVersion: 2
@@ -63,7 +66,7 @@ MonoBehaviour:
   damage: 18
   attackCooldown: 0.6
   staminaCost: 8
-  blockStaminaDamage: 8
+  blockStaminaDamageModifier: 1
   audioClips_BlockSound:
   - {fileID: 8300000, guid: 9b51803bf4ca0744b8ec79f0696d2867, type: 3}
   - {fileID: 8300000, guid: f2bc45810b6e0df44b0f0b991f12b58a, type: 3}

@@ -869,6 +869,11 @@ public class PlayerController : PlayerEntity
         CharacterStaminaComponent.DepleteStamina(value);
     }
 
+    public void DepleteUltimate(float value)
+    {
+        CharacterUltimateComponent.DepleteUltimate(value);
+    }
+
     private void StaminaRecover()
     {
         if (isStaminaCoolDown)

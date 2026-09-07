@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5949059691857095748}
   - component: {fileID: 7266188067607101063}
   m_Layer: 14
-  m_Name: HealthPotion_Small
+  m_Name: ManaPotion_Big
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,7 +46,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdf652001b72f5a4bb1484bf77162e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Item
-  itemType: 0
+  itemCategory: 0
+  itemType: 5
+  spr_Icon: {fileID: -203486805, guid: 979989d45c9864f42bd709a76add5e41, type: 3}
+  equipmentName: Mana Potion (L)
   pickupRadius: 1
   playerLayer:
     serializedVersion: 2

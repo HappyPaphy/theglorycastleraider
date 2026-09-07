@@ -24,12 +24,14 @@ public enum ItemType
     RingOfStamina,
 
     // Pyromancies (Max 1)
-    Fireball,
-    Combustion,
+    SmallFireball,
+    LargeFireball,
+    SmallCombustion,
+    LargeCombustion,
 
     // Magics (Max 1)
-    SoulArrow,
-    MagicWeapon
+    SmallSoulArrow,
+    LargeSoulArrow,
 }
 
 public class Item : MonoBehaviour
@@ -37,6 +39,7 @@ public class Item : MonoBehaviour
     public ItemCategory itemCategory;
     public ItemType itemType;
     public Sprite spr_Icon;
+    public string equipmentName;
 
     [SerializeField] protected float pickupRadius = 1.5f;
     [SerializeField] protected LayerMask playerLayer;
@@ -48,6 +51,22 @@ public class Item : MonoBehaviour
 
     [SerializeField] protected GameObject uiButtonPrompt;
 
+    [Header("Spell Modifiers (Can be combined)")]
+    [Tooltip("If true, the spell pauses for a duration before executing.")]
+    public bool useDelay;
+    public float castDelay = 0.5f;
+    public float flatManaCost = 20f;
+
+    [Tooltip("If true, hold the button to build up power. Releases on button lift.")]
+    public bool useCharge;
+    public float maxChargeTime = 3f;
+    public float chargeManaDrainRate = 15f;
+
+    [Tooltip("If true, hold the button to continuously fire (e.g. Flamethrower).")]
+    public bool useContinuous;
+    public float continuousManaDrainRate = 15f;
+
+    public GameObject spellPrefab;
 
     protected bool isCollected = false;
     protected float rotationSpeed = 90f; // Degrees it spins per second
@@ -122,8 +141,6 @@ public class Item : MonoBehaviour
             Debug.Log("Inventory full for this item type!");
             // Optional: Play a "Cannot pick up" sound or UI message here
         }
-
-        Destroy(gameObject);
     }
 
     protected void OnDrawGizmosSelected()

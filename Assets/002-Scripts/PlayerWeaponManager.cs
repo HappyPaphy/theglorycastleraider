@@ -26,6 +26,10 @@ public class PlayerWeaponManager : MonoBehaviour
     [SerializeField] private Image image_Spell;
     [SerializeField] private Image image_Item;
 
+    [SerializeField] private Sprite emptyWeaponSprite;
+    [SerializeField] private Sprite emptyItemSprite;
+    [SerializeField] private Sprite emptySpellSprite;
+
     [SerializeField] private CameraFollow cameraFollow;
     [SerializeField] private CameraBob cameraBob;
     public PerformActionState currentState_LeftHand;
@@ -85,6 +89,10 @@ public class PlayerWeaponManager : MonoBehaviour
     public Item[] equippedRings = new Item[4];
     public Item[] equippedSpells = new Item[4];
     [HideInInspector] public int activeSpellSlot = 0;
+    [HideInInspector] public int activeItemSlot = 0;
+
+    public Item currentActiveSpell => equippedSpells[activeSpellSlot];
+    public Item currentActiveItem => equippedItems[activeItemSlot];
 
     public static PlayerWeaponManager instance;
 
@@ -112,7 +120,9 @@ public class PlayerWeaponManager : MonoBehaviour
         if (currentParryLeft > 0f) currentParryLeft -= Time.deltaTime;
 
         HandleHandSprite();
+        HandleItemAndSpellSprites();
         HandleWeaponSwitching();
+        HandleItemUsage();
         HandleRightHandInput();
         HandleLeftHandInput();
 
@@ -161,6 +171,8 @@ public class PlayerWeaponManager : MonoBehaviour
 
     private void HandleWeaponSwitching()
     {
+        if(EquipmentLoadOut.instance.isPanelActive) { return; }
+
         // Right D-Pad: Cycle Right Hand
         if (playerController.IsSwitchWeaponPressed_Right)
         {
@@ -175,12 +187,95 @@ public class PlayerWeaponManager : MonoBehaviour
             CycleWeapon(ref activeLeftSlot, leftHandWeapons, true);
         }
 
-        // Up D-Pad: Cycle Spells (Combine Pyro and Magic logic here as needed)
-        // Down D-Pad: Cycle Items
+        // Up D-Pad: Cycle Spells
+        if (playerController.IsSwitchWeaponPressed_Up)
+        {
+            playerController.IsSwitchWeaponPressed_Up = false;
+            CycleEquipment(ref activeSpellSlot, equippedSpells);
+        }
+
+        // Down D-Pad: Cycle Items 
+        if (playerController.IsSwitchWeaponPressed_Down)
+        {
+            playerController.IsSwitchWeaponPressed_Down = false;
+            CycleEquipment(ref activeItemSlot, equippedItems);
+        }
+    }
+
+    private void HandleItemUsage()
+    {
+        // Check for player input and ensure they aren't stuck in another uninterruptible animation
+        if (playerController.IsReloadPressed && !playerController.isKicking && !playerController.isExecuting)
+        {
+            playerController.IsReloadPressed = false;
+
+            if (currentActiveItem != null && currentActiveItem.itemCategory == ItemCategory.Consumable)
+            {
+                // Check if the item exists in the inventory and has at least 1 charge
+                if (InventoryManager.instance.consumables.ContainsKey(currentActiveItem.itemType) &&
+                    InventoryManager.instance.consumables[currentActiveItem.itemType] > 0)
+                {
+                    // 1. Decrease the quantity by 1
+                    InventoryManager.instance.consumables[currentActiveItem.itemType]--;
+
+                    // 2. Apply the effect
+                    ApplyConsumableEffect(currentActiveItem.itemType);
+                }
+                else
+                {
+                    // Optional: Play an "empty inventory" click sound
+                }
+            }
+        }
+    }
+
+    private void ApplyConsumableEffect(ItemType type)
+    {
+        switch (type)
+        {
+            case ItemType.HealthPotion_Small:
+                playerController.CharacterHealthComponent.Heal(40f);
+                break;
+            case ItemType.HealthPotion_Medium:
+                playerController.CharacterHealthComponent.Heal(80f);
+                break;
+            case ItemType.HealthPotion_Big:
+                playerController.CharacterHealthComponent.Heal(135f);
+                break;
+            case ItemType.ManaPotion_Small:
+                playerController.CharacterUltimateComponent.GainUltimate(40f);
+                break;
+            case ItemType.ManaPotion_Medium:
+                playerController.CharacterUltimateComponent.GainUltimate(80f);
+                break;
+            case ItemType.ManaPotion_Big:
+                playerController.CharacterUltimateComponent.GainUltimate(135f);
+                break;
+        }
     }
 
     private void CycleWeapon(ref int currentSlot, Weapon[] weaponArray, bool isLeftHand)
     {
+        if (weaponArray == null || weaponArray.Length == 0) return;
+
+        // Search for the next available non-null weapon slot
+        int originalSlot = currentSlot;
+        int nextSlot = currentSlot;
+        bool found = false;
+
+        for (int i = 1; i <= weaponArray.Length; i++)
+        {
+            nextSlot = (originalSlot + i) % weaponArray.Length;
+            if (weaponArray[nextSlot] != null)
+            {
+                found = true;
+                break;
+            }
+        }
+
+        // If no weapons are equipped in any slot, don't cycle
+        if (!found) return;
+
         // Cancel two-handed stance if we switch weapons
         if (isTwoHanding) ToggleTwoHandedStance();
 
@@ -188,26 +283,111 @@ public class PlayerWeaponManager : MonoBehaviour
         if (isLeftHand && isBlockingLeft) { isBlockingLeft = false; currentState_LeftHand = PerformActionState.Idle; }
         if (!isLeftHand && isBlockingRight) { isBlockingRight = false; currentState_Righthand = PerformActionState.Idle; }
 
-        currentSlot++;
-        if (currentSlot >= weaponArray.Length) currentSlot = 0;
+        currentSlot = nextSlot;
 
         // Force the animator to update to the newly selected weapon immediately
         UpdateAnimatorControllers(isLeftHand);
     }
 
-    public void EquipWeaponToSlot(Weapon weapon, bool isLeftHand, int slotIndex)
+    private void CycleEquipment(ref int currentSlot, Item[] equipmentArray)
     {
-        if (slotIndex < 0 || slotIndex >= 3) return;
+        if (equipmentArray == null || equipmentArray.Length == 0) return;
 
-        if (isLeftHand)
+        // Search for the next available non-null equipment slot
+        int originalSlot = currentSlot;
+        int nextSlot = currentSlot;
+        bool found = false;
+
+        for (int i = 1; i <= equipmentArray.Length; i++)
         {
-            leftHandWeapons[slotIndex] = weapon;
-            if (slotIndex == activeLeftSlot) UpdateAnimatorControllers(true);
+            nextSlot = (originalSlot + i) % equipmentArray.Length;
+            if (equipmentArray[nextSlot] != null)
+            {
+                found = true;
+                break;
+            }
         }
-        else
+
+        // If no items are equipped in any slot, don't cycle
+        if (!found) return;
+
+        currentSlot = nextSlot;
+    }
+
+    public void EquipItem(Item item, EquipmentSlotType slotType, int slotIndex)
+    {
+        if (item == null) return;
+
+        // 1. Check if the item is already equipped anywhere else and clear that old slot
+        ClearExistingSlot(item);
+
+        // 2. Assign to the new target slot
+        switch (slotType)
         {
-            rightHandWeapons[slotIndex] = weapon;
-            if (slotIndex == activeRightSlot) UpdateAnimatorControllers(false);
+            case EquipmentSlotType.RightHand:
+                if (item is Weapon wRight)
+                {
+                    rightHandWeapons[slotIndex] = wRight;
+                    if (slotIndex == activeRightSlot) UpdateAnimatorControllers(false);
+                }
+                break;
+            case EquipmentSlotType.LeftHand:
+                if (item is Weapon wLeft)
+                {
+                    leftHandWeapons[slotIndex] = wLeft;
+                    if (slotIndex == activeLeftSlot) UpdateAnimatorControllers(true);
+                }
+                break;
+            case EquipmentSlotType.Item:
+                equippedItems[slotIndex] = item;
+                break;
+            case EquipmentSlotType.Ring:
+                equippedRings[slotIndex] = item;
+                break;
+            case EquipmentSlotType.Spell:
+                equippedSpells[slotIndex] = item;
+                break;
+        }
+    }
+
+    private void ClearExistingSlot(Item item)
+    {
+        // Check Right Hand Weapons
+        for (int i = 0; i < rightHandWeapons.Length; i++)
+        {
+            if (rightHandWeapons[i] == item)
+            {
+                rightHandWeapons[i] = null;
+                if (i == activeRightSlot) UpdateAnimatorControllers(false);
+            }
+        }
+
+        // Check Left Hand Weapons
+        for (int i = 0; i < leftHandWeapons.Length; i++)
+        {
+            if (leftHandWeapons[i] == item)
+            {
+                leftHandWeapons[i] = null;
+                if (i == activeLeftSlot) UpdateAnimatorControllers(true);
+            }
+        }
+
+        // Check Items
+        for (int i = 0; i < equippedItems.Length; i++)
+        {
+            if (equippedItems[i] == item) equippedItems[i] = null;
+        }
+
+        // Check Rings
+        for (int i = 0; i < equippedRings.Length; i++)
+        {
+            if (equippedRings[i] == item) equippedRings[i] = null;
+        }
+
+        // Check Spells
+        for (int i = 0; i < equippedSpells.Length; i++)
+        {
+            if (equippedSpells[i] == item) equippedSpells[i] = null;
         }
     }
 
@@ -237,7 +417,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
             currentState_LeftHand = PerformActionState.Idle;
             image_LeftHand.enabled = false;
-            image_LeftHandWeaponIcon.enabled = false;
+            image_LeftHandWeaponIcon.color = new Color(255,255,255,60);
         }
         else
         {
@@ -250,7 +430,7 @@ public class PlayerWeaponManager : MonoBehaviour
             if (leftHandWeapon != null)
             {
                 image_LeftHand.enabled = true;
-                image_LeftHandWeaponIcon.enabled = true;
+                image_LeftHandWeaponIcon.color = new Color(255,255,255,60);
                 if (anim_LeftHand != null && leftHandWeapon.animController_OneHanded != null)
                 {
                     anim_LeftHand.runtimeAnimatorController = leftHandWeapon.animController_OneHanded;
@@ -268,6 +448,7 @@ public class PlayerWeaponManager : MonoBehaviour
             if (image_LeftHandWeaponIcon.sprite != leftHandWeapon.spr_Weapon)
             {
                 image_LeftHandWeaponIcon.sprite = leftHandWeapon.spr_Weapon;
+                image_LeftHandWeaponIcon.SetNativeSize();
             }
 
             if (image_LeftHand.enabled == false)
@@ -283,8 +464,13 @@ public class PlayerWeaponManager : MonoBehaviour
         {
             if (image_LeftHand.enabled == true)
             {
-                image_LeftHandWeaponIcon.enabled = false;
                 image_LeftHand.enabled = false;
+            }
+
+            if (image_LeftHandWeaponIcon.sprite != emptyWeaponSprite)
+            {
+                image_LeftHandWeaponIcon.sprite = emptyWeaponSprite;
+                image_LeftHandWeaponIcon.SetNativeSize();
             }
         }
 
@@ -294,6 +480,7 @@ public class PlayerWeaponManager : MonoBehaviour
             if(image_RightHandWeaponIcon.sprite != rightHandWeapon.spr_Weapon)
             {
                 image_RightHandWeaponIcon.sprite = rightHandWeapon.spr_Weapon;
+                image_RightHandWeaponIcon.SetNativeSize();
             }
 
             if (image_RightHand.enabled == false)
@@ -310,8 +497,60 @@ public class PlayerWeaponManager : MonoBehaviour
         {
             if (image_RightHand.enabled == true)
             {
-                image_RightHandWeaponIcon.enabled = false;
                 image_RightHand.enabled = false;
+            }
+
+            if (image_RightHandWeaponIcon.sprite != emptyWeaponSprite)
+            {
+                image_RightHandWeaponIcon.sprite = emptyWeaponSprite;
+                image_RightHandWeaponIcon.SetNativeSize();
+            }
+        }
+    }
+
+    private void HandleItemAndSpellSprites()
+    {
+        // -----------------------
+        // SPELL UI UPDATE
+        // -----------------------
+        if (currentActiveSpell != null && currentActiveSpell.spr_Icon != null)
+        {
+            if (image_Spell.sprite != currentActiveSpell.spr_Icon)
+            {
+                image_Spell.sprite = currentActiveSpell.spr_Icon;
+                image_Spell.SetNativeSize();
+                image_Spell.color = Color.white; // Full opacity
+            }
+        }
+        else
+        {
+            if (image_Spell.sprite != emptySpellSprite)
+            {
+                image_Spell.sprite = emptySpellSprite;
+                image_Spell.SetNativeSize();
+                image_Spell.color = new Color32(255, 255, 255, 60); // Dimmed when empty
+            }
+        }
+
+        // -----------------------
+        // ITEM UI UPDATE
+        // -----------------------
+        if (currentActiveItem != null && currentActiveItem.spr_Icon != null)
+        {
+            if (image_Item.sprite != currentActiveItem.spr_Icon)
+            {
+                image_Item.sprite = currentActiveItem.spr_Icon;
+                image_Item.SetNativeSize();
+                image_Item.color = Color.white; // Full opacity
+            }
+        }
+        else
+        {
+            if (image_Item.sprite != emptyItemSprite)
+            {
+                image_Item.sprite = emptyItemSprite;
+                image_Item.SetNativeSize();
+                image_Item.color = new Color32(255, 255, 255, 60); // Dimmed when empty
             }
         }
     }
@@ -319,6 +558,7 @@ public class PlayerWeaponManager : MonoBehaviour
     private void HandleRightHandInput()
     {
         if (rightHandWeapon == null) return;
+        if (EquipmentLoadOut.instance.isPanelActive) { return; }
 
         switch (rightHandWeapon.weaponCategory)
         {
@@ -343,6 +583,7 @@ public class PlayerWeaponManager : MonoBehaviour
     private void HandleLeftHandInput()
     {
         if (isTwoHanding || leftHandWeapon == null) return;
+        if (EquipmentLoadOut.instance.isPanelActive) { return; }
 
         switch (leftHandWeapon.weaponCategory)
         {
@@ -457,107 +698,154 @@ public class PlayerWeaponManager : MonoBehaviour
 
     private void HandlePyromancyInput(Weapon weapon, bool isLeftHand)
     {
-        bool isPressed = isLeftHand ? playerController.isLeftHandPressed : playerController.isRightHandPressed;
-        bool isHeld = isLeftHand ? playerController.isLeftHandHeld : playerController.isRightHandHeld;
-        ref float lastAttackTime = ref (isLeftHand ? ref lastAttackTimeLeft : ref lastAttackTimeRight);
-        ref float attackResetTimer = ref (isLeftHand ? ref attackStateResetTimerLeft : ref attackStateResetTimerRef(isLeftHand));
-
-        // When first pressed, execute the Cast animation state (Press1) and deplete stamina[cite: 14]
-        if (isPressed && !playerController.isKicking)
-        {
-            if (playerController.CharacterStaminaComponent.CurrentStamina > 0f)
-            {
-                if (Time.time >= lastAttackTime + weapon.attackCooldown)
-                {
-                    playerController.StaminaDepleted(weapon.staminaCost);
-                    lastAttackTime = Time.time;
-
-                    if (isLeftHand)
-                    {
-                        currentState_LeftHand = PerformActionState.Press1;
-                        attackStateResetTimerLeft = weapon.attackCooldown;
-                    }
-                    else
-                    {
-                        currentState_Righthand = PerformActionState.Press1;
-                        attackStateResetTimerRight = weapon.attackCooldown;
-                    }
-                }
-            }
-        }
-        // While continuing to hold the button down, switch to charging/channeling state (Hold1)[cite: 14]
-        else if (isHeld)
-        {
-            PerformActionState currentState = isLeftHand ? currentState_LeftHand : currentState_Righthand;
-
-            // Allow transition to Hold1 after the initial press or directly if channeled
-            if (currentState == PerformActionState.Press1 || currentState == PerformActionState.Idle)
-            {
-                if (isLeftHand) currentState_LeftHand = PerformActionState.Hold1;
-                else currentState_Righthand = PerformActionState.Hold1;
-            }
-        }
-        // When released from a hold state, return to Idle
-        else
-        {
-            PerformActionState currentState = isLeftHand ? currentState_LeftHand : currentState_Righthand;
-            if (currentState == PerformActionState.Hold1)
-            {
-                if (isLeftHand) currentState_LeftHand = PerformActionState.Idle;
-                else currentState_Righthand = PerformActionState.Idle;
-            }
-        }
-    }
-
-    private ref float attackStateResetTimerRef(bool isLeftHand)
-    {
-        return ref (isLeftHand ? ref attackStateResetTimerLeft : ref attackStateResetTimerRight);
+        if (currentActiveSpell == null || currentActiveSpell.itemCategory != ItemCategory.Pyromancy) return;
+        ProcessSpellInput(weapon, currentActiveSpell, isLeftHand);
     }
 
     private void HandleMagicInput(Weapon weapon, bool isLeftHand)
     {
-        bool isPressed = isLeftHand ? playerController.isLeftHandPressed : playerController.isRightHandPressed;
-        bool isHeld = isLeftHand ? playerController.isLeftHandHeld : playerController.isRightHandHeld;
+        if (currentActiveSpell == null || currentActiveSpell.itemCategory != ItemCategory.Magic) return;
+        ProcessSpellInput(weapon, currentActiveSpell, isLeftHand);
+    }
 
-        if (isPressed)
+    private void ProcessSpellInput(Weapon weapon, Item spell, bool isLeftHand)
+    {
+        PerformActionState currentState = isLeftHand ? currentState_LeftHand : currentState_Righthand;
+        bool isPressed = isLeftHand ? playerController.isLeftHandPressed : playerController.isRightHandPressed;
+        ref float lastAttackTime = ref (isLeftHand ? ref lastAttackTimeLeft : ref lastAttackTimeRight);
+
+        // Only begin a cast if the hand is Idle, the attack cooldown has passed, and we aren't kicking
+        if (currentState == PerformActionState.Idle && isPressed && !playerController.isKicking)
         {
-            if (playerController.CharacterStaminaComponent.CurrentStamina > 0f)
-                PerformMagicCast(weapon, isLeftHand, isHold: false);
-        }
-        else if (isHeld)
-        {
-            PerformMagicCast(weapon, isLeftHand, isHold: true);
-        }
-        else
-        {
-            if (isLeftHand && currentState_LeftHand == PerformActionState.Hold1) currentState_LeftHand = PerformActionState.Idle;
-            else if (!isLeftHand && currentState_Righthand == PerformActionState.Hold1) currentState_Righthand = PerformActionState.Idle;
+            if (playerController.CharacterStaminaComponent.CurrentStamina > 0f &&
+                playerController.CharacterUltimateComponent.CurrentUltimate > 0f &&
+                Time.time >= lastAttackTime + weapon.attackCooldown)
+            {
+                StartCoroutine(SpellCastSequence(weapon, spell, isLeftHand));
+            }
         }
     }
 
-    private void PerformMagicCast(Weapon weapon, bool isLeftHand, bool isHold)
+    private IEnumerator SpellCastSequence(Weapon weapon, Item spell, bool isLeftHand)
     {
+        // INITIAL SETUP: Deplete stamina and set the animation to Hold1 (Wind-up)
         playerController.StaminaDepleted(weapon.staminaCost);
 
-        if (isHold)
+        if (isLeftHand) currentState_LeftHand = PerformActionState.Hold1;
+        else currentState_Righthand = PerformActionState.Hold1;
+
+        Transform castTransform = cameraTransform;
+
+        // -----------------------------------------------------
+        // PHASE 1: DELAY
+        // -----------------------------------------------------
+        if (spell.useDelay)
         {
-            if (isLeftHand) currentState_LeftHand = PerformActionState.Hold1;
-            else currentState_Righthand = PerformActionState.Hold1;
+            playerController.DepleteUltimate(spell.flatManaCost);
+            yield return new WaitForSeconds(spell.castDelay);
+        }
+        else if (!spell.useCharge && !spell.useContinuous)
+        {
+            // Standard instant flat cost for simple, non-modified casts
+            playerController.DepleteUltimate(spell.flatManaCost);
+        }
+
+        // If the player let go during the delay and it's a continuous spell, cancel.
+        if (spell.useContinuous && !IsHandHeld(isLeftHand))
+        {
+            EndSpellCast(weapon, isLeftHand);
+            yield break;
+        }
+
+        // -----------------------------------------------------
+        // PHASE 2: CHARGE
+        // -----------------------------------------------------
+        float finalCharge = 0f;
+        if (spell.useCharge)
+        {
+            // If it's a continuous spell, charge acts as a 'spin-up' (must hold until max before firing).
+            // If it's a single shot, you hold to build power, and release to fire early or at max.
+            bool requireMaxChargeForContinuous = spell.useContinuous;
+
+            while (IsHandHeld(isLeftHand) && playerController.CharacterUltimateComponent.CurrentUltimate > 0f)
+            {
+                if (finalCharge < spell.maxChargeTime)
+                {
+                    finalCharge += Time.deltaTime;
+                    playerController.DepleteUltimate(spell.chargeManaDrainRate * Time.deltaTime);
+                }
+
+                // Break charge phase to start firing if spinning up a continuous weapon
+                if (requireMaxChargeForContinuous && finalCharge >= spell.maxChargeTime)
+                {
+                    break;
+                }
+
+                yield return null; // Wait until next frame
+            }
+        }
+
+        // -----------------------------------------------------
+        // PHASE 3: EXECUTION
+        // -----------------------------------------------------
+        if (spell.useContinuous)
+        {
+            // Must still be holding the button to spray
+            if (IsHandHeld(isLeftHand) && playerController.CharacterUltimateComponent.CurrentUltimate > 0f)
+            {
+                GameObject activeSpell = null;
+                if (spell.spellPrefab != null)
+                {
+                    // Parented to transform so the flamethrower follows the player's camera turning
+                    activeSpell = Instantiate(spell.spellPrefab, castTransform.position, castTransform.rotation, castTransform);
+                }
+
+                // Keep spraying until button released or mana empty
+                while (IsHandHeld(isLeftHand) && playerController.CharacterUltimateComponent.CurrentUltimate > 0f)
+                {
+                    playerController.DepleteUltimate(spell.continuousManaDrainRate * Time.deltaTime);
+                    yield return null;
+                }
+
+                if (activeSpell != null) Destroy(activeSpell);
+            }
         }
         else
         {
-            if (isLeftHand)
+            // Single cast execution (Fires on button release if charged, or instantly if standard)
+            if (spell.spellPrefab != null)
             {
-                lastAttackTimeLeft = Time.time;
-                currentState_LeftHand = PerformActionState.Press1;
-                attackStateResetTimerLeft = weapon.attackCooldown;
+                GameObject proj = Instantiate(spell.spellPrefab, castTransform.position, castTransform.rotation);
+
+                // TODO: Pass 'finalCharge' to the spawned projectile script here so it knows its multiplier
             }
-            else
-            {
-                lastAttackTimeRight = Time.time;
-                currentState_Righthand = PerformActionState.Press1;
-                attackStateResetTimerRight = weapon.attackCooldown;
-            }
+        }
+
+        // -----------------------------------------------------
+        // PHASE 4: CLEANUP
+        // -----------------------------------------------------
+        EndSpellCast(weapon, isLeftHand);
+    }
+
+    private bool IsHandHeld(bool isLeftHand)
+    {
+        return isLeftHand ? playerController.isLeftHandHeld : playerController.isRightHandHeld;
+    }
+
+    private void EndSpellCast(Weapon weapon, bool isLeftHand)
+    {
+        // Reverts state back to the Update loop reset timers
+        if (isLeftHand)
+        {
+            lastAttackTimeLeft = Time.time;
+            currentState_LeftHand = PerformActionState.Press1; // Release animation
+            attackStateResetTimerLeft = weapon.attackCooldown;
+        }
+        else
+        {
+            lastAttackTimeRight = Time.time;
+            currentState_Righthand = PerformActionState.Press1; // Release animation
+            attackStateResetTimerRight = weapon.attackCooldown;
         }
     }
 
@@ -631,32 +919,6 @@ public class PlayerWeaponManager : MonoBehaviour
         bool rightIsPyro = rightHandWeapon != null && rightHandWeapon.weaponCategory == WeaponCategory.PyromancyFlame;
         bool leftIsPyro = leftHandWeapon != null && leftHandWeapon.weaponCategory == WeaponCategory.PyromancyFlame;
         return rightIsPyro || leftIsPyro;
-    }
-
-    private void PerformPyromancy(Weapon weapon, bool isLeftHand, bool isHold)
-    {
-        playerController.StaminaDepleted(weapon.staminaCost);
-
-        if (isHold)
-        {
-            if (isLeftHand) currentState_LeftHand = PerformActionState.Hold1;
-            else currentState_Righthand = PerformActionState.Hold1;
-        }
-        else
-        {
-            if (isLeftHand)
-            {
-                lastAttackTimeLeft = Time.time;
-                currentState_LeftHand = PerformActionState.Press1;
-                attackStateResetTimerLeft = weapon.attackCooldown;
-            }
-            else
-            {
-                lastAttackTimeRight = Time.time;
-                currentState_Righthand = PerformActionState.Press1;
-                attackStateResetTimerRight = weapon.attackCooldown;
-            }
-        }
     }
 
     private EnemyEntity GetEnemyInFront()

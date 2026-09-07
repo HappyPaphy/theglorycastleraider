@@ -536,7 +536,18 @@
                 {
                     "name": "",
                     "id": "76210590-e2b8-4ff9-82fc-4fbf2cf4ff28",
-                    "path": "<Keyboard>/1",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "SwitchWeaponUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "36865824-2edd-4a76-b27c-5b017e365a34",
+                    "path": "<Mouse>/forwardButton",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
@@ -558,7 +569,7 @@
                 {
                     "name": "",
                     "id": "7fe10627-7ea9-4739-be45-a650b66803de",
-                    "path": "<Keyboard>/2",
+                    "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
@@ -580,7 +591,18 @@
                 {
                     "name": "",
                     "id": "2eb88b3e-18a1-44ed-b517-d41e6990deed",
-                    "path": "<Keyboard>/3",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "SwitchWeaponDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d843f8ab-94a4-45c8-845d-53e9903771e8",
+                    "path": "<Mouse>/backButton",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
@@ -602,7 +624,7 @@
                 {
                     "name": "",
                     "id": "1098b3fb-6550-474c-b021-bcc80153ad47",
-                    "path": "<Keyboard>/4",
+                    "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
