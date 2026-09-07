@@ -4,7 +4,7 @@ using UnityEngine;
 public class SpellProjectile : MonoBehaviour
 {
     [Header("Projectile Settings")]
-    public Vector3 spawnOffSet = new Vector3(0f, -0.35f, 0.5f);
+    public Vector3 spawnOffSet = new Vector3(0f, -0.1f, 0.5f);
     public float knockBackValue;
     public float speed = 15f;
     public float damage = 25f;

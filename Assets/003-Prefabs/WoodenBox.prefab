@@ -581,6 +581,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74a4eb4e2514f18479299c2956360d7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropItemOnDead
-  obj_DropItem: {fileID: 380057338341773006, guid: 589029928fc2356459b06eb3b1733989, type: 3}
-  dropChance_Min: 5
-  dropChance_Max: 50
+  maxDropsAllowed: 1
+  isNeedAtLeastOneDrop: 0
+  potentialDrops: []

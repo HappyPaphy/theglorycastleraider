@@ -54,6 +54,7 @@ MonoBehaviour:
     _currentHP: 70
     _executePercentage: 0.4
   slider_HP: {fileID: 0}
+  decapitatedHeadPrefab: {fileID: 1945120904451398954, guid: 3aa5bf4a8c78e8742a150aafcb5e1838, type: 3}
   faceToCamera: {fileID: 6605675104170769090}
   executeTransform: {fileID: 482324574376791486}
   goreSprite_34HP: {fileID: 1120836982495257028}
@@ -61,7 +62,6 @@ MonoBehaviour:
   animGore34: {fileID: 7620875348692328258}
   animGore67: {fileID: 8121104169884513463}
   agent: {fileID: 2971637515779346058}
-  damageKnockbackForce: 8
   blockKnockbackForce: 3
   knockbackDecay: 10
   maxBalance: 100
@@ -81,6 +81,7 @@ MonoBehaviour:
   backstabAngle: 60
   backstabRange: 2
   backstabDamage: 100
+  isEnableAgentOnStartOnce: 0
   isStunned: 0
   isDied: 0
   isDiedOnce: 0
@@ -99,7 +100,6 @@ MonoBehaviour:
   currentState: 0
   damageStunDuration: 0.5
   stunRecoveryTime: 4
-  bloodEffect: {fileID: 6317032364392488945, guid: b462f72f433bde146b3c942ccc0215ab, type: 3}
   headSpawnTransform: {fileID: 482324574376791486}
 --- !u!195 &2971637515779346058
 NavMeshAgent:

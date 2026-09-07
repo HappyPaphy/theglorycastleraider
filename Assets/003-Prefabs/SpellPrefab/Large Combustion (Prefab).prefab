@@ -49,13 +49,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpellContinuous
   damageImpactSound: 0
-  spawnOffSet: {x: 0, y: -0.35, z: 0.5}
+  spawnOffSet: {x: 0, y: -0.1, z: 0.5}
   damagePerTick: 10
   tickRate: 0.125
   isBlockable: 0
   knockBackForce: 1
   forwardSpeed: 1.5
   travelDuration: 0.75
+  vfx_Combustion: {fileID: 0}
   lifeTime: 1
 --- !u!114 &5603721721904330789
 MonoBehaviour:

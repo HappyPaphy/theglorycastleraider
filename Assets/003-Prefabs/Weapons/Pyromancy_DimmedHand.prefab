@@ -62,18 +62,24 @@ MonoBehaviour:
   useDelay: 0
   castDelay: 0.5
   flatManaCost: 20
+  flatStaminaCost: 16
   useCharge: 0
   maxChargeTime: 3
   chargeManaDrainRate: 15
+  chargeStaminaDrainRate: 15
   useContinuous: 0
+  continuousSpawnRate: 0.25
   continuousManaDrainRate: 15
+  continuousStaminaDrainRate: 15
   spellPrefab: {fileID: 0}
+  damageImpactSound: 0
   weaponCategory: 4
   meleeType: 0
   shieldType: 0
   bowType: 0
   pyromancyType: 1
   sorceryType: 0
+  damageKnockbackForce: 8
   damage: 18
   attackCooldown: 0.6
   staminaCost: 8
@@ -86,8 +92,8 @@ MonoBehaviour:
   audioClips_ParrySound:
   - {fileID: 8300000, guid: 3f7fdfc3796e8b8439360a9b79fb63cf, type: 3}
   spr_Weapon: {fileID: 302748542, guid: 061137b5a6b2b4c43b0bd8cc01e15662, type: 3}
-  animController_OneHanded: {fileID: 9100000, guid: b1dd4e21bb34d7f409d8aaa9f5d82f05, type: 2}
-  animController_TwoHanded: {fileID: 9100000, guid: 6d727605931cd5643bfe8be6aa293f15, type: 2}
+  animController_OneHanded: {fileID: 9100000, guid: 1c746e80b85ec81468796d6b216e43e1, type: 2}
+  animController_TwoHanded: {fileID: 9100000, guid: f45e898248198e04db227e1d5a19d92c, type: 2}
 --- !u!1 &3288727578148725994
 GameObject:
   m_ObjectHideFlags: 0

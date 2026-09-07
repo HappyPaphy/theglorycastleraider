@@ -351,24 +351,24 @@ PrefabInstance:
       objectReference: {fileID: 659744090}
     - target: {fileID: 4552899870359573739, guid: 13cbc4bcde22b514dba970752d61e221, type: 3}
       propertyPath: menuElement_MainMenu.Array.size
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4552899870359573739, guid: 13cbc4bcde22b514dba970752d61e221, type: 3}
       propertyPath: menuElement_MainMenu.Array.data[2].rectMenuElement
       value: 
-      objectReference: {fileID: 659744088}
+      objectReference: {fileID: 34830387}
     - target: {fileID: 4552899870359573739, guid: 13cbc4bcde22b514dba970752d61e221, type: 3}
       propertyPath: menuElement_MainMenu.Array.data[3].rectMenuElement
       value: 
-      objectReference: {fileID: 34830387}
+      objectReference: {fileID: 34830386}
     - target: {fileID: 4552899870359573739, guid: 13cbc4bcde22b514dba970752d61e221, type: 3}
       propertyPath: menuElement_MainMenu.Array.data[4].rectMenuElement
       value: 
-      objectReference: {fileID: 34830386}
+      objectReference: {fileID: 1268319433}
     - target: {fileID: 4552899870359573739, guid: 13cbc4bcde22b514dba970752d61e221, type: 3}
       propertyPath: menuElement_MainMenu.Array.data[5].rectMenuElement
       value: 
-      objectReference: {fileID: 1268319433}
+      objectReference: {fileID: 1783962218}
     - target: {fileID: 4552899870359573739, guid: 13cbc4bcde22b514dba970752d61e221, type: 3}
       propertyPath: menuElement_MainMenu.Array.data[6].rectMenuElement
       value: 
@@ -384,11 +384,11 @@ PrefabInstance:
     - target: {fileID: 4552899870359573739, guid: 13cbc4bcde22b514dba970752d61e221, type: 3}
       propertyPath: menuElement_MainMenu.Array.data[4].rectTransform_Hide
       value: 
-      objectReference: {fileID: 34830388}
+      objectReference: {fileID: 464654029}
     - target: {fileID: 4552899870359573739, guid: 13cbc4bcde22b514dba970752d61e221, type: 3}
       propertyPath: menuElement_MainMenu.Array.data[4].rectTransform_Show
       value: 
-      objectReference: {fileID: 34830389}
+      objectReference: {fileID: 298783068}
     - target: {fileID: 4552899870359573739, guid: 13cbc4bcde22b514dba970752d61e221, type: 3}
       propertyPath: menuElement_MainMenu.Array.data[5].rectTransform_Hide
       value: 
@@ -41027,7 +41027,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &659744088
 RectTransform:
   m_ObjectHideFlags: 0
@@ -41068,6 +41068,12 @@ MonoBehaviour:
   text: {fileID: 975223779}
   alpha: 60
   activeGameObjectOnHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onClick:
+    m_PersistentCalls:
+      m_Calls: []
   clickSound: {fileID: 0}
 --- !u!114 &659744090
 MonoBehaviour:
@@ -80877,6 +80883,12 @@ MonoBehaviour:
   text: {fileID: 0}
   alpha: 60
   activeGameObjectOnHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onClick:
+    m_PersistentCalls:
+      m_Calls: []
   clickSound: {fileID: 0}
 --- !u!114 &1268319435
 MonoBehaviour:
@@ -114236,6 +114248,12 @@ MonoBehaviour:
   text: {fileID: 0}
   alpha: 60
   activeGameObjectOnHover: {fileID: 0}
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onClick:
+    m_PersistentCalls:
+      m_Calls: []
   clickSound: {fileID: 0}
 --- !u!114 &1783962220
 MonoBehaviour:

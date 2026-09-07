@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Playables;
 using UnityEngine.UI;
+using TMPro;
 
 public enum PerformActionState
 {
@@ -25,6 +26,7 @@ public class PlayerWeaponManager : MonoBehaviour
     [SerializeField] private Image image_RightHandWeaponIcon;
     [SerializeField] private Image image_Spell;
     [SerializeField] private Image image_Item;
+    [SerializeField] private TextMeshProUGUI text_ItemCount;
 
     [SerializeField] private Sprite emptyWeaponSprite;
     [SerializeField] private Sprite emptyItemSprite;
@@ -132,23 +134,6 @@ public class PlayerWeaponManager : MonoBehaviour
             ToggleTwoHandedStance();    
         }
 
-
-        if (playerController.isKickPressed && !playerController.isKicking 
-            && currentState_Righthand == PerformActionState.Idle && currentState_LeftHand == PerformActionState.Idle)
-        {
-            if (playerController.CharacterStaminaComponent.CurrentStamina > 0f)
-            {
-                EnemyEntity targetEnemy = GetEnemyInFront();
-
-                if (targetEnemy != null && targetEnemy.isStunned)
-                {
-                    RumbleManager.instance.RumblePulse(1f, 2.5f, 0.3f);
-                    playerController.StaminaDepleted(executeStaminaCost);
-                    StartCoroutine(ExecutionSequence(targetEnemy));
-                }
-            }
-        }
-
         // State Reset Timers
         if (currentState_Righthand != PerformActionState.Idle && currentState_Righthand != PerformActionState.Hold1 && currentState_Righthand != PerformActionState.Block && !playerController.isKicking && !playerController.isExecuting)
         {
@@ -204,6 +189,9 @@ public class PlayerWeaponManager : MonoBehaviour
 
     private void HandleItemUsage()
     {
+        if (EquipmentLoadOut.instance.isPanelActive) { return; }
+        if (PauseGame.instance.IsPaused) { return; }
+
         // Check for player input and ensure they aren't stuck in another uninterruptible animation
         if (playerController.IsReloadPressed && !playerController.isKicking && !playerController.isExecuting)
         {
@@ -211,19 +199,38 @@ public class PlayerWeaponManager : MonoBehaviour
 
             if (currentActiveItem != null && currentActiveItem.itemCategory == ItemCategory.Consumable)
             {
+                ItemType activeType = currentActiveItem.itemType;
+
                 // Check if the item exists in the inventory and has at least 1 charge
-                if (InventoryManager.instance.consumables.ContainsKey(currentActiveItem.itemType) &&
-                    InventoryManager.instance.consumables[currentActiveItem.itemType] > 0)
+                if (InventoryManager.instance.consumables.ContainsKey(activeType) &&
+                    InventoryManager.instance.consumables[activeType] > 0)
                 {
                     // 1. Decrease the quantity by 1
-                    InventoryManager.instance.consumables[currentActiveItem.itemType]--;
+                    InventoryManager.instance.consumables[activeType]--;
 
                     // 2. Apply the effect
-                    ApplyConsumableEffect(currentActiveItem.itemType);
-                }
-                else
-                {
-                    // Optional: Play an "empty inventory" click sound
+                    ApplyConsumableEffect(activeType);
+
+                    // 3. If depleted, clear it completely from inventory and loadouts
+                    if (InventoryManager.instance.consumables[activeType] <= 0)
+                    {
+                        InventoryManager.instance.RemoveConsumableIfEmpty(activeType);
+
+                        // Automatically cycle to the next available item so the player isn't left empty-handed
+                        CycleEquipment(ref activeItemSlot, equippedItems);
+                    }
+
+                    // 4. Force immediate UI and loadout update
+                    if (EquipmentLoadOut.instance != null)
+                    {
+                        EquipmentLoadOut.instance.RefreshUI();
+
+                        // If the inventory selection menu is currently open, refresh that grid too
+                        if (EquipmentLoadOut.instance.isPanelActive && EquipmentLoadOut.instance.isInInventoryMenu)
+                        {
+                            EquipmentLoadOut.instance.OpenInventoryCategory(EquipmentSlotType.Item, activeItemSlot);
+                        }
+                    }
                 }
             }
         }
@@ -537,6 +544,9 @@ public class PlayerWeaponManager : MonoBehaviour
         // -----------------------
         if (currentActiveItem != null && currentActiveItem.spr_Icon != null)
         {
+            int quantity = InventoryManager.instance.consumables[currentActiveItem.itemType];
+            text_ItemCount.text = $"{quantity}";
+
             if (image_Item.sprite != currentActiveItem.spr_Icon)
             {
                 image_Item.sprite = currentActiveItem.spr_Icon;
@@ -548,6 +558,7 @@ public class PlayerWeaponManager : MonoBehaviour
         {
             if (image_Item.sprite != emptyItemSprite)
             {
+                text_ItemCount.text = "";
                 image_Item.sprite = emptyItemSprite;
                 image_Item.SetNativeSize();
                 image_Item.color = new Color32(255, 255, 255, 60); // Dimmed when empty
@@ -718,7 +729,7 @@ public class PlayerWeaponManager : MonoBehaviour
         if (currentState == PerformActionState.Idle && isPressed && !playerController.isKicking)
         {
             if (playerController.CharacterStaminaComponent.CurrentStamina > spell.flatStaminaCost &&
-                playerController.CharacterUltimateComponent.CurrentUltimate > spell.flatManaCost &&
+                playerController.CharacterUltimateComponent.CurrentUltimate >= spell.flatManaCost &&
                 Time.time >= lastAttackTime + weapon.attackCooldown)
             {
                 StartCoroutine(SpellCastSequence(weapon, spell, isLeftHand));
@@ -731,8 +742,8 @@ public class PlayerWeaponManager : MonoBehaviour
         // INITIAL SETUP: Deplete stamina and set the animation to Hold1 (Wind-up)
         playerController.StaminaDepleted(spell.flatStaminaCost);
 
-        if (isLeftHand) currentState_LeftHand = PerformActionState.Hold1;
-        else currentState_Righthand = PerformActionState.Hold1;
+        if (isLeftHand) anim_LeftHand.Play("Press1");
+        else anim_RightHand.Play("Press1");
 
         Transform castTransform = cameraTransform;
 
@@ -746,13 +757,6 @@ public class PlayerWeaponManager : MonoBehaviour
             yield return new WaitForSeconds(spell.castDelay);
         }
 
-        // If the player let go during the delay and it's a continuous spell, cancel.
-        if (spell.useContinuous && !IsHandHeld(isLeftHand) && Time.timeScale != 0f)
-        {
-            EndSpellCast(weapon, isLeftHand);
-            yield break;
-        }
-
         // -----------------------------------------------------
         // PHASE 2: CHARGE
         // -----------------------------------------------------
@@ -763,7 +767,7 @@ public class PlayerWeaponManager : MonoBehaviour
             // If it's a single shot, you hold to build power, and release to fire early or at max.
             bool requireMaxChargeForContinuous = spell.useContinuous;
 
-            while (IsHandHeld(isLeftHand) && playerController.CharacterUltimateComponent.CurrentUltimate > spell.chargeManaDrainRate)
+            while (IsHandHeld(isLeftHand) && playerController.CharacterUltimateComponent.CurrentUltimate >= spell.chargeManaDrainRate)
             {
                 if (finalCharge < spell.maxChargeTime)
                 {
@@ -789,29 +793,34 @@ public class PlayerWeaponManager : MonoBehaviour
             SoundManager.instance.FireSound_Combustion(castTransform.position, true);
 
             // Must still be holding the button to spray
-            if (IsHandHeld(isLeftHand) && playerController.CharacterUltimateComponent.CurrentUltimate > spell.continuousManaDrainRate)
+            if (IsHandHeld(isLeftHand) && playerController.CharacterUltimateComponent.CurrentUltimate >= spell.continuousManaDrainRate)
             {
                 //GameObject activeSpell = null;
                 
                 // Keep spraying until button released or mana empty
-                while (IsHandHeld(isLeftHand) && playerController.CharacterUltimateComponent.CurrentUltimate > spell.continuousManaDrainRate)
+                while (IsHandHeld(isLeftHand) && playerController.CharacterUltimateComponent.CurrentUltimate >= spell.continuousManaDrainRate
+                    && playerController.CharacterStaminaComponent.CurrentStamina >= spell.continuousStaminaDrainRate)
                 {
-
                     if (spell.spellPrefab != null)
                     {
                         // Parented to transform so the flamethrower follows the player's camera turning
                         Instantiate(spell.spellPrefab, castTransform.position, castTransform.rotation, castTransform);
                         
                         playerController.DepleteUltimate(spell.continuousManaDrainRate);
+                        playerController.StaminaDepleted(spell.continuousStaminaDrainRate);
                         yield return new WaitForSeconds(spell.continuousSpawnRate);
+                    }
+
+                    if(playerController.CharacterUltimateComponent.CurrentUltimate < spell.continuousManaDrainRate)
+                    {
+                        break;
                     }
 
                     yield return null;
                 }
 
                 SoundManager.instance.FireSound_Combustion(castTransform.position, false);
-
-                //if (activeSpell != null) Destroy(activeSpell);
+                EndSpellCast(weapon, isLeftHand);
             }
         }
         else
@@ -820,15 +829,11 @@ public class PlayerWeaponManager : MonoBehaviour
             if (spell.spellPrefab != null)
             {
                 Instantiate(spell.spellPrefab, castTransform.position, castTransform.rotation, castTransform);
-                
+                EndSpellCast(weapon, isLeftHand);
                 // TODO: Pass 'finalCharge' to the spawned projectile script here so it knows its multiplier
             }
         }
 
-        // -----------------------------------------------------
-        // PHASE 4: CLEANUP
-        // -----------------------------------------------------
-        EndSpellCast(weapon, isLeftHand);
     }
 
     private bool IsHandHeld(bool isLeftHand)
@@ -842,13 +847,13 @@ public class PlayerWeaponManager : MonoBehaviour
         if (isLeftHand)
         {
             lastAttackTimeLeft = Time.time;
-            currentState_LeftHand = PerformActionState.Press1; // Release animation
+            anim_LeftHand.Play("Idle");
             attackStateResetTimerLeft = weapon.attackCooldown;
         }
         else
         {
             lastAttackTimeRight = Time.time;
-            currentState_Righthand = PerformActionState.Press1; // Release animation
+            anim_RightHand.Play("Idle");
             attackStateResetTimerRight = weapon.attackCooldown;
         }
     }
@@ -900,22 +905,34 @@ public class PlayerWeaponManager : MonoBehaviour
             yield return null;
         }
 
+        playerController.EnableKick();
         transform.eulerAngles = new Vector3(0f, targetYaw, 0f);
         playerController.verticalRotation = targetPitch;
 
-        currentState_Righthand = PerformActionState.Execute;
+        //currentState_Righthand = PerformActionState.Execute;
 
         targetEnemy.GotExecuted();
+
+        
+
         cameraFollow.isSmoothing = false;
         cameraBob.TriggerShake(0.293f, 0.05f);
         cameraBob.TriggerZoomEffect(40f, 0.293f, 0.25f);
 
         yield return new WaitForSeconds(0.293f);
 
+        if (targetEnemy.decapitatedHeadPrefab != null)
+        {
+            Vector3 headSpawnPos = targetEnemy.executeTransform.position;
+            Instantiate(targetEnemy.decapitatedHeadPrefab, headSpawnPos, Random.rotation);
+        }
+
         cameraFollow.isSmoothing = false;
         playerController.isExecuting = false;
         playerController.isAttacking = false;
-        currentState_Righthand = PerformActionState.Idle;
+
+        // Trigger PlayerController's cleanup to hide the foot icon and set animator state back to idle
+        playerController.EndKickVisuals();
     }
 
     public bool HasPyromancyEquipped()
@@ -925,7 +942,14 @@ public class PlayerWeaponManager : MonoBehaviour
         return rightIsPyro || leftIsPyro;
     }
 
-    private EnemyEntity GetEnemyInFront()
+    public void StartExecutionRoutine(EnemyEntity targetEnemy)
+    {
+        playerController.StaminaDepleted(executeStaminaCost);
+        StartCoroutine(ExecutionSequence(targetEnemy));
+    }
+
+    // Change this from 'private EnemyEntity' to 'public EnemyEntity'
+    public EnemyEntity GetEnemyInFront()
     {
         Vector3 castStart = cameraTransform.position - (cameraTransform.forward * attackRadius);
         Ray rayAttack = new Ray(castStart, cameraTransform.forward);

@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e228b45736a8cf4ea000616e628a4dd, type: 3}
+  m_Name: Dungeon Flow (Prison) (First Floor)
+  m_EditorClassIdentifier: DunGen::DunGen.Graph.DungeonFlow
+  globalPropGroupID_obsolete: 
+  globalPropRanges_obsolete: []
+  Length:
+    Min: 5
+    Max: 10
+  BranchMode: 0
+  BranchCount:
+    Min: 1
+    Max: 5
+  GlobalProps:
+  - ID: 1
+    Count:
+      Min: 40
+      Max: 75
+  KeyManager: {fileID: 0}
+  DoorwayConnectionChance: 0
+  RestrictConnectionToSameSection: 0
+  TileInjectionRules: []
+  TileTagConnectionMode: 0
+  TileConnectionTags: []
+  DoorwayTagConnectionMode: 1
+  OverrideDoorwaySockets: 0
+  DoorwayConnectionTags: []
+  BranchTagPruneMode: 1
+  BranchPruneTags: []
+  GlobalStraighteningSettings:
+    OverrideStraightenChance: 0
+    StraightenChance: 0
+    OverrideCanStraightenMainPath: 0
+    CanStraightenMainPath: 0
+    OverrideCanStraightenBranchPaths: 0
+    CanStraightenBranchPaths: 0
+  CustomPipeline: {fileID: 0}
+  Nodes:
+  - Graph: {fileID: 11400000}
+    TileSets:
+    - {fileID: 11400000, guid: 9847c596ecac8a247a6fecbc515b78ef, type: 2}
+    NodeType: 1
+    Position: 0
+    Label: Start
+    Keys: []
+    Locks: []
+    LockPlacement: 0
+    StraighteningSettings:
+      OverrideStraightenChance: 0
+      StraightenChance: 0
+      OverrideCanStraightenMainPath: 0
+      CanStraightenMainPath: 1
+      OverrideCanStraightenBranchPaths: 0
+      CanStraightenBranchPaths: 0
+  - Graph: {fileID: 11400000}
+    TileSets:
+    - {fileID: 11400000, guid: a4775b6bff1764d4b90916feb4b5421e, type: 2}
+    NodeType: 2
+    Position: 1
+    Label: Goal
+    Keys: []
+    Locks: []
+    LockPlacement: 0
+    StraighteningSettings:
+      OverrideStraightenChance: 0
+      StraightenChance: 0
+      OverrideCanStraightenMainPath: 0
+      CanStraightenMainPath: 1
+      OverrideCanStraightenBranchPaths: 0
+      CanStraightenBranchPaths: 0
+  - Graph: {fileID: 11400000}
+    TileSets:
+    - {fileID: 11400000, guid: a5c104683e0823b4faf3380cda9db9a8, type: 2}
+    NodeType: 0
+    Position: 0.035807535
+    Label: First Room
+    Keys: []
+    Locks: []
+    LockPlacement: 0
+    StraighteningSettings:
+      OverrideStraightenChance: 0
+      StraightenChance: 0
+      OverrideCanStraightenMainPath: 0
+      CanStraightenMainPath: 1
+      OverrideCanStraightenBranchPaths: 0
+      CanStraightenBranchPaths: 0
+  Lines:
+  - Graph: {fileID: 11400000}
+    DungeonArchetypes:
+    - {fileID: 11400000, guid: 434a4db798b236d47917cca96b00dd1b, type: 2}
+    Position: 0
+    Length: 1
+    Keys: []
+    Locks: []
+  currentFileVersion: 1

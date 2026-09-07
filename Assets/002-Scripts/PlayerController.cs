@@ -533,18 +533,39 @@ public class PlayerController : PlayerEntity
 
     private void HandleKick()
     {
-        if (isKickPressed && !isKicking && PlayerWeaponManager.instance.currentState_Righthand == PerformActionState.Idle 
+        if (isKickPressed && !isKicking && PlayerWeaponManager.instance.currentState_Righthand == PerformActionState.Idle
             && PlayerWeaponManager.instance.currentState_LeftHand == PerformActionState.Idle)
         {
             if (CharacterStaminaComponent.CurrentStamina > 0f)
             {
-                image_Foot.enabled = true;
-                isKicking = true;
-                anim_Foot.Play("Kick", 0, 0f);
-                footState = FootState.Kick;
-                StartCoroutine(KickSequence());
+                // 1. Immediately trigger the Kick visuals and state
+                
+
+                // 2. Check if there is an enemy in front we can execute
+                EnemyEntity targetEnemy = PlayerWeaponManager.instance.GetEnemyInFront();
+
+                if (targetEnemy != null && targetEnemy.isStunned)
+                {
+                    // Branch A: Execution!
+                    RumbleManager.instance.RumblePulse(1f, 2.5f, 0.3f);
+                    PlayerWeaponManager.instance.StartExecutionRoutine(targetEnemy);
+                }
+                else
+                {
+                    EnableKick();
+                    // Branch B: Standard Kick Raycast
+                    StartCoroutine(KickSequence());
+                }
             }
         }
+    }
+
+    public void EnableKick()
+    {
+        image_Foot.enabled = true;
+        isKicking = true;
+        anim_Foot.Play("Kick", 0, 0f);
+        footState = FootState.Kick;
     }
 
     private IEnumerator KickSequence()
@@ -553,10 +574,17 @@ public class PlayerController : PlayerEntity
         PerformKick();
 
         yield return new WaitForSeconds(0.225f);
+        EndKickVisuals(); // Replaced individual resets with the unified cleanup
+    }
+
+    public void EndKickVisuals()
+    {
+        // Safely resets the foot states and hand states when either a normal kick OR an execution finishes
         isKicking = false;
+        image_Foot.enabled = false;
+        footState = FootState.Idle;
         PlayerWeaponManager.instance.currentState_LeftHand = PerformActionState.Idle;
         PlayerWeaponManager.instance.currentState_Righthand = PerformActionState.Idle;
-        image_Foot.enabled = false;
     }
 
     private void PerformKick()

@@ -120,6 +120,35 @@ public class InventoryManager : MonoBehaviour
         return false;
     }
 
+    public void RemoveConsumableIfEmpty(ItemType itemType)
+    {
+        if (consumables.ContainsKey(itemType) && consumables[itemType] <= 0)
+        {
+            // 1. Remove from dictionary
+            consumables.Remove(itemType);
+
+            // 2. Remove the visual template from the list
+            Item targetTemplate = consumablesList.FirstOrDefault(i => i.itemType == itemType);
+            if (targetTemplate != null)
+            {
+                consumablesList.Remove(targetTemplate);
+            }
+
+            // 3. Clear from PlayerWeaponManager equipped items slots
+            if (PlayerWeaponManager.instance != null)
+            {
+                for (int i = 0; i < PlayerWeaponManager.instance.equippedItems.Length; i++)
+                {
+                    if (PlayerWeaponManager.instance.equippedItems[i] != null &&
+                        PlayerWeaponManager.instance.equippedItems[i].itemType == itemType)
+                    {
+                        PlayerWeaponManager.instance.equippedItems[i] = null;
+                    }
+                }
+            }
+        }
+    }
+
     /// <summary>
     /// Parents the object to the InventoryManager and disables it so it is saved in memory for the Loadout UI.
     /// </summary>

@@ -19,6 +19,8 @@ public class SpellContinuous : MonoBehaviour
     [Tooltip("How long (in seconds) the flame burst continues moving forward before holding position.")]
     public float travelDuration = 0.2f;
 
+    [SerializeField] private GameObject vfx_Combustion;
+
     public float lifeTime = 1f; // Prevents the fireball from floating forever
     private float nextTickTime;
     private float travelTimer;
@@ -35,6 +37,13 @@ public class SpellContinuous : MonoBehaviour
         travelTimer = travelDuration;
         transform.localPosition += spawnOffSet;
         transform.parent = null;
+
+        if(vfx_Combustion != null)
+        {
+            vfx_Combustion.transform.SetParent(PlayerController.instance.transform);
+            vfx_Combustion.transform.localPosition = Vector3.zero;
+            Destroy(vfx_Combustion, 1f);
+        }
 
         Destroy(gameObject, lifeTime);
     }

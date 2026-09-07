@@ -12,7 +12,7 @@ namespace DunGen.Demo
 		public Action<StringBuilder> GetAdditionalText;
 
 		private readonly StringBuilder infoText = new StringBuilder();
-		private IDemoInputBridge inputBridge;
+		//private IDemoInputBridge inputBridge;
 		private bool showStats = false;
 		private float keypressDelay = 0.1f;
 		private float timeSinceLastPress;
@@ -22,7 +22,7 @@ namespace DunGen.Demo
 
 		private void Start()
 		{
-			inputBridge = new DemoInputBridge();
+			//inputBridge = new DemoInputBridge();
 
 			if (DungeonGenerator == null)
 				DungeonGenerator = GetComponentInChildren<RuntimeDungeon>();
@@ -102,9 +102,9 @@ namespace DunGen.Demo
 		{
 			timeSinceLastPress += Time.deltaTime;
 
-			var resetInputState = inputBridge.GetResetInputState();
+			//var resetInputState = inputBridge.GetResetInputState();
 
-			if (resetInputState == InputState.Pressed)
+			/*if (resetInputState == InputState.Pressed)
 			{
 				timeSinceLastPress = 0;
 				isKeyDown = true;
@@ -135,7 +135,7 @@ namespace DunGen.Demo
 			}
 
 			if (inputBridge.GetToggleStats())
-				showStats = !showStats;
+				showStats = !showStats;*/
 		}
 
 		private void OnGUI()

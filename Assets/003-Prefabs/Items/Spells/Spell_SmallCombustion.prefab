@@ -60,7 +60,7 @@ MonoBehaviour:
   pickupSound: {fileID: 0}
   uiButtonPrompt: {fileID: 3288727578148725994}
   useDelay: 1
-  castDelay: 0.3
+  castDelay: 0.5
   flatManaCost: 1
   flatStaminaCost: 1
   useCharge: 0
@@ -72,7 +72,6 @@ MonoBehaviour:
   continuousManaDrainRate: 1.25
   continuousStaminaDrainRate: 1.25
   spellPrefab: {fileID: 1874451441540881930, guid: 7cc78b105b903024389ce0fcb5ca8228, type: 3}
-  damageKnockbackForce: 1
 --- !u!1 &3288727578148725994
 GameObject:
   m_ObjectHideFlags: 0

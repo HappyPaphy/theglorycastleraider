@@ -3,6 +3,7 @@ using UnityEngine.AI;
 
 public class EnemyEntity : CharacterEntity
 {
+    public GameObject decapitatedHeadPrefab;
     [SerializeField] protected FaceToCamera faceToCamera;
     public Transform executeTransform;
 
