@@ -46,8 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdf652001b72f5a4bb1484bf77162e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Item
-  itemCategory: 0
-  itemType: 4
+  itemCategory: 1
+  itemType: 5
   spr_Icon: {fileID: 967355532, guid: 979989d45c9864f42bd709a76add5e41, type: 3}
   equipmentName: Mana Potion (M)
   pickupRadius: 1
@@ -59,6 +59,15 @@ MonoBehaviour:
   pickupEffect: {fileID: 0}
   pickupSound: {fileID: 0}
   uiButtonPrompt: {fileID: 3288727578148725994}
+  useDelay: 0
+  castDelay: 0.5
+  flatManaCost: 20
+  useCharge: 0
+  maxChargeTime: 3
+  chargeManaDrainRate: 15
+  useContinuous: 0
+  continuousManaDrainRate: 15
+  spellPrefab: {fileID: 0}
 --- !u!1 &3288727578148725994
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,7 +13,6 @@ public class EnemyEntity : CharacterEntity
     [SerializeField] protected NavMeshAgent agent;
 
     [Header("Knockback Settings")]
-    [SerializeField] protected float damageKnockbackForce = 8f; // How hard they get pushed when hurt
     [SerializeField] protected float blockKnockbackForce = 3f;  // How hard they get pushed when blocking
     [SerializeField] protected float knockbackDecay = 10f;      // How quickly they stop sliding
     protected Vector3 currentKnockback = Vector3.zero;
@@ -128,7 +127,7 @@ public class EnemyEntity : CharacterEntity
 
     }
 
-    public virtual void GotParried()
+    public virtual void GotParried(bool isLeftHand)
     {
 
     }
@@ -138,7 +137,7 @@ public class EnemyEntity : CharacterEntity
 
     }
 
-    public virtual void GotKicked(Vector3 hitPoint, float damageValue)
+    public virtual void GotKicked(Vector3 hitPoint, float damageValue, float knockBackValue)
     {
 
     }
@@ -294,7 +293,12 @@ public class EnemyEntity : CharacterEntity
         return false;
     }
 
-    public virtual void TakeSwordHit(bool isLeft, Vector3 hitPoint, float damageValue)
+    public virtual void TakeSwordHit(bool isLeft, Vector3 hitPoint, float damageValue, bool isBlockable, bool isLeftHand, DamageImpactSound damageImpactSound)
+    {
+
+    }
+
+    public virtual void TakeSpellHit(bool isLeft, Vector3 hitPoint, float damageValue, bool isBlockable, float knockBackValue, DamageImpactSound damageImpactSound)
     {
 
     }

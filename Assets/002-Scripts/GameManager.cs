@@ -21,7 +21,6 @@ public enum GameDifficultyState
     Impossible
 };
 
-
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private PlayerInputActions playerInputActions;

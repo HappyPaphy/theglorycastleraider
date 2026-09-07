@@ -4,9 +4,14 @@ using UnityEngine;
 public class SpellProjectile : MonoBehaviour
 {
     [Header("Projectile Settings")]
+    public Vector3 spawnOffSet = new Vector3(0f, -0.35f, 0.5f);
+    public float knockBackValue;
     public float speed = 15f;
     public float damage = 25f;
     public float lifeTime = 5f; // Prevents the fireball from floating forever
+    public bool isBlockable = false;
+    public float knockBackForce = 8f;
+    public DamageImpactSound damageImpactSound = DamageImpactSound.None;
 
     [Header("Visuals")]
     public GameObject impactEffectPrefab;
@@ -16,6 +21,9 @@ public class SpellProjectile : MonoBehaviour
         // Ensure the Rigidbody doesn't fall due to gravity if it's a straight-shooting spell
         GetComponent<Rigidbody>().useGravity = false;
         GetComponent<Rigidbody>().isKinematic = true;
+
+        transform.localPosition += spawnOffSet;
+        transform.parent = null;
 
         Destroy(gameObject, lifeTime);
     }
@@ -36,10 +44,11 @@ public class SpellProjectile : MonoBehaviour
         if (targetEnemy != null)
         {
             // False for 'isLeftAttack' as spells don't have a specific swing direction
-            targetEnemy.TakeSwordHit(false, other.ClosestPoint(transform.position), damage);
+            targetEnemy.TakeSpellHit(false, other.ClosestPoint(transform.position), damage, isBlockable, knockBackForce, damageImpactSound);
         }
         else if (destructible != null)
         {
+            SoundManager.instance.WoodenSound_Hit(other.ClosestPoint(transform.position));
             destructible.TakeDamage(damage, other, other.ClosestPoint(transform.position));
         }
 

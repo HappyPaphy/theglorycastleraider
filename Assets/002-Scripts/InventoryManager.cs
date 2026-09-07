@@ -101,6 +101,12 @@ public class InventoryManager : MonoBehaviour
             case WeaponCategory.Bow:
                 currentCount = weapons.Count(w => w.weaponCategory == WeaponCategory.Bow && w.bowType == newWeapon.bowType);
                 break;
+            case WeaponCategory.PyromancyFlame:
+                currentCount = weapons.Count(w => w.weaponCategory == WeaponCategory.PyromancyFlame && w.pyromancyType == newWeapon.pyromancyType);
+                break;
+            case WeaponCategory.SorceryCatalyst:
+                currentCount = weapons.Count(w => w.weaponCategory == WeaponCategory.SorceryCatalyst && w.sorceryType == newWeapon.sorceryType);
+                break;
                 // PyromancyFlame and SorceryCatalyst handled here if they are categorized as Weapons
         }
 

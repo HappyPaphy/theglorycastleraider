@@ -1967,6 +1967,18 @@ PrefabInstance:
       propertyPath: m_CellSize.y
       value: 51
       objectReference: {fileID: 0}
+    - target: {fileID: 4334922003792730700, guid: 6c6a70510cadb9547a1d6247c6cbe4b4, type: 3}
+      propertyPath: emptyItemSprite
+      value: 
+      objectReference: {fileID: -1836484362, guid: a174fc7bb99907747b8099b2559afff4, type: 3}
+    - target: {fileID: 4334922003792730700, guid: 6c6a70510cadb9547a1d6247c6cbe4b4, type: 3}
+      propertyPath: emptySpellSprite
+      value: 
+      objectReference: {fileID: -1836484362, guid: a174fc7bb99907747b8099b2559afff4, type: 3}
+    - target: {fileID: 4334922003792730700, guid: 6c6a70510cadb9547a1d6247c6cbe4b4, type: 3}
+      propertyPath: emptyWeaponSprite
+      value: 
+      objectReference: {fileID: 2104145149, guid: e84864a80e414c047bfec3a13f061fec, type: 3}
     - target: {fileID: 4429506873305595838, guid: 6c6a70510cadb9547a1d6247c6cbe4b4, type: 3}
       propertyPath: m_Maskable
       value: 0
@@ -2135,6 +2147,26 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7940459305445736142, guid: 6c6a70510cadb9547a1d6247c6cbe4b4, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 36119
+      objectReference: {fileID: 0}
+    - target: {fileID: 8485872600232359185, guid: 6c6a70510cadb9547a1d6247c6cbe4b4, type: 3}
+      propertyPath: emptyItemSprite
+      value: 
+      objectReference: {fileID: -1836484362, guid: a174fc7bb99907747b8099b2559afff4, type: 3}
+    - target: {fileID: 8485872600232359185, guid: 6c6a70510cadb9547a1d6247c6cbe4b4, type: 3}
+      propertyPath: emptyRingSprite
+      value: 
+      objectReference: {fileID: -1836484362, guid: a174fc7bb99907747b8099b2559afff4, type: 3}
+    - target: {fileID: 8485872600232359185, guid: 6c6a70510cadb9547a1d6247c6cbe4b4, type: 3}
+      propertyPath: emptySpellSprite
+      value: 
+      objectReference: {fileID: -1836484362, guid: a174fc7bb99907747b8099b2559afff4, type: 3}
+    - target: {fileID: 8485872600232359185, guid: 6c6a70510cadb9547a1d6247c6cbe4b4, type: 3}
+      propertyPath: emptyWeaponSprite
+      value: 
+      objectReference: {fileID: 2104145149, guid: e84864a80e414c047bfec3a13f061fec, type: 3}
     - target: {fileID: 8554896289012606016, guid: 6c6a70510cadb9547a1d6247c6cbe4b4, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

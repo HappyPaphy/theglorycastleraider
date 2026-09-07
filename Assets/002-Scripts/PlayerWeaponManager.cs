@@ -717,8 +717,8 @@ public class PlayerWeaponManager : MonoBehaviour
         // Only begin a cast if the hand is Idle, the attack cooldown has passed, and we aren't kicking
         if (currentState == PerformActionState.Idle && isPressed && !playerController.isKicking)
         {
-            if (playerController.CharacterStaminaComponent.CurrentStamina > 0f &&
-                playerController.CharacterUltimateComponent.CurrentUltimate > 0f &&
+            if (playerController.CharacterStaminaComponent.CurrentStamina > spell.flatStaminaCost &&
+                playerController.CharacterUltimateComponent.CurrentUltimate > spell.flatManaCost &&
                 Time.time >= lastAttackTime + weapon.attackCooldown)
             {
                 StartCoroutine(SpellCastSequence(weapon, spell, isLeftHand));
@@ -729,29 +729,25 @@ public class PlayerWeaponManager : MonoBehaviour
     private IEnumerator SpellCastSequence(Weapon weapon, Item spell, bool isLeftHand)
     {
         // INITIAL SETUP: Deplete stamina and set the animation to Hold1 (Wind-up)
-        playerController.StaminaDepleted(weapon.staminaCost);
+        playerController.StaminaDepleted(spell.flatStaminaCost);
 
         if (isLeftHand) currentState_LeftHand = PerformActionState.Hold1;
         else currentState_Righthand = PerformActionState.Hold1;
 
         Transform castTransform = cameraTransform;
 
+        playerController.DepleteUltimate(spell.flatManaCost);
+
         // -----------------------------------------------------
         // PHASE 1: DELAY
         // -----------------------------------------------------
         if (spell.useDelay)
         {
-            playerController.DepleteUltimate(spell.flatManaCost);
             yield return new WaitForSeconds(spell.castDelay);
-        }
-        else if (!spell.useCharge && !spell.useContinuous)
-        {
-            // Standard instant flat cost for simple, non-modified casts
-            playerController.DepleteUltimate(spell.flatManaCost);
         }
 
         // If the player let go during the delay and it's a continuous spell, cancel.
-        if (spell.useContinuous && !IsHandHeld(isLeftHand))
+        if (spell.useContinuous && !IsHandHeld(isLeftHand) && Time.timeScale != 0f)
         {
             EndSpellCast(weapon, isLeftHand);
             yield break;
@@ -767,7 +763,7 @@ public class PlayerWeaponManager : MonoBehaviour
             // If it's a single shot, you hold to build power, and release to fire early or at max.
             bool requireMaxChargeForContinuous = spell.useContinuous;
 
-            while (IsHandHeld(isLeftHand) && playerController.CharacterUltimateComponent.CurrentUltimate > 0f)
+            while (IsHandHeld(isLeftHand) && playerController.CharacterUltimateComponent.CurrentUltimate > spell.chargeManaDrainRate)
             {
                 if (finalCharge < spell.maxChargeTime)
                 {
@@ -790,24 +786,32 @@ public class PlayerWeaponManager : MonoBehaviour
         // -----------------------------------------------------
         if (spell.useContinuous)
         {
-            // Must still be holding the button to spray
-            if (IsHandHeld(isLeftHand) && playerController.CharacterUltimateComponent.CurrentUltimate > 0f)
-            {
-                GameObject activeSpell = null;
-                if (spell.spellPrefab != null)
-                {
-                    // Parented to transform so the flamethrower follows the player's camera turning
-                    activeSpell = Instantiate(spell.spellPrefab, castTransform.position, castTransform.rotation, castTransform);
-                }
+            SoundManager.instance.FireSound_Combustion(castTransform.position, true);
 
+            // Must still be holding the button to spray
+            if (IsHandHeld(isLeftHand) && playerController.CharacterUltimateComponent.CurrentUltimate > spell.continuousManaDrainRate)
+            {
+                //GameObject activeSpell = null;
+                
                 // Keep spraying until button released or mana empty
-                while (IsHandHeld(isLeftHand) && playerController.CharacterUltimateComponent.CurrentUltimate > 0f)
+                while (IsHandHeld(isLeftHand) && playerController.CharacterUltimateComponent.CurrentUltimate > spell.continuousManaDrainRate)
                 {
-                    playerController.DepleteUltimate(spell.continuousManaDrainRate * Time.deltaTime);
+
+                    if (spell.spellPrefab != null)
+                    {
+                        // Parented to transform so the flamethrower follows the player's camera turning
+                        Instantiate(spell.spellPrefab, castTransform.position, castTransform.rotation, castTransform);
+                        
+                        playerController.DepleteUltimate(spell.continuousManaDrainRate);
+                        yield return new WaitForSeconds(spell.continuousSpawnRate);
+                    }
+
                     yield return null;
                 }
 
-                if (activeSpell != null) Destroy(activeSpell);
+                SoundManager.instance.FireSound_Combustion(castTransform.position, false);
+
+                //if (activeSpell != null) Destroy(activeSpell);
             }
         }
         else
@@ -815,8 +819,8 @@ public class PlayerWeaponManager : MonoBehaviour
             // Single cast execution (Fires on button release if charged, or instantly if standard)
             if (spell.spellPrefab != null)
             {
-                GameObject proj = Instantiate(spell.spellPrefab, castTransform.position, castTransform.rotation);
-
+                Instantiate(spell.spellPrefab, castTransform.position, castTransform.rotation, castTransform);
+                
                 // TODO: Pass 'finalCharge' to the spawned projectile script here so it knows its multiplier
             }
         }
@@ -1017,7 +1021,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
                 if (targetEnemy != null && processedTargets.Add(targetEnemy))
                 {
-                    targetEnemy.TakeSwordHit(isLeftAttack, hit.point, weapon.damage);
+                    targetEnemy.TakeSwordHit(isLeftAttack, hit.point, weapon.damage, true, isLeftHand, weapon.damageImpactSound);
                     hitSomething = true;
                 }
                 else if (destructible != null && processedTargets.Add(destructible))

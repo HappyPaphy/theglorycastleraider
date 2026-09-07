@@ -1,6 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum DamageImpactSound
+{
+    None,
+    MetalFlesh,
+    FireFlesh
+}
+
 public class SoundManager : MonoBehaviour
 {
     [SerializeField] private int audioPoolSize = 30;
@@ -28,6 +35,10 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioSource sfx_BlockAndParried; 
     [SerializeField] private AudioSource sfx_BowSound_String;
     [SerializeField] private AudioSource sfx_BowSound_Hit;
+
+    [SerializeField] private AudioSource[] sfx_FireSound_Impact;
+    [SerializeField] private AudioSource[] sfx_FireSound_Combustion;
+    public bool isCombustionSoundPlaying = false;
 
     [Header("Destructable")]
     [SerializeField] private AudioSource[] sfx_Wooden_Hit;
@@ -67,7 +78,7 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void PlaySound(AudioSource templateSource, Vector3 soundPosition, float maxDistance)
+    public void PlayNewSound(AudioSource templateSource, Vector3 soundPosition, float maxDistance)
     {
         if (templateSource == null || templateSource.clip == null) return;
 
@@ -86,6 +97,20 @@ public class SoundManager : MonoBehaviour
             availableSource.maxDistance = maxDistance;
 
             availableSource.Play();
+        }
+    }
+
+    public void PlaySound(AudioSource templateSource, Vector3 soundPosition, float maxDistance, bool isPlay)
+    {
+        if(isPlay)
+        {
+            templateSource.transform.position = soundPosition;
+            templateSource.maxDistance = maxDistance;
+            templateSource.Play();
+        }
+        else
+        {
+            templateSource.Stop();
         }
     }
 
@@ -108,82 +133,94 @@ public class SoundManager : MonoBehaviour
     public void HumanSound_Grunt(Vector3 soundPosition)
     {
         int rndIndex = Random.Range(0, sfx_Human_Grunt.Length);
-        PlaySound(sfx_Human_Grunt[rndIndex], soundPosition, 100f);
+        PlayNewSound(sfx_Human_Grunt[rndIndex], soundPosition, 100f);
     }
 
     public void HumanSound_Attack(Vector3 soundPosition)
     {
         int rndIndex = Random.Range(0, sfx_Human_Attack.Length);
-        PlaySound(sfx_Human_Attack[rndIndex], soundPosition, 100f);
+        PlayNewSound(sfx_Human_Attack[rndIndex], soundPosition, 100f);
     }
 
     public void HumanSound_Died(Vector3 soundPosition)
     {
         int rndIndex = Random.Range(0, sfx_Human_Died.Length);
-        PlaySound(sfx_Human_Died[rndIndex], soundPosition, 100f);
+        PlayNewSound(sfx_Human_Died[rndIndex], soundPosition, 100f);
     }
 
     public void HumanSound_Parried(Vector3 soundPosition)
     {
         int rndIndex = Random.Range(0, sfx_Human_Parried.Length);
-        PlaySound(sfx_Human_Parried[rndIndex], soundPosition, 100f);
+        PlayNewSound(sfx_Human_Parried[rndIndex], soundPosition, 100f);
     }
 
     public void SwordSound_Air(Vector3 soundPosition)
     {
         int rndIndex = Random.Range(0, sfx_SwordSwing_Air.Length);
-        PlaySound(sfx_SwordSwing_Air[rndIndex], soundPosition, 100f);
+        PlayNewSound(sfx_SwordSwing_Air[rndIndex], soundPosition, 100f);
     }
 
     public void SwordSound_Flesh(Vector3 soundPosition)
     {
         int rndIndex = Random.Range(0, sfx_SwordSwing_Flesh.Length);
-        PlaySound(sfx_SwordSwing_Flesh[rndIndex], soundPosition, 100f);
+        PlayNewSound(sfx_SwordSwing_Flesh[rndIndex], soundPosition, 100f);
     }
 
     public void SwordSound_Metal(Vector3 soundPosition)
     {
         int rndIndex = Random.Range(0, sfx_SwordSwing_Metal.Length);
-        PlaySound(sfx_SwordSwing_Metal[rndIndex], soundPosition, 100f);
+        PlayNewSound(sfx_SwordSwing_Metal[rndIndex], soundPosition, 100f);
     }
 
     public void BlockOrParrySound(AudioClip[] clips,Vector3 soundPosition)
     {
         int rndIndex = Random.Range(0, clips.Length);
         sfx_BlockAndParried.clip = clips[rndIndex];
-        PlaySound(sfx_BlockAndParried, soundPosition, 100f);
+        PlayNewSound(sfx_BlockAndParried, soundPosition, 100f);
     }
 
     public void SwordSound_Execute(Vector3 soundPosition)
     {
         int rndIndex = Random.Range(0, sfx_SwordSound_Execute.Length);
-        PlaySound(sfx_SwordSound_Execute[rndIndex], soundPosition, 100f);
+        PlayNewSound(sfx_SwordSound_Execute[rndIndex], soundPosition, 100f);
+    }
+
+    public void FireSound_Impact(Vector3 soundPosition)
+    {
+        int rndIndex = Random.Range(0, sfx_FireSound_Impact.Length);
+        PlayNewSound(sfx_FireSound_Impact[rndIndex], soundPosition, 100f);
+    }
+
+    public void FireSound_Combustion(Vector3 soundPosition, bool isPlay)
+    {
+        int rndIndex = Random.Range(0, sfx_FireSound_Combustion.Length);
+        PlaySound(sfx_FireSound_Combustion[rndIndex], soundPosition, 100f, isPlay);
     }
 
     public void BowSound_String(Vector3 soundPosition)
     {
-        PlaySound(sfx_BowSound_String, soundPosition, 100f);
+        PlayNewSound(sfx_BowSound_String, soundPosition, 100f);
     }
 
     public void BowSound_Hit(Vector3 soundPosition)
     {
-        PlaySound(sfx_BowSound_Hit, soundPosition, 100f);
+        PlayNewSound(sfx_BowSound_Hit, soundPosition, 100f);
     }
 
     public void KickSound_Human(Vector3 soundPosition)
     {
-        PlaySound(sfx_Kick_Human, soundPosition, 100f);
+        PlayNewSound(sfx_Kick_Human, soundPosition, 100f);
     }
 
     public void KickSound_Air(Vector3 soundPosition)
     {
-        PlaySound(sfx_Kick_Air, soundPosition, 100f);
+        PlayNewSound(sfx_Kick_Air, soundPosition, 100f);
     }
 
     public void PlayerHurtSound(Vector3 soundPosition)
     {
         int rndIndex = Random.Range(0, sfx_Player_Grunt.Length);
-        PlaySound(sfx_Player_Grunt[rndIndex], soundPosition, 100f);
+        PlayNewSound(sfx_Player_Grunt[rndIndex], soundPosition, 100f);
     }
 
     public void ChickenSound(int index)
@@ -194,12 +231,12 @@ public class SoundManager : MonoBehaviour
     public void WoodenSound_Hit(Vector3 soundPosition)
     {
         int rndIndex = Random.Range(0, sfx_Wooden_Hit.Length);
-        PlaySound(sfx_Wooden_Hit[rndIndex], soundPosition, 100f);
+        PlayNewSound(sfx_Wooden_Hit[rndIndex], soundPosition, 100f);
     }
 
     public void WoodenSound_Break(Vector3 soundPosition)
     {
         int rndIndex = Random.Range(0, sfx_Wooden_Break.Length);
-        PlaySound(sfx_Wooden_Break[rndIndex], soundPosition, 100f);
+        PlayNewSound(sfx_Wooden_Break[rndIndex], soundPosition, 100f);
     }
 }

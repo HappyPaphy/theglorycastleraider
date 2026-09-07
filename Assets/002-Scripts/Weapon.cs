@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public enum WeaponCategory
 {
+    None,
     Melee,
     Shield,
     Bow,
@@ -17,26 +18,43 @@ public enum WeaponCategory
 
 public enum MeleeType
 {
+    None,
     ShortSword
 }
 
 public enum ShieldType
 {
+    None,
     WoodenShield
 }
 
 public enum BowType
 {
+    None,
     WoodenBow
+}
+public enum PyromancyFlameType
+{
+    None,
+    DimmedHand
+}
+public enum SorceryCatalystType
+{
+    None,
+    WoodenStaff
 }
 
 public class Weapon : Item
 {
+    public DamageImpactSound damageImpactSound;
     public WeaponCategory weaponCategory;
     public MeleeType meleeType;
     public ShieldType shieldType;
     public BowType bowType;
+    public PyromancyFlameType pyromancyType;
+    public SorceryCatalystType sorceryType;
 
+    public float damageKnockbackForce = 8f;
     public float damage = 0f;
     public float attackCooldown = 0.6f;
     public float staminaCost = 10f;

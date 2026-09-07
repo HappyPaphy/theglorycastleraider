@@ -2809,6 +2809,7 @@ Transform:
   - {fileID: 8348812608043537076}
   - {fileID: 2486073445075139790}
   - {fileID: 6056821618842304169}
+  - {fileID: 1144273153304610955}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2889368470421274785
@@ -3407,6 +3408,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 102320391327494226}
     m_Modifications:
+    - target: {fileID: 295015692443402210, guid: 4facf0f55c28ed74798b1f5664dc8b85, type: 3}
+      propertyPath: m_VersionIndex
+      value: 788
+      objectReference: {fileID: 0}
     - target: {fileID: 380057338341773006, guid: 4facf0f55c28ed74798b1f5664dc8b85, type: 3}
       propertyPath: m_Name
       value: Spell_SmallFireball
@@ -4513,6 +4518,68 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4357959978852719167, guid: b9fc7f196d774754a9e22c7661379195, type: 3}
   m_PrefabInstance: {fileID: 6426574766433882378}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6732327409250493647
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 102320391327494226}
+    m_Modifications:
+    - target: {fileID: 380057338341773006, guid: c672b56dcc5ebce4ebab2826e181bcfc, type: 3}
+      propertyPath: m_Name
+      value: Pyromancy_DimmedHand
+      objectReference: {fileID: 0}
+    - target: {fileID: 5949059691857095748, guid: c672b56dcc5ebce4ebab2826e181bcfc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.028170595
+      objectReference: {fileID: 0}
+    - target: {fileID: 5949059691857095748, guid: c672b56dcc5ebce4ebab2826e181bcfc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.08999994
+      objectReference: {fileID: 0}
+    - target: {fileID: 5949059691857095748, guid: c672b56dcc5ebce4ebab2826e181bcfc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.486377
+      objectReference: {fileID: 0}
+    - target: {fileID: 5949059691857095748, guid: c672b56dcc5ebce4ebab2826e181bcfc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5949059691857095748, guid: c672b56dcc5ebce4ebab2826e181bcfc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5949059691857095748, guid: c672b56dcc5ebce4ebab2826e181bcfc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5949059691857095748, guid: c672b56dcc5ebce4ebab2826e181bcfc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5949059691857095748, guid: c672b56dcc5ebce4ebab2826e181bcfc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5949059691857095748, guid: c672b56dcc5ebce4ebab2826e181bcfc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5949059691857095748, guid: c672b56dcc5ebce4ebab2826e181bcfc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c672b56dcc5ebce4ebab2826e181bcfc, type: 3}
+--- !u!4 &1144273153304610955 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5949059691857095748, guid: c672b56dcc5ebce4ebab2826e181bcfc, type: 3}
+  m_PrefabInstance: {fileID: 6732327409250493647}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6828154968549735437
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4803,6 +4870,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 102320391327494226}
     m_Modifications:
+    - target: {fileID: 295015692443402210, guid: d816bce2b29f25c41aa7bf89c346f857, type: 3}
+      propertyPath: m_VersionIndex
+      value: 788
+      objectReference: {fileID: 0}
     - target: {fileID: 380057338341773006, guid: d816bce2b29f25c41aa7bf89c346f857, type: 3}
       propertyPath: m_Name
       value: Spell_Combustion
@@ -4845,6 +4916,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5949059691857095748, guid: d816bce2b29f25c41aa7bf89c346f857, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7266188067607101063, guid: d816bce2b29f25c41aa7bf89c346f857, type: 3}
+      propertyPath: useDelay
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7266188067607101063, guid: d816bce2b29f25c41aa7bf89c346f857, type: 3}
+      propertyPath: castDelay
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

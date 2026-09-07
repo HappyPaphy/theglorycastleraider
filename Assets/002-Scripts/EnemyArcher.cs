@@ -220,7 +220,7 @@ public class EnemyArcher : EnemyEntity
 
     // --- Damage & Execution Overrides (Mirrors EnemyThief[cite: 7]) ---
 
-    public override void TakeSwordHit(bool isLeft, Vector3 hitPoint, float damageValue)
+    public override void TakeSwordHit(bool isLeft, Vector3 hitPoint, float damageValue, bool isBlockable, bool isLeftHand, DamageImpactSound damageImpactSound)
     {
         if (isDied) return;
 
@@ -238,9 +238,73 @@ public class EnemyArcher : EnemyEntity
             ObjectPoolingManager.instance.SpawnObject("Blood", eyesTransform.position);
         }
 
-        SoundManager.instance.SwordSound_Flesh(sprRndr.transform.position);
-        SoundManager.instance.HumanSound_Grunt(sprRndr.transform.position);
+        switch (damageImpactSound)
+        {
+            case DamageImpactSound.MetalFlesh:
+                {
+                    SoundManager.instance.SwordSound_Flesh(sprRndr.transform.position);
+                    SoundManager.instance.HumanSound_Grunt(sprRndr.transform.position);
+                }
+                break;
+
+            case DamageImpactSound.FireFlesh:
+                {
+                    SoundManager.instance.FireSound_Impact(sprRndr.transform.position);
+                }
+                break;
+        }
+
+        float damageKnockbackForce = 0f;
+
+        if (isLeftHand)
+        {
+            damageKnockbackForce = PlayerWeaponManager.instance.leftHandWeapon.damageKnockbackForce;
+        }
+        else
+        {
+            damageKnockbackForce = PlayerWeaponManager.instance.rightHandWeapon.damageKnockbackForce;
+        }
+
         ApplyKnockback(damageKnockbackForce);
+
+        TakeDamage(damageValue); // Derived from EnemyEntity[cite: 6]
+    }
+
+    public override void TakeSpellHit(bool isLeft, Vector3 hitPoint, float damageValue, bool isBlockable, float knockBackValue, DamageImpactSound damageImpactSound)
+    {
+        if (isDied) return;
+
+        // Archers don't block. They just take the hit.
+        if (!isStunned)
+        {
+            currentState = isLeft ? EnemyArcherState.DamageLeft : EnemyArcherState.DamageRight;
+            stateTimer = damageStunDuration;
+        }
+
+        SafeStopAgent(true);
+
+        if (ObjectPoolingManager.instance != null)
+        {
+            ObjectPoolingManager.instance.SpawnObject("Blood", eyesTransform.position);
+        }
+
+        switch (damageImpactSound)
+        {
+            case DamageImpactSound.MetalFlesh:
+                {
+                    SoundManager.instance.SwordSound_Flesh(sprRndr.transform.position);
+                    SoundManager.instance.HumanSound_Grunt(sprRndr.transform.position);
+                }
+                break;
+
+            case DamageImpactSound.FireFlesh:
+                {
+                    SoundManager.instance.FireSound_Impact(sprRndr.transform.position);
+                }
+                break;
+        }
+
+        ApplyKnockback(knockBackValue);
 
         TakeDamage(damageValue); // Derived from EnemyEntity[cite: 6]
     }
@@ -253,7 +317,7 @@ public class EnemyArcher : EnemyEntity
         SafeStopAgent(true);
     }
 
-    public override void GotKicked(Vector3 hitPoint, float damageValue)
+    public override void GotKicked(Vector3 hitPoint, float damageValue, float knockBackValue)
     {
         if (!isStunned)
         {
@@ -264,7 +328,7 @@ public class EnemyArcher : EnemyEntity
 
         SafeStopAgent(true);
 
-        ApplyKnockback(damageKnockbackForce);
+        ApplyKnockback(knockBackValue);
 
         if (ObjectPoolingManager.instance != null)
         {

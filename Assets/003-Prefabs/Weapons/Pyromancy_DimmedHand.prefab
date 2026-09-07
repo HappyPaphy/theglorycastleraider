@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62f50db142357e5418bac12b597e14c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Weapon
-  itemCategory: 2
+  itemCategory: 5
   itemType: 0
   spr_Icon: {fileID: 302748542, guid: 061137b5a6b2b4c43b0bd8cc01e15662, type: 3}
   equipmentName: Dimmed Hand (Pyro)
@@ -68,10 +68,12 @@ MonoBehaviour:
   useContinuous: 0
   continuousManaDrainRate: 15
   spellPrefab: {fileID: 0}
-  weaponCategory: 0
+  weaponCategory: 4
   meleeType: 0
   shieldType: 0
   bowType: 0
+  pyromancyType: 1
+  sorceryType: 0
   damage: 18
   attackCooldown: 0.6
   staminaCost: 8
@@ -83,7 +85,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b20bf6d7d62c3bd42aebeaf09bdd035b, type: 3}
   audioClips_ParrySound:
   - {fileID: 8300000, guid: 3f7fdfc3796e8b8439360a9b79fb63cf, type: 3}
-  spr_Weapon: {fileID: -2085894017, guid: 061137b5a6b2b4c43b0bd8cc01e15662, type: 3}
+  spr_Weapon: {fileID: 302748542, guid: 061137b5a6b2b4c43b0bd8cc01e15662, type: 3}
   animController_OneHanded: {fileID: 9100000, guid: b1dd4e21bb34d7f409d8aaa9f5d82f05, type: 2}
   animController_TwoHanded: {fileID: 9100000, guid: 6d727605931cd5643bfe8be6aa293f15, type: 2}
 --- !u!1 &3288727578148725994

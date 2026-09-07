@@ -2,6 +2,7 @@ using UnityEngine;
 
 public enum ItemCategory
 {
+    None,
     Consumable,
     Ring,
     Pyromancy,
@@ -11,6 +12,7 @@ public enum ItemCategory
 
 public enum ItemType
 {
+    None,
     // Consumables (Max 99)
     HealthPotion_Small,
     HealthPotion_Medium,
@@ -56,15 +58,19 @@ public class Item : MonoBehaviour
     public bool useDelay;
     public float castDelay = 0.5f;
     public float flatManaCost = 20f;
+    public float flatStaminaCost = 16f;
 
     [Tooltip("If true, hold the button to build up power. Releases on button lift.")]
     public bool useCharge;
     public float maxChargeTime = 3f;
     public float chargeManaDrainRate = 15f;
+    public float chargeStaminaDrainRate = 15f;
 
     [Tooltip("If true, hold the button to continuously fire (e.g. Flamethrower).")]
     public bool useContinuous;
+    public float continuousSpawnRate = 0.25f;
     public float continuousManaDrainRate = 15f;
+    public float continuousStaminaDrainRate = 15f;
 
     public GameObject spellPrefab;
 

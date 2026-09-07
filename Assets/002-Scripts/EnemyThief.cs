@@ -210,7 +210,7 @@ public class EnemyThief : EnemyEntity
         }
     }
 
-    public override void TakeSwordHit(bool isLeft, Vector3 hitPoint, float damageValue)
+    public override void TakeSwordHit(bool isLeft, Vector3 hitPoint, float damageValue, bool isBlockable, bool isLeftHand, DamageImpactSound damageImpactSound)
     {
         if (isDied) { return; }
 
@@ -220,40 +220,102 @@ public class EnemyThief : EnemyEntity
         if (isParried)
         {
             // If the enemy is in a parried state, they take the hit no matter what
-            ApplyDamageState(isLeft, hitPoint, damageValue);
+            ApplyDamageState(isLeft, hitPoint, damageValue, isLeftHand, damageImpactSound);
         }
         else
         {
-            if(!isBlockingActive)
+            if(isBlockable)
             {
-                if (currentHitCount >= maxHitsBeforeBlock && maxHitsBeforeBlock > 0)
+                if (!isBlockingActive)
                 {
-                    currentHitCount = maxBlocksBeforeHit;
-                    maxBlocksBeforeHit--;
-                    isBlockingActive = true;
+                    if (currentHitCount >= maxHitsBeforeBlock && maxHitsBeforeBlock > 0)
+                    {
+                        currentHitCount = maxBlocksBeforeHit;
+                        maxBlocksBeforeHit--;
+                        isBlockingActive = true;
 
-                    currentHitCount--;
-                    ApplyBlockState(isLeft);
+                        currentHitCount--;
+                        ApplyBlockState(isLeft);
+                    }
+                    else
+                    {
+                        // Enemy takes the hit and increments the counter
+                        currentHitCount++;
+                        ApplyDamageState(isLeft, hitPoint, damageValue, isLeftHand, damageImpactSound);
+                    }
                 }
                 else
                 {
-                    // Enemy takes the hit and increments the counter
-                    currentHitCount++;
-                    ApplyDamageState(isLeft, hitPoint, damageValue);
+                    if (currentHitCount > 0)
+                    {
+                        currentHitCount--;
+                        ApplyBlockState(isLeft);
+                    }
+                    else
+                    {
+                        isBlockingActive = false;
+                        ApplyDamageState(isLeft, hitPoint, damageValue, isLeftHand, damageImpactSound);
+                    }
                 }
             }
             else
             {
-                if (currentHitCount > 0)
+                ApplyDamageState(isLeft, hitPoint, damageValue, isLeftHand, damageImpactSound);
+            }       
+        }
+    }
+
+    public override void TakeSpellHit(bool isLeft, Vector3 hitPoint, float damageValue, bool isBlockable, float knockBackValue, DamageImpactSound damageImpactSound)
+    {
+        if (isDied) { return; }
+
+        // Refresh the combo reset timer every time a hit lands
+        hitResetTimer = comboResetTime;
+
+        if (isParried)
+        {
+            // If the enemy is in a parried state, they take the hit no matter what
+            ApplyDamageState(isLeft, hitPoint, damageValue, knockBackValue, damageImpactSound);
+        }
+        else
+        {
+            if (isBlockable)
+            {
+                if (!isBlockingActive)
                 {
-                    currentHitCount--;
-                    ApplyBlockState(isLeft);
+                    if (currentHitCount >= maxHitsBeforeBlock && maxHitsBeforeBlock > 0)
+                    {
+                        currentHitCount = maxBlocksBeforeHit;
+                        maxBlocksBeforeHit--;
+                        isBlockingActive = true;
+
+                        currentHitCount--;
+                        ApplyBlockState(isLeft);
+                    }
+                    else
+                    {
+                        // Enemy takes the hit and increments the counter
+                        currentHitCount++;
+                        ApplyDamageState(isLeft, hitPoint, damageValue, knockBackValue, damageImpactSound);
+                    }
                 }
                 else
                 {
-                    isBlockingActive = false;
-                    ApplyDamageState(isLeft, hitPoint, damageValue);
+                    if (currentHitCount > 0)
+                    {
+                        currentHitCount--;
+                        ApplyBlockState(isLeft);
+                    }
+                    else
+                    {
+                        isBlockingActive = false;
+                        ApplyDamageState(isLeft, hitPoint, damageValue, knockBackValue, damageImpactSound);
+                    }
                 }
+            }
+            else
+            {
+                ApplyDamageState(isLeft, hitPoint, damageValue, knockBackValue, damageImpactSound);
             }
         }
     }
@@ -261,7 +323,7 @@ public class EnemyThief : EnemyEntity
     /// <summary>
     /// Call this method from your player's script when the player successfully parries this enemy.
     /// </summary>
-    public override void GotParried()
+    public override void GotParried(bool isLeftHand)
     {
         currentState = EnemyThiefState.Parried;
         isParried = true;
@@ -271,6 +333,17 @@ public class EnemyThief : EnemyEntity
         SoundManager.instance.HumanSound_Parried(sprRndr.transform.position);
 
         SafeStopAgent(true);
+
+        float damageKnockbackForce = 0f;
+
+        if(isLeftHand)
+        {
+            damageKnockbackForce = PlayerWeaponManager.instance.leftHandWeapon.damageKnockbackForce;
+        }
+        else
+        {
+            damageKnockbackForce = PlayerWeaponManager.instance.rightHandWeapon.damageKnockbackForce;
+        }
 
         ApplyKnockback(damageKnockbackForce);
     }
@@ -332,7 +405,7 @@ public class EnemyThief : EnemyEntity
         }
     }
 
-    public override void GotKicked(Vector3 hitPoint, float damageValue)
+    public override void GotKicked(Vector3 hitPoint, float damageValue, float knockBackValue)
     {
         if (!isStunned)
         {
@@ -348,7 +421,7 @@ public class EnemyThief : EnemyEntity
 
         SafeStopAgent(true);
 
-        ApplyKnockback(damageKnockbackForce);
+        ApplyKnockback(knockBackValue);
 
         if (ObjectPoolingManager.instance != null)
         {
@@ -360,7 +433,7 @@ public class EnemyThief : EnemyEntity
         TakeDamage(damageValue);
     }
 
-    private void ApplyDamageState(bool isLeft, Vector3 hitPoint, float damageValue)
+    private void ApplyDamageState(bool isLeft, Vector3 hitPoint, float damageValue, bool isLeftHand, DamageImpactSound damageImpactSound)
     {
         if (isDied) { return; }
 
@@ -376,12 +449,75 @@ public class EnemyThief : EnemyEntity
             ObjectPoolingManager.instance.SpawnObject("Blood", eyesTransform.position);
         }
 
-        SoundManager.instance.SwordSound_Flesh(sprRndr.transform.position);
-        SoundManager.instance.HumanSound_Grunt(sprRndr.transform.position);
+        switch(damageImpactSound)
+        {
+            case DamageImpactSound.MetalFlesh:
+                {
+                    SoundManager.instance.SwordSound_Flesh(sprRndr.transform.position);
+                    SoundManager.instance.HumanSound_Grunt(sprRndr.transform.position);
+                }
+                break;
+
+            case DamageImpactSound.FireFlesh:
+                {
+                    SoundManager.instance.FireSound_Impact(sprRndr.transform.position);
+                }
+                break;
+        }
 
         SafeStopAgent(true);
 
+        float damageKnockbackForce = 0f;
+
+        if (isLeftHand)
+        {
+            damageKnockbackForce = PlayerWeaponManager.instance.leftHandWeapon.damageKnockbackForce;
+        }
+        else
+        {
+            damageKnockbackForce = PlayerWeaponManager.instance.rightHandWeapon.damageKnockbackForce;
+        }
+
         ApplyKnockback(damageKnockbackForce);
+
+        TakeDamage(damageValue);
+    }
+
+    private void ApplyDamageState(bool isLeft, Vector3 hitPoint, float damageValue, float knockBackValue, DamageImpactSound damageImpactSound)
+    {
+        if (isDied) { return; }
+
+        if (!isStunned)
+        {
+            currentState = isLeft ? EnemyThiefState.DamageLeft : EnemyThiefState.DamageRight;
+            stateTimer = damageStunDuration;
+        }
+
+
+        if (ObjectPoolingManager.instance != null)
+        {
+            ObjectPoolingManager.instance.SpawnObject("Blood", eyesTransform.position);
+        }
+
+        switch (damageImpactSound)
+        {
+            case DamageImpactSound.MetalFlesh:
+                {
+                    SoundManager.instance.SwordSound_Flesh(sprRndr.transform.position);
+                    SoundManager.instance.HumanSound_Grunt(sprRndr.transform.position);
+                }
+                break;
+
+            case DamageImpactSound.FireFlesh:
+                {
+                    SoundManager.instance.FireSound_Impact(sprRndr.transform.position);
+                }
+                break;
+        }
+
+        SafeStopAgent(true);
+
+        ApplyKnockback(knockBackValue);
 
         TakeDamage(damageValue);
     }

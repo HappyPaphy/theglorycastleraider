@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62f50db142357e5418bac12b597e14c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Weapon
-  itemCategory: 4
+  itemCategory: 5
   itemType: 0
   spr_Icon: {fileID: -2085894017, guid: 061137b5a6b2b4c43b0bd8cc01e15662, type: 3}
   equipmentName: ShortHand Sword
@@ -59,13 +59,31 @@ MonoBehaviour:
   pickupEffect: {fileID: 0}
   pickupSound: {fileID: 0}
   uiButtonPrompt: {fileID: 3288727578148725994}
-  weaponCategory: 0
-  meleeType: 0
+  useDelay: 0
+  castDelay: 0.5
+  flatManaCost: 20
+  flatStaminaCost: 16
+  useCharge: 0
+  maxChargeTime: 3
+  chargeManaDrainRate: 15
+  chargeStaminaDrainRate: 15
+  useContinuous: 0
+  continuousSpawnRate: 0.25
+  continuousManaDrainRate: 15
+  continuousStaminaDrainRate: 15
+  spellPrefab: {fileID: 0}
+  damageImpactSound: 1
+  weaponCategory: 1
+  meleeType: 1
   shieldType: 0
   bowType: 0
+  pyromancyType: 0
+  sorceryType: 0
+  damageKnockbackForce: 8
   damage: 18
   attackCooldown: 0.6
   staminaCost: 8
+  manaCost: 10
   blockStaminaDamageModifier: 1
   audioClips_BlockSound:
   - {fileID: 8300000, guid: 9b51803bf4ca0744b8ec79f0696d2867, type: 3}

@@ -46,8 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdf652001b72f5a4bb1484bf77162e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Item
-  itemCategory: 2
-  itemType: 8
+  itemCategory: 3
+  itemType: 9
   spr_Icon: {fileID: -1032916297, guid: 061137b5a6b2b4c43b0bd8cc01e15662, type: 3}
   equipmentName: Small Fireball (Pyro)
   pickupRadius: 1
@@ -61,13 +61,18 @@ MonoBehaviour:
   uiButtonPrompt: {fileID: 3288727578148725994}
   useDelay: 1
   castDelay: 0.5
-  flatManaCost: 20
+  flatManaCost: 16
+  flatStaminaCost: 16
   useCharge: 0
-  maxChargeTime: 3
-  chargeManaDrainRate: 15
+  maxChargeTime: 0
+  chargeManaDrainRate: 0
+  chargeStaminaDrainRate: 0
   useContinuous: 0
-  continuousManaDrainRate: 15
-  spellPrefab: {fileID: 0}
+  continuousSpawnRate: 0
+  continuousManaDrainRate: 0
+  continuousStaminaDrainRate: 0
+  spellPrefab: {fileID: 8268016343758361480, guid: 8416bb63bc4a693469e4fb8d935ca5a0, type: 3}
+  damageKnockbackForce: 8
 --- !u!1 &3288727578148725994
 GameObject:
   m_ObjectHideFlags: 0

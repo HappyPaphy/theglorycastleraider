@@ -585,7 +585,7 @@ public class PlayerController : PlayerEntity
                 if (targetEnemy != null && processedTargets.Add(targetEnemy))
                 {
                     SoundManager.instance.KickSound_Human(transform.position);
-                    targetEnemy.GotKicked(hit.point, kickDamage);
+                    targetEnemy.GotKicked(hit.point, kickDamage, 8f);
                     hitSomething = true;
                 }
                 else if (destructible != null && processedTargets.Add(destructible))
@@ -750,17 +750,18 @@ public class PlayerController : PlayerEntity
     {
         if (playerWeaponManager.currentParryLeft > 0f || playerWeaponManager.currentParryRight > 0f)
         {
-            enemy.GotParried();
             BlockedOrParriedEffect(enemy.eyesTransform.position);
             RumbleManager.instance.RumblePulse(1f, 3f, 0.4f);
             cameraBob.TriggerShake(0.293f, 0.05f);
 
             if (playerWeaponManager.currentParryLeft > 0f)
             {
+                enemy.GotParried(true);
                 SoundManager.instance.BlockOrParrySound(playerWeaponManager.leftHandWeapon.audioClips_ParrySound, transform.position);
             }
             else if (playerWeaponManager.currentParryRight > 0f)
             {
+                enemy.GotParried(false);
                 SoundManager.instance.BlockOrParrySound(playerWeaponManager.rightHandWeapon.audioClips_ParrySound, transform.position);
             }
         }
