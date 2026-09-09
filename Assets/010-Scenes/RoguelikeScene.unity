@@ -1544,6 +1544,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c9d75dd08432ea43b83ca2a89d899ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoguelikeManager
+  dungeonIndex: 0
+  dungeonFlows:
+  - {fileID: 11400000, guid: d59dcec730943e343afc21659eb49cb6, type: 2}
+  - {fileID: 11400000, guid: 4276845bda306f44d9011d01bd0e2d25, type: 2}
+  - {fileID: 11400000, guid: 4276845bda306f44d9011d01bd0e2d25, type: 2}
   runtimeDungeon: {fileID: 1204253485}
   navMeshSurface: {fileID: 558632015}
   playerResetTransform: {fileID: 2115885559}

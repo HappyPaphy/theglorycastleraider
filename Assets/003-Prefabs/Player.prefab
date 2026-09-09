@@ -5395,8 +5395,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38767bc092e89324d88b5ae6d8824cda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HintToggle
-  obj_XboxHint: {fileID: 4576443280688015836}
-  obj_PcHint: {fileID: 3894454590732959635}
+  obj_XboxHint: {fileID: 3894454590732959635}
+  obj_PcHint: {fileID: 4576443280688015836}
 --- !u!1 &4250471163109524281
 GameObject:
   m_ObjectHideFlags: 0
@@ -11278,7 +11278,7 @@ MonoBehaviour:
   meleeStaminaCost: 12
   meleeDamage: 18
   attackRange: 1.4
-  attackRadius: 0.15
+  attackRadius: 0.35
   lungeForce: 3
   attackLayerMask:
     serializedVersion: 2

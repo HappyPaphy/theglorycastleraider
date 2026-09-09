@@ -1,17 +1,22 @@
 using DG.Tweening;
 using DunGen;
+using DunGen.Graph;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
-using static UnityEngine.Audio.GeneratorInstance;
 
 public class RoguelikeManager : MonoBehaviour
 {
     public static event Action OnDungeonReady;
     public static bool IsDungeonReady { get; private set; }
 
+    public int dungeonIndex = 0;
+
+    public List<GameObject> obj_Enemies; 
+
+    [SerializeField] private DungeonFlow[] dungeonFlows;
     [SerializeField] private RuntimeDungeon runtimeDungeon;
     [SerializeField] private NavMeshSurface navMeshSurface;
 
@@ -57,7 +62,9 @@ public class RoguelikeManager : MonoBehaviour
 
     private void Update()
     {
-        if(isPlayerInTheLastRoom)
+        obj_Enemies.RemoveAll(item => item == null);
+
+        if (isPlayerInTheLastRoom)
         {
             if (canvasGroup_ProceedNextFloor.alpha == 0f)
             {
@@ -91,7 +98,20 @@ public class RoguelikeManager : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
+        foreach(GameObject enemy in obj_Enemies)
+        {
+            Destroy(enemy);
+        }
+
         allDungeonTiles.Clear();
+
+        if(dungeonIndex < dungeonFlows.Length)
+        {
+            dungeonIndex++;
+        }
+
+        runtimeDungeon.Generator.Settings.DungeonFlow = dungeonFlows[dungeonIndex];  
+
         runtimeDungeon.Generate();
         isPlayerInTheLastRoom = false;
     }
@@ -116,6 +136,7 @@ public class RoguelikeManager : MonoBehaviour
                 EnemyDirector.instance.ResetDirector();
             }
 
+            canvasGroup_ProceedNextFloor.DOKill();
             canvasGroup_ProceedNextFloor.alpha = 0f;
             canvasGroup_BlackFadeUI.DOFade(0f, 0.5f).SetUpdate(false);
             BakeDungeonNavMesh();

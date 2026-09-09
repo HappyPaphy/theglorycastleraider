@@ -102,9 +102,11 @@ public class EnemyEntity : CharacterEntity
             playerTransform = playerObj.transform;
         }
 
-        goreSprite_34HP.enabled = false;
-        goreSprite_67HP.enabled = false;
-
+        if(goreSprite_34HP != null && goreSprite_67HP != null)
+        {
+            goreSprite_34HP.enabled = false;
+            goreSprite_67HP.enabled = false;
+        }
 
         base.Start();
     }
@@ -179,6 +181,8 @@ public class EnemyEntity : CharacterEntity
 
     protected void HandleGoreSprite()
     {
+        if(goreSprite_34HP == null || goreSprite_67HP == null) { return; }
+
         if (CharacterHealthComponent.CurrentHP <= CharacterHealthComponent.MaxHP * 0.34f)
         {
             if (!goreSprite_34HP.enabled)

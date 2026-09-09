@@ -15,8 +15,8 @@ MonoBehaviour:
   globalPropGroupID_obsolete: 
   globalPropRanges_obsolete: []
   Length:
-    Min: 5
-    Max: 10
+    Min: 7
+    Max: 7
   BranchMode: 0
   BranchCount:
     Min: 1
@@ -68,37 +68,6 @@ MonoBehaviour:
     NodeType: 2
     Position: 1
     Label: Goal
-    Keys: []
-    Locks: []
-    LockPlacement: 0
-    StraighteningSettings:
-      OverrideStraightenChance: 0
-      StraightenChance: 0
-      OverrideCanStraightenMainPath: 0
-      CanStraightenMainPath: 1
-      OverrideCanStraightenBranchPaths: 0
-      CanStraightenBranchPaths: 0
-  - Graph: {fileID: 11400000}
-    TileSets: []
-    NodeType: 0
-    Position: 0.041029472
-    Label: First Weapon Room
-    Keys: []
-    Locks: []
-    LockPlacement: 0
-    StraighteningSettings:
-      OverrideStraightenChance: 0
-      StraightenChance: 0
-      OverrideCanStraightenMainPath: 0
-      CanStraightenMainPath: 1
-      OverrideCanStraightenBranchPaths: 0
-      CanStraightenBranchPaths: 0
-  - Graph: {fileID: 11400000}
-    TileSets:
-    - {fileID: 11400000, guid: f82d551e6058b2b42966412b94229a8b, type: 2}
-    NodeType: 0
-    Position: 0.96754944
-    Label: Last Room
     Keys: []
     Locks: []
     LockPlacement: 0

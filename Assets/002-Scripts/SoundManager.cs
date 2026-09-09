@@ -25,6 +25,10 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioSource[] sfx_Human_Died;
     [SerializeField] private AudioSource[] sfx_Human_Parried;
 
+    [SerializeField] private AudioSource[] sfx_Dog_Grunt;
+    [SerializeField] private AudioSource[] sfx_Dog_Attack;
+    [SerializeField] private AudioSource[] sfx_Dog_Died;
+
     [SerializeField] private AudioSource[] sfx_Chicken;
 
     [Header("Sword Swing")]
@@ -146,6 +150,24 @@ public class SoundManager : MonoBehaviour
     {
         int rndIndex = Random.Range(0, sfx_Human_Died.Length);
         PlayNewSound(sfx_Human_Died[rndIndex], soundPosition, 100f);
+    }
+
+    public void DogSound_Grunt(Vector3 soundPosition)
+    {
+        int rndIndex = Random.Range(0, sfx_Dog_Grunt.Length);
+        PlayNewSound(sfx_Dog_Grunt[rndIndex], soundPosition, 100f);
+    }
+
+    public void DogSound_Attack(Vector3 soundPosition)
+    {
+        int rndIndex = Random.Range(0, sfx_Dog_Attack.Length);
+        PlayNewSound(sfx_Dog_Attack[rndIndex], soundPosition, 100f);
+    }
+
+    public void DogSound_Died(Vector3 soundPosition)
+    {
+        int rndIndex = Random.Range(0, sfx_Dog_Died.Length);
+        PlayNewSound(sfx_Dog_Died[rndIndex], soundPosition, 100f);
     }
 
     public void HumanSound_Parried(Vector3 soundPosition)

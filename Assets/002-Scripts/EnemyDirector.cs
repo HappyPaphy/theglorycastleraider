@@ -8,8 +8,8 @@ public class EnemyDirector : MonoBehaviour
     [Tooltip("Maximum number of enemies allowed to aggressively chase and attack the player at the same time.")]
     public int maxActiveAttackers = 2;
 
-    [SerializeField] private List<EnemyThief> registeredEnemies = new List<EnemyThief>();
-    public List<EnemyThief> activeAttackers = new List<EnemyThief>();
+    [SerializeField] private List<EnemyEntity> registeredEnemies = new List<EnemyEntity>();
+    public List<EnemyEntity> activeAttackers = new List<EnemyEntity>();
 
     public static EnemyDirector instance;
 
@@ -32,13 +32,13 @@ public class EnemyDirector : MonoBehaviour
         activeAttackers.Clear();
     }
 
-    public void RegisterEnemy(EnemyThief enemy)
+    public void RegisterEnemy(EnemyEntity enemy)
     {
         if (!registeredEnemies.Contains(enemy))
             registeredEnemies.Add(enemy);
     }
 
-    public void UnregisterEnemy(EnemyThief enemy)
+    public void UnregisterEnemy(EnemyEntity enemy)
     {
         registeredEnemies.Remove(enemy);
         activeAttackers.Remove(enemy);
@@ -47,7 +47,7 @@ public class EnemyDirector : MonoBehaviour
     /// <summary>
     /// Enemies call this to ask if they are allowed to rush/attack the player.
     /// </summary>
-    public bool RequestAttackPermission(EnemyThief enemy)
+    public bool RequestAttackPermission(EnemyEntity enemy)
     {
         if (activeAttackers.Contains(enemy)) return true;
 
@@ -60,7 +60,7 @@ public class EnemyDirector : MonoBehaviour
         return false; // Slots are full! Enemy must wait or circle.
     }
 
-    public void ReleaseAttackPermission(EnemyThief enemy)
+    public void ReleaseAttackPermission(EnemyEntity enemy)
     {
         if (activeAttackers.Contains(enemy))
         {

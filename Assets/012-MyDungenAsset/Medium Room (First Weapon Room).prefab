@@ -512,7 +512,7 @@ MonoBehaviour:
   OverrideAutomaticTileBounds: 1
   TileBoundsOverride:
     m_Center: {x: 0, y: 1.2381536, z: 0}
-    m_Extent: {x: 2, y: 1.3281535, z: 1.9999999}
+    m_Extent: {x: 3.0000002, y: 1.3281536, z: 3}
   Entrances: []
   Exits: []
   OverrideConnectionChance: 0
@@ -531,10 +531,10 @@ MonoBehaviour:
     isOnMainPath: 0
     localBounds:
       m_Center: {x: 0, y: 1.2381536, z: 0}
-      m_Extent: {x: 2, y: 1.3281535, z: 1.9999999}
+      m_Extent: {x: 3.0000002, y: 1.3281536, z: 3}
     worldBounds:
       m_Center: {x: 0, y: 1.2381536, z: 0}
-      m_Extent: {x: 2, y: 1.3281535, z: 1.9999999}
+      m_Extent: {x: 3.0000002, y: 1.3281536, z: 3}
     placementParameters:
       archetype: {fileID: 0}
       node:

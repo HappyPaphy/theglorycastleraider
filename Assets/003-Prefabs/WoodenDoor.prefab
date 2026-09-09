@@ -1628,65 +1628,9 @@ MonoBehaviour:
   m_Mesh: {fileID: 0}
   m_VersionIndex: 8237
   m_IsSelectable: 1
-  m_SelectedFaces: 00000000
-  m_SelectedEdges:
-  - a: 151
-    b: 152
-  - a: 152
-    b: 153
-  - a: 153
-    b: 160
-  - a: 160
-    b: 165
-  - a: 165
-    b: 169
-  - a: 169
-    b: 178
-  - a: 174
-    b: 175
-  - a: 178
-    b: 174
-  - a: 175
-    b: 176
-  - a: 150
-    b: 151
-  - a: 108
-    b: 150
-  - a: 176
-    b: 129
-  - a: 129
-    b: 127
-  - a: 107
-    b: 108
-  - a: 58
-    b: 107
-  - a: 228
-    b: 229
-  - a: 229
-    b: 230
-  - a: 230
-    b: 232
-  - a: 232
-    b: 223
-  - a: 223
-    b: 219
-  - a: 219
-    b: 215
-  - a: 57
-    b: 58
-  - a: 215
-    b: 209
-  - a: 209
-    b: 210
-  - a: 210
-    b: 57
-  - a: 227
-    b: 228
-  - a: 80
-    b: 227
-  - a: 127
-    b: 80
-  m_SelectedVertices: 9a000000970000009800000099000000a1000000a0000000a6000000a5000000a9000000aa000000b3000000b2000000ae000000af000000b0000000b1000000b4000000ab000000a40000009f000000960000006d0000006c00000074000000770000007a00000082000000810000007f000000800000007b0000007c00000072000000730000006b0000003b0000003a000000e4000000e5000000e7000000e60000005100000052000000e8000000e90000004b000000e0000000df00000045000000db000000dc000000d7000000d80000003800000039000000d1000000d200000046000000470000004c00000053000000e300000050000000
+  m_SelectedFaces: 
+  m_SelectedEdges: []
+  m_SelectedVertices: 
 --- !u!114 &6692514631752964217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1823,7 +1767,7 @@ MonoBehaviour:
     yAxis: 1
     zAxis: 1
     detectFloatingFragments: 0
-    asynchronous: 1
+    asynchronous: 0
     insideMaterial: {fileID: 2100000, guid: 1f650b7c05f19274c8b4d7df67587e08, type: 2}
     textureScale: {x: 1, y: 1}
     textureOffset: {x: 0, y: 0}
