@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 5841220806726078086}
   - component: {fileID: 6312334937239222548}
   - component: {fileID: 3045173145494446904}
-  - component: {fileID: 855507272764565747}
   - component: {fileID: 1913689487950840695}
   - component: {fileID: 9089990791682691278}
   - component: {fileID: -7490674384882535161}
@@ -462,25 +461,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!114 &855507272764565747
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2628002776702642408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a82b6b8adce70964dbdd88d916e1c5cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: DunGen::DunGen.Door
-  Dungeon: {fileID: 0}
-  DoorwayA: {fileID: 0}
-  DoorwayB: {fileID: 0}
-  TileA: {fileID: 0}
-  TileB: {fileID: 0}
-  dontCullBehind: 0
-  isOpen: 0
 --- !u!114 &1913689487950840695
 MonoBehaviour:
   m_ObjectHideFlags: 0

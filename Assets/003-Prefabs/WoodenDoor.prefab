@@ -1751,6 +1751,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91fc9178a0b0c3d4bb8b6d91b16d9893, type: 3}
   m_Name: 
   m_EditorClassIdentifier: RuntimeAssembly::Fracture
+  isCanBeDamage: 1
   maxHealth: 20
   currentHealth: 20
   collisionDamageMultiplier: 0
@@ -1762,7 +1763,7 @@ MonoBehaviour:
     - 0
     triggerKey: 0
   fractureOptions:
-    fragmentCount: 12
+    fragmentCount: 8
     xAxis: 1
     yAxis: 1
     zAxis: 1

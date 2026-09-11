@@ -8,6 +8,14 @@ public enum DamageImpactSound
     FireFlesh
 }
 
+public enum SurfaceType
+{
+    Brick,
+    Wood,
+    Dirt,
+    Water
+}
+
 public class SoundManager : MonoBehaviour
 {
     [SerializeField] private int audioPoolSize = 30;
@@ -25,10 +33,18 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioSource[] sfx_Human_Died;
     [SerializeField] private AudioSource[] sfx_Human_Parried;
 
+    [Header("BigKnight")]
+    [SerializeField] private AudioSource[] sfx_BigKnight_Grunt;
+    [SerializeField] private AudioSource[] sfx_BigKnight_Attack;
+    [SerializeField] private AudioSource[] sfx_BigKnight_Died;
+    [SerializeField] private AudioSource[] sfx_BigKnight_Tired;
+
+    [Header("Dog")]
     [SerializeField] private AudioSource[] sfx_Dog_Grunt;
     [SerializeField] private AudioSource[] sfx_Dog_Attack;
     [SerializeField] private AudioSource[] sfx_Dog_Died;
 
+    [Header("Chicken")]
     [SerializeField] private AudioSource[] sfx_Chicken;
 
     [Header("Sword Swing")]
@@ -49,7 +65,10 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioSource[] sfx_Wooden_Break;
 
     [Header("FootStep")]
-    [SerializeField] private AudioSource sfx_FootStep_Brick;
+    [SerializeField] private AudioSource[] sfx_FootStep_Brick;
+    [SerializeField] private AudioSource[] sfx_FootStep_Wood;
+    [SerializeField] private AudioSource[] sfx_FootStep_Dirt;
+    [SerializeField] private AudioSource[] sfx_FootStep_Water;
 
     [Header("Kick")]
     [SerializeField] private AudioSource sfx_Kick_Human;
@@ -150,6 +169,30 @@ public class SoundManager : MonoBehaviour
     {
         int rndIndex = Random.Range(0, sfx_Human_Died.Length);
         PlayNewSound(sfx_Human_Died[rndIndex], soundPosition, 100f);
+    }
+
+    public void BigKnightSound_Grunt(Vector3 soundPosition)
+    {
+        int rndIndex = Random.Range(0, sfx_BigKnight_Grunt.Length);
+        PlayNewSound(sfx_BigKnight_Grunt[rndIndex], soundPosition, 100f);
+    }
+
+    public void BigKnightSound_Attack(Vector3 soundPosition)
+    {
+        int rndIndex = Random.Range(0, sfx_BigKnight_Attack.Length);
+        PlayNewSound(sfx_BigKnight_Attack[rndIndex], soundPosition, 100f);
+    }
+
+    public void BigKnightSound_Died(Vector3 soundPosition)
+    {
+        int rndIndex = Random.Range(0, sfx_BigKnight_Died.Length);
+        PlayNewSound(sfx_BigKnight_Died[rndIndex], soundPosition, 100f);
+    }
+
+    public void BigKnightSound_Tired(Vector3 soundPosition, bool isPlay)
+    {
+        int rndIndex = Random.Range(0, sfx_BigKnight_Tired.Length);
+        PlaySound(sfx_BigKnight_Tired[rndIndex], soundPosition, 100f, isPlay);
     }
 
     public void DogSound_Grunt(Vector3 soundPosition)
@@ -260,5 +303,24 @@ public class SoundManager : MonoBehaviour
     {
         int rndIndex = Random.Range(0, sfx_Wooden_Break.Length);
         PlayNewSound(sfx_Wooden_Break[rndIndex], soundPosition, 100f);
+    }
+
+    public void PlayFootStep(Vector3 soundPosition, SurfaceType surfaceType)
+    {
+        AudioSource[] selectedSteps = null;
+
+        switch (surfaceType)
+        {
+            case SurfaceType.Brick: selectedSteps = sfx_FootStep_Brick; break;
+            case SurfaceType.Wood: selectedSteps = sfx_FootStep_Wood; break;
+            case SurfaceType.Dirt: selectedSteps = sfx_FootStep_Dirt; break;
+            case SurfaceType.Water: selectedSteps = sfx_FootStep_Water; break;
+        }
+
+        if (selectedSteps != null && selectedSteps.Length > 0)
+        {
+            int rndIndex = Random.Range(0, selectedSteps.Length);
+            PlayNewSound(selectedSteps[rndIndex], soundPosition, 20f);
+        }
     }
 }

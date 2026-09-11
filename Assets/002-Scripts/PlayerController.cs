@@ -19,7 +19,7 @@ public class PlayerController : PlayerEntity
     [SerializeField] private CameraFollow cameraFollow;
     [SerializeField] private GameObject deadCamPrefab;
     [SerializeField] private CameraPostProcessEffect postProcressEffect;
-    [SerializeField] private CameraBob cameraBob;
+    public CameraBob cameraBob;
     [SerializeField] private PlayerWeaponManager playerWeaponManager;
     [SerializeField] private WeaponSway weaponSway;
 
@@ -28,7 +28,7 @@ public class PlayerController : PlayerEntity
     [SerializeField] private InputAction input_Jump;
     [SerializeField] private InputAction input_Sprint;
     [SerializeField] private InputAction input_Move;
-    [SerializeField] private InputAction input_Look;
+    public InputAction input_Look;
     [SerializeField] private InputAction input_Interact;
     [SerializeField] private InputAction input_Reload;
     [SerializeField] private InputAction input_Dash;

@@ -10,6 +10,9 @@ public class CameraBob : MonoBehaviour
     [SerializeField] private float sprintFrequency = 18f;
     [SerializeField] private float sprintAmplitude = 0.1f;
 
+    [SerializeField] private float stepIntervalMultiplier = 1.5f; // Increase this to make steps slower (e.g., 1.5 or 2.0)
+    private float stepTimer = 0f;
+
     [SerializeField] private float defaultFOV = 75f;
     private Coroutine zoomCoroutine;
 
@@ -51,18 +54,37 @@ public class CameraBob : MonoBehaviour
         if (playerController != null && playerController.playerControls != null)
         {
             moveValue = playerController.playerControls.Player.Move.ReadValue<Vector2>();
-            isSprinting = playerController.isSprintHeld;
+
+            // Only count as sprinting if the player actually has stamina remaining
+            isSprinting = playerController.isSprintHeld && playerController.CharacterStaminaComponent.CurrentStamina > 0f;
         }
 
         bool isMoving = moveValue.sqrMagnitude > 0.01f;
 
-        // 2. Only bob if grounded AND actively moving
-        if (controller.isGrounded && isMoving)
+        // 2. Only bob and play steps if grounded, actively moving, and NOT sliding
+        if (controller.isGrounded && isMoving && !playerController.isSliding)
         {
             float currentFreq = isSprinting ? sprintFrequency : walkFrequency;
             float currentAmp = isSprinting ? sprintAmplitude : walkAmplitude;
 
+            float previousTimer = timer;
             timer += Time.deltaTime * currentFreq;
+
+            stepTimer += Time.deltaTime * currentFreq * (1f / stepIntervalMultiplier);
+            float previousStepTimer = stepTimer - (Time.deltaTime * currentFreq * (1f / stepIntervalMultiplier));
+
+            // 3. FOOTSTEP SYNC: Trigger footstep every time the timer crosses a multiple of PI (half a sine wave cycle)
+            if (Mathf.FloorToInt(stepTimer / Mathf.PI) > Mathf.FloorToInt(previousStepTimer / Mathf.PI))
+            {
+                if (SoundManager.instance != null)
+                {
+                    // Detect the ground type right before playing the sound
+                    SurfaceType currentSurface = DetermineSurfaceType();
+
+                    // Play the sound at the camera's location
+                    SoundManager.instance.PlayFootStep(cameraTransform.position, currentSurface);
+                }
+            }
 
             float xOffset = Mathf.Cos(timer / 2) * currentAmp;
             float yOffset = Mathf.Sin(timer) * currentAmp;
@@ -71,6 +93,7 @@ public class CameraBob : MonoBehaviour
         }
         else
         {
+            // Reset timer so the first step plays immediately when moving again
             timer = 0f;
             currentBobOffset = Vector3.Lerp(currentBobOffset, Vector3.zero, Time.deltaTime * 10f);
         }
@@ -170,5 +193,26 @@ public class CameraBob : MonoBehaviour
             cam.fieldOfView = defaultFOV;
         }
 
+    }
+
+    private SurfaceType DetermineSurfaceType()
+    {
+        // Shoot a ray from slightly above the player's feet straight down
+        Vector3 rayStart = playerController.transform.position + (Vector3.up * 0.5f);
+
+        if (Physics.Raycast(rayStart, Vector3.down, out RaycastHit hit, 2f))
+        {
+            // Check the tag of the floor we hit
+            switch (hit.collider.tag)
+            {
+                case "Wood": return SurfaceType.Wood;
+                case "Dirt": return SurfaceType.Dirt;
+                case "Water": return SurfaceType.Water;
+                case "Brick": return SurfaceType.Brick;
+                default: return SurfaceType.Brick; // Default to brick if no specific tag is found
+            }
+        }
+
+        return SurfaceType.Brick; // Fallback
     }
 }

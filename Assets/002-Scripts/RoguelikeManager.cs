@@ -29,6 +29,8 @@ public class RoguelikeManager : MonoBehaviour
     [SerializeField] private CanvasGroup canvasGroup_BlackFadeUI;
 
     [HideInInspector] public bool isPlayerInTheLastRoom = false;
+    private bool isProceedNextFloorOnce = false;
+
     public static RoguelikeManager instance;
 
     private void Awake()
@@ -75,9 +77,11 @@ public class RoguelikeManager : MonoBehaviour
                 canvasGroup_ProceedNextFloor.DOFade(0f, 0.3f).SetUpdate(false);
             }
 
-            if (PlayerController.instance.IsMinimapPressed)
+            if (PlayerController.instance.IsMinimapPressed && !isProceedNextFloorOnce)
             {
                 PlayerController.instance.IsMinimapPressed = false;
+                isProceedNextFloorOnce = true;
+
                 StartCoroutine(ProceedToNextFloor());
             }
         }
@@ -114,6 +118,7 @@ public class RoguelikeManager : MonoBehaviour
 
         runtimeDungeon.Generate();
         isPlayerInTheLastRoom = false;
+        isProceedNextFloorOnce = false;
     }
 
     private void HandleGenerationStatusChanged(DungeonGenerator generator, GenerationStatus status)

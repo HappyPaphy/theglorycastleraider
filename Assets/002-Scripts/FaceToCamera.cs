@@ -8,7 +8,7 @@ public class FaceToCamera : MonoBehaviour
     [SerializeField] private Animator anim;
     [SerializeField] private bool isFaceToPlayer = true;
 
-    [HideInInspector] public bool isFaceYAxis = false;
+    public bool isFaceYAxis = false;
 
     [Header("Sprites")]
     [SerializeField] private Sprite spr_Front;

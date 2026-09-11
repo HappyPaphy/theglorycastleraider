@@ -93,6 +93,24 @@ public class PlayerWeaponManager : MonoBehaviour
     [HideInInspector] public int activeSpellSlot = 0;
     [HideInInspector] public int activeItemSlot = 0;
 
+    [SerializeField] private QuickRadialMenu quickMenu_Spell;
+    [SerializeField] private QuickRadialMenu quickMenu_Item;
+    [SerializeField] private QuickRadialMenu quickMenu_LeftWeapon;
+    [SerializeField] private QuickRadialMenu quickMenu_RightWeapon;
+    private bool isQuickMenuActive = false;
+
+    private float itemSwitchHoldDownDuration = 0.2f;
+    private float currentItemSwitchHoldDown = 0f;
+
+    private float spellSwitchHoldDownDuration = 0.2f;
+    private float currentSpellSwitchHoldDown = 0f;
+
+    private float leftWeaponSwitchHoldDownDuration = 0.2f;
+    private float currentLeftWeaponSwitchHoldDown = 0f;
+
+    private float rightWeaponSwitchHoldDownDuration = 0.2f;
+    private float currentRightWeaponSwitchHoldDown = 0f;
+
     public Item currentActiveSpell => equippedSpells[activeSpellSlot];
     public Item currentActiveItem => equippedItems[activeItemSlot];
 
@@ -121,6 +139,7 @@ public class PlayerWeaponManager : MonoBehaviour
         if (currentParryRight > 0f) currentParryRight -= Time.deltaTime;
         if (currentParryLeft > 0f) currentParryLeft -= Time.deltaTime;
 
+        HandleQuickRadialMenu();
         HandleHandSprite();
         HandleItemAndSpellSprites();
         HandleWeaponSwitching();
@@ -154,9 +173,147 @@ public class PlayerWeaponManager : MonoBehaviour
         }
     }
 
+    private void HandleQuickRadialMenu()
+    {
+        if (!isQuickMenuActive)
+        {
+            HandleQuickMenuHoldDownInput();
+            return; 
+        }
+
+        Vector2 inputDir = playerController.input_Look.ReadValue<Vector2>();
+
+        if (quickMenu_Spell.isMenuActive)
+        {
+            if (!playerController.IsSwitchWeaponHeld_Up)
+            {
+                int selectedIndex = quickMenu_Spell.CloseMenu();
+                isQuickMenuActive = false;
+                playerController.IsSwitchWeaponPressed_Up = false; // Prevent accidental tap cycle on release
+
+                if (selectedIndex != -1 && selectedIndex < equippedSpells.Length && equippedSpells[selectedIndex] != null)
+                {
+                    activeSpellSlot = selectedIndex;
+                }
+            }
+            else quickMenu_Spell.UpdateMenu(inputDir);
+        }
+        // ITEM MENU
+        else if (quickMenu_Item.isMenuActive)
+        {
+            if (!playerController.IsSwitchWeaponHeld_Down)
+            {
+                int selectedIndex = quickMenu_Item.CloseMenu();
+                isQuickMenuActive = false;
+                playerController.IsSwitchWeaponPressed_Down = false;
+
+                if (selectedIndex != -1 && selectedIndex < equippedItems.Length && equippedItems[selectedIndex] != null)
+                {
+                    activeItemSlot = selectedIndex;
+                    UseCurrentItem(); // Instantly uses the item upon selecting it via the wheel
+                }
+            }
+            else quickMenu_Item.UpdateMenu(inputDir);
+        }
+        // RIGHT WEAPON MENU
+        else if (quickMenu_RightWeapon.isMenuActive)
+        {
+            if (!playerController.IsSwitchWeaponHeld_Right)
+            {
+                int selectedIndex = quickMenu_RightWeapon.CloseMenu();
+                isQuickMenuActive = false;
+                playerController.IsSwitchWeaponPressed_Right = false;
+
+                if (selectedIndex != -1 && selectedIndex < rightHandWeapons.Length && rightHandWeapons[selectedIndex] != null)
+                {
+                    if (isTwoHanding) ToggleTwoHandedStance();
+                    if (isBlockingRight) { isBlockingRight = false; currentState_Righthand = PerformActionState.Idle; }
+
+                    activeRightSlot = selectedIndex;
+                    UpdateAnimatorControllers(false);
+                }
+            }
+            else quickMenu_RightWeapon.UpdateMenu(inputDir);
+        }
+        // LEFT WEAPON MENU
+        else if (quickMenu_LeftWeapon.isMenuActive)
+        {
+            if (!playerController.IsSwitchWeaponHeld_Left)
+            {
+                int selectedIndex = quickMenu_LeftWeapon.CloseMenu();
+                isQuickMenuActive = false;
+                playerController.IsSwitchWeaponPressed_Left = false;
+
+                if (selectedIndex != -1 && selectedIndex < leftHandWeapons.Length && leftHandWeapons[selectedIndex] != null)
+                {
+                    if (isTwoHanding) ToggleTwoHandedStance();
+                    if (isBlockingLeft) { isBlockingLeft = false; currentState_LeftHand = PerformActionState.Idle; }
+
+                    activeLeftSlot = selectedIndex;
+                    UpdateAnimatorControllers(true);
+                }
+            }
+            else quickMenu_LeftWeapon.UpdateMenu(inputDir);
+        }
+    }
+
+    private void HandleQuickMenuHoldDownInput()
+    {
+        if (playerController.IsSwitchWeaponHeld_Up)
+        {
+            currentSpellSwitchHoldDown += Time.deltaTime;
+            if (currentSpellSwitchHoldDown > spellSwitchHoldDownDuration)
+            {
+                quickMenu_Spell.OpenMenu();
+                isQuickMenuActive = true;
+                currentSpellSwitchHoldDown = 0f;
+            }
+        }
+        else currentSpellSwitchHoldDown = 0f;
+
+        // Item (Down)
+        if (playerController.IsSwitchWeaponHeld_Down)
+        {
+            currentItemSwitchHoldDown += Time.deltaTime;
+            if (currentItemSwitchHoldDown > itemSwitchHoldDownDuration)
+            {
+                quickMenu_Item.OpenMenu();
+                isQuickMenuActive = true;
+                currentItemSwitchHoldDown = 0f;
+            }
+        }
+        else currentItemSwitchHoldDown = 0f;
+
+        // Right Weapon (Right)
+        if (playerController.IsSwitchWeaponHeld_Right)
+        {
+            currentRightWeaponSwitchHoldDown += Time.deltaTime;
+            if (currentRightWeaponSwitchHoldDown > rightWeaponSwitchHoldDownDuration)
+            {
+                quickMenu_RightWeapon.OpenMenu();
+                isQuickMenuActive = true;
+                currentRightWeaponSwitchHoldDown = 0f;
+            }
+        }
+        else currentRightWeaponSwitchHoldDown = 0f;
+
+        // Left Weapon (Left)
+        if (playerController.IsSwitchWeaponHeld_Left)
+        {
+            currentLeftWeaponSwitchHoldDown += Time.deltaTime;
+            if (currentLeftWeaponSwitchHoldDown > leftWeaponSwitchHoldDownDuration)
+            {
+                quickMenu_LeftWeapon.OpenMenu();
+                isQuickMenuActive = true;
+                currentLeftWeaponSwitchHoldDown = 0f;
+            }
+        }
+        else currentLeftWeaponSwitchHoldDown = 0f;
+    }
+
     private void HandleWeaponSwitching()
     {
-        if(EquipmentLoadOut.instance.isPanelActive) { return; }
+        if(EquipmentLoadOut.instance.isPanelActive || isQuickMenuActive) { return; }
 
         // Right D-Pad: Cycle Right Hand
         if (playerController.IsSwitchWeaponPressed_Right)
@@ -196,40 +353,44 @@ public class PlayerWeaponManager : MonoBehaviour
         if (playerController.IsReloadPressed && !playerController.isKicking && !playerController.isExecuting)
         {
             playerController.IsReloadPressed = false;
+            UseCurrentItem();
+        }
+    }
 
-            if (currentActiveItem != null && currentActiveItem.itemCategory == ItemCategory.Consumable)
+    private void UseCurrentItem()
+    {
+        if (currentActiveItem != null && currentActiveItem.itemCategory == ItemCategory.Consumable)
+        {
+            ItemType activeType = currentActiveItem.itemType;
+
+            // Check if the item exists in the inventory and has at least 1 charge
+            if (InventoryManager.instance.consumables.ContainsKey(activeType) &&
+                InventoryManager.instance.consumables[activeType] > 0)
             {
-                ItemType activeType = currentActiveItem.itemType;
+                // 1. Decrease the quantity by 1
+                InventoryManager.instance.consumables[activeType]--;
 
-                // Check if the item exists in the inventory and has at least 1 charge
-                if (InventoryManager.instance.consumables.ContainsKey(activeType) &&
-                    InventoryManager.instance.consumables[activeType] > 0)
+                // 2. Apply the effect
+                ApplyConsumableEffect(activeType);
+
+                // 3. If depleted, clear it completely from inventory and loadouts
+                if (InventoryManager.instance.consumables[activeType] <= 0)
                 {
-                    // 1. Decrease the quantity by 1
-                    InventoryManager.instance.consumables[activeType]--;
+                    InventoryManager.instance.RemoveConsumableIfEmpty(activeType);
 
-                    // 2. Apply the effect
-                    ApplyConsumableEffect(activeType);
+                    // Automatically cycle to the next available item so the player isn't left empty-handed
+                    CycleEquipment(ref activeItemSlot, equippedItems);
+                }
 
-                    // 3. If depleted, clear it completely from inventory and loadouts
-                    if (InventoryManager.instance.consumables[activeType] <= 0)
+                // 4. Force immediate UI and loadout update
+                if (EquipmentLoadOut.instance != null)
+                {
+                    EquipmentLoadOut.instance.RefreshUI();
+
+                    // If the inventory selection menu is currently open, refresh that grid too
+                    if (EquipmentLoadOut.instance.isPanelActive && EquipmentLoadOut.instance.isInInventoryMenu)
                     {
-                        InventoryManager.instance.RemoveConsumableIfEmpty(activeType);
-
-                        // Automatically cycle to the next available item so the player isn't left empty-handed
-                        CycleEquipment(ref activeItemSlot, equippedItems);
-                    }
-
-                    // 4. Force immediate UI and loadout update
-                    if (EquipmentLoadOut.instance != null)
-                    {
-                        EquipmentLoadOut.instance.RefreshUI();
-
-                        // If the inventory selection menu is currently open, refresh that grid too
-                        if (EquipmentLoadOut.instance.isPanelActive && EquipmentLoadOut.instance.isInInventoryMenu)
-                        {
-                            EquipmentLoadOut.instance.OpenInventoryCategory(EquipmentSlotType.Item, activeItemSlot);
-                        }
+                        EquipmentLoadOut.instance.OpenInventoryCategory(EquipmentSlotType.Item, activeItemSlot);
                     }
                 }
             }

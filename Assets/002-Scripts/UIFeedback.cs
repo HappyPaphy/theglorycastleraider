@@ -23,13 +23,13 @@ public class UIFeedback : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     [SerializeField] private GameObject text;
     [SerializeField] private Byte alpha = 60;
     [SerializeField] private GameObject activeGameObjectOnHover;
+    [SerializeField] private bool isButtonInteractble = true;
 
     [Header("Custom UI Events")]
     public UnityEvent onHover;
     public UnityEvent onClick;
 
     private bool isSelected = false;
-    private bool isHovered = false;
 
     private Vector3 originalScale;
     private Vector3 targetScale;
@@ -98,14 +98,14 @@ public class UIFeedback : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
         if(activeGameObjectOnHover != null)
         {
-            if(isHovered || isSelected)
+            if(isSelected)
             {
                 if(!activeGameObjectOnHover.activeInHierarchy)
                 {
                     activeGameObjectOnHover.SetActive(true);
                 }
             }
-            else if(!isHovered && !isSelected)
+            else if(!isSelected)
             {
                 if (activeGameObjectOnHover.activeInHierarchy)
                 {
@@ -120,24 +120,34 @@ public class UIFeedback : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         switch (GameManager.instance.navigationMode)
         {
             case UINavigtionMode.Select:
-                UnHoveredUI();
                 FeedbackUI(isSelected);
                 break;
 
             case UINavigtionMode.Pointer:
-                FeedbackUI(isHovered);
+                FeedbackUI(isSelected);
                 break;
         }
+    }
+
+    public void SubmitUI()
+    {
+        if (clickSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(clickSound);
+        }
+
+        onClick?.Invoke();
+    }
+
+    public void SelectedUI()
+    {
+        isSelected = true;
+        onHover?.Invoke();
     }
 
     public void UnSelectedUI()
     {
         isSelected = false;
-    }
-
-    public void UnHoveredUI()
-    {
-        isHovered = false;
     }
 
     private void FeedbackUI(bool isTarget)
@@ -146,7 +156,6 @@ public class UIFeedback : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             case UISelectType.Scale:
                 {
-
                     Color currentColor = new Color();
 
                     if(image != null)
@@ -203,48 +212,42 @@ public class UIFeedback : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (GameManager.instance.navigationMode != UINavigtionMode.Pointer) { return; }
+        if (!isButtonInteractble) { return; }
 
         EventSystem.current.SetSelectedGameObject(gameObject);
-        isHovered = true;
-        onHover?.Invoke();
+        SelectedUI();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        isHovered = false;
+        if (!isButtonInteractble) { return; }
+        UnSelectedUI();
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (clickSound != null && audioSource != null)
-        {
-            audioSource.PlayOneShot(clickSound);
-        }
-
-        onClick?.Invoke();
+        if (!isButtonInteractble) { return; }
+        SubmitUI();
     }
     public void OnSelect(BaseEventData eventData)
     {
         if (GameManager.instance.navigationMode != UINavigtionMode.Select) { return; }
+        if (!isButtonInteractble) { return; }
 
         EventSystem.current.SetSelectedGameObject(gameObject);
-        isSelected = true;
-        onHover?.Invoke();
+        SelectedUI();
     }
 
     // SELECTION LOST: Fires when selection moves to another object
     public void OnDeselect(BaseEventData eventData)
     {
-        isSelected = false;
+        if (!isButtonInteractble) { return; }
+        UnSelectedUI();
     }
 
     public void OnSubmit(BaseEventData eventData)
     {
-        if (clickSound != null && audioSource != null)
-        {
-            audioSource.PlayOneShot(clickSound);
-        }
-
-        onClick?.Invoke();
+        if (!isButtonInteractble) { return; }
+        SubmitUI();
     }
 }
