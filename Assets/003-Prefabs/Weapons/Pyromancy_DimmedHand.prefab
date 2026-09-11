@@ -48,7 +48,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Weapon
   itemCategory: 5
   itemType: 0
-  spr_Icon: {fileID: 302748542, guid: 061137b5a6b2b4c43b0bd8cc01e15662, type: 3}
+  spr_Icon_Frame: {fileID: 302748542, guid: 061137b5a6b2b4c43b0bd8cc01e15662, type: 3}
+  spr_Icon_NoFrame: {fileID: -243376218, guid: 3c62a0a01a3cad74a8b515df0c16207e, type: 3}
   equipmentName: Dimmed Hand (Pyro)
   pickupRadius: 1.5
   playerLayer:

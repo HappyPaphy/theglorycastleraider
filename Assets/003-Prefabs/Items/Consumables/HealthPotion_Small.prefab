@@ -49,7 +49,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   itemCategory: 1
   itemType: 1
-  spr_Icon: {fileID: -249073448, guid: 979989d45c9864f42bd709a76add5e41, type: 3}
+  spr_Icon_Frame: {fileID: -249073448, guid: 979989d45c9864f42bd709a76add5e41, type: 3}
+  spr_Icon_NoFrame: {fileID: 289664515, guid: d443114fb77e54246a8a92492b54239c, type: 3}
   equipmentName: Health Potion (S)
   pickupRadius: 1
   playerLayer:

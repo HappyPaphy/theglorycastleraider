@@ -163,9 +163,9 @@ public class EquipmentLoadOut : MonoBehaviour
         for (int i = 0; i < itemSlots.Length; i++)
         {
             Item item = PlayerWeaponManager.instance.equippedItems[i];
-            if (item != null && item.spr_Icon != null)
+            if (item != null && item.spr_Icon_Frame != null)
             {
-                itemSlots[i].sprite = item.spr_Icon;
+                itemSlots[i].sprite = item.spr_Icon_Frame;
                 itemSlots[i].SetNativeSize();
 
                 // Fetch quantity from InventoryManager dictionary
@@ -189,7 +189,7 @@ public class EquipmentLoadOut : MonoBehaviour
         for (int i = 0; i < spellSlots.Length; i++)
         {
             Item spell = PlayerWeaponManager.instance.equippedSpells[i];
-            spellSlots[i].sprite = (spell != null && spell.spr_Icon != null) ? spell.spr_Icon : emptySpellSprite;
+            spellSlots[i].sprite = (spell != null && spell.spr_Icon_Frame != null) ? spell.spr_Icon_Frame : emptySpellSprite;
             spellSlots[i].SetNativeSize();
         }
 
@@ -197,7 +197,7 @@ public class EquipmentLoadOut : MonoBehaviour
         for (int i = 0; i < ringSlots.Length; i++)
         {
             Item ring = PlayerWeaponManager.instance.equippedRings[i];
-            ringSlots[i].sprite = (ring != null && ring.spr_Icon != null) ? ring.spr_Icon : emptyRingSprite;
+            ringSlots[i].sprite = (ring != null && ring.spr_Icon_Frame != null) ? ring.spr_Icon_Frame : emptyRingSprite;
             ringSlots[i].SetNativeSize();
         }
     }
@@ -350,7 +350,7 @@ public class EquipmentLoadOut : MonoBehaviour
         {
             detailLargeIcon_Inventory.gameObject.SetActive(true);
 
-            detailLargeIcon_Inventory.sprite = item.spr_Icon;
+            detailLargeIcon_Inventory.sprite = item.spr_Icon_Frame;
             detailLargeIcon_Inventory.SetNativeSize();
             detailNameRightText_Inventory.text = item.equipmentName;
             detailDescriptionText_Inventory.text = "Description mapped from Item data...";
@@ -436,7 +436,7 @@ public void PreviewItemDetails(EquipmentSlotType slotType, int index)
             // Enable the large icon image component
             detailLargeIcon_Loadout.gameObject.SetActive(true);
 
-            detailLargeIcon_Loadout.sprite = targetItem.spr_Icon;
+            detailLargeIcon_Loadout.sprite = targetItem.spr_Icon_Frame;
             detailLargeIcon_Loadout.SetNativeSize();
             detailCategoryText_Loadout.text = targetItem.itemCategory.ToString();
             detailNameLeftText_Loadout.text = targetItem.equipmentName; // Can append upgrade levels later

@@ -20,7 +20,7 @@ public class InventorySlotUI : MonoBehaviour
 
         if (item != null)
         {
-            iconImage.sprite = item.spr_Icon;
+            iconImage.sprite = item.spr_Icon_Frame;
             iconImage.SetNativeSize();
             iconImage.gameObject.SetActive(true);
 

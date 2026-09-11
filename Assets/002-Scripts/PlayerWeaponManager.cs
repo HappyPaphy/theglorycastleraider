@@ -97,7 +97,7 @@ public class PlayerWeaponManager : MonoBehaviour
     [SerializeField] private QuickRadialMenu quickMenu_Item;
     [SerializeField] private QuickRadialMenu quickMenu_LeftWeapon;
     [SerializeField] private QuickRadialMenu quickMenu_RightWeapon;
-    private bool isQuickMenuActive = false;
+    [HideInInspector] public bool isQuickMenuActive = false;
 
     private float itemSwitchHoldDownDuration = 0.2f;
     private float currentItemSwitchHoldDown = 0f;
@@ -269,7 +269,13 @@ public class PlayerWeaponManager : MonoBehaviour
                 currentSpellSwitchHoldDown = 0f;
             }
         }
-        else currentSpellSwitchHoldDown = 0f;
+        else if(!playerController.IsSwitchWeaponHeld_Up 
+            && currentSpellSwitchHoldDown > 0f
+            && currentSpellSwitchHoldDown <= spellSwitchHoldDownDuration)
+        {
+            currentSpellSwitchHoldDown = 0f;
+            CycleEquipment(ref activeSpellSlot, equippedSpells);
+        }
 
         // Item (Down)
         if (playerController.IsSwitchWeaponHeld_Down)
@@ -282,7 +288,13 @@ public class PlayerWeaponManager : MonoBehaviour
                 currentItemSwitchHoldDown = 0f;
             }
         }
-        else currentItemSwitchHoldDown = 0f;
+        else if(!playerController.IsSwitchWeaponHeld_Down
+            && currentItemSwitchHoldDown > 0f
+            && currentItemSwitchHoldDown <= itemSwitchHoldDownDuration)
+        {
+            currentItemSwitchHoldDown = 0f;
+            CycleEquipment(ref activeItemSlot, equippedItems);
+        }
 
         // Right Weapon (Right)
         if (playerController.IsSwitchWeaponHeld_Right)
@@ -295,7 +307,13 @@ public class PlayerWeaponManager : MonoBehaviour
                 currentRightWeaponSwitchHoldDown = 0f;
             }
         }
-        else currentRightWeaponSwitchHoldDown = 0f;
+        else if(!playerController.IsSwitchWeaponHeld_Right
+            && currentRightWeaponSwitchHoldDown > 0f
+            && currentRightWeaponSwitchHoldDown <= rightWeaponSwitchHoldDownDuration)
+        {
+            currentRightWeaponSwitchHoldDown = 0f;
+            CycleWeapon(ref activeRightSlot, rightHandWeapons, false);
+        }
 
         // Left Weapon (Left)
         if (playerController.IsSwitchWeaponHeld_Left)
@@ -308,7 +326,13 @@ public class PlayerWeaponManager : MonoBehaviour
                 currentLeftWeaponSwitchHoldDown = 0f;
             }
         }
-        else currentLeftWeaponSwitchHoldDown = 0f;
+        else if(!playerController.IsSwitchWeaponHeld_Left
+            && currentLeftWeaponSwitchHoldDown > 0f
+            && currentLeftWeaponSwitchHoldDown <= leftWeaponSwitchHoldDownDuration)
+        {
+            currentLeftWeaponSwitchHoldDown = 0f;
+            CycleWeapon(ref activeLeftSlot, leftHandWeapons, true);
+        }
     }
 
     private void HandleWeaponSwitching()
@@ -319,28 +343,25 @@ public class PlayerWeaponManager : MonoBehaviour
         if (playerController.IsSwitchWeaponPressed_Right)
         {
             playerController.IsSwitchWeaponPressed_Right = false;
-            CycleWeapon(ref activeRightSlot, rightHandWeapons, false);
+            
         }
 
         // Left D-Pad: Cycle Left Hand
         if (playerController.IsSwitchWeaponPressed_Left)
         {
             playerController.IsSwitchWeaponPressed_Left = false;
-            CycleWeapon(ref activeLeftSlot, leftHandWeapons, true);
         }
 
         // Up D-Pad: Cycle Spells
         if (playerController.IsSwitchWeaponPressed_Up)
         {
             playerController.IsSwitchWeaponPressed_Up = false;
-            CycleEquipment(ref activeSpellSlot, equippedSpells);
         }
 
         // Down D-Pad: Cycle Items 
         if (playerController.IsSwitchWeaponPressed_Down)
         {
             playerController.IsSwitchWeaponPressed_Down = false;
-            CycleEquipment(ref activeItemSlot, equippedItems);
         }
     }
 
@@ -681,11 +702,11 @@ public class PlayerWeaponManager : MonoBehaviour
         // -----------------------
         // SPELL UI UPDATE
         // -----------------------
-        if (currentActiveSpell != null && currentActiveSpell.spr_Icon != null)
+        if (currentActiveSpell != null && currentActiveSpell.spr_Icon_Frame != null)
         {
-            if (image_Spell.sprite != currentActiveSpell.spr_Icon)
+            if (image_Spell.sprite != currentActiveSpell.spr_Icon_Frame)
             {
-                image_Spell.sprite = currentActiveSpell.spr_Icon;
+                image_Spell.sprite = currentActiveSpell.spr_Icon_Frame;
                 image_Spell.SetNativeSize();
                 image_Spell.color = Color.white; // Full opacity
             }
@@ -703,14 +724,14 @@ public class PlayerWeaponManager : MonoBehaviour
         // -----------------------
         // ITEM UI UPDATE
         // -----------------------
-        if (currentActiveItem != null && currentActiveItem.spr_Icon != null)
+        if (currentActiveItem != null && currentActiveItem.spr_Icon_Frame != null)
         {
             int quantity = InventoryManager.instance.consumables[currentActiveItem.itemType];
             text_ItemCount.text = $"{quantity}";
 
-            if (image_Item.sprite != currentActiveItem.spr_Icon)
+            if (image_Item.sprite != currentActiveItem.spr_Icon_Frame)
             {
-                image_Item.sprite = currentActiveItem.spr_Icon;
+                image_Item.sprite = currentActiveItem.spr_Icon_Frame;
                 image_Item.SetNativeSize();
                 image_Item.color = Color.white; // Full opacity
             }
@@ -731,6 +752,7 @@ public class PlayerWeaponManager : MonoBehaviour
     {
         if (rightHandWeapon == null) return;
         if (EquipmentLoadOut.instance.isPanelActive) { return; }
+        if (isQuickMenuActive) { return; }
 
         switch (rightHandWeapon.weaponCategory)
         {
@@ -756,6 +778,7 @@ public class PlayerWeaponManager : MonoBehaviour
     {
         if (isTwoHanding || leftHandWeapon == null) return;
         if (EquipmentLoadOut.instance.isPanelActive) { return; }
+        if (isQuickMenuActive) { return; }
 
         switch (leftHandWeapon.weaponCategory)
         {

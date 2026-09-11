@@ -17,6 +17,10 @@ public class QuickRadialMenu : MonoBehaviour
 
     [Header("UI Panels")]
     public GameObject panel_RadialMenu;
+    [SerializeField] private Image image_InnerCenter;
+    [SerializeField] private Image image_OuterCenter;
+    [SerializeField] private float innerRotationSpeed = 45f;
+    [SerializeField] private float outerRotationSpeed = -30f;
 
     [Header("Radial Slices (Start Top, go Clockwise)")]
     [Tooltip("0: Top, 1: Top-Right, 2: Bottom-Right, 3: Bottom(Cancel), 4: Bottom-Left, 5: Top-Left")]
@@ -45,6 +49,22 @@ public class QuickRadialMenu : MonoBehaviour
     private void Awake()
     {
         panel_RadialMenu.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (isMenuActive)
+        {
+            if (image_InnerCenter != null)
+            {
+                image_InnerCenter.rectTransform.Rotate(0f, 0f, innerRotationSpeed * Time.unscaledDeltaTime);
+            }
+
+            if (image_OuterCenter != null)
+            {
+                image_OuterCenter.rectTransform.Rotate(0f, 0f, outerRotationSpeed * Time.unscaledDeltaTime);
+            }
+        }
     }
 
     /// <summary>
@@ -164,9 +184,10 @@ public class QuickRadialMenu : MonoBehaviour
             int loadoutIndex = GetLoadoutIndex(i);
             Item equippedItem = GetItemAtLoadoutIndex(loadoutIndex);
 
-            if (equippedItem != null && equippedItem.spr_Icon != null)
+            if (equippedItem != null && equippedItem.spr_Icon_NoFrame != null)
             {
-                itemIcons[i].sprite = equippedItem.spr_Icon;
+                itemIcons[i].sprite = equippedItem.spr_Icon_NoFrame;
+                itemIcons[i].SetNativeSize();
                 itemIcons[i].gameObject.SetActive(true);
 
                 if (menuType == QuickMenuType.Item && InventoryManager.instance.consumables.ContainsKey(equippedItem.itemType))
@@ -211,7 +232,8 @@ public class QuickRadialMenu : MonoBehaviour
         if (hoveredItem != null)
         {
             detailLargeIcon.gameObject.SetActive(true);
-            detailLargeIcon.sprite = hoveredItem.spr_Icon;
+            detailLargeIcon.sprite = hoveredItem.spr_Icon_NoFrame;
+            detailLargeIcon.SetNativeSize();
             detailNameText.text = hoveredItem.equipmentName;
             detailDescriptionText.text = "Description mapped from item data...";
         }

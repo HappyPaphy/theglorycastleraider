@@ -641,6 +641,8 @@ public class PlayerController : PlayerEntity
 
     private void HandleMouseLook()
     {
+        if(playerWeaponManager.isQuickMenuActive) { return; }
+
         if(!isExecuting)
         {
             Vector2 lookValue = input_Look.ReadValue<Vector2>();

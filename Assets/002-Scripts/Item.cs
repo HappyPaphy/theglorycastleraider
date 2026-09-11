@@ -40,7 +40,8 @@ public class Item : MonoBehaviour
 {
     public ItemCategory itemCategory;
     public ItemType itemType;
-    public Sprite spr_Icon;
+    public Sprite spr_Icon_Frame;
+    public Sprite spr_Icon_NoFrame;
     public string equipmentName;
 
     [SerializeField] protected float pickupRadius = 1.5f;

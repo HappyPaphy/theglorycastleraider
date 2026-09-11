@@ -48,7 +48,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   itemCategory: 1
   itemType: 6
-  spr_Icon: {fileID: -203486805, guid: 979989d45c9864f42bd709a76add5e41, type: 3}
+  spr_Icon_Frame: {fileID: -203486805, guid: 979989d45c9864f42bd709a76add5e41, type: 3}
+  spr_Icon_NoFrame: {fileID: 352828566, guid: d443114fb77e54246a8a92492b54239c, type: 3}
   equipmentName: Mana Potion (L)
   pickupRadius: 1
   playerLayer:
