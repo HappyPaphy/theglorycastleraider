@@ -74,6 +74,8 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioSource sfx_Kick_Human;
     [SerializeField] private AudioSource sfx_Kick_Air;
 
+    [SerializeField] private AudioSource sfx_PotionDrinkingSound;
+
     public static SoundManager instance;
 
     void Awake()
@@ -291,6 +293,11 @@ public class SoundManager : MonoBehaviour
     public void ChickenSound(int index)
     {
         sfx_Chicken[index].Play();
+    }
+
+    public void PotionDrinkingSound(Vector3 soundPosition)
+    {
+        PlayNewSound(sfx_PotionDrinkingSound, soundPosition, 100f);
     }
 
     public void WoodenSound_Hit(Vector3 soundPosition)

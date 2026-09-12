@@ -8,7 +8,10 @@ public class CameraPostProcessEffect : MonoBehaviour
     [SerializeField] private Volume postProcessVolume;
 
     [Header("Settings")]
-    [SerializeField] private Color colorVignette;
+    [SerializeField] private Color colorVignette_Default;
+    [SerializeField] private Color colorVignette_Damage;
+    [SerializeField] private Color colorVignette_Heal;
+    [SerializeField] private Color colorVignette_Mana;
     [SerializeField] private float vignetteIntensity = 0.75f; // Peak intensity when hit
     [SerializeField] private float defaultVignetteIntensity = 0f; // Normal baseline
     [SerializeField] private float recoverySpeed = 5f;
@@ -37,6 +40,11 @@ public class CameraPostProcessEffect : MonoBehaviour
             }
 
             vignette.intensity.value = Mathf.Lerp(vignette.intensity.value, defaultVignetteIntensity, Time.deltaTime * recoverySpeed);
+
+            if(vignette.intensity.value <= 0f)
+            {
+                vignette.color.value = colorVignette_Default;
+            }
         }
 
         if(lensDistortion != null)
@@ -59,7 +67,37 @@ public class CameraPostProcessEffect : MonoBehaviour
     {
         if (vignette != null)
         {
-            // Instantly punch the vignette intensity up
+            vignette.color.value = colorVignette_Damage;
+            vignette.intensity.value = vignetteIntensity;
+        }
+
+        if (lensDistortion != null)
+        {
+            // Optional: You can punch or warp lens distortion on impact too
+            lensDistortion.intensity.value = -0.4f;
+        }
+    }
+
+    public void TriggerHealEffect()
+    {
+        if (vignette != null)
+        {
+            vignette.color.value = colorVignette_Heal;
+            vignette.intensity.value = vignetteIntensity;
+        }
+
+        if (lensDistortion != null)
+        {
+            // Optional: You can punch or warp lens distortion on impact too
+            lensDistortion.intensity.value = -0.4f;
+        }
+    }
+
+    public void TriggerManaEffect()
+    {
+        if (vignette != null)
+        {
+            vignette.color.value = colorVignette_Mana;
             vignette.intensity.value = vignetteIntensity;
         }
 

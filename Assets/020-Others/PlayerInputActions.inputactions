@@ -536,7 +536,7 @@
                 {
                     "name": "",
                     "id": "76210590-e2b8-4ff9-82fc-4fbf2cf4ff28",
-                    "path": "<Keyboard>/upArrow",
+                    "path": "<Keyboard>/3",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
@@ -546,8 +546,8 @@
                 },
                 {
                     "name": "",
-                    "id": "36865824-2edd-4a76-b27c-5b017e365a34",
-                    "path": "<Mouse>/forwardButton",
+                    "id": "e64fd7b9-37e8-46d4-871f-98afbb124180",
+                    "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
@@ -569,6 +569,17 @@
                 {
                     "name": "",
                     "id": "7fe10627-7ea9-4739-be45-a650b66803de",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "SwitchWeaponRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "023265d9-296d-4ffa-8b4b-54cc264b98a8",
                     "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
@@ -591,7 +602,7 @@
                 {
                     "name": "",
                     "id": "2eb88b3e-18a1-44ed-b517-d41e6990deed",
-                    "path": "<Keyboard>/downArrow",
+                    "path": "<Keyboard>/4",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
@@ -601,8 +612,8 @@
                 },
                 {
                     "name": "",
-                    "id": "d843f8ab-94a4-45c8-845d-53e9903771e8",
-                    "path": "<Mouse>/backButton",
+                    "id": "1b42281a-ef7d-4b68-8e23-2bdad3eaa624",
+                    "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
@@ -624,6 +635,17 @@
                 {
                     "name": "",
                     "id": "1098b3fb-6550-474c-b021-bcc80153ad47",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "SwitchWeaponLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b4a766a2-c62b-4fd4-ad45-da36d6d63b11",
                     "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",

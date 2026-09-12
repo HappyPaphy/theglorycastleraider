@@ -53,8 +53,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraPostProcessEffect
   postProcessVolume: {fileID: 0}
-  colorVignette: {r: 1, g: 0, b: 0, a: 1}
-  vignetteIntensity: 0.65
+  colorVignette_Default: {r: 1, g: 1, b: 1, a: 1}
+  colorVignette_Damage: {r: 1, g: 0, b: 0.02745098, a: 1}
+  colorVignette_Heal: {r: 0.27058825, g: 1, b: 0.14117648, a: 1}
+  colorVignette_Mana: {r: 0.14117648, g: 1, b: 0.92156863, a: 1}
+  vignetteIntensity: 0.85
   defaultVignetteIntensity: 0
   recoverySpeed: 0.8
 --- !u!114 &6208284861752380741
@@ -161,6 +164,9 @@ MonoBehaviour:
   - poolName: Spark
     prefab: {fileID: 6317032364392488945, guid: 05ee21720c12c844788ffb522a97b9f6, type: 3}
     initialSize: 10
+  - poolName: Fragment
+    prefab: {fileID: 8844255175287915473, guid: 625060cc45143d8429d61ed12c1cae95, type: 3}
+    initialSize: 1
 --- !u!114 &4544473805201243755
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -334,30 +334,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3677687745922054245, guid: 439e65dcb3b64ed4f9c617d464ed7471, type: 3}
-      propertyPath: pools.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3677687745922054245, guid: 439e65dcb3b64ed4f9c617d464ed7471, type: 3}
-      propertyPath: pools.Array.data[2].prefab
-      value: 
-      objectReference: {fileID: 8844255175287915473, guid: 625060cc45143d8429d61ed12c1cae95, type: 3}
-    - target: {fileID: 3677687745922054245, guid: 439e65dcb3b64ed4f9c617d464ed7471, type: 3}
-      propertyPath: pools.Array.data[2].poolName
-      value: Fragment
-      objectReference: {fileID: 0}
-    - target: {fileID: 3677687745922054245, guid: 439e65dcb3b64ed4f9c617d464ed7471, type: 3}
-      propertyPath: pools.Array.data[2].initialSize
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3982992093126580887, guid: 439e65dcb3b64ed4f9c617d464ed7471, type: 3}
       propertyPath: eventSystem
       value: 
       objectReference: {fileID: 283804170}
-    - target: {fileID: 6208284861752380741, guid: 439e65dcb3b64ed4f9c617d464ed7471, type: 3}
-      propertyPath: uiNavigations.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7411133707959285392, guid: 439e65dcb3b64ed4f9c617d464ed7471, type: 3}
       propertyPath: postProcessVolume
       value: 
@@ -873,7 +853,7 @@ MonoBehaviour:
       MultiDungeonCollisionMode: 1
       fileVersion: 0
     Settings:
-      DungeonFlow: {fileID: 11400000, guid: 64fe3d4207ffd154a8d03d88c1210b2c, type: 2}
+      DungeonFlow: {fileID: 11400000, guid: d59dcec730943e343afc21659eb49cb6, type: 2}
       PipelineOverride: {fileID: 0}
       ShouldRandomizeSeed: 1
       Seed: 0
@@ -1682,10 +1662,10 @@ MonoBehaviour:
   dungeonIndex: 0
   obj_Enemies: []
   dungeonFlows:
-  - {fileID: 11400000, guid: 64fe3d4207ffd154a8d03d88c1210b2c, type: 2}
   - {fileID: 11400000, guid: d59dcec730943e343afc21659eb49cb6, type: 2}
   - {fileID: 11400000, guid: c5d19f619bb36644c8863007902a3eb1, type: 2}
   - {fileID: 11400000, guid: 4276845bda306f44d9011d01bd0e2d25, type: 2}
+  - {fileID: 11400000, guid: 64fe3d4207ffd154a8d03d88c1210b2c, type: 2}
   runtimeDungeon: {fileID: 1204253485}
   navMeshSurface: {fileID: 558632015}
   playerResetTransform: {fileID: 2115885559}
@@ -1912,6 +1892,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4334922003792730700, guid: 6c6a70510cadb9547a1d6247c6cbe4b4, type: 3}
+      propertyPath: postProcressEffect
+      value: 
+      objectReference: {fileID: 507299281}
     - target: {fileID: 5994806411166218576, guid: 6c6a70510cadb9547a1d6247c6cbe4b4, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

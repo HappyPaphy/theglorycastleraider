@@ -232,4 +232,46 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
+
+    public IEnumerator GainObjectScaleFeedback(GameObject obj, bool isPositiveFeedback, Vector3 originalScale)
+    {
+        Vector3 targetScale = new Vector3(1f, 1f, 1f);
+        float pulseDuration = 0.2f;
+
+        if (isPositiveFeedback)
+        {
+            targetScale = originalScale * 1.3f;
+        }
+        else
+        {
+            targetScale = originalScale * 0.7f;
+        }
+
+        float halfDuration = pulseDuration / 2f;
+
+        float timeElapsed = 0f;
+        while (timeElapsed < halfDuration)
+        {
+            float t = timeElapsed / halfDuration;
+
+            obj.transform.localScale = Vector3.Lerp(originalScale, targetScale, t);
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        obj.transform.localScale = targetScale;
+
+        timeElapsed = 0f;
+
+        while (timeElapsed < halfDuration)
+        {
+            float t = timeElapsed / halfDuration;
+
+            obj.transform.localScale = Vector3.Lerp(targetScale, originalScale, t);
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        obj.transform.localScale = originalScale;
+    }
 }

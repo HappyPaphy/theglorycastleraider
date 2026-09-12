@@ -589,6 +589,7 @@ public class PlayerController : PlayerEntity
 
     private void PerformKick()
     {
+        StaminaEffect(false);
         RumbleManager.instance.RumblePulse(1f, 2.5f, 0.1f);
         StaminaDepleted(kickStaminaCost);
 
@@ -637,7 +638,20 @@ public class PlayerController : PlayerEntity
         TriggerMeleeJolt(joltDirection);
     }
 
-    
+    public void StaminaEffect(bool isPositiveEffect)
+    {
+        StartCoroutine(GameManager.instance.GainObjectScaleFeedback(slider_Stamina.gameObject, isPositiveEffect, new Vector3(0.63f, 0.63f, 0.63f)));
+    }
+
+    public void HealthEffect(bool isPositiveEffect)
+    {
+        StartCoroutine(GameManager.instance.GainObjectScaleFeedback(slider_HP.gameObject, isPositiveEffect, new Vector3(0.7f, 0.7f, 0.7f)));
+    }
+
+    public void ManaEffect(bool isPositiveEffect)
+    {
+        StartCoroutine(GameManager.instance.GainObjectScaleFeedback(slider_Ultimate.gameObject, isPositiveEffect, new Vector3(0.57f, 0.57f, 0.57f)));
+    }
 
     private void HandleMouseLook()
     {
@@ -703,6 +717,7 @@ public class PlayerController : PlayerEntity
         {
             if(CharacterStaminaComponent.CurrentStamina > 0f)
             {
+                StaminaEffect(false);
                 RumbleManager.instance.RumblePulse(1f, 1.5f, slideDuration);
                 StaminaDepleted(slideStaminaCost);
                 isSliding = true;
@@ -809,11 +824,13 @@ public class PlayerController : PlayerEntity
 
                 if(playerWeaponManager.isBlockingLeft)
                 {
+                    StaminaEffect(false);
                     StaminaDepleted(enemy.staminaDamage * playerWeaponManager.leftHandWeapon.blockStaminaDamageModifier * GameManager.instance.playerTakeStaminaDamage);
                     SoundManager.instance.BlockOrParrySound(playerWeaponManager.leftHandWeapon.audioClips_BlockSound ,transform.position);
                 }
                 else if(playerWeaponManager.isBlockingRight)
                 {
+                    StaminaEffect(false);
                     StaminaDepleted(enemy.staminaDamage * playerWeaponManager.rightHandWeapon.blockStaminaDamageModifier * GameManager.instance.playerTakeStaminaDamage);
                     SoundManager.instance.BlockOrParrySound(playerWeaponManager.rightHandWeapon.audioClips_BlockSound, transform.position);
                 }
@@ -829,6 +846,7 @@ public class PlayerController : PlayerEntity
                 SoundManager.instance.SwordSound_Flesh(transform.position);
                 SoundManager.instance.PlayerHurtSound(transform.position);
                 cameraBob.TriggerShake(0.293f, 0.1f);
+                HealthEffect(false);
                 CharacterHealthComponent.TakeDamage(enemy.attackDamage * GameManager.instance.playerTakeHPDamage);
                 TriggerMeleeJolt(new Vector3(30f, 0f, 0f));
                 RumbleManager.instance.RumblePulse(1f, 2.5f, 0.2f);
@@ -864,11 +882,13 @@ public class PlayerController : PlayerEntity
 
                 if(playerWeaponManager.isBlockingLeft)
                 {
+                    StaminaEffect(false);
                     StaminaDepleted(arrow.staminaDamage * playerWeaponManager.leftHandWeapon.blockStaminaDamageModifier * GameManager.instance.playerTakeStaminaDamage);
                     SoundManager.instance.BlockOrParrySound(playerWeaponManager.leftHandWeapon.audioClips_BlockSound ,transform.position);
                 }
                 else if(playerWeaponManager.isBlockingRight)
                 {
+                    StaminaEffect(false);
                     StaminaDepleted(arrow.staminaDamage * playerWeaponManager.rightHandWeapon.blockStaminaDamageModifier * GameManager.instance.playerTakeStaminaDamage);
                     SoundManager.instance.BlockOrParrySound(playerWeaponManager.rightHandWeapon.audioClips_BlockSound, transform.position);
                 }
@@ -885,6 +905,7 @@ public class PlayerController : PlayerEntity
                 SoundManager.instance.BowSound_Hit(transform.position);
                 SoundManager.instance.PlayerHurtSound(transform.position);
                 cameraBob.TriggerShake(0.293f, 0.1f);
+                HealthEffect(false);
                 CharacterHealthComponent.TakeDamage(arrow.damage * GameManager.instance.playerTakeHPDamage);
                 TriggerMeleeJolt(new Vector3(30f, 0f, 0f));
                 RumbleManager.instance.RumblePulse(1f, 2.5f, 0.1f);
@@ -937,7 +958,7 @@ public class PlayerController : PlayerEntity
         }*/
     }
 
-    private void BlockedOrParriedEffect(Vector3 pos)
+    public void BlockedOrParriedEffect(Vector3 pos)
     {
         if(ObjectPoolingManager.instance != null)
         {

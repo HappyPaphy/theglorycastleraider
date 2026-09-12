@@ -34,6 +34,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
     [SerializeField] private CameraFollow cameraFollow;
     [SerializeField] private CameraBob cameraBob;
+    [SerializeField] private CameraPostProcessEffect postProcressEffect;
     public PerformActionState currentState_LeftHand;
     public PerformActionState currentState_Righthand;
 
@@ -43,8 +44,8 @@ public class PlayerWeaponManager : MonoBehaviour
     [SerializeField] private Animator anim_LeftHand;
     [SerializeField] private Animator anim_RightHand;
 
-    public Weapon[] rightHandWeapons = new Weapon[2];
-    public Weapon[] leftHandWeapons = new Weapon[2];
+    public Weapon[] rightHandWeapons = new Weapon[3];
+    public Weapon[] leftHandWeapons = new Weapon[3];
 
     [HideInInspector] public int activeRightSlot = 0;
     [HideInInspector] public int activeLeftSlot = 0;
@@ -210,7 +211,6 @@ public class PlayerWeaponManager : MonoBehaviour
                 if (selectedIndex != -1 && selectedIndex < equippedItems.Length && equippedItems[selectedIndex] != null)
                 {
                     activeItemSlot = selectedIndex;
-                    UseCurrentItem(); // Instantly uses the item upon selecting it via the wheel
                 }
             }
             else quickMenu_Item.UpdateMenu(inputDir);
@@ -333,6 +333,27 @@ public class PlayerWeaponManager : MonoBehaviour
             currentLeftWeaponSwitchHoldDown = 0f;
             CycleWeapon(ref activeLeftSlot, leftHandWeapons, true);
         }
+
+        if(InputSchemeManager.instance.CurrentInputMode == InputMode.PC)
+        {
+            if (Mouse.current != null)
+            {
+                float scrollY = Mouse.current.scroll.ReadValue().y;
+
+                // Check if the scroll input exceeds the threshold
+                if (Mathf.Abs(scrollY) >= 1f)
+                {
+                    if (scrollY < 0)
+                    {
+                        CycleEquipment(ref activeItemSlot, equippedItems);
+                    }
+                    else if (scrollY > 0)
+                    {
+                        CycleEquipment(ref activeSpellSlot, equippedSpells);
+                    }
+                }
+            }
+        }
     }
 
     private void HandleWeaponSwitching()
@@ -423,22 +444,40 @@ public class PlayerWeaponManager : MonoBehaviour
         switch (type)
         {
             case ItemType.HealthPotion_Small:
+                SoundManager.instance.PotionDrinkingSound(playerController.transform.position);
+                postProcressEffect.TriggerHealEffect();
                 playerController.CharacterHealthComponent.Heal(40f);
+                playerController.HealthEffect(true);
                 break;
             case ItemType.HealthPotion_Medium:
+                SoundManager.instance.PotionDrinkingSound(playerController.transform.position);
+                postProcressEffect.TriggerHealEffect();
                 playerController.CharacterHealthComponent.Heal(80f);
+                playerController.HealthEffect(true);
                 break;
             case ItemType.HealthPotion_Big:
+                SoundManager.instance.PotionDrinkingSound(playerController.transform.position);
+                postProcressEffect.TriggerHealEffect();
                 playerController.CharacterHealthComponent.Heal(135f);
+                playerController.HealthEffect(true);
                 break;
             case ItemType.ManaPotion_Small:
+                SoundManager.instance.PotionDrinkingSound(playerController.transform.position);
+                postProcressEffect.TriggerManaEffect();
                 playerController.CharacterUltimateComponent.GainUltimate(40f);
+                playerController.ManaEffect(true);
                 break;
             case ItemType.ManaPotion_Medium:
+                SoundManager.instance.PotionDrinkingSound(playerController.transform.position);
+                postProcressEffect.TriggerManaEffect();
                 playerController.CharacterUltimateComponent.GainUltimate(80f);
+                playerController.ManaEffect(true);
                 break;
             case ItemType.ManaPotion_Big:
+                SoundManager.instance.PotionDrinkingSound(playerController.transform.position);
+                postProcressEffect.TriggerManaEffect();
                 playerController.CharacterUltimateComponent.GainUltimate(135f);
+                playerController.ManaEffect(true);
                 break;
         }
     }
@@ -1225,6 +1264,7 @@ public class PlayerWeaponManager : MonoBehaviour
             {
                 EnemyEntity targetEnemy = hit.collider.GetComponent<EnemyEntity>();
                 Fracture destructible = hit.collider.GetComponent<Fracture>();
+                ArrowProjectile arrow = hit.collider.GetComponent<ArrowProjectile>();
                 FractureTrigger fractureTrigger = hit.collider.GetComponent<FractureTrigger>();
 
                 if (targetEnemy != null && processedTargets.Add(targetEnemy))
@@ -1241,6 +1281,15 @@ public class PlayerWeaponManager : MonoBehaviour
                     {
                         fractureTrigger.TriggerMaterialSound_Hit();
                     }
+                }
+                else if (arrow != null && processedTargets.Add(arrow))
+                {
+                    playerController.BlockedOrParriedEffect(arrow.gameObject.transform.position);
+                    RumbleManager.instance.RumblePulse(1f, 2.5f, 0.1f);
+                    cameraBob.TriggerShake(0.293f, 0.05f);
+                    Destroy(arrow.gameObject);
+                    hitSomething = true;
+                    SoundManager.instance.BlockOrParrySound(weapon.audioClips_ParrySound, playerController.transform.position);
                 }
             }
         }

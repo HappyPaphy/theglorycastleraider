@@ -20,6 +20,7 @@ public class EquipmentLoadOut : MonoBehaviour
 {
     [SerializeField] private GameObject panel_Loadout;
     [SerializeField] private GameObject panel_Inventory;
+    [SerializeField] private GameObject currentSelect_Loadout;
     [SerializeField] private GameObject firstSelected_Loadout;
 
     private GameObject firstSelected_Inventory_Weapons;
@@ -114,7 +115,7 @@ public class EquipmentLoadOut : MonoBehaviour
             {
                 CloseInventoryCategory();
 
-                EventSystem.current.SetSelectedGameObject(firstSelected_Loadout);
+                EventSystem.current.SetSelectedGameObject(currentSelect_Loadout);
             }
             else if (!panel_Loadout.activeInHierarchy)
             {
@@ -377,7 +378,7 @@ public class EquipmentLoadOut : MonoBehaviour
         panel_Loadout.SetActive(true);
 
         // Reset focus back to the loadout grid
-        EventSystem.current.SetSelectedGameObject(firstSelected_Loadout);
+        EventSystem.current.SetSelectedGameObject(currentSelect_Loadout);
     }
 
     // ==========================================
@@ -467,7 +468,7 @@ public void PreviewItemDetails(EquipmentSlotType slotType, int index)
     {
         // 1. Fire the event (if anything else needs to listen to it)
         onSlotClicked?.Invoke(type, index);
-
+        currentSelect_Loadout = EventSystem.current.currentSelectedGameObject;
         // 2. Automatically transition the UI to the correct Inventory category
         OpenInventoryCategory(type, index);
     }
