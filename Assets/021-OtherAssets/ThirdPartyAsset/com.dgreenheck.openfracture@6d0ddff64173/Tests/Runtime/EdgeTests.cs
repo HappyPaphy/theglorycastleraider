@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using NUnit.Framework;
 
 public class EdgeConstraintTests
@@ -60,3 +61,5 @@ public class EdgeConstraintTests
         Assert.False(edgeA.GetHashCode() == edgeB.GetHashCode());
     }
 }
+
+#endif

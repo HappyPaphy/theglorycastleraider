@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using NUnit.Framework;
 using UnityEngine;
 
@@ -326,3 +327,5 @@ public class MathUtilsTests
     }
     #endregion
 }
+
+#endif

@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using NUnit.Framework;
 using UnityEngine;
 
@@ -381,3 +382,4 @@ public class FragmentDataTests
         Assert.AreEqual(3 * triangleCount2, mesh.GetTriangles(1).Length);
     }
 }
+#endif

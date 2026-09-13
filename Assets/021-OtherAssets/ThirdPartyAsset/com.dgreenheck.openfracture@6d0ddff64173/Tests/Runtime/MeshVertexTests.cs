@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using NUnit.Framework;
 using UnityEngine;
 
@@ -19,3 +20,4 @@ public class MeshVertexTests
         Assert.True(vertexA == vertexB);
     }
 }
+#endif

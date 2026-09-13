@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using NUnit.Framework;
 
 public class QuadTests
@@ -30,3 +31,4 @@ public class QuadTests
         Assert.AreEqual(t2R, quad.t2R);
     }
 }
+#endif

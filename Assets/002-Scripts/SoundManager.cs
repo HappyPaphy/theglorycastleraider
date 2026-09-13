@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public enum DamageImpactSound
 {
@@ -21,8 +22,11 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private int audioPoolSize = 30;
     private List<AudioSource> audioPool = new List<AudioSource>();
 
+    [Header("Audio Mixer Routing")]
+    [SerializeField] private AudioMixerGroup sfxMixerGroup; // Route pooled sounds here
+
     [Header("Music")]
-    [SerializeField] private AudioSource music_Background;
+    [SerializeField] private AudioSource music_Background; // Route this manually in the Inspector
 
     [Header("Player")]
     [SerializeField] private AudioSource[] sfx_Player_Grunt;
@@ -98,6 +102,8 @@ public class SoundManager : MonoBehaviour
             source.rolloffMode = AudioRolloffMode.Linear;
             source.dopplerLevel = 0f; // Prevent pitch shifting on camera movement
             source.playOnAwake = false;
+
+            source.outputAudioMixerGroup = sfxMixerGroup;
 
             audioPool.Add(source);
         }

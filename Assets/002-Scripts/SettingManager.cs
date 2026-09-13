@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -55,6 +56,14 @@ public class SettingManager : MonoBehaviour
     [SerializeField] private bool isLanguageChangable = false;
     [HideInInspector] public bool isSettingActive = false;
 
+    [Header("Mixer")]
+    [SerializeField] private AudioMixer mainMixer;
+
+    [Header("Sliders")]
+    [SerializeField] private Slider masterSlider;
+    [SerializeField] private Slider sfxSlider;
+    [SerializeField] private Slider musicSlider;
+
     public static SettingManager instance;
 
     private void Awake()
@@ -79,9 +88,10 @@ public class SettingManager : MonoBehaviour
         isSettingActive = false;
 
         LoadKeyBinding();
+        SetSoundSettingOnStart();
 
-        screenSetting.SetActive(true);
-        soundSetting.SetActive(false);
+        screenSetting.SetActive(false);
+        soundSetting.SetActive(true);
         languageSetting.SetActive(false);
         rebindSetting.SetActive(false);
 
@@ -114,6 +124,51 @@ public class SettingManager : MonoBehaviour
     void Update()
     {
         HandleGamepadTabNavigation();
+    }
+
+    private void SetSoundSettingOnStart()
+    {
+        masterSlider.onValueChanged.AddListener(SetMasterVolume);
+        sfxSlider.onValueChanged.AddListener(SetSFXVolume);
+        musicSlider.onValueChanged.AddListener(SetMusicVolume);
+
+        // Load saved volumes or default to 0.3f (30%) if no save exists
+        LoadVolumeSettings();
+    }
+
+    private void SetMasterVolume(float sliderValue)
+    {
+        // Convert linear slider (0.0001 to 1) to logarithmic dB (-80 to 0)
+        float decibels = Mathf.Log10(sliderValue) * 20f;
+        mainMixer.SetFloat("MasterVolume", decibels);
+        PlayerPrefs.SetFloat("SavedMasterVolume", sliderValue);
+    }
+
+    private void SetSFXVolume(float sliderValue)
+    {
+        float decibels = Mathf.Log10(sliderValue) * 20f;
+        mainMixer.SetFloat("SFXVolume", decibels);
+        PlayerPrefs.SetFloat("SavedSFXVolume", sliderValue);
+    }
+
+    private void SetMusicVolume(float sliderValue)
+    {
+        float decibels = Mathf.Log10(sliderValue) * 20f;
+        mainMixer.SetFloat("MusicVolume", decibels);
+        PlayerPrefs.SetFloat("SavedMusicVolume", sliderValue);
+    }
+
+    private void LoadVolumeSettings()
+    {
+        // 0.3f represents the 30% default volume requirement
+        float masterVol = PlayerPrefs.GetFloat("SavedMasterVolume", 0.25f);
+        float sfxVol = PlayerPrefs.GetFloat("SavedSFXVolume", 1.5f);
+        float musicVol = PlayerPrefs.GetFloat("SavedMusicVolume", 1.5f);
+
+        // Update slider visuals (this automatically triggers the OnValueChanged events above)
+        masterSlider.value = masterVol;
+        sfxSlider.value = sfxVol;
+        musicSlider.value = musicVol;
     }
 
     private void HandleGamepadTabNavigation()

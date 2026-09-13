@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
@@ -18,3 +19,5 @@ public class TriangulationPointTests
         Assert.AreEqual(coords, point.coords);
     }
 }
+
+#endif

@@ -102,9 +102,11 @@ public class EquipmentLoadOut : MonoBehaviour
 
     private void HandleToggleLoadoutPanel()
     {
-        if(PlayerController.instance.CharacterHealthComponent.CurrentHP <= 0f || PauseGame.instance.IsPaused)
+        if(PlayerController.instance.CharacterHealthComponent.CurrentHP <= 0f) { return; }
+
+        if(PauseGame.instance != null)
         {
-            return;
+            if(PauseGame.instance.IsPaused) { return; }
         }
 
         if (PlayerController.instance.IsToggleLoadoutPressed)

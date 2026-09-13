@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
@@ -42,3 +43,5 @@ public class Vector3Tests
         Assert.True(testPoint.IsAbovePlane(planeNormal, planeOrigin));
     }
 }
+
+#endif
