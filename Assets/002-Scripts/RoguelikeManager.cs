@@ -4,6 +4,7 @@ using DunGen.Graph;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.AI.Navigation;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ public class RoguelikeManager : MonoBehaviour
     public static event Action OnDungeonReady;
     public static bool IsDungeonReady { get; private set; }
 
+    public string[] str_DungeonIndex;
     public int dungeonIndex = 0;
 
     public List<GameObject> obj_Enemies; 
@@ -20,11 +22,14 @@ public class RoguelikeManager : MonoBehaviour
     [SerializeField] private RuntimeDungeon runtimeDungeon;
     [SerializeField] private NavMeshSurface navMeshSurface;
 
+    [SerializeField] private TextMeshProUGUI text_FloorIndex;
+
     [SerializeField] private Transform playerResetTransform;
 
     public List<Tile> allDungeonTiles = new List<Tile>();
     public Tile currentActiveTile;
 
+    [SerializeField] private CanvasGroup canvasGroup_TextFloorIndex;
     [SerializeField] private CanvasGroup canvasGroup_ProceedNextFloor;
     [SerializeField] private CanvasGroup canvasGroup_BlackFadeUI;
 
@@ -113,6 +118,10 @@ public class RoguelikeManager : MonoBehaviour
         {
             dungeonIndex++;
         }
+        else
+        {
+            AsyncLoaderManager.instance.LoadLevel("MainMenu", false);
+        }
 
         runtimeDungeon.Generator.Settings.DungeonFlow = dungeonFlows[dungeonIndex];  
 
@@ -145,7 +154,18 @@ public class RoguelikeManager : MonoBehaviour
             canvasGroup_ProceedNextFloor.alpha = 0f;
             canvasGroup_BlackFadeUI.DOFade(0f, 0.5f).SetUpdate(false);
             BakeDungeonNavMesh();
+
+            StartCoroutine(ShowFloorNumber());
         }
+    }
+
+    private IEnumerator ShowFloorNumber()
+    {
+        text_FloorIndex.text = $"{str_DungeonIndex[dungeonIndex]}";
+        yield return new WaitForSeconds(0.7f);
+        canvasGroup_TextFloorIndex.DOFade(1f, 0.5f).SetUpdate(false);
+        yield return new WaitForSeconds(2f);
+        canvasGroup_TextFloorIndex.DOFade(0f, 0.5f).SetUpdate(false);
     }
 
     private IEnumerator TeleportPlayerSafe()
@@ -228,6 +248,7 @@ public class RoguelikeManager : MonoBehaviour
 
     private void SetUpUI()
     {
+        canvasGroup_TextFloorIndex.alpha = 0f;
         canvasGroup_BlackFadeUI.alpha = 1f;
         canvasGroup_ProceedNextFloor.alpha = 0f;
     }

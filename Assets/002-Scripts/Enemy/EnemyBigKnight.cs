@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.AI;
 
 public enum EnemyBigKnightState
@@ -26,6 +27,10 @@ public enum EnemyBigKnightState
 
 public class EnemyBigKnight : EnemyEntity
 {
+    [SerializeField] private Slider balanceSlider;
+    private float currentStuntValue = 0f;
+    private float maxStuntValue = 100f;
+
     [SerializeField] private CapsuleCollider capsuleCol;
     [SerializeField] private SpriteRenderer sprRndr;
     [SerializeField] private EnemyBigKnightState currentState;
@@ -115,6 +120,7 @@ public class EnemyBigKnight : EnemyEntity
         ChooseAnimation();
         HandleState();
         HandleBalance();
+        HandleTired();
         HandleExecute();
         base.Update();
     }
@@ -147,6 +153,25 @@ public class EnemyBigKnight : EnemyEntity
         else
         {
             anim.speed = 1f;
+        }
+    }
+
+    private void HandleTired()
+    {
+        if(balanceSlider != null)
+        {
+            balanceSlider.maxValue = maxStuntValue;
+            balanceSlider.value = currentStuntValue;
+        }
+
+        if(currentStuntValue >= maxStuntValue)
+        {
+            currentStuntValue = 0f;
+            GotTired();
+        }
+        else if(currentStuntValue > 0)
+        {
+            currentStuntValue -= Time.deltaTime * 3.5f;
         }
     }
 
@@ -487,6 +512,7 @@ public class EnemyBigKnight : EnemyEntity
             // Fully block EVERYTHING else, ignoring block counters
             isBlockingActive = true;
             ApplyBlockState(isLeft);
+            currentStuntValue += 2.8f;
         }
     }
 
@@ -506,6 +532,7 @@ public class EnemyBigKnight : EnemyEntity
         {
             isBlockingActive = true;
             ApplyBlockState(isLeft);
+            currentStuntValue += 1f;
         }
     }
 
@@ -561,16 +588,22 @@ public class EnemyBigKnight : EnemyEntity
     {
         SoundManager.instance.BigKnightSound_Tired(sprRndr.transform.position, true);
 
+        ApplyKnockback(isLeftHand ? PlayerWeaponManager.instance.leftHandWeapon.damageKnockbackForce : PlayerWeaponManager.instance.rightHandWeapon.damageKnockbackForce);
+
         // Boss Mechanic: Only tired if player successfully parries the 3rd final hit
-        if (currentState == EnemyBigKnightState.Attack3 && comboStep == 3)
+        if (currentState != EnemyBigKnightState.Kick)
         {
-            ApplyKnockback(isLeftHand ? PlayerWeaponManager.instance.leftHandWeapon.damageKnockbackForce : PlayerWeaponManager.instance.rightHandWeapon.damageKnockbackForce);
-            currentState = EnemyBigKnightState.Tired;
-            stateTimer = tiredDuration;
-            isParried = true;
-            currentHitCount = 0;
-            SafeStopAgent(true);
+            currentStuntValue += 33f;
         }
+    }
+
+    private void GotTired()
+    {
+        currentState = EnemyBigKnightState.Tired;
+        stateTimer = tiredDuration;
+        isParried = true;
+        currentHitCount = 0;
+        SafeStopAgent(true);
     }
 
     public override void GotKicked(Vector3 hitPoint, float damageValue, float knockBackValue)

@@ -305,6 +305,13 @@ MonoBehaviour:
   text: {fileID: 0}
   alpha: 60
   activeGameObjectOnHover: {fileID: 0}
+  isButtonInteractble: 1
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onClick:
+    m_PersistentCalls:
+      m_Calls: []
   clickSound: {fileID: 0}
 --- !u!1 &366582784460470084
 GameObject:
@@ -601,6 +608,13 @@ MonoBehaviour:
   text: {fileID: 5348029809360907633}
   alpha: 60
   activeGameObjectOnHover: {fileID: 0}
+  isButtonInteractble: 1
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onClick:
+    m_PersistentCalls:
+      m_Calls: []
   clickSound: {fileID: 0}
 --- !u!1 &688371017578762935
 GameObject:
@@ -744,6 +758,13 @@ MonoBehaviour:
   text: {fileID: 3568435308723681182}
   alpha: 60
   activeGameObjectOnHover: {fileID: 0}
+  isButtonInteractble: 1
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onClick:
+    m_PersistentCalls:
+      m_Calls: []
   clickSound: {fileID: 0}
 --- !u!1 &699924880925682060
 GameObject:
@@ -1069,9 +1090,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &923847136921935966
 GameObject:
   m_ObjectHideFlags: 0
@@ -1392,9 +1415,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &1108030012422487630
 GameObject:
   m_ObjectHideFlags: 0
@@ -1686,6 +1711,13 @@ MonoBehaviour:
   text: {fileID: 0}
   alpha: 60
   activeGameObjectOnHover: {fileID: 0}
+  isButtonInteractble: 1
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onClick:
+    m_PersistentCalls:
+      m_Calls: []
   clickSound: {fileID: 0}
 --- !u!1 &1284208671779105857
 GameObject:
@@ -1903,9 +1935,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &1554996279620777374
 GameObject:
   m_ObjectHideFlags: 0
@@ -2679,9 +2713,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &2218268093549190574
 GameObject:
   m_ObjectHideFlags: 0
@@ -3286,6 +3322,13 @@ MonoBehaviour:
   text: {fileID: 0}
   alpha: 60
   activeGameObjectOnHover: {fileID: 0}
+  isButtonInteractble: 1
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onClick:
+    m_PersistentCalls:
+      m_Calls: []
   clickSound: {fileID: 0}
 --- !u!1 &2410188026022505202
 GameObject:
@@ -3460,9 +3503,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &2430833738371009488
 GameObject:
   m_ObjectHideFlags: 0
@@ -3585,6 +3630,13 @@ MonoBehaviour:
   text: {fileID: 0}
   alpha: 60
   activeGameObjectOnHover: {fileID: 0}
+  isButtonInteractble: 1
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onClick:
+    m_PersistentCalls:
+      m_Calls: []
   clickSound: {fileID: 0}
 --- !u!1 &2566701625518331065
 GameObject:
@@ -3800,9 +3852,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &2574472947797607842
 GameObject:
   m_ObjectHideFlags: 0
@@ -3945,6 +3999,13 @@ MonoBehaviour:
   text: {fileID: 3177104980186449412}
   alpha: 60
   activeGameObjectOnHover: {fileID: 0}
+  isButtonInteractble: 1
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onClick:
+    m_PersistentCalls:
+      m_Calls: []
   clickSound: {fileID: 0}
 --- !u!1 &2647530860048638124
 GameObject:
@@ -4310,9 +4371,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &3097128771835761903
 GameObject:
   m_ObjectHideFlags: 0
@@ -4604,9 +4667,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &3232545466476157070
 GameObject:
   m_ObjectHideFlags: 0
@@ -5144,9 +5209,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &3460893793490357845
 GameObject:
   m_ObjectHideFlags: 0
@@ -5300,6 +5367,13 @@ MonoBehaviour:
   text: {fileID: 0}
   alpha: 60
   activeGameObjectOnHover: {fileID: 0}
+  isButtonInteractble: 1
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onClick:
+    m_PersistentCalls:
+      m_Calls: []
   clickSound: {fileID: 0}
 --- !u!1 &3496625394690967123
 GameObject:
@@ -5515,9 +5589,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &3568435308723681182
 GameObject:
   m_ObjectHideFlags: 0
@@ -5732,9 +5808,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &3628795547803013021
 GameObject:
   m_ObjectHideFlags: 0
@@ -5811,6 +5889,10 @@ MonoBehaviour:
   playstationSwitchTab: {fileID: 2241621286442784496}
   isLanguageChangable: 0
   isSettingActive: 0
+  mainMixer: {fileID: 0}
+  masterSlider: {fileID: 7574383622979954330}
+  sfxSlider: {fileID: 2048923904229365817}
+  musicSlider: {fileID: 9048957473451850699}
 --- !u!225 &7032119943278214239
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -5976,6 +6058,13 @@ MonoBehaviour:
   text: {fileID: 0}
   alpha: 60
   activeGameObjectOnHover: {fileID: 0}
+  isButtonInteractble: 1
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onClick:
+    m_PersistentCalls:
+      m_Calls: []
   clickSound: {fileID: 0}
 --- !u!1 &3863655893026494273
 GameObject:
@@ -6328,6 +6417,13 @@ MonoBehaviour:
   text: {fileID: 0}
   alpha: 60
   activeGameObjectOnHover: {fileID: 0}
+  isButtonInteractble: 1
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onClick:
+    m_PersistentCalls:
+      m_Calls: []
   clickSound: {fileID: 0}
 --- !u!1 &4200229893508371043
 GameObject:
@@ -6546,6 +6642,13 @@ MonoBehaviour:
   text: {fileID: 8796384837367069665}
   alpha: 60
   activeGameObjectOnHover: {fileID: 0}
+  isButtonInteractble: 1
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onClick:
+    m_PersistentCalls:
+      m_Calls: []
   clickSound: {fileID: 0}
 --- !u!1 &4257817001178205734
 GameObject:
@@ -6761,9 +6864,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &4606333582466734919
 GameObject:
   m_ObjectHideFlags: 0
@@ -7281,9 +7386,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &5206549851616025882
 GameObject:
   m_ObjectHideFlags: 0
@@ -7438,6 +7545,13 @@ MonoBehaviour:
   text: {fileID: 2566701625518331065}
   alpha: 60
   activeGameObjectOnHover: {fileID: 0}
+  isButtonInteractble: 1
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onClick:
+    m_PersistentCalls:
+      m_Calls: []
   clickSound: {fileID: 0}
 --- !u!1 &5348029809360907633
 GameObject:
@@ -7653,9 +7767,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &5431228170850098405
 GameObject:
   m_ObjectHideFlags: 0
@@ -7870,9 +7986,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &5450690907896105300
 GameObject:
   m_ObjectHideFlags: 0
@@ -8162,9 +8280,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &5574421993505955631
 GameObject:
   m_ObjectHideFlags: 0
@@ -8345,6 +8465,13 @@ MonoBehaviour:
   text: {fileID: 0}
   alpha: 60
   activeGameObjectOnHover: {fileID: 0}
+  isButtonInteractble: 1
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onClick:
+    m_PersistentCalls:
+      m_Calls: []
   clickSound: {fileID: 0}
 --- !u!1 &5715038576326453672
 GameObject:
@@ -8451,6 +8578,13 @@ MonoBehaviour:
   text: {fileID: 0}
   alpha: 60
   activeGameObjectOnHover: {fileID: 0}
+  isButtonInteractble: 1
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onClick:
+    m_PersistentCalls:
+      m_Calls: []
   clickSound: {fileID: 0}
 --- !u!1 &5731229358501523630
 GameObject:
@@ -8616,6 +8750,13 @@ MonoBehaviour:
   text: {fileID: 0}
   alpha: 60
   activeGameObjectOnHover: {fileID: 0}
+  isButtonInteractble: 1
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onClick:
+    m_PersistentCalls:
+      m_Calls: []
   clickSound: {fileID: 0}
 --- !u!1 &5871577792454522502
 GameObject:
@@ -8941,9 +9082,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &5985407062420559817
 GameObject:
   m_ObjectHideFlags: 0
@@ -9086,6 +9229,13 @@ MonoBehaviour:
   text: {fileID: 3496625394690967123}
   alpha: 60
   activeGameObjectOnHover: {fileID: 0}
+  isButtonInteractble: 1
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onClick:
+    m_PersistentCalls:
+      m_Calls: []
   clickSound: {fileID: 0}
 --- !u!1 &6209716046437620123
 GameObject:
@@ -9537,9 +9687,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &6403429585691496316
 GameObject:
   m_ObjectHideFlags: 0
@@ -9915,9 +10067,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &6508508971765030415
 GameObject:
   m_ObjectHideFlags: 0
@@ -10420,6 +10574,13 @@ MonoBehaviour:
   text: {fileID: 5348029809360907633}
   alpha: 60
   activeGameObjectOnHover: {fileID: 0}
+  isButtonInteractble: 1
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onClick:
+    m_PersistentCalls:
+      m_Calls: []
   clickSound: {fileID: 0}
 --- !u!1 &6805029785987280404
 GameObject:
@@ -10669,9 +10830,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &6975402671869227266
 GameObject:
   m_ObjectHideFlags: 0
@@ -10936,6 +11099,13 @@ MonoBehaviour:
   text: {fileID: 0}
   alpha: 60
   activeGameObjectOnHover: {fileID: 0}
+  isButtonInteractble: 1
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onClick:
+    m_PersistentCalls:
+      m_Calls: []
   clickSound: {fileID: 0}
 --- !u!1 &7284676447340442794
 GameObject:
@@ -11151,9 +11321,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &7379911396585534566
 GameObject:
   m_ObjectHideFlags: 0
@@ -11574,9 +11746,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &7788877485246775064
 GameObject:
   m_ObjectHideFlags: 0
@@ -11900,9 +12074,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &7997882626047933338
 GameObject:
   m_ObjectHideFlags: 0
@@ -12153,9 +12329,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &8175598294435330337
 GameObject:
   m_ObjectHideFlags: 0
@@ -12445,9 +12623,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &8262295664026688850
 GameObject:
   m_ObjectHideFlags: 0
@@ -12794,9 +12974,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &8423558576325724598
 GameObject:
   m_ObjectHideFlags: 0
@@ -13209,6 +13391,13 @@ MonoBehaviour:
   text: {fileID: 0}
   alpha: 60
   activeGameObjectOnHover: {fileID: 0}
+  isButtonInteractble: 1
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onClick:
+    m_PersistentCalls:
+      m_Calls: []
   clickSound: {fileID: 0}
 --- !u!1 &8689283769598193231
 GameObject:
@@ -13499,9 +13688,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &8841488754412605367
 GameObject:
   m_ObjectHideFlags: 0
@@ -13973,7 +14164,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8758277758935324815, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_text
-      value: RMB
+      value: LMB
       objectReference: {fileID: 0}
     - target: {fileID: 8758277758935324815, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_fontAsset
@@ -14057,9 +14248,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &3855354532634981681 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3765126000884218416, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -14099,9 +14292,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!114 &4042264855404999954 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4168522202458225171, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -14284,9 +14479,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!224 &6734491570278212904 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6680292650503350825, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -14621,7 +14818,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8758277758935324815, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_text
-      value: Space
+      value: R
       objectReference: {fileID: 0}
     - target: {fileID: 8758277758935324815, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_fontAsset
@@ -14705,9 +14902,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &3633589582263963174 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3765126000884218416, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -14747,9 +14946,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!114 &4608555178209365509 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4168522202458225171, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -14959,9 +15160,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1001 &751369875607993101
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15292,7 +15495,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8758277758935324815, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_text
-      value: D-Pad/Right
+      value: D-Pad Right
       objectReference: {fileID: 0}
     - target: {fileID: 8758277758935324815, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_fontAsset
@@ -15379,9 +15582,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!114 &3725873480870314270 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4168522202458225171, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -15432,9 +15637,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!224 &6257835444267684132 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6680292650503350825, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -15622,9 +15829,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!224 &7700745036222352634 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6968172690644006903, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -16032,9 +16241,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!114 &3721233338714931840 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4168522202458225171, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -16085,9 +16296,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!114 &6253459324519027385 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6680292650503350826, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -16275,9 +16488,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1001 &869215781698163033
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16596,7 +16811,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8758277758935324815, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_text
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8758277758935324815, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_fontAsset
@@ -16680,9 +16895,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!114 &3875774083800083274 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4168522202458225171, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -16733,9 +16950,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &5811114529972878580 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6680292650847612333, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -16907,9 +17126,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!224 &5811114530334309232 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6680292650503350825, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -17386,9 +17607,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!114 &3826235033334829241 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4168522202458225171, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -17439,9 +17662,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &5797608691836815111 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6680292650847612333, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -17613,9 +17838,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!114 &5797608692147650688 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6680292650503350826, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -18050,9 +18277,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!114 &2314096587372960352 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4168522202458225171, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -18103,9 +18332,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!114 &5004036344908958297 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6680292650503350826, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -18293,9 +18524,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1001 &1906452017262676235
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18753,9 +18986,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!114 &2570575555898192664 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4168522202458225171, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -18806,9 +19041,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!114 &5098143806270956321 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6680292650503350826, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -18996,9 +19233,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1001 &2823186524240943130
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19416,9 +19655,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!114 &2230524215970554377 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4168522202458225171, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -19469,9 +19710,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!224 &5160585361065570285 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6968172690644006903, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -19664,9 +19907,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1001 &2907782120415068475
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19997,7 +20242,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8758277758935324815, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_text
-      value: D-Pad/Left
+      value: D-Pad Left
       objectReference: {fileID: 0}
     - target: {fileID: 8758277758935324815, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_fontAsset
@@ -20095,9 +20340,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &2484917382674368382 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 731473608444823109, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -20137,9 +20384,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!224 &5253845107693287116 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6968172690644006903, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -20316,9 +20565,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!114 &8426145478092335889 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6680292650503350826, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -20748,9 +20999,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &2805692682390340484 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 731473608444823109, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -20790,9 +21043,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!114 &7597750883608688659 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5024266567257472466, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -20975,9 +21230,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!224 &8105440547130372072 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6680292650503350825, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -21422,9 +21679,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &2857114947541400448 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 731473608444823109, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -21464,9 +21723,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!224 &5563029192467892786 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6968172690644006903, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -21654,9 +21915,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!224 &8157460877619173356 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6680292650503350825, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -22090,9 +22353,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!114 &960740041547671795 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4168522202458225171, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -22143,9 +22408,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!224 &6070648912157435159 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6968172690644006903, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -22322,9 +22589,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!224 &7510176672668137673 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6680292650503350825, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -22670,7 +22939,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8758277758935324815, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_text
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8758277758935324815, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_fontAsset
@@ -22886,9 +23155,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!114 &1050467679295858025 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6680292650503350826, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -22944,9 +23215,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &7377250414071690611 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3765126000884218416, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -22986,9 +23259,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!114 &7780171590096598352 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4168522202458225171, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -23330,7 +23605,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8758277758935324815, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_text
-      value: D-Pad/Down
+      value: D-Pad Down
       objectReference: {fileID: 0}
     - target: {fileID: 8758277758935324815, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_fontAsset
@@ -23565,9 +23840,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!224 &3647708536571956848 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6968172690644006903, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -23612,9 +23889,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &7380491132837004215 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3765126000884218416, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -23654,9 +23933,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!114 &7779193654546531220 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4168522202458225171, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -24217,9 +24498,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!224 &1119346375983300704 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6680292650503350825, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -24280,9 +24563,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &7457388663848489081 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3765126000884218416, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -24322,9 +24607,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!114 &7702296139774906458 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4168522202458225171, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -24654,7 +24941,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8758277758935324815, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_text
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8758277758935324815, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_fontAsset
@@ -24870,9 +25157,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!224 &4177687180418641965 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6680292650503350825, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -24928,9 +25217,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!114 &6671689522707701783 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4168522202458225171, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -24981,9 +25272,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1001 &7379744135210670958
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25534,9 +25827,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &5920672303234638174 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3765126000884218416, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -25576,9 +25871,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!114 &6896012592177275261 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4168522202458225171, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -25629,9 +25926,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1001 &8251984349478124425
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26202,9 +26501,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &5099370199307747769 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3765126000884218416, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -26244,9 +26545,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!114 &5430603176331968922 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4168522202458225171, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -26297,9 +26600,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1001 &8689541340406101789
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26925,9 +27230,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!114 &4705948336428141838 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4168522202458225171, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -26978,9 +27285,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &8264602915131847000 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 731473608444823109, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -27020,9 +27329,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1001 &8695627714360892026
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27385,7 +27696,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8758277758935324815, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_text
-      value: D-Pad/Up
+      value: D-Pad Up
       objectReference: {fileID: 0}
     - target: {fileID: 8758277758935324815, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
       propertyPath: m_fontAsset
@@ -27609,9 +27920,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!114 &2600892076138852432 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6680292650503350826, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -27678,9 +27991,11 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5
 --- !u!1 &8253871107701513279 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 731473608444823109, guid: f25dcd618d3acd64795bf8bb32edb6c9, type: 3}
@@ -27720,6 +28035,8 @@ MonoBehaviour:
   - LanguageCode: en
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 0
   - LanguageCode: th
     SizeFactor: 1
     SpacingLine: 0
+    SpacingCharacter: 5

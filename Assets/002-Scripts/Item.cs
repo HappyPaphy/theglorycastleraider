@@ -81,6 +81,8 @@ public class Item : MonoBehaviour
     protected float hoverHeight = 0.14f; // How high/low it moves from its center
     protected Vector3 startPos;
 
+    [SerializeField] private bool isCollectedOnStart = false;
+
     protected virtual void Start()
     {
         transform.position += spawnOffSet;
@@ -142,6 +144,59 @@ public class Item : MonoBehaviour
             isCollected = true;
             uiButtonPrompt.SetActive(false);
             if (obj_RotateObject != null) obj_RotateObject.SetActive(false);
+
+            if (EquipmentLoadOut.instance != null && PlayerWeaponManager.instance != null)
+            {
+
+                switch(itemCategory)
+                {
+                    case ItemCategory.Consumable:
+                        {
+                            for (int i = 0; i < PlayerWeaponManager.instance.equippedItems.Length; i++)
+                            {
+                                if (PlayerWeaponManager.instance.equippedItems[i] == null)
+                                {
+                                    EquipmentLoadOut.instance.pendingSlotType = EquipmentSlotType.Item;
+                                    EquipmentLoadOut.instance.pendingSlotIndex = i;
+                                    EquipmentLoadOut.instance.EquipSelectedItem(this, false);
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+
+                    case ItemCategory.Pyromancy:
+                    case ItemCategory.Magic:
+                        {
+                            for (int i = 0; i < PlayerWeaponManager.instance.equippedSpells.Length; i++)
+                            {
+                                if (PlayerWeaponManager.instance.equippedSpells[i] == null)
+                                {
+                                    EquipmentLoadOut.instance.pendingSlotType = EquipmentSlotType.Spell;
+                                    EquipmentLoadOut.instance.pendingSlotIndex = i;
+                                    EquipmentLoadOut.instance.EquipSelectedItem(this, false);
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+
+                    case ItemCategory.Ring:
+                        {
+                            for (int i = 0; i < PlayerWeaponManager.instance.equippedRings.Length; i++)
+                            {
+                                if (PlayerWeaponManager.instance.equippedRings[i] == null)
+                                {
+                                    EquipmentLoadOut.instance.pendingSlotType = EquipmentSlotType.Ring;
+                                    EquipmentLoadOut.instance.pendingSlotIndex = i;
+                                    EquipmentLoadOut.instance.EquipSelectedItem(this, false);
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+                }
+            }
         }
         else
         {

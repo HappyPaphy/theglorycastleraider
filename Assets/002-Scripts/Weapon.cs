@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Localization;
@@ -112,5 +113,31 @@ public class Weapon : Item
         obj_RotateObject.SetActive(false);
         uiButtonPrompt.SetActive(false);
         isCollected = true;
+
+        bool isAutomaticallyEquipped = false;
+
+        if(EquipmentLoadOut.instance != null && PlayerWeaponManager.instance != null)
+        {
+            for(int i = 0; i< PlayerWeaponManager.instance.rightHandWeapons.Length; i++)
+            {
+                if (PlayerWeaponManager.instance.rightHandWeapons[i] == null)
+                {
+                    isAutomaticallyEquipped = true;
+                    EquipmentLoadOut.instance.pendingSlotType = EquipmentSlotType.RightHand;
+                    EquipmentLoadOut.instance.pendingSlotIndex = i;
+                    EquipmentLoadOut.instance.EquipSelectedItem(this, false);
+                    break;
+                }
+
+                if (PlayerWeaponManager.instance.leftHandWeapons[i] == null)
+                {
+                    isAutomaticallyEquipped = true;
+                    EquipmentLoadOut.instance.pendingSlotType = EquipmentSlotType.LeftHand;
+                    EquipmentLoadOut.instance.pendingSlotIndex = i;
+                    EquipmentLoadOut.instance.EquipSelectedItem(this, false);
+                    break;
+                }
+            }
+        }
     }
 }

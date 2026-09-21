@@ -40,7 +40,7 @@ public class EnemyEntity : CharacterEntity
     [Header("State")]
     [SerializeField] protected bool isEnableAgentOnStartOnce = false;
     [HideInInspector] public bool isStunned = false;
-    protected bool isPlayerDetected = false;
+    [SerializeField] protected bool isPlayerDetected = false;
     [SerializeField] protected bool isDied = false;
     [SerializeField] protected bool isDiedOnce = false; 
 

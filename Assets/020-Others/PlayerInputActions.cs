@@ -147,9 +147,18 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""ToggleTwoHanded"",
+                    ""name"": ""ToggleTwoHanded_Right"",
                     ""type"": ""Button"",
                     ""id"": ""fc6d2966-ac4a-4e1e-80b1-74ac89e7ef2c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ToggleTwoHanded_Left"",
+                    ""type"": ""Button"",
+                    ""id"": ""91a1c220-1cdf-4257-9167-054e0f4ab41e"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -446,11 +455,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""20ac5569-e4e0-4f46-929b-38bb6c86854b"",
-                    ""path"": ""<Mouse>/middleButton"",
+                    ""path"": ""<Keyboard>/x"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""ToggleTwoHanded"",
+                    ""action"": ""ToggleTwoHanded_Right"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -461,7 +470,29 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
-                    ""action"": ""ToggleTwoHanded"",
+                    ""action"": ""ToggleTwoHanded_Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2bbdfa5e-075d-4aa9-a4e6-817ec1caf726"",
+                    ""path"": ""<Keyboard>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ToggleTwoHanded_Left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5de5bb9d-a2b1-4b29-9178-625f8979a7a5"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""ToggleTwoHanded_Left"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1425,7 +1456,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_RightHand = m_Player.FindAction("RightHand", throwIfNotFound: true);
         m_Player_LeftHand = m_Player.FindAction("LeftHand", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
-        m_Player_ToggleTwoHanded = m_Player.FindAction("ToggleTwoHanded", throwIfNotFound: true);
+        m_Player_ToggleTwoHanded_Right = m_Player.FindAction("ToggleTwoHanded_Right", throwIfNotFound: true);
+        m_Player_ToggleTwoHanded_Left = m_Player.FindAction("ToggleTwoHanded_Left", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
@@ -1538,7 +1570,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_RightHand;
     private readonly InputAction m_Player_LeftHand;
     private readonly InputAction m_Player_Interact;
-    private readonly InputAction m_Player_ToggleTwoHanded;
+    private readonly InputAction m_Player_ToggleTwoHanded_Right;
+    private readonly InputAction m_Player_ToggleTwoHanded_Left;
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_Jump;
@@ -1586,9 +1619,13 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         /// <summary>
-        /// Provides access to the underlying input action "Player/ToggleTwoHanded".
+        /// Provides access to the underlying input action "Player/ToggleTwoHanded_Right".
         /// </summary>
-        public InputAction @ToggleTwoHanded => m_Wrapper.m_Player_ToggleTwoHanded;
+        public InputAction @ToggleTwoHanded_Right => m_Wrapper.m_Player_ToggleTwoHanded_Right;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/ToggleTwoHanded_Left".
+        /// </summary>
+        public InputAction @ToggleTwoHanded_Left => m_Wrapper.m_Player_ToggleTwoHanded_Left;
         /// <summary>
         /// Provides access to the underlying input action "Player/Dash".
         /// </summary>
@@ -1677,9 +1714,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
-            @ToggleTwoHanded.started += instance.OnToggleTwoHanded;
-            @ToggleTwoHanded.performed += instance.OnToggleTwoHanded;
-            @ToggleTwoHanded.canceled += instance.OnToggleTwoHanded;
+            @ToggleTwoHanded_Right.started += instance.OnToggleTwoHanded_Right;
+            @ToggleTwoHanded_Right.performed += instance.OnToggleTwoHanded_Right;
+            @ToggleTwoHanded_Right.canceled += instance.OnToggleTwoHanded_Right;
+            @ToggleTwoHanded_Left.started += instance.OnToggleTwoHanded_Left;
+            @ToggleTwoHanded_Left.performed += instance.OnToggleTwoHanded_Left;
+            @ToggleTwoHanded_Left.canceled += instance.OnToggleTwoHanded_Left;
             @Dash.started += instance.OnDash;
             @Dash.performed += instance.OnDash;
             @Dash.canceled += instance.OnDash;
@@ -1742,9 +1782,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
-            @ToggleTwoHanded.started -= instance.OnToggleTwoHanded;
-            @ToggleTwoHanded.performed -= instance.OnToggleTwoHanded;
-            @ToggleTwoHanded.canceled -= instance.OnToggleTwoHanded;
+            @ToggleTwoHanded_Right.started -= instance.OnToggleTwoHanded_Right;
+            @ToggleTwoHanded_Right.performed -= instance.OnToggleTwoHanded_Right;
+            @ToggleTwoHanded_Right.canceled -= instance.OnToggleTwoHanded_Right;
+            @ToggleTwoHanded_Left.started -= instance.OnToggleTwoHanded_Left;
+            @ToggleTwoHanded_Left.performed -= instance.OnToggleTwoHanded_Left;
+            @ToggleTwoHanded_Left.canceled -= instance.OnToggleTwoHanded_Left;
             @Dash.started -= instance.OnDash;
             @Dash.performed -= instance.OnDash;
             @Dash.canceled -= instance.OnDash;
@@ -2143,12 +2186,19 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnInteract(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "ToggleTwoHanded" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "ToggleTwoHanded_Right" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnToggleTwoHanded(InputAction.CallbackContext context);
+        void OnToggleTwoHanded_Right(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ToggleTwoHanded_Left" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnToggleTwoHanded_Left(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "Dash" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

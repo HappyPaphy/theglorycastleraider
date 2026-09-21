@@ -364,12 +364,14 @@ public class EquipmentLoadOut : MonoBehaviour
         }
     }
 
-    public void EquipSelectedItem(Item itemToEquip)
+    public void EquipSelectedItem(Item itemToEquip, bool isOpenLoadout = true)
     {
         // Route through PlayerWeaponManager to handle duplicate checks and un-equipping
         PlayerWeaponManager.instance.EquipItem(itemToEquip, pendingSlotType, pendingSlotIndex);
 
-        CloseInventoryCategory();
+        if(isOpenLoadout)
+            CloseInventoryCategory();
+        
         RefreshUI();
     }
 

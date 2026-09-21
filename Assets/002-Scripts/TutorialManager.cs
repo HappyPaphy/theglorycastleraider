@@ -6,7 +6,8 @@ public enum TutorialState
 {
     Idle,
     ChangeToRoguelike,
-    FallOfToDeath
+    FallOfToDeath,
+    PickUpWeapon
 }
 
 public class TutorialManager : MonoBehaviour
@@ -21,6 +22,7 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private CanvasGroup canvasGroup_BlackFadeUI;
     [SerializeField] private CanvasGroup[] canvasGroup_ChangeScene;
     [SerializeField] private CanvasGroup[] canvasGroup_FallToDeath;
+    [SerializeField] private CanvasGroup[] canvasGroup_PickUpWeapon;
 
     private bool isSetDifficultyOnce = false;
     [HideInInspector] public bool isTriggerSceneChangeOnce = false;
@@ -115,6 +117,22 @@ public class TutorialManager : MonoBehaviour
         }
 
         StartCoroutine(GameOver.instance.TriggerGameOver());
+    }
+
+    public IEnumerator TriggerPickUpWeapon(bool isActive)
+    {
+        if (isTriggerSceneChangeOnce) { yield break; }
+        isTriggerSceneChangeOnce = true;
+
+        currentState = TutorialState.PickUpWeapon;
+
+        for (int i = 0; i < canvasGroup_PickUpWeapon.Length; i++)
+        {
+            canvasGroup_PickUpWeapon[i].DOFade(1f, 0.8f).SetUpdate(true);
+            yield return new WaitForSecondsRealtime(7f);
+            canvasGroup_PickUpWeapon[i].DOFade(0f, 0.8f).SetUpdate(true);
+            yield return new WaitForSecondsRealtime(1.5f);
+        }
     }
 
     private void SetUpUI()

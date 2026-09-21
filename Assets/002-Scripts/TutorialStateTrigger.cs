@@ -3,7 +3,8 @@ using UnityEngine;
 public enum TutorialTriggerType
 {
     FallToDeath,
-    ChangeScene
+    ChangeScene,
+    PickUpWeapon,
 }
 
 public class TutorialStateTrigger : MonoBehaviour

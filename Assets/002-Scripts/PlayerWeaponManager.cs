@@ -23,7 +23,13 @@ public enum PerformActionState
 public class PlayerWeaponManager : MonoBehaviour
 {
     [SerializeField] private Image image_LeftHandWeaponIcon;
+    [SerializeField] private CanvasGroup canvasGroup_LeftHandWeaponIcon;
+    [SerializeField] private GameObject obj_LeftHandActionIcon_OneHanded;
+    [SerializeField] private GameObject obj_LeftHandActionIcon_TwoHanded;
     [SerializeField] private Image image_RightHandWeaponIcon;
+    [SerializeField] private CanvasGroup canvasGroup_RightHandWeaponIcon;
+    [SerializeField] private GameObject obj_RightHandActionIcon_OneHanded;
+    [SerializeField] private GameObject obj_RightHandActionIcon_TwoHanded;
     [SerializeField] private Image image_Spell;
     [SerializeField] private Image image_Item;
     [SerializeField] private TextMeshProUGUI text_ItemCount;
@@ -50,10 +56,14 @@ public class PlayerWeaponManager : MonoBehaviour
     [HideInInspector] public int activeRightSlot = 0;
     [HideInInspector] public int activeLeftSlot = 0;
 
+    [SerializeField] private GameObject switchWeaponUI_Gamepad;
+    [SerializeField] private GameObject switchWeaponUI_PC;
+
     public Weapon rightHandWeapon => rightHandWeapons[activeRightSlot];
     public Weapon leftHandWeapon => leftHandWeapons[activeLeftSlot];
 
-    [HideInInspector] public bool isTwoHanding = false;
+    [HideInInspector] public bool isTwoHanding_Left = false;
+    [HideInInspector] public bool isTwoHanding_Right = false;
 
     [Header("Melee Settings")]
     [SerializeField] private float executeStaminaCost = 20f;
@@ -147,11 +157,17 @@ public class PlayerWeaponManager : MonoBehaviour
         HandleItemUsage();
         HandleRightHandInput();
         HandleLeftHandInput();
+        HandleWeaponSwitchUI();
 
-        if (playerController.IsToggleTwoHandedPressed)
+        if (playerController.IsToggleTwoHandedPressed_Right)
         {
-            playerController.IsToggleTwoHandedPressed = false;
-            ToggleTwoHandedStance();    
+            playerController.IsToggleTwoHandedPressed_Right = false;
+            ToggleTwoHandedStance(false);
+        }
+        else if(playerController.IsToggleTwoHandedPressed_Left)
+        {
+            playerController.IsToggleTwoHandedPressed_Left = false;
+            ToggleTwoHandedStance(true);
         }
 
         // State Reset Timers
@@ -164,12 +180,33 @@ public class PlayerWeaponManager : MonoBehaviour
             }
         }
 
-        if (currentState_LeftHand != PerformActionState.Idle && currentState_LeftHand != PerformActionState.Hold1 && currentState_Righthand != PerformActionState.Block && !playerController.isKicking && !playerController.isExecuting)
+        if (currentState_LeftHand != PerformActionState.Idle && currentState_LeftHand != PerformActionState.Hold1 && currentState_LeftHand != PerformActionState.Block && !playerController.isKicking && !playerController.isExecuting)
         {
             attackStateResetTimerLeft -= Time.deltaTime;
             if (attackStateResetTimerLeft <= 0f && currentBlockCooldownLeft <= 0f)
             {
                 currentState_LeftHand = PerformActionState.Idle;
+            }
+        }
+    }
+
+    private void HandleWeaponSwitchUI()
+    {
+        if(InputSchemeManager.instance.CurrentInputMode == InputMode.PC)
+        {
+            if(!switchWeaponUI_PC.activeInHierarchy)
+            {
+                switchWeaponUI_PC.SetActive(true);
+                switchWeaponUI_Gamepad.SetActive(false);
+            }
+        }
+        else if(InputSchemeManager.instance.CurrentInputMode == InputMode.PlayStation ||
+            InputSchemeManager.instance.CurrentInputMode == InputMode.Xbox)
+        {
+            if(!switchWeaponUI_Gamepad.activeInHierarchy)
+            {
+                switchWeaponUI_Gamepad.SetActive(true);
+                switchWeaponUI_PC.SetActive(false);
             }
         }
     }
@@ -226,7 +263,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
                 if (selectedIndex != -1 && selectedIndex < rightHandWeapons.Length && rightHandWeapons[selectedIndex] != null)
                 {
-                    if (isTwoHanding) ToggleTwoHandedStance();
+                    if (isTwoHanding_Right) ToggleTwoHandedStance(false);
                     if (isBlockingRight) { isBlockingRight = false; currentState_Righthand = PerformActionState.Idle; }
 
                     activeRightSlot = selectedIndex;
@@ -246,7 +283,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
                 if (selectedIndex != -1 && selectedIndex < leftHandWeapons.Length && leftHandWeapons[selectedIndex] != null)
                 {
-                    if (isTwoHanding) ToggleTwoHandedStance();
+                    if (isTwoHanding_Left) ToggleTwoHandedStance(true);
                     if (isBlockingLeft) { isBlockingLeft = false; currentState_LeftHand = PerformActionState.Idle; }
 
                     activeLeftSlot = selectedIndex;
@@ -505,15 +542,14 @@ public class PlayerWeaponManager : MonoBehaviour
         if (!found) return;
 
         // Cancel two-handed stance if we switch weapons
-        if (isTwoHanding) ToggleTwoHandedStance();
+        if (isLeftHand && isTwoHanding_Left) ToggleTwoHandedStance(true);
+        if (!isLeftHand && isTwoHanding_Right) ToggleTwoHandedStance(false);
 
         // Cancel any active blocks
         if (isLeftHand && isBlockingLeft) { isBlockingLeft = false; currentState_LeftHand = PerformActionState.Idle; }
         if (!isLeftHand && isBlockingRight) { isBlockingRight = false; currentState_Righthand = PerformActionState.Idle; }
 
         currentSlot = nextSlot;
-
-        // Force the animator to update to the newly selected weapon immediately
         UpdateAnimatorControllers(isLeftHand);
     }
 
@@ -619,59 +655,94 @@ public class PlayerWeaponManager : MonoBehaviour
         }
     }
 
-    public void ToggleTwoHandedStance()
+    public void ToggleTwoHandedStance(bool isLeftHand)
     {
-        if (rightHandWeapon == null) return;
-
         if (isBlockingRight || isBlockingLeft)
         {
             isBlockingRight = false;
             isBlockingLeft = false;
             currentBlockCooldownRight = blockCooldownDuration;
             currentBlockCooldownLeft = blockCooldownDuration;
-            currentState_Righthand = PerformActionState.Idle;
-            currentState_LeftHand = PerformActionState.Idle;
         }
 
-        isTwoHanding = !isTwoHanding;
-
-        if (isTwoHanding)
+        if (isLeftHand)
         {
-            if (anim_RightHand != null && rightHandWeapon.animController_TwoHanded != null)
-            {
-                anim_RightHand.runtimeAnimatorController = rightHandWeapon.animController_TwoHanded;
-                anim_RightHand.Play("IsIdle", -1, 0f);
-            }
+            if (leftHandWeapon == null) return;
 
-            currentState_LeftHand = PerformActionState.Idle;
-            image_LeftHand.enabled = false;
-            image_LeftHandWeaponIcon.color = new Color(255,255,255,60);
+            // If the Right hand is currently two-handing, just reset to dual one-handed
+            if (isTwoHanding_Right)
+            {
+                isTwoHanding_Right = false;
+            }
+            else
+            {
+                // Otherwise, perform normal toggle for the Left hand
+                isTwoHanding_Left = !isTwoHanding_Left;
+            }
         }
         else
         {
-            if (anim_RightHand != null && rightHandWeapon.animController_OneHanded != null)
-            {
-                anim_RightHand.runtimeAnimatorController = rightHandWeapon.animController_OneHanded;
-                anim_RightHand.Play("IsIdle", -1, 0f);
-            }
+            if (rightHandWeapon == null) return;
 
-            if (leftHandWeapon != null)
+            // If the Left hand is currently two-handing, just reset to dual one-handed
+            if (isTwoHanding_Left)
             {
-                image_LeftHand.enabled = true;
-                image_LeftHandWeaponIcon.color = new Color(255,255,255,60);
-                if (anim_LeftHand != null && leftHandWeapon.animController_OneHanded != null)
+                isTwoHanding_Left = false;
+            }
+            else
+            {
+                // Otherwise, perform normal toggle for the Right hand
+                isTwoHanding_Right = !isTwoHanding_Right;
+            }
+        }
+
+        currentState_Righthand = PerformActionState.Idle;
+        currentState_LeftHand = PerformActionState.Idle;
+
+        UpdateAnimatorControllers(true);
+        UpdateAnimatorControllers(false);
+        HandleHandSprite();
+    }
+
+    private void UpdateAnimatorControllers(bool isLeftHand)
+    {
+        if (isLeftHand)
+        {
+            if (anim_LeftHand != null)
+            {
+                if (leftHandWeapon != null)
                 {
-                    anim_LeftHand.runtimeAnimatorController = leftHandWeapon.animController_OneHanded;
-                    anim_LeftHand.Play("IsIdle", -1, 0f);
+                    RuntimeAnimatorController targetController = (isTwoHanding_Left && leftHandWeapon.animController_TwoHanded != null)
+                        ? leftHandWeapon.animController_TwoHanded
+                        : leftHandWeapon.animController_OneHanded;
+
+                    anim_LeftHand.runtimeAnimatorController = targetController;
+                    if (targetController != null) anim_LeftHand.Play("IsIdle", -1, 0f);
                 }
+                else anim_LeftHand.runtimeAnimatorController = null;
+            }
+        }
+        else
+        {
+            if (anim_RightHand != null)
+            {
+                if (rightHandWeapon != null)
+                {
+                    RuntimeAnimatorController targetController = (isTwoHanding_Right && rightHandWeapon.animController_TwoHanded != null)
+                        ? rightHandWeapon.animController_TwoHanded
+                        : rightHandWeapon.animController_OneHanded;
+
+                    anim_RightHand.runtimeAnimatorController = targetController;
+                    if (targetController != null) anim_RightHand.Play("IsIdle", -1, 0f);
+                }
+                else anim_RightHand.runtimeAnimatorController = null;
             }
         }
     }
 
     private void HandleHandSprite()
     {
-        // Left hand sprite respects the isTwoHanding stance
-        if (leftHandWeapon != null && !isTwoHanding)
+        if (leftHandWeapon != null && !isTwoHanding_Right)
         {
             if (image_LeftHandWeaponIcon.sprite != leftHandWeapon.spr_Weapon)
             {
@@ -679,59 +750,86 @@ public class PlayerWeaponManager : MonoBehaviour
                 image_LeftHandWeaponIcon.SetNativeSize();
             }
 
-            if (image_LeftHand.enabled == false)
+            if(isTwoHanding_Left)
             {
-                image_LeftHandWeaponIcon.enabled = true;
-                image_LeftHand.enabled = true;
-
-                if (anim_LeftHand != null && leftHandWeapon.animController_OneHanded != null)
-                    anim_LeftHand.runtimeAnimatorController = leftHandWeapon.animController_OneHanded;
+                obj_LeftHandActionIcon_OneHanded.SetActive(false);
+                obj_LeftHandActionIcon_TwoHanded.SetActive(true);
             }
+            else
+            {
+                obj_LeftHandActionIcon_OneHanded.SetActive(true);
+                obj_LeftHandActionIcon_TwoHanded.SetActive(false);
+            }
+
+            canvasGroup_LeftHandWeaponIcon.alpha = 1f;
+            image_LeftHand.enabled = true;
+            image_LeftHandWeaponIcon.color = Color.white;
         }
         else
         {
-            if (image_LeftHand.enabled == true)
-            {
-                image_LeftHand.enabled = false;
-            }
+            image_LeftHand.enabled = false;
 
-            if (image_LeftHandWeaponIcon.sprite != emptyWeaponSprite)
+            if (isTwoHanding_Right)
             {
-                image_LeftHandWeaponIcon.sprite = emptyWeaponSprite;
-                image_LeftHandWeaponIcon.SetNativeSize();
+                canvasGroup_LeftHandWeaponIcon.alpha = 0.4f; // Hide completely if right hand is two-handing
+                obj_LeftHandActionIcon_OneHanded.SetActive(false);
+                obj_LeftHandActionIcon_TwoHanded.SetActive(false);
+            }
+            else
+            {
+                image_LeftHandWeaponIcon.enabled = true;
+                if (image_LeftHandWeaponIcon.sprite != emptyWeaponSprite)
+                {
+                    image_LeftHandWeaponIcon.sprite = emptyWeaponSprite;
+                    image_LeftHandWeaponIcon.SetNativeSize();
+                }
+                image_LeftHandWeaponIcon.color = new Color32(255, 255, 255, 60);
             }
         }
 
-        // Right hand sprite logic
-        if (rightHandWeapon != null)
+        // ---------------- RIGHT HAND ----------------
+        if (rightHandWeapon != null && !isTwoHanding_Left)
         {
-            if(image_RightHandWeaponIcon.sprite != rightHandWeapon.spr_Weapon)
+            if (image_RightHandWeaponIcon.sprite != rightHandWeapon.spr_Weapon)
             {
                 image_RightHandWeaponIcon.sprite = rightHandWeapon.spr_Weapon;
                 image_RightHandWeaponIcon.SetNativeSize();
             }
 
-            if (image_RightHand.enabled == false)
+            if (isTwoHanding_Right)
             {
-                image_RightHandWeaponIcon.enabled = true;
-                image_RightHand.enabled = true;
-
-                RuntimeAnimatorController targetController = (isTwoHanding && rightHandWeapon.animController_TwoHanded != null) ? rightHandWeapon.animController_TwoHanded : rightHandWeapon.animController_OneHanded;
-                if (anim_RightHand != null && targetController != null)
-                    anim_RightHand.runtimeAnimatorController = targetController;
+                obj_RightHandActionIcon_OneHanded.SetActive(false);
+                obj_RightHandActionIcon_TwoHanded.SetActive(true);
             }
+            else
+            {
+                obj_RightHandActionIcon_OneHanded.SetActive(true);
+                obj_RightHandActionIcon_TwoHanded.SetActive(false);
+            }
+
+            canvasGroup_RightHandWeaponIcon.alpha = 1f;
+            image_RightHand.enabled = true;
+            image_RightHandWeaponIcon.color = Color.white;
         }
         else
         {
-            if (image_RightHand.enabled == true)
-            {
-                image_RightHand.enabled = false;
-            }
+            image_RightHand.enabled = false;
 
-            if (image_RightHandWeaponIcon.sprite != emptyWeaponSprite)
+            if (isTwoHanding_Left)
             {
-                image_RightHandWeaponIcon.sprite = emptyWeaponSprite;
-                image_RightHandWeaponIcon.SetNativeSize();
+                canvasGroup_RightHandWeaponIcon.alpha = 0.4f; // Hide completely if left hand is two-handing
+                obj_RightHandActionIcon_OneHanded.SetActive(false);
+                obj_RightHandActionIcon_TwoHanded.SetActive(false);
+            }
+            else
+            {
+                image_RightHandWeaponIcon.enabled = true;
+                if (image_RightHandWeaponIcon.sprite != emptyWeaponSprite)
+                {
+                    image_RightHandWeaponIcon.sprite = emptyWeaponSprite;
+                    image_RightHandWeaponIcon.SetNativeSize();
+                }
+                image_RightHandWeaponIcon.color = new Color32(255, 255, 255, 60);
             }
         }
     }
@@ -789,53 +887,35 @@ public class PlayerWeaponManager : MonoBehaviour
 
     private void HandleRightHandInput()
     {
-        if (rightHandWeapon == null) return;
+        // --- FIX: Block input if the Left hand is currently two-handing ---
+        if (rightHandWeapon == null || isTwoHanding_Left) return;
         if (EquipmentLoadOut.instance.isPanelActive) { return; }
         if (isQuickMenuActive) { return; }
 
         switch (rightHandWeapon.weaponCategory)
         {
-            case WeaponCategory.Shield:
-                HandleShieldInput(rightHandWeapon, isLeftHand: false);
-                break;
-            case WeaponCategory.Melee:
-                HandleMeleeInput(rightHandWeapon, isLeftHand: false);
-                break;
-            case WeaponCategory.Bow:
-                HandleBowInput(rightHandWeapon, isLeftHand: false);
-                break;
-            case WeaponCategory.PyromancyFlame:
-                HandlePyromancyInput(rightHandWeapon, isLeftHand: false);
-                break;
-            case WeaponCategory.SorceryCatalyst:
-                HandleMagicInput(rightHandWeapon, isLeftHand: false);
-                break;
+            case WeaponCategory.Shield: HandleShieldInput(rightHandWeapon, isLeftHand: false); break;
+            case WeaponCategory.Melee: HandleMeleeInput(rightHandWeapon, isLeftHand: false); break;
+            case WeaponCategory.Bow: HandleBowInput(rightHandWeapon, isLeftHand: false); break;
+            case WeaponCategory.PyromancyFlame: HandlePyromancyInput(rightHandWeapon, isLeftHand: false); break;
+            case WeaponCategory.SorceryCatalyst: HandleMagicInput(rightHandWeapon, isLeftHand: false); break;
         }
     }
 
     private void HandleLeftHandInput()
     {
-        if (isTwoHanding || leftHandWeapon == null) return;
+        // --- FIX: Block input if the Right hand is currently two-handing ---
+        if (leftHandWeapon == null || isTwoHanding_Right) return;
         if (EquipmentLoadOut.instance.isPanelActive) { return; }
         if (isQuickMenuActive) { return; }
 
         switch (leftHandWeapon.weaponCategory)
         {
-            case WeaponCategory.Shield:
-                HandleShieldInput(leftHandWeapon, isLeftHand: true);
-                break;
-            case WeaponCategory.Melee:
-                HandleMeleeInput(leftHandWeapon, isLeftHand: true);
-                break;
-            case WeaponCategory.Bow:
-                HandleBowInput(leftHandWeapon, isLeftHand: true);
-                break;
-            case WeaponCategory.PyromancyFlame:
-                HandlePyromancyInput(leftHandWeapon, isLeftHand: true);
-                break;
-            case WeaponCategory.SorceryCatalyst:
-                HandleMagicInput(leftHandWeapon, isLeftHand: true);
-                break;
+            case WeaponCategory.Shield: HandleShieldInput(leftHandWeapon, isLeftHand: true); break;
+            case WeaponCategory.Melee: HandleMeleeInput(leftHandWeapon, isLeftHand: true); break;
+            case WeaponCategory.Bow: HandleBowInput(leftHandWeapon, isLeftHand: true); break;
+            case WeaponCategory.PyromancyFlame: HandlePyromancyInput(leftHandWeapon, isLeftHand: true); break;
+            case WeaponCategory.SorceryCatalyst: HandleMagicInput(leftHandWeapon, isLeftHand: true); break;
         }
     }
 
@@ -872,26 +952,33 @@ public class PlayerWeaponManager : MonoBehaviour
         bool isPressed = isLeftHand ? playerController.isLeftHandPressed : playerController.isRightHandPressed;
         ref float lastAttackTime = ref (isLeftHand ? ref lastAttackTimeLeft : ref lastAttackTimeRight);
 
-        if (isTwoHanding)
+        // --- FIX: Determine if THIS specific hand is two-handing ---
+        bool isTwoHandingThisWeapon = isLeftHand ? isTwoHanding_Left : isTwoHanding_Right;
+
+        if (isTwoHandingThisWeapon)
         {
-            bool isBlockHeld = playerController.isLeftHandHeld;
-            ref float blockCooldown = ref currentBlockCooldownRight;
+            // If two-handing LEFT, Right trigger blocks. If two-handing RIGHT, Left trigger blocks.
+            bool isBlockHeld = isLeftHand ? playerController.isRightHandHeld : playerController.isLeftHandHeld;
+            ref float blockCooldown = ref (isLeftHand ? ref currentBlockCooldownLeft : ref currentBlockCooldownRight);
+            ref bool isBlocking = ref (isLeftHand ? ref isBlockingLeft : ref isBlockingRight);
+            ref PerformActionState currentState = ref (isLeftHand ? ref currentState_LeftHand : ref currentState_Righthand);
+            ref float currentParry = ref (isLeftHand ? ref currentParryLeft : ref currentParryRight);
 
             if (isBlockHeld && blockCooldown <= 0f && !playerController.isKicking)
             {
-                if (playerController.CharacterStaminaComponent.CurrentStamina > 0f && !isBlockingRight)
+                if (playerController.CharacterStaminaComponent.CurrentStamina > 0f && !isBlocking)
                 {
                     RumbleManager.instance.RumblePulse(1f, 2f, 0.15f);
-                    isBlockingRight = true;
-                    currentState_Righthand = PerformActionState.Block;
-                    currentParryRight = parryDuration;
+                    isBlocking = true;
+                    currentState = PerformActionState.Block;
+                    currentParry = parryDuration;
                 }
             }
-            else if (!isBlockHeld && isBlockingRight)
+            else if (!isBlockHeld && isBlocking)
             {
-                isBlockingRight = false;
+                isBlocking = false;
                 blockCooldown = blockCooldownDuration;
-                currentState_Righthand = PerformActionState.Idle;
+                currentState = PerformActionState.Idle;
             }
         }
 
@@ -1350,40 +1437,6 @@ public class PlayerWeaponManager : MonoBehaviour
                 if (lastRightStateHash != 0 && anim_RightHand != null) anim_RightHand.SetBool(lastRightStateHash, false);
                 if (anim_RightHand != null) anim_RightHand.SetBool(rightHash, true);
                 lastRightStateHash = rightHash;
-            }
-        }
-    }
-
-    private void UpdateAnimatorControllers(bool isLeftHand)
-    {
-        if (isLeftHand)
-        {
-            if (anim_LeftHand != null)
-            {
-                if (leftHandWeapon != null && leftHandWeapon.animController_OneHanded != null)
-                {
-                    anim_LeftHand.runtimeAnimatorController = leftHandWeapon.animController_OneHanded;
-                    anim_LeftHand.Play("IsIdle", -1, 0f);
-                }
-                else
-                {
-                    anim_LeftHand.runtimeAnimatorController = null;
-                }
-            }
-        }
-        else
-        {
-            if (anim_RightHand != null)
-            {
-                if (rightHandWeapon != null && rightHandWeapon.animController_OneHanded != null)
-                {
-                    anim_RightHand.runtimeAnimatorController = rightHandWeapon.animController_OneHanded;
-                    anim_RightHand.Play("IsIdle", -1, 0f);
-                }
-                else
-                {
-                    anim_RightHand.runtimeAnimatorController = null;
-                }
             }
         }
     }

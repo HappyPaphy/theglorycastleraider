@@ -34,7 +34,8 @@ public class PlayerController : PlayerEntity
     [SerializeField] private InputAction input_Dash;
     [SerializeField] private InputAction input_Minimap;
     [SerializeField] private InputAction input_Pause;
-    [SerializeField] private InputAction input_ToggleTwoHanded;
+    [SerializeField] private InputAction input_ToggleTwoHanded_Left;
+    [SerializeField] private InputAction input_ToggleTwoHanded_Right;
     [SerializeField] private InputAction input_SwitchWeapon_Up;
     [SerializeField] private InputAction input_SwitchWeapon_Right;
     [SerializeField] private InputAction input_SwitchWeapon_Down;
@@ -87,8 +88,10 @@ public class PlayerController : PlayerEntity
     [HideInInspector] public bool isLeftHandPressed = false;
     [HideInInspector] public bool IsReloadHeld = false;
     [HideInInspector] public bool IsReloadPressed = false;
-    [HideInInspector] public bool IsToggleTwoHandedHeld = false;
-    [HideInInspector] public bool IsToggleTwoHandedPressed = false;
+    [HideInInspector] public bool IsToggleTwoHandedHeld_Left = false;
+    [HideInInspector] public bool IsToggleTwoHandedPressed_Left = false;
+    [HideInInspector] public bool IsToggleTwoHandedHeld_Right = false;
+    [HideInInspector] public bool IsToggleTwoHandedPressed_Right = false;
     [HideInInspector] public bool IsToggleLoadoutHeld = false;
     [HideInInspector] public bool IsToggleLoadoutPressed = false;
 
@@ -172,10 +175,15 @@ public class PlayerController : PlayerEntity
         input_Sprint.performed += OnSprintPerformed;
         input_Sprint.canceled += OnSprintCanceled;
 
-        input_ToggleTwoHanded = playerControls.Player.ToggleTwoHanded;
-        input_ToggleTwoHanded.Enable();
-        input_ToggleTwoHanded.performed += OnToggleTwoHandedPerformed;
-        input_ToggleTwoHanded.canceled += OnToggleTwoHandedCanceled;
+        input_ToggleTwoHanded_Left = playerControls.Player.ToggleTwoHanded_Left;
+        input_ToggleTwoHanded_Left.Enable();
+        input_ToggleTwoHanded_Left.performed += OnToggleTwoHandedPerformed_Left;
+        input_ToggleTwoHanded_Left.canceled += OnToggleTwoHandedCanceled_Left;
+
+        input_ToggleTwoHanded_Right = playerControls.Player.ToggleTwoHanded_Right;
+        input_ToggleTwoHanded_Right.Enable();
+        input_ToggleTwoHanded_Right.performed += OnToggleTwoHandedPerformed_Right;
+        input_ToggleTwoHanded_Right.canceled += OnToggleTwoHandedCanceled_Right;
 
         input_Kick = playerControls.Player.Kick;
         input_Kick.Enable();
@@ -260,7 +268,8 @@ public class PlayerController : PlayerEntity
         input_Dash.Disable();
         input_Minimap.Disable();
         input_Pause.Disable();
-        input_ToggleTwoHanded.Disable();
+        input_ToggleTwoHanded_Left.Disable();
+        input_ToggleTwoHanded_Right.Disable();
         input_SwitchWeapon_Up.Disable();
         input_SwitchWeapon_Right.Disable();
         input_SwitchWeapon_Down.Disable();
@@ -419,17 +428,30 @@ public class PlayerController : PlayerEntity
         IsPauseHeld = false;
     }
 
-    private void OnToggleTwoHandedPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    private void OnToggleTwoHandedPerformed_Left(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
         // When the button is first pressed down
-        IsToggleTwoHandedHeld = true;
-        IsToggleTwoHandedPressed = true;
+        IsToggleTwoHandedHeld_Left = true;
+        IsToggleTwoHandedPressed_Left = true;
     }
 
-    private void OnToggleTwoHandedCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    private void OnToggleTwoHandedCanceled_Left(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
         // When the button is released
-        IsToggleTwoHandedHeld = false;
+        IsToggleTwoHandedHeld_Left = false;
+    }
+
+    private void OnToggleTwoHandedPerformed_Right(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        // When the button is first pressed down
+        IsToggleTwoHandedHeld_Right = true;
+        IsToggleTwoHandedPressed_Right = true;
+    }
+
+    private void OnToggleTwoHandedCanceled_Right(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        // When the button is released
+        IsToggleTwoHandedHeld_Right = false;
     }
 
     private void OnSwitchWeaponUpPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
@@ -1028,7 +1050,8 @@ public class PlayerController : PlayerEntity
         isKickPressed = false;
         isJumpPressed = false;
         isSprintPressed = false;
-        IsToggleTwoHandedPressed = false;
+        IsToggleTwoHandedPressed_Left = false;
+        IsToggleTwoHandedPressed_Right = false;
         IsToggleLoadoutPressed = false;
     }
 

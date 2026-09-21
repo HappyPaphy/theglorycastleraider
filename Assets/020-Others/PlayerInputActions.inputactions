@@ -61,9 +61,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "ToggleTwoHanded",
+                    "name": "ToggleTwoHanded_Right",
                     "type": "Button",
                     "id": "fc6d2966-ac4a-4e1e-80b1-74ac89e7ef2c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ToggleTwoHanded_Left",
+                    "type": "Button",
+                    "id": "91a1c220-1cdf-4257-9167-054e0f4ab41e",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -360,11 +369,11 @@
                 {
                     "name": "",
                     "id": "20ac5569-e4e0-4f46-929b-38bb6c86854b",
-                    "path": "<Mouse>/middleButton",
+                    "path": "<Keyboard>/x",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "ToggleTwoHanded",
+                    "action": "ToggleTwoHanded_Right",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -375,7 +384,29 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "ToggleTwoHanded",
+                    "action": "ToggleTwoHanded_Right",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2bbdfa5e-075d-4aa9-a4e6-817ec1caf726",
+                    "path": "<Keyboard>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "ToggleTwoHanded_Left",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5de5bb9d-a2b1-4b29-9178-625f8979a7a5",
+                    "path": "<Gamepad>/leftStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "ToggleTwoHanded_Left",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
