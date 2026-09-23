@@ -951,7 +951,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 03481c2bee5524249b2bef77f6e6960a, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.235
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -995,7 +995,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -1632,7 +1632,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SoundManager
   audioPoolSize: 30
-  sfxMixerGroup: {fileID: 0}
+  sfxMixerGroup: {fileID: 3091505273892445445, guid: 88a5a1addff0c854681849b35a5df558, type: 2}
   music_Background: {fileID: 6952665776938900328}
   sfx_Player_Grunt:
   - {fileID: 2341685447119725683}
@@ -5173,7 +5173,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: e20d1427ef55ced4da8bd6b04e82ac73, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.235
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -5217,7 +5217,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
