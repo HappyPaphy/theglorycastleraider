@@ -120,9 +120,9 @@ public class Item : MonoBehaviour
         {
             uiButtonPrompt.SetActive(true);
 
-            if(PlayerController.instance.IsInteractPressed)
+            if(InputSchemeManager.instance.IsInteractPressed)
             {
-                PlayerController.instance.IsInteractPressed = false;
+                InputSchemeManager.instance.IsInteractPressed = false;
                 Collecting();
             }
         }

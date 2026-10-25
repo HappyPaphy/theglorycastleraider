@@ -159,14 +159,14 @@ public class PlayerWeaponManager : MonoBehaviour
         HandleLeftHandInput();
         HandleWeaponSwitchUI();
 
-        if (playerController.IsToggleTwoHandedPressed_Right)
+        if (InputSchemeManager.instance.IsToggleTwoHandedPressed_Right)
         {
-            playerController.IsToggleTwoHandedPressed_Right = false;
+            InputSchemeManager.instance.IsToggleTwoHandedPressed_Right = false;
             ToggleTwoHandedStance(false);
         }
-        else if(playerController.IsToggleTwoHandedPressed_Left)
+        else if(InputSchemeManager.instance.IsToggleTwoHandedPressed_Left)
         {
-            playerController.IsToggleTwoHandedPressed_Left = false;
+            InputSchemeManager.instance.IsToggleTwoHandedPressed_Left = false;
             ToggleTwoHandedStance(true);
         }
 
@@ -219,15 +219,15 @@ public class PlayerWeaponManager : MonoBehaviour
             return; 
         }
 
-        Vector2 inputDir = playerController.input_Look.ReadValue<Vector2>();
+        Vector2 inputDir = InputSchemeManager.instance.input_Look.ReadValue<Vector2>();
 
         if (quickMenu_Spell.isMenuActive)
         {
-            if (!playerController.IsSwitchWeaponHeld_Up)
+            if (!InputSchemeManager.instance.IsSwitchWeaponHeld_Up)
             {
                 int selectedIndex = quickMenu_Spell.CloseMenu();
                 isQuickMenuActive = false;
-                playerController.IsSwitchWeaponPressed_Up = false; // Prevent accidental tap cycle on release
+                InputSchemeManager.instance.IsSwitchWeaponPressed_Up = false; // Prevent accidental tap cycle on release
 
                 if (selectedIndex != -1 && selectedIndex < equippedSpells.Length && equippedSpells[selectedIndex] != null)
                 {
@@ -239,11 +239,11 @@ public class PlayerWeaponManager : MonoBehaviour
         // ITEM MENU
         else if (quickMenu_Item.isMenuActive)
         {
-            if (!playerController.IsSwitchWeaponHeld_Down)
+            if (!InputSchemeManager.instance.IsSwitchWeaponHeld_Down)
             {
                 int selectedIndex = quickMenu_Item.CloseMenu();
                 isQuickMenuActive = false;
-                playerController.IsSwitchWeaponPressed_Down = false;
+                InputSchemeManager.instance.IsSwitchWeaponPressed_Down = false;
 
                 if (selectedIndex != -1 && selectedIndex < equippedItems.Length && equippedItems[selectedIndex] != null)
                 {
@@ -255,11 +255,11 @@ public class PlayerWeaponManager : MonoBehaviour
         // RIGHT WEAPON MENU
         else if (quickMenu_RightWeapon.isMenuActive)
         {
-            if (!playerController.IsSwitchWeaponHeld_Right)
+            if (!InputSchemeManager.instance.IsSwitchWeaponHeld_Right)
             {
                 int selectedIndex = quickMenu_RightWeapon.CloseMenu();
                 isQuickMenuActive = false;
-                playerController.IsSwitchWeaponPressed_Right = false;
+                InputSchemeManager.instance.IsSwitchWeaponPressed_Right = false;
 
                 if (selectedIndex != -1 && selectedIndex < rightHandWeapons.Length && rightHandWeapons[selectedIndex] != null)
                 {
@@ -275,11 +275,11 @@ public class PlayerWeaponManager : MonoBehaviour
         // LEFT WEAPON MENU
         else if (quickMenu_LeftWeapon.isMenuActive)
         {
-            if (!playerController.IsSwitchWeaponHeld_Left)
+            if (!InputSchemeManager.instance.IsSwitchWeaponHeld_Left)
             {
                 int selectedIndex = quickMenu_LeftWeapon.CloseMenu();
                 isQuickMenuActive = false;
-                playerController.IsSwitchWeaponPressed_Left = false;
+                InputSchemeManager.instance.IsSwitchWeaponPressed_Left = false;
 
                 if (selectedIndex != -1 && selectedIndex < leftHandWeapons.Length && leftHandWeapons[selectedIndex] != null)
                 {
@@ -296,7 +296,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
     private void HandleQuickMenuHoldDownInput()
     {
-        if (playerController.IsSwitchWeaponHeld_Up)
+        if (InputSchemeManager.instance.IsSwitchWeaponHeld_Up)
         {
             currentSpellSwitchHoldDown += Time.deltaTime;
             if (currentSpellSwitchHoldDown > spellSwitchHoldDownDuration)
@@ -306,7 +306,7 @@ public class PlayerWeaponManager : MonoBehaviour
                 currentSpellSwitchHoldDown = 0f;
             }
         }
-        else if(!playerController.IsSwitchWeaponHeld_Up 
+        else if(!InputSchemeManager.instance.IsSwitchWeaponHeld_Up 
             && currentSpellSwitchHoldDown > 0f
             && currentSpellSwitchHoldDown <= spellSwitchHoldDownDuration)
         {
@@ -315,7 +315,7 @@ public class PlayerWeaponManager : MonoBehaviour
         }
 
         // Item (Down)
-        if (playerController.IsSwitchWeaponHeld_Down)
+        if (InputSchemeManager.instance.IsSwitchWeaponHeld_Down)
         {
             currentItemSwitchHoldDown += Time.deltaTime;
             if (currentItemSwitchHoldDown > itemSwitchHoldDownDuration)
@@ -325,7 +325,7 @@ public class PlayerWeaponManager : MonoBehaviour
                 currentItemSwitchHoldDown = 0f;
             }
         }
-        else if(!playerController.IsSwitchWeaponHeld_Down
+        else if(!InputSchemeManager.instance.IsSwitchWeaponHeld_Down
             && currentItemSwitchHoldDown > 0f
             && currentItemSwitchHoldDown <= itemSwitchHoldDownDuration)
         {
@@ -334,7 +334,7 @@ public class PlayerWeaponManager : MonoBehaviour
         }
 
         // Right Weapon (Right)
-        if (playerController.IsSwitchWeaponHeld_Right)
+        if (InputSchemeManager.instance.IsSwitchWeaponHeld_Right)
         {
             currentRightWeaponSwitchHoldDown += Time.deltaTime;
             if (currentRightWeaponSwitchHoldDown > rightWeaponSwitchHoldDownDuration)
@@ -344,7 +344,7 @@ public class PlayerWeaponManager : MonoBehaviour
                 currentRightWeaponSwitchHoldDown = 0f;
             }
         }
-        else if(!playerController.IsSwitchWeaponHeld_Right
+        else if(!InputSchemeManager.instance.IsSwitchWeaponHeld_Right
             && currentRightWeaponSwitchHoldDown > 0f
             && currentRightWeaponSwitchHoldDown <= rightWeaponSwitchHoldDownDuration)
         {
@@ -353,7 +353,7 @@ public class PlayerWeaponManager : MonoBehaviour
         }
 
         // Left Weapon (Left)
-        if (playerController.IsSwitchWeaponHeld_Left)
+        if (InputSchemeManager.instance.IsSwitchWeaponHeld_Left)
         {
             currentLeftWeaponSwitchHoldDown += Time.deltaTime;
             if (currentLeftWeaponSwitchHoldDown > leftWeaponSwitchHoldDownDuration)
@@ -363,7 +363,7 @@ public class PlayerWeaponManager : MonoBehaviour
                 currentLeftWeaponSwitchHoldDown = 0f;
             }
         }
-        else if(!playerController.IsSwitchWeaponHeld_Left
+        else if(!InputSchemeManager.instance.IsSwitchWeaponHeld_Left
             && currentLeftWeaponSwitchHoldDown > 0f
             && currentLeftWeaponSwitchHoldDown <= leftWeaponSwitchHoldDownDuration)
         {
@@ -398,28 +398,28 @@ public class PlayerWeaponManager : MonoBehaviour
         if(EquipmentLoadOut.instance.isPanelActive || isQuickMenuActive) { return; }
 
         // Right D-Pad: Cycle Right Hand
-        if (playerController.IsSwitchWeaponPressed_Right)
+        if (InputSchemeManager.instance.IsSwitchWeaponPressed_Right)
         {
-            playerController.IsSwitchWeaponPressed_Right = false;
+            InputSchemeManager.instance.IsSwitchWeaponPressed_Right = false;
             
         }
 
         // Left D-Pad: Cycle Left Hand
-        if (playerController.IsSwitchWeaponPressed_Left)
+        if (InputSchemeManager.instance.IsSwitchWeaponPressed_Left)
         {
-            playerController.IsSwitchWeaponPressed_Left = false;
+            InputSchemeManager.instance.IsSwitchWeaponPressed_Left = false;
         }
 
         // Up D-Pad: Cycle Spells
-        if (playerController.IsSwitchWeaponPressed_Up)
+        if (InputSchemeManager.instance.IsSwitchWeaponPressed_Up)
         {
-            playerController.IsSwitchWeaponPressed_Up = false;
+            InputSchemeManager.instance.IsSwitchWeaponPressed_Up = false;
         }
 
         // Down D-Pad: Cycle Items 
-        if (playerController.IsSwitchWeaponPressed_Down)
+        if (InputSchemeManager.instance.IsSwitchWeaponPressed_Down)
         {
-            playerController.IsSwitchWeaponPressed_Down = false;
+            InputSchemeManager.instance.IsSwitchWeaponPressed_Down = false;
         }
     }
 
@@ -429,9 +429,9 @@ public class PlayerWeaponManager : MonoBehaviour
         if (PauseGame.instance.IsPaused) { return; }
 
         // Check for player input and ensure they aren't stuck in another uninterruptible animation
-        if (playerController.IsReloadPressed && !playerController.isKicking && !playerController.isExecuting)
+        if (InputSchemeManager.instance.IsReloadPressed && !playerController.isKicking && !playerController.isExecuting)
         {
-            playerController.IsReloadPressed = false;
+            InputSchemeManager.instance.IsReloadPressed = false;
             UseCurrentItem();
         }
     }
@@ -921,7 +921,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
     private void HandleShieldInput(Weapon weapon, bool isLeftHand)
     {
-        bool isHeld = isLeftHand ? playerController.isLeftHandHeld : playerController.isRightHandHeld;
+        bool isHeld = isLeftHand ? InputSchemeManager.instance.isLeftHandHeld : InputSchemeManager.instance.isRightHandHeld;
         ref float blockCooldown = ref (isLeftHand ? ref currentBlockCooldownLeft : ref currentBlockCooldownRight);
         ref bool isBlocking = ref (isLeftHand ? ref isBlockingLeft : ref isBlockingRight);
         ref float currentParry = ref (isLeftHand ? ref currentParryLeft : ref currentParryRight);
@@ -949,7 +949,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
     private void HandleMeleeInput(Weapon weapon, bool isLeftHand)
     {
-        bool isPressed = isLeftHand ? playerController.isLeftHandPressed : playerController.isRightHandPressed;
+        bool isPressed = isLeftHand ? InputSchemeManager.instance.isLeftHandPressed : InputSchemeManager.instance.isRightHandPressed;
         ref float lastAttackTime = ref (isLeftHand ? ref lastAttackTimeLeft : ref lastAttackTimeRight);
 
         // --- FIX: Determine if THIS specific hand is two-handing ---
@@ -958,7 +958,7 @@ public class PlayerWeaponManager : MonoBehaviour
         if (isTwoHandingThisWeapon)
         {
             // If two-handing LEFT, Right trigger blocks. If two-handing RIGHT, Left trigger blocks.
-            bool isBlockHeld = isLeftHand ? playerController.isRightHandHeld : playerController.isLeftHandHeld;
+            bool isBlockHeld = isLeftHand ? InputSchemeManager.instance.isRightHandHeld : InputSchemeManager.instance.isLeftHandHeld;
             ref float blockCooldown = ref (isLeftHand ? ref currentBlockCooldownLeft : ref currentBlockCooldownRight);
             ref bool isBlocking = ref (isLeftHand ? ref isBlockingLeft : ref isBlockingRight);
             ref PerformActionState currentState = ref (isLeftHand ? ref currentState_LeftHand : ref currentState_Righthand);
@@ -999,8 +999,8 @@ public class PlayerWeaponManager : MonoBehaviour
 
     private void HandleBowInput(Weapon weapon, bool isLeftHand)
     {
-        bool isHeld = isLeftHand ? playerController.isLeftHandHeld : playerController.isRightHandHeld;
-        bool isPressed = isLeftHand ? playerController.isLeftHandPressed : playerController.isRightHandPressed;
+        bool isHeld = isLeftHand ? InputSchemeManager.instance.isLeftHandHeld : InputSchemeManager.instance.isRightHandHeld;
+        bool isPressed = isLeftHand ? InputSchemeManager.instance.isLeftHandPressed : InputSchemeManager.instance.isRightHandPressed;
 
         // Press to draw string (Hold1), release to shoot (Press1)
         if (isHeld)
@@ -1032,7 +1032,7 @@ public class PlayerWeaponManager : MonoBehaviour
     private void ProcessSpellInput(Weapon weapon, Item spell, bool isLeftHand)
     {
         PerformActionState currentState = isLeftHand ? currentState_LeftHand : currentState_Righthand;
-        bool isPressed = isLeftHand ? playerController.isLeftHandPressed : playerController.isRightHandPressed;
+        bool isPressed = isLeftHand ? InputSchemeManager.instance.isLeftHandPressed : InputSchemeManager.instance.isRightHandPressed;
         ref float lastAttackTime = ref (isLeftHand ? ref lastAttackTimeLeft : ref lastAttackTimeRight);
 
         // Only begin a cast if the hand is Idle, the attack cooldown has passed, and we aren't kicking
@@ -1148,7 +1148,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
     private bool IsHandHeld(bool isLeftHand)
     {
-        return isLeftHand ? playerController.isLeftHandHeld : playerController.isRightHandHeld;
+        return isLeftHand ? InputSchemeManager.instance.isLeftHandHeld : InputSchemeManager.instance.isRightHandHeld;
     }
 
     private void EndSpellCast(Weapon weapon, bool isLeftHand)

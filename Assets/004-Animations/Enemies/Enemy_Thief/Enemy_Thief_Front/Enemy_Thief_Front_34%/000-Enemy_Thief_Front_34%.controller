@@ -82,7 +82,7 @@ AnimatorStateTransition:
     m_ConditionEvent: IsRun
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: IsAttack
+    m_ConditionEvent: IsAttack1
     m_EventTreshold: 0
   - m_ConditionMode: 2
     m_ConditionEvent: IsBlockLeft
@@ -140,7 +140,7 @@ AnimatorStateTransition:
     m_ConditionEvent: IsRun
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: IsAttack
+    m_ConditionEvent: IsAttack1
     m_EventTreshold: 0
   - m_ConditionMode: 2
     m_ConditionEvent: IsBlockLeft
@@ -198,7 +198,7 @@ AnimatorStateTransition:
     m_ConditionEvent: IsRun
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: IsAttack
+    m_ConditionEvent: IsAttack1
     m_EventTreshold: 0
   - m_ConditionMode: 2
     m_ConditionEvent: IsBlockLeft
@@ -360,7 +360,7 @@ AnimatorStateTransition:
     m_ConditionEvent: IsRun
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: IsAttack
+    m_ConditionEvent: IsAttack1
     m_EventTreshold: 0
   - m_ConditionMode: 2
     m_ConditionEvent: IsBlockLeft
@@ -418,7 +418,7 @@ AnimatorStateTransition:
     m_ConditionEvent: IsRun
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: IsAttack
+    m_ConditionEvent: IsAttack1
     m_EventTreshold: 0
   - m_ConditionMode: 2
     m_ConditionEvent: IsBlockLeft
@@ -476,7 +476,7 @@ AnimatorStateTransition:
     m_ConditionEvent: IsRun
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: IsAttack
+    m_ConditionEvent: IsAttack1
     m_EventTreshold: 0
   - m_ConditionMode: 2
     m_ConditionEvent: IsBlockLeft
@@ -534,7 +534,7 @@ AnimatorStateTransition:
     m_ConditionEvent: IsRun
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: IsAttack
+    m_ConditionEvent: IsAttack1
     m_EventTreshold: 0
   - m_ConditionMode: 2
     m_ConditionEvent: IsBlockLeft
@@ -598,7 +598,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: IsAttack
+  - m_Name: IsAttack1
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -686,7 +686,7 @@ AnimatorStateTransition:
     m_ConditionEvent: IsRun
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: IsAttack
+    m_ConditionEvent: IsAttack1
     m_EventTreshold: 0
   - m_ConditionMode: 2
     m_ConditionEvent: IsBlockLeft
@@ -822,7 +822,7 @@ AnimatorStateTransition:
     m_ConditionEvent: IsRun
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: IsAttack
+    m_ConditionEvent: IsAttack1
     m_EventTreshold: 0
   - m_ConditionMode: 2
     m_ConditionEvent: IsBlockLeft
@@ -880,7 +880,7 @@ AnimatorStateTransition:
     m_ConditionEvent: IsRun
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: IsAttack
+    m_ConditionEvent: IsAttack1
     m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: IsBlockLeft
@@ -964,7 +964,7 @@ AnimatorStateTransition:
     m_ConditionEvent: IsRun
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: IsAttack
+    m_ConditionEvent: IsAttack1
     m_EventTreshold: 0
   - m_ConditionMode: 2
     m_ConditionEvent: IsBlockLeft
@@ -1048,7 +1048,7 @@ AnimatorStateTransition:
     m_ConditionEvent: IsRun
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: IsAttack
+    m_ConditionEvent: IsAttack1
     m_EventTreshold: 0
   - m_ConditionMode: 2
     m_ConditionEvent: IsBlockLeft

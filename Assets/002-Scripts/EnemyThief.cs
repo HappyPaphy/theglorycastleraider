@@ -8,7 +8,8 @@ public enum EnemyThiefState
     Idle,
     Run,
     Flank,
-    Attack,
+    Attack1,
+    Attack2,
     DamageLeft,
     DamageRight,
     BlockLeft,
@@ -30,6 +31,7 @@ public class EnemyThief : EnemyEntity
     [SerializeField] private float moveSpeed;
 
     [Header("Combat Dynamics")]
+    [SerializeField] private int maxAttackComboCount = 1;
     [SerializeField] private int maxHitsBeforeBlock = 2; // X times enemy can be hit before blocking
     [SerializeField] private int maxBlocksBeforeHit = 2; // X times enemy can be hit before blocking
     [SerializeField] private int currentHitCount = 0;
@@ -39,6 +41,7 @@ public class EnemyThief : EnemyEntity
     private float hitResetTimer = 0f;
     private float flankTimer = 0f;
     private Vector3 currentFlankDestination;
+    private bool isOpenForParry = false;
 
     [SerializeField] protected float preAttackRadius = 10f;     // Circle overlap range
     [SerializeField] protected float preAttackAngle = 90f;
@@ -107,6 +110,7 @@ public class EnemyThief : EnemyEntity
         HandleState();
         HandleBalance();
         HandleExecute();
+        HandleGoreAnimController();
 
         base.Update();
     }
@@ -130,9 +134,9 @@ public class EnemyThief : EnemyEntity
             {
                 float distanceToPlayer = Vector3.Distance(eyesTransform.position, playerTransform.position);
 
-                if (!Physics.Raycast(eyesTransform.position, directionToPlayer, distanceToPlayer, obstacleLayer))
+                if (!Physics.Raycast(eyesTransform.position, directionToPlayer, distanceToPlayer, obstacleLayer) && stateTimer <= 0f && kickTimer <= 0f)
                 {
-                    currentState = EnemyThiefState.Attack;
+                    currentState = EnemyThiefState.Attack1;
                     return;
                 }
             }
@@ -325,6 +329,8 @@ public class EnemyThief : EnemyEntity
     /// </summary>
     public override void GotParried(bool isLeftHand)
     {
+        if(!isOpenForParry) { return; }
+
         currentState = EnemyThiefState.Parried;
         isParried = true;
         parryTimer = parryRecoveryTime;
@@ -578,11 +584,11 @@ public class EnemyThief : EnemyEntity
         if(isDied) { return; }
 
         // Countdown the timer for temporary states (Damage, Block, etc.)
-        if (stateTimer > 0 && !isStunned)
+        if ((stateTimer > 0) && !isStunned)
         {
             engagementTimer -= Time.deltaTime;
             stateTimer -= Time.deltaTime;
-            if (stateTimer <= 0)
+            if (stateTimer <= 0 && kickTimer <= 0)
             {
                 // Timer finished, return to default behavior
                 currentState = EnemyThiefState.Run;
@@ -715,15 +721,18 @@ public class EnemyThief : EnemyEntity
                 }
                 break;
 
-            case EnemyThiefState.Attack:
+            case EnemyThiefState.Attack1:
                 {
                     SafeStopAgent(false);
                     engagementTimer -= Time.deltaTime;
 
-                    if (!isPreAttackOnce)
+                    if(stateTimer <= 0 && kickTimer <= 0)
                     {
-                        isPreAttackOnce = true;
-                        StartCoroutine(AttackSequence());
+                        if (!isPreAttackOnce)
+                        {
+                            isPreAttackOnce = true;
+                            StartCoroutine(AttackSequence());
+                        }
                     }
                 }
                 break;
@@ -744,31 +753,77 @@ public class EnemyThief : EnemyEntity
 
     private IEnumerator AttackSequence()
     {
-        SoundManager.instance.HumanSound_Attack(sprRndr.transform.position);
+        isOpenForParry = false;
 
-        yield return new WaitForSeconds(preAttackDuration);
-
-        if (currentState == EnemyThiefState.Attack)
+        for(int i = 0; i < maxAttackComboCount; i++)
         {
-            Vector3 startPos = sprRndr.gameObject.transform.position;
-            Vector3 endPos = startPos + (sprRndr.gameObject.transform.forward * attackRange);
-
-            Collider[] hitPlayers = Physics.OverlapCapsule(startPos, endPos, attackRadius, playerLayer);
-
-            if (hitPlayers.Length > 0)
+            if(i == maxAttackComboCount - 1)
             {
-                hitPlayers[0].GetComponent<PlayerController>().TakeSwordHit(this);
-            }
-            else
-            {
-                currentState = EnemyThiefState.Run;
+                currentState = EnemyThiefState.Attack2;
+                isOpenForParry = true;
             }
 
-            // Apply the cooldown
-            currentAttackCooldown = attackCooldownDuration;
+            SoundManager.instance.HumanSound_Attack(sprRndr.transform.position);
+            yield return new WaitForSeconds(preAttackDuration);
 
-            // 3. IMPORTANT: Free the enemy from the Attack state so they can move again
-            
+            if(stateTimer > 0 || kickTimer > 0 && isParried && isDied) { yield break; }
+
+            if (currentState == EnemyThiefState.Attack1 || currentState == EnemyThiefState.Attack2)
+            {
+                Vector3 startPos = sprRndr.gameObject.transform.position;
+                Vector3 endPos = startPos + (sprRndr.gameObject.transform.forward * attackRange);
+
+                Collider[] hitPlayers = Physics.OverlapCapsule(startPos, endPos, attackRadius, playerLayer);
+
+                if (hitPlayers.Length > 0)
+                {
+                    hitPlayers[0].GetComponent<PlayerController>().TakeSwordHit(this);
+                }
+
+                // Apply the cooldown
+                currentAttackCooldown = attackCooldownDuration;
+
+                // 3. IMPORTANT: Free the enemy from the Attack state so they can move again
+
+            }
+        }
+
+        if(!isParried)
+            currentState = EnemyThiefState.Run;
+    }
+
+    protected void HandleGoreAnimController()
+    {
+        if (animationController_34HP == null || animationController_67HP == null || animationController_100HP == null) { return; }
+
+        RuntimeAnimatorController targetController = null;
+
+        if (CharacterHealthComponent.CurrentHP <= CharacterHealthComponent.MaxHP * 0.34f)
+        {
+            targetController = animationController_34HP;
+        }
+        else if (CharacterHealthComponent.CurrentHP <= CharacterHealthComponent.MaxHP * 0.67f)
+        {
+            targetController = animationController_67HP;
+        }
+        else
+        {
+            targetController = animationController_100HP;
+        }
+
+        if (anim.runtimeAnimatorController != targetController)
+        {
+            // 1. Get current state info before switching
+            AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+            int stateNameHash = stateInfo.fullPathHash;
+            float normalizedTime = stateInfo.normalizedTime;
+
+            // 2. Switch the controller
+            anim.runtimeAnimatorController = targetController;
+
+            // 3. Restore the previous state and normalized time
+            // Note: The target controller must have a state matching this hash for this to work smoothly
+            anim.Play(stateNameHash, 0, normalizedTime);
         }
     }
 
@@ -777,7 +832,8 @@ public class EnemyThief : EnemyEntity
         { EnemyThiefState.Idle, Animator.StringToHash("IsIdle") },
         { EnemyThiefState.Run, Animator.StringToHash("IsRun") },
         { EnemyThiefState.Flank, Animator.StringToHash("IsRun") },
-        { EnemyThiefState.Attack, Animator.StringToHash("IsAttack") },
+        { EnemyThiefState.Attack1, Animator.StringToHash("IsAttack1") },
+        { EnemyThiefState.Attack2, Animator.StringToHash("IsAttack2") },
         { EnemyThiefState.BlockLeft, Animator.StringToHash("IsBlockLeft") },
         { EnemyThiefState.BlockRight, Animator.StringToHash("IsBlockRight") },
         { EnemyThiefState.DamageLeft, Animator.StringToHash("IsDamageLeft") },
@@ -803,13 +859,21 @@ public class EnemyThief : EnemyEntity
             if (lastStateHash != 0)
             {
                 anim.SetBool(lastStateHash, false);
-                animGore34.SetBool(lastStateHash, false);
-                animGore67.SetBool(lastStateHash, false);
+
+                if(animGore34 != null)
+                    animGore34.SetBool(lastStateHash, false);
+
+                if (animGore67 != null)
+                    animGore67.SetBool(lastStateHash, false);
             }
 
             anim.SetBool(currentHash, true);
-            animGore34.SetBool(currentHash, true);
-            animGore67.SetBool(currentHash, true);
+
+            if (animGore34 != null)
+                animGore34.SetBool(currentHash, true);
+
+            if (animGore67 != null)
+                animGore67.SetBool(currentHash, true);
 
             lastStateHash = currentHash;
         }

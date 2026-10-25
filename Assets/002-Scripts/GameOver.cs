@@ -32,7 +32,7 @@ public class GameOver : MonoBehaviour
 
         if(isRestartAvailable)
         {
-            if(PlayerController.instance.IsInteractPressed)
+            if(InputSchemeManager.instance.IsInteractPressed)
             {
                 canvasGroup_GameOver.DOKill();
                 canvasGroup_GameOver.DOFade(0f, 0.5f).SetUpdate(true);

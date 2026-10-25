@@ -109,9 +109,9 @@ public class EquipmentLoadOut : MonoBehaviour
             if(PauseGame.instance.IsPaused) { return; }
         }
 
-        if (PlayerController.instance.IsToggleLoadoutPressed)
+        if (InputSchemeManager.instance.IsToggleLoadoutPressed)
         {
-            PlayerController.instance.IsToggleLoadoutPressed = false;
+            InputSchemeManager.instance.IsToggleLoadoutPressed = false;
 
             if (panel_Inventory.activeInHierarchy)
             {
@@ -129,12 +129,16 @@ public class EquipmentLoadOut : MonoBehaviour
 
                 isPanelActive = true;
                 EventSystem.current.SetSelectedGameObject(firstSelected_Loadout);
+
+                InputSchemeManager.instance.OnInputActiveChange.Invoke();
             }
             else if(panel_Loadout.activeInHierarchy)
             {
                 Time.timeScale = 1f;
                 panel_Loadout.SetActive(false);
                 isPanelActive = false;
+
+                InputSchemeManager.instance.OnInputActiveChange.Invoke();
             }
         }
     }

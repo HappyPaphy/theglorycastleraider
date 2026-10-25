@@ -81,7 +81,7 @@ public class AsyncLoaderManager : MonoBehaviour
         {
             EventSystem.current.SetSelectedGameObject(confirmButton.gameObject);
 
-            if (PlayerController.instance.IsInteractPressed)
+            if (InputSchemeManager.instance.IsInteractPressed)
             {
                 ConfirmSceneChange();
             }
@@ -89,7 +89,7 @@ public class AsyncLoaderManager : MonoBehaviour
 
         if(canvasGroup_LoadingScreen.alpha == 1f)
         {
-            if(PlayerController.instance.IsReloadPressed)
+            if(InputSchemeManager.instance.IsReloadPressed)
             {
                 StartCoroutine(ChangeTip());
             }

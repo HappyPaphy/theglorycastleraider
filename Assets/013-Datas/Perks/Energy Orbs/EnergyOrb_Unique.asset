@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: add1fc5d3b6875c46a624d5794780ab9, type: 3}
+  m_Name: EnergyOrb_Unique
+  m_EditorClassIdentifier: Assembly-CSharp::EnergyOrbDefinition
+  tier: 2
+  shuffleCost: 50
+  offerCount: 3
+  minCardLevel: 1
+  maxCardLevel: 3
+  cardPool: []
+  allowDuplicateOffers: 0

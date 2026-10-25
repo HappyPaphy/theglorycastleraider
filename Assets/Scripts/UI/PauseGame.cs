@@ -92,16 +92,26 @@ public class PauseGame : MonoBehaviour
 
     void Update()
     {
-        if (PlayerController.instance.IsPausePressed && !isPaused && !isHowToPlayOn && !isReadingScroll 
+        if (InputSchemeManager.instance.IsPausePressed && !isPaused && !isHowToPlayOn && !isReadingScroll 
             /*&& !EquipmentManager.instance.isReplacePanelActive*/ && !isThisMainmenu && !GameOver.instance.isTriggerOnce
             )
         {
-            if(TutorialManager.instance != null)
+            InputSchemeManager.instance.IsPausePressed = false;
+
+            if (TutorialManager.instance != null)
             {
                 if (TutorialManager.instance.currentState != TutorialState.Idle) { return; }
             }
 
-            PlayerController.instance.IsPausePressed = false;
+            if (InputSchemeManager.instance != null)
+            {
+                if (PerkSelectionManager.instance.isPanelActive) { return; }
+            }
+
+            if (EquipmentLoadOut.instance != null)
+            {
+                if (EquipmentLoadOut.instance.isPanelActive) { return; }
+            }
 
             if (RoguelikeManager.instance != null)
             {
@@ -113,9 +123,25 @@ public class PauseGame : MonoBehaviour
 
             PauseTheGame();
         }
-        else if(PlayerController.instance.IsPausePressed && isPaused && !isHowToPlayOn && !isReadingScroll)
+        else if(InputSchemeManager.instance.IsPausePressed && isPaused && !isHowToPlayOn && !isReadingScroll)
         {
-            PlayerController.instance.IsPausePressed = false;
+            InputSchemeManager.instance.IsPausePressed = false;
+
+            if (TutorialManager.instance != null)
+            {
+                if (TutorialManager.instance.currentState != TutorialState.Idle) { return; }
+            }
+
+            if (InputSchemeManager.instance != null)
+            {
+                if (PerkSelectionManager.instance.isPanelActive) { return; }
+            }
+
+            if (EquipmentLoadOut.instance != null)
+            {
+                if (EquipmentLoadOut.instance.isPanelActive) { return; }
+            }
+
             SettingManager.instance.isSettingActive = false;
 
             MakePanelActive(mainMenuConfirmPanel, false);
@@ -193,6 +219,8 @@ public class PauseGame : MonoBehaviour
 
         canvasGroup_PausedMenu.blocksRaycasts = true;
         canvasGroup_PausedMenu.interactable = true;
+
+        InputSchemeManager.instance.OnInputActiveChange.Invoke();
     }
 
     private void UpdateRoguelikeText()
@@ -248,62 +276,8 @@ public class PauseGame : MonoBehaviour
 
         MakePanelActive(pauseMenuPanel, false);
         Invoke("SetActivePauseMenuPanel", 0.2f);
-    }
 
-    public void ResumeButton()
-    {
-        if (isPaused && !isHowToPlayOn)
-        {
-            isPaused = false;
-            Time.timeScale = 1f;
-            StartCoroutine(MakeCanvasGroupActive(false, canvasGroup_Setting));
-
-            canvasGroup_PausedMenu.blocksRaycasts = false;
-            canvasGroup_PausedMenu.interactable = false;
-
-            if (SettingManager.instance != null)
-            {
-                SettingManager.instance.SaveKeyBinding();
-            }
-
-            pauseMenuPanel.DOScaleX(0, 0.2f).SetEase(Ease.InBack).SetUpdate(true);
-        }
-    }
-
-    /*public void PauseGameButton()
-    {
-        if (!isPaused && !isHowToPlayOn)
-        {
-            isPaused = true;
-            Time.timeScale = 0f;
-            pauseMenuPanel.DOScaleX(1, 0.2f).SetEase(Ease.OutBack).SetUpdate(true);
-            EventSystem.current.SetSelectedGameObject(firstSelected_PauseMenu);
-        }
-        else if (isPaused && !isHowToPlayOn)
-        {
-            isPaused = false;
-            Time.timeScale = 1f;
-            pauseMenuPanel.DOScaleX(0, 0.2f).SetEase(Ease.InBack).SetUpdate(true);
-            EventSystem.current.SetSelectedGameObject(null);
-        }
-    }*/
-
-    private void SetActivePauseMenuPanel()
-    {
-        pauseMenuPanel.gameObject.SetActive(false);
-    }
-
-    /*public void HowToPlay()
-    {
-        isHowToPlayOn = true;
-        howToPlayCanvaGroup.DOFade(1, 0.2f).SetEase(Ease.OutBack).SetUpdate(true);
-        howToPlayCanvaGroup.blocksRaycasts = true;
-        howToPlayCanvaGroup.interactable = true;
-    }*/
-
-    public void BackToPausedMenu()
-    {
-        isHowToPlayOn = false;
+        InputSchemeManager.instance.OnInputActiveChange.Invoke();
     }
 
     public void RestartScene()

@@ -51,12 +51,12 @@ public class CameraBob : MonoBehaviour
         bool isSprinting = false;
 
         // Ensure playerController is assigned and active before reading
-        if (playerController != null && playerController.playerControls != null)
+        if (InputSchemeManager.instance != null && InputSchemeManager.instance.playerControls != null)
         {
-            moveValue = playerController.playerControls.Player.Move.ReadValue<Vector2>();
+            moveValue = InputSchemeManager.instance.playerControls.Player.Move.ReadValue<Vector2>();
 
             // Only count as sprinting if the player actually has stamina remaining
-            isSprinting = playerController.isSprintHeld && playerController.CharacterStaminaComponent.CurrentStamina > 0f;
+            isSprinting = InputSchemeManager.instance.isSprintHeld && playerController.CharacterStaminaComponent.CurrentStamina > 0f;
         }
 
         bool isMoving = moveValue.sqrMagnitude > 0.01f;

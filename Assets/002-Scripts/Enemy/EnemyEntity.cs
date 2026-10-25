@@ -11,6 +11,10 @@ public class EnemyEntity : CharacterEntity
     [SerializeField] protected SpriteRenderer goreSprite_67HP;
     [SerializeField] protected Animator animGore34;
     [SerializeField] protected Animator animGore67;
+
+    [SerializeField] protected RuntimeAnimatorController animationController_34HP;
+    [SerializeField] protected RuntimeAnimatorController animationController_67HP;
+    [SerializeField] protected RuntimeAnimatorController animationController_100HP;
     [SerializeField] protected NavMeshAgent agent;
 
     [Header("Knockback Settings")]
@@ -215,8 +219,8 @@ public class EnemyEntity : CharacterEntity
                 goreSprite_67HP.enabled = false;
             }
         }
-        
     }
+
 
     protected virtual void HandleKnockback()
     {

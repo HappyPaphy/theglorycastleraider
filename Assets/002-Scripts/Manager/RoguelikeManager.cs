@@ -82,9 +82,9 @@ public class RoguelikeManager : MonoBehaviour
                 canvasGroup_ProceedNextFloor.DOFade(0f, 0.3f).SetUpdate(false);
             }
 
-            if (PlayerController.instance.IsMinimapPressed && !isProceedNextFloorOnce)
+            if (InputSchemeManager.instance.IsMinimapPressed && !isProceedNextFloorOnce)
             {
-                PlayerController.instance.IsMinimapPressed = false;
+                InputSchemeManager.instance.IsMinimapPressed = false;
                 isProceedNextFloorOnce = true;
 
                 StartCoroutine(ProceedToNextFloor());

@@ -28,6 +28,7 @@ public class UIFeedback : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     [Header("Custom UI Events")]
     public UnityEvent onHover;
     public UnityEvent onClick;
+    public UnityEvent onSelected;
 
     private bool isSelected = false;
 
@@ -236,6 +237,8 @@ public class UIFeedback : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
         EventSystem.current.SetSelectedGameObject(gameObject);
         SelectedUI();
+
+        onSelected?.Invoke();
     }
 
     // SELECTION LOST: Fires when selection moves to another object

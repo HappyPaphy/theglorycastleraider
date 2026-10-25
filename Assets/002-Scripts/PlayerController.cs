@@ -16,56 +16,13 @@ public enum FootState
 public class PlayerController : PlayerEntity
 {
     [Header("Components")]
+    public CoinWallet coinWallet;
     [SerializeField] private CameraFollow cameraFollow;
     [SerializeField] private GameObject deadCamPrefab;
     [SerializeField] private CameraPostProcessEffect postProcressEffect;
     public CameraBob cameraBob;
     [SerializeField] private PlayerWeaponManager playerWeaponManager;
     [SerializeField] private WeaponSway weaponSway;
-
-    [Header("Input Actions")]
-    public PlayerInputActions playerControls;
-    [SerializeField] private InputAction input_Jump;
-    [SerializeField] private InputAction input_Sprint;
-    [SerializeField] private InputAction input_Move;
-    public InputAction input_Look;
-    [SerializeField] private InputAction input_Interact;
-    [SerializeField] private InputAction input_Reload;
-    [SerializeField] private InputAction input_Dash;
-    [SerializeField] private InputAction input_Minimap;
-    [SerializeField] private InputAction input_Pause;
-    [SerializeField] private InputAction input_ToggleTwoHanded_Left;
-    [SerializeField] private InputAction input_ToggleTwoHanded_Right;
-    [SerializeField] private InputAction input_SwitchWeapon_Up;
-    [SerializeField] private InputAction input_SwitchWeapon_Right;
-    [SerializeField] private InputAction input_SwitchWeapon_Down;
-    [SerializeField] private InputAction input_SwitchWeapon_Left;
-    [SerializeField] private InputAction input_ToggleLoadout;
-    public InputAction input_Kick;
-    public InputAction input_PerformRightHand;
-    public InputAction input_PerformLeftHand;
-
-    public Sprite InteractSprite_Keyboard;
-    public Sprite InteractSprite_XBox;
-
-    [HideInInspector] public bool IsInteractHeld = false;
-    [HideInInspector] public bool IsInteractPressed = false;
-    private bool isDashHeld = false;
-    private bool isDashPressed = false;
-    [HideInInspector] public bool IsMinimapHeld = false;
-    [HideInInspector] public bool IsMinimapPressed = false;
-    [HideInInspector] public bool IsPauseHeld = false;
-    [HideInInspector] public bool IsPausePressed = false;
-    [HideInInspector] public bool IsSwitchWeaponPressed_Up = false;
-    [HideInInspector] public bool IsSwitchWeaponPressed_Right = false;
-    [HideInInspector] public bool IsSwitchWeaponPressed_Down = false;
-    [HideInInspector] public bool IsSwitchWeaponPressed_Left = false;
-    [HideInInspector] public bool IsSwitchWeaponHeld_Up = false;
-    [HideInInspector] public bool IsSwitchWeaponHeld_Right = false;
-    [HideInInspector] public bool IsSwitchWeaponHeld_Down = false;
-    [HideInInspector] public bool IsSwitchWeaponHeld_Left = false;
-
-    [HideInInspector] public bool isMouseVisible = false;
 
     [Header("Kick")]
     public FootState footState;
@@ -74,26 +31,6 @@ public class PlayerController : PlayerEntity
     [SerializeField] private LayerMask kickLayerMask;
     [SerializeField] private Image image_Foot;
     [SerializeField] private Animator anim_Foot;
-
-    [Header("Combat")]
-    [HideInInspector] public bool isJumpHeld = false;
-    [HideInInspector] public bool isJumpPressed = false;
-    [HideInInspector] public bool isSprintHeld = false;
-    [HideInInspector] public bool isSprintPressed = false;
-    [HideInInspector] public bool isKickHeld = false;
-    [HideInInspector] public bool isKickPressed = false;
-    [HideInInspector] public bool isRightHandHeld = false;
-    [HideInInspector] public bool isRightHandPressed = false;
-    [HideInInspector] public bool isLeftHandHeld = false;
-    [HideInInspector] public bool isLeftHandPressed = false;
-    [HideInInspector] public bool IsReloadHeld = false;
-    [HideInInspector] public bool IsReloadPressed = false;
-    [HideInInspector] public bool IsToggleTwoHandedHeld_Left = false;
-    [HideInInspector] public bool IsToggleTwoHandedPressed_Left = false;
-    [HideInInspector] public bool IsToggleTwoHandedHeld_Right = false;
-    [HideInInspector] public bool IsToggleTwoHandedPressed_Right = false;
-    [HideInInspector] public bool IsToggleLoadoutHeld = false;
-    [HideInInspector] public bool IsToggleLoadoutPressed = false;
 
     [Header("Movement Settings")]
     [SerializeField] private float walkSpeed = 6f;
@@ -150,366 +87,12 @@ public class PlayerController : PlayerEntity
 
     public static PlayerController instance;
 
-    private void OnEnable()
-    {
-        // 1. Subscribe to the binding update event
-        RebindSaveLoad.OnBindingsLoaded += ApplyLoadedBindings;
-
-        // 2. Load the overrides immediately into playerControls before maps are activated
-        ApplyLoadedBindings();
-
-        // 3. Set up and enable actions normally
-        input_Move = playerControls.Player.Move;
-        input_Move.Enable();
-
-        input_Look = playerControls.Player.Look;
-        input_Look.Enable();
-
-        input_Jump = playerControls.Player.Jump;
-        input_Jump.Enable();
-        input_Jump.performed += OnJumpPerformed;
-        input_Jump.canceled += OnJumpCanceled;
-
-        input_Sprint = playerControls.Player.Sprint;
-        input_Sprint.Enable();
-        input_Sprint.performed += OnSprintPerformed;
-        input_Sprint.canceled += OnSprintCanceled;
-
-        input_ToggleTwoHanded_Left = playerControls.Player.ToggleTwoHanded_Left;
-        input_ToggleTwoHanded_Left.Enable();
-        input_ToggleTwoHanded_Left.performed += OnToggleTwoHandedPerformed_Left;
-        input_ToggleTwoHanded_Left.canceled += OnToggleTwoHandedCanceled_Left;
-
-        input_ToggleTwoHanded_Right = playerControls.Player.ToggleTwoHanded_Right;
-        input_ToggleTwoHanded_Right.Enable();
-        input_ToggleTwoHanded_Right.performed += OnToggleTwoHandedPerformed_Right;
-        input_ToggleTwoHanded_Right.canceled += OnToggleTwoHandedCanceled_Right;
-
-        input_Kick = playerControls.Player.Kick;
-        input_Kick.Enable();
-        input_Kick.performed += OnKickPerformed;
-        input_Kick.canceled += OnKickCanceled;
-
-        input_PerformRightHand = playerControls.Player.RightHand;
-        input_PerformRightHand.Enable();
-        input_PerformRightHand.performed += OnRightHandPerformed;
-        input_PerformRightHand.canceled += OnRightHandCanceled;
-
-        input_PerformLeftHand = playerControls.Player.LeftHand;
-        input_PerformLeftHand.Enable();
-        input_PerformLeftHand.performed += OnLeftHandPerformed;
-        input_PerformLeftHand.canceled += OnLeftHandCanceled;
-
-        input_Interact = playerControls.Player.Interact;
-        input_Interact.Enable();
-        input_Interact.performed += OnInteractPerformed;
-        input_Interact.canceled += OnInteractCanceled;
-
-        input_Reload = playerControls.Player.Reload;
-        input_Reload.Enable();
-        input_Reload.performed += OnReloadPerformed;
-        input_Reload.canceled += OnReloadCanceled;
-
-        input_Dash = playerControls.Player.Dash;
-        input_Dash.Enable();
-        input_Dash.performed += OnDashPerformed;
-        input_Dash.canceled += OnDashCanceled;
-
-        input_Minimap = playerControls.Player.Minimap;
-        input_Minimap.Enable();
-        input_Minimap.performed += OnMinimapPerformed;
-        input_Minimap.canceled += OnMinimapCanceled;
-
-        input_Pause = playerControls.Player.Pause;
-        input_Pause.Enable();
-        input_Pause.performed += OnPausePerformed;
-        input_Pause.canceled += OnPauseCanceled;
-
-        input_SwitchWeapon_Up = playerControls.Player.SwitchWeaponUp;
-        input_SwitchWeapon_Up.Enable();
-        input_SwitchWeapon_Up.performed += OnSwitchWeaponUpPerformed;
-        input_SwitchWeapon_Up.canceled += OnSwitchWeaponUpCanceled;
-
-        input_SwitchWeapon_Right = playerControls.Player.SwitchWeaponRight;
-        input_SwitchWeapon_Right.Enable();
-        input_SwitchWeapon_Right.performed += OnSwitchWeaponRightPerformed;
-        input_SwitchWeapon_Right.canceled += OnSwitchWeaponRightCanceled;
-
-        input_SwitchWeapon_Down = playerControls.Player.SwitchWeaponDown;
-        input_SwitchWeapon_Down.Enable();
-        input_SwitchWeapon_Down.performed += OnSwitchWeaponDownPerformed;
-        input_SwitchWeapon_Down.canceled += OnSwitchWeaponDownCanceled;
-
-        input_SwitchWeapon_Left = playerControls.Player.SwitchWeaponLeft;
-        input_SwitchWeapon_Left.Enable();
-        input_SwitchWeapon_Left.performed += OnSwitchWeaponLeftPerformed;
-        input_SwitchWeapon_Left.canceled += OnSwitchWeaponLeftCanceled;
-
-        input_ToggleLoadout = playerControls.Player.Loadout;
-        input_ToggleLoadout.Enable();
-        input_ToggleLoadout.performed += OnToggleLoadoutPerformed;
-        input_ToggleLoadout.canceled += OnToggleLoadoutCanceled;
-    }
-
-    private void OnDisable()
-    {
-        // Unsubscribe from the event to avoid memory leaks
-        RebindSaveLoad.OnBindingsLoaded -= ApplyLoadedBindings;
-
-        input_Move.Disable();
-        input_Look.Disable();
-        input_Jump.Disable();
-        input_Sprint.Disable();
-        input_Kick.Disable();
-        input_PerformLeftHand.Disable();
-        input_PerformRightHand.Disable();
-        input_Interact.Disable();
-        input_Reload.Disable();
-        input_Dash.Disable();
-        input_Minimap.Disable();
-        input_Pause.Disable();
-        input_ToggleTwoHanded_Left.Disable();
-        input_ToggleTwoHanded_Right.Disable();
-        input_SwitchWeapon_Up.Disable();
-        input_SwitchWeapon_Right.Disable();
-        input_SwitchWeapon_Down.Disable();
-        input_SwitchWeapon_Left.Disable();
-        input_ToggleLoadout.Disable();
-    }
-
-    private void ApplyLoadedBindings()
-    {
-        if (playerControls == null) return;
-
-        // Pull the key directly from your active RebindSaveLoad instance, or default back to a safe fallback string
-        string key = RebindSaveLoad.instance != null ? RebindSaveLoad.instance.playerPreferenceKey : "YOUR_DEFAULT_PREF_KEY";
-
-        string rebinds = PlayerPrefs.GetString(key);
-        if (!string.IsNullOrEmpty(rebinds))
-        {
-            // If bindings are modified mid-game, input maps must cycle off and on to apply changes cleanly
-            bool wasEnabled = playerControls.asset.enabled;
-            if (wasEnabled) playerControls.Disable();
-
-            playerControls.LoadBindingOverridesFromJson(rebinds);
-
-            if (wasEnabled) playerControls.Enable();
-        }
-    }
-
-    private void OnJumpPerformed(InputAction.CallbackContext context)
-    {
-        isJumpHeld = true;
-        isJumpPressed = true;
-    }
-
-    private void OnJumpCanceled(InputAction.CallbackContext context)
-    {
-        isJumpHeld = false;
-    }
-
-    private void OnToggleLoadoutPerformed(InputAction.CallbackContext context)
-    {
-        IsToggleLoadoutHeld = true;
-        IsToggleLoadoutPressed = true;
-    }
-
-    private void OnToggleLoadoutCanceled(InputAction.CallbackContext context)
-    {
-        IsToggleLoadoutHeld = false;
-    }
-
-    private void OnSprintPerformed(InputAction.CallbackContext context)
-    {
-        isSprintHeld = true;
-        isSprintPressed = true;
-    }
-
-    private void OnSprintCanceled(InputAction.CallbackContext context)
-    {
-        isSprintHeld = false;
-    }
-
-    private void OnKickPerformed(InputAction.CallbackContext context)
-    {
-        isKickHeld = true;
-        isKickPressed = true;
-    }
-
-    private void OnKickCanceled(InputAction.CallbackContext context)
-    {
-        isKickHeld = false;
-    }
-
-    private void OnRightHandPerformed(InputAction.CallbackContext context)
-    {
-        isRightHandHeld = true;
-        isRightHandPressed = true;
-    }
-
-    private void OnRightHandCanceled(InputAction.CallbackContext context)
-    {
-        isRightHandHeld = false;
-    }
-
-    private void OnLeftHandPerformed(InputAction.CallbackContext context)
-    {
-        isLeftHandHeld = true;
-        isLeftHandPressed = true;
-    }
-
-    private void OnLeftHandCanceled(InputAction.CallbackContext context)
-    {
-        isLeftHandHeld = false;
-    }
-
-    private void OnInteractPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        // When the button is first pressed down
-        IsInteractHeld = true;
-        IsInteractPressed = true;
-    }
-
-    private void OnInteractCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        // When the button is released
-        IsInteractHeld = false;
-    }
-
-    private void OnDashPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        // When the button is first pressed down
-        isDashHeld = true;
-        isDashPressed = true;
-    }
-
-    private void OnDashCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        // When the button is released
-        isDashHeld = false;
-    }
-
-    private void OnMinimapPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        // When the button is first pressed down
-        IsMinimapHeld = true;
-        IsMinimapPressed = true;
-    }
-
-    private void OnMinimapCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        // When the button is released
-        IsMinimapHeld = false;
-    }
-
-    private void OnReloadPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        // When the button is first pressed down
-        IsReloadHeld = true;
-        IsReloadPressed = true;
-    }
-
-    private void OnReloadCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        // When the button is released
-        IsReloadHeld = false;
-    }
-
-    private void OnPausePerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        // When the button is first pressed down
-        IsPauseHeld = true;
-        IsPausePressed = true;
-    }
-
-    private void OnPauseCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        // When the button is released
-        IsPauseHeld = false;
-    }
-
-    private void OnToggleTwoHandedPerformed_Left(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        // When the button is first pressed down
-        IsToggleTwoHandedHeld_Left = true;
-        IsToggleTwoHandedPressed_Left = true;
-    }
-
-    private void OnToggleTwoHandedCanceled_Left(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        // When the button is released
-        IsToggleTwoHandedHeld_Left = false;
-    }
-
-    private void OnToggleTwoHandedPerformed_Right(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        // When the button is first pressed down
-        IsToggleTwoHandedHeld_Right = true;
-        IsToggleTwoHandedPressed_Right = true;
-    }
-
-    private void OnToggleTwoHandedCanceled_Right(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        // When the button is released
-        IsToggleTwoHandedHeld_Right = false;
-    }
-
-    private void OnSwitchWeaponUpPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        // When the button is first pressed down
-        IsSwitchWeaponPressed_Up = true;
-        IsSwitchWeaponHeld_Up = true;
-    }
-
-    private void OnSwitchWeaponUpCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        // When the button is released
-        IsSwitchWeaponHeld_Up = false;
-    }
-
-    private void OnSwitchWeaponRightPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        // When the button is first pressed down
-        IsSwitchWeaponPressed_Right = true;
-        IsSwitchWeaponHeld_Right = true;
-    }
-
-    private void OnSwitchWeaponRightCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        // When the button is released
-        IsSwitchWeaponHeld_Right = false;
-    }
-    private void OnSwitchWeaponDownPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        // When the button is first pressed down
-        IsSwitchWeaponPressed_Down = true;
-        IsSwitchWeaponHeld_Down = true;
-    }
-
-    private void OnSwitchWeaponDownCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        // When the button is released
-        IsSwitchWeaponHeld_Down = false;
-    }
-    private void OnSwitchWeaponLeftPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        // When the button is first pressed down
-        IsSwitchWeaponPressed_Left = true;
-        IsSwitchWeaponHeld_Left = true;
-    }
-
-    private void OnSwitchWeaponLeftCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        // When the button is released
-        IsSwitchWeaponHeld_Left = false;
-    }
+    
 
 
     protected override void Awake()
     {
         instance = this;
-
-        playerControls = new PlayerInputActions();
 
         base.Awake();
     }
@@ -548,14 +131,9 @@ public class PlayerController : PlayerEntity
         base.Update();
     }
 
-    private void LateUpdate()
-    {
-        ResetActionInputPressed();
-    }
-
     private void HandleKick()
     {
-        if (isKickPressed && !isKicking && PlayerWeaponManager.instance.currentState_Righthand == PerformActionState.Idle
+        if (InputSchemeManager.instance.isKickPressed && !isKicking && PlayerWeaponManager.instance.currentState_Righthand == PerformActionState.Idle
             && PlayerWeaponManager.instance.currentState_LeftHand == PerformActionState.Idle)
         {
             if (CharacterStaminaComponent.CurrentStamina > 0f)
@@ -681,7 +259,7 @@ public class PlayerController : PlayerEntity
 
         if(!isExecuting)
         {
-            Vector2 lookValue = input_Look.ReadValue<Vector2>();
+            Vector2 lookValue = InputSchemeManager.instance.input_Look.ReadValue<Vector2>();
 
             float adjustedSensitivity = mouseSensitivity;
 
@@ -730,12 +308,12 @@ public class PlayerController : PlayerEntity
         Vector2 moveValue = Vector2.zero;
         if (!isAttacking && !isExecuting)
         {
-            moveValue = input_Move.ReadValue<Vector2>();
+            moveValue = InputSchemeManager.instance.input_Move.ReadValue<Vector2>();
         }
 
         Vector3 standardMove = transform.right * moveValue.x + transform.forward * moveValue.y;
 
-        if (isDashPressed && isGrounded && !isSliding && !isAttacking && !isExecuting && standardMove.sqrMagnitude > 0.01f)
+        if (InputSchemeManager.instance.isDashPressed && isGrounded && !isSliding && !isAttacking && !isExecuting && standardMove.sqrMagnitude > 0.01f)
         {
             if(CharacterStaminaComponent.CurrentStamina > 0f)
             {
@@ -782,7 +360,7 @@ public class PlayerController : PlayerEntity
         }
         else
         {
-            bool isSprinting = isSprintHeld && CharacterStaminaComponent.CurrentStamina > 0f;
+            bool isSprinting = InputSchemeManager.instance.isSprintHeld && CharacterStaminaComponent.CurrentStamina > 0f;
 
             if (isSprinting && moveValue.sqrMagnitude > 0.01f)
             {
@@ -799,7 +377,7 @@ public class PlayerController : PlayerEntity
 
         controller.Move(finalMove * currentSpeed * Time.deltaTime);
 
-        if (isJumpPressed && isGrounded && !isSliding && !isAttacking)
+        if (InputSchemeManager.instance.isJumpPressed && isGrounded && !isSliding && !isAttacking)
         {
             weaponSway.TriggerJumpImpulse();
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
@@ -1032,27 +610,6 @@ public class PlayerController : PlayerEntity
         playerWeaponManager.image_RightHand.enabled = false;
 
         base.Die();
-    }
-
-    private void ResetActionInputPressed()
-    {
-        IsInteractPressed = false;
-        isDashPressed = false;
-        IsMinimapPressed = false;
-        IsReloadPressed = false;
-        IsPausePressed = false;
-        IsSwitchWeaponPressed_Up = false;
-        IsSwitchWeaponPressed_Right = false;
-        IsSwitchWeaponPressed_Down = false;
-        IsSwitchWeaponPressed_Left = false;
-        isRightHandPressed = false;
-        isLeftHandPressed = false;
-        isKickPressed = false;
-        isJumpPressed = false;
-        isSprintPressed = false;
-        IsToggleTwoHandedPressed_Left = false;
-        IsToggleTwoHandedPressed_Right = false;
-        IsToggleLoadoutPressed = false;
     }
 
     private static readonly Dictionary<FootState, int> StateToHash = new Dictionary<FootState, int>

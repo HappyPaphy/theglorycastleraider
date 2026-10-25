@@ -33,7 +33,7 @@ public class WeaponSway : MonoBehaviour
     {
         if(playerController.CharacterHealthComponent.CurrentHP <= 0f) { return; }
 
-        Vector2 lookDelta = playerController.playerControls.Player.Look.ReadValue<Vector2>();
+        Vector2 lookDelta = InputSchemeManager.instance.playerControls.Player.Look.ReadValue<Vector2>();
 
         float moveX = Mathf.Clamp(-lookDelta.x * swayMultiplier, -maxSway, maxSway);
         float moveY = Mathf.Clamp(-lookDelta.y * swayMultiplier, -maxSway, maxSway);
@@ -43,11 +43,11 @@ public class WeaponSway : MonoBehaviour
         // 2. Calculate Movement Bob (Figure-8 pattern)
         Vector3 movementBobPosition = Vector3.zero;
 
-        Vector2 moveValue = playerController.playerControls.Player.Move.ReadValue<Vector2>();
+        Vector2 moveValue = InputSchemeManager.instance.playerControls.Player.Move.ReadValue<Vector2>();
         bool isMoving = moveValue.sqrMagnitude > 0.01f;
 
         // Read the sprint bool directly from the controller
-        bool isSprinting = playerController.isSprintHeld;
+        bool isSprinting = InputSchemeManager.instance.isSprintHeld;
 
         if (isMoving && !playerController.isAttacking && playerController.isGrounded && !playerController.isSliding)
         {
