@@ -68,6 +68,7 @@ public class InputSchemeManager : MonoBehaviour
     [Header("UI Input Actions")]
     public InputAction input_Submit;
     public InputAction input_Cancel;
+    public InputAction input_UIReload;
 
 
     public Sprite InteractSprite_Keyboard;
@@ -112,6 +113,8 @@ public class InputSchemeManager : MonoBehaviour
     [HideInInspector] public bool IsSubmitHeld = false;
     [HideInInspector] public bool IsCancelPressed = false;
     [HideInInspector] public bool IsCancelHeld = false;
+    [HideInInspector] public bool IsUIReloadPressed = false;
+    [HideInInspector] public bool IsUIReloadHeld = false;
 
     [HideInInspector] public bool isMouseVisible = false;
 
@@ -251,6 +254,11 @@ public class InputSchemeManager : MonoBehaviour
         input_Cancel.Enable();
         input_Cancel.performed += OnCancelPerformed;
         input_Cancel.canceled += OnCancelCanceled;
+
+        input_UIReload = playerControls.UI.Reload;
+        input_UIReload.Enable();
+        input_UIReload.performed += OnUIReloadPerformed;
+        input_UIReload.canceled += OnUIReloadCanceled;
     }
 
     private void OnDisable()
@@ -277,8 +285,10 @@ public class InputSchemeManager : MonoBehaviour
         input_SwitchWeapon_Down.Disable();
         input_SwitchWeapon_Left.Disable();
         input_ToggleLoadout.Disable();
+
         input_Submit.Disable();
         input_Cancel.Disable();
+        input_UIReload.Disable();
     }
 
     private void ApplyLoadedBindings()
@@ -303,6 +313,8 @@ public class InputSchemeManager : MonoBehaviour
 
     private void OnJumpPerformed(InputAction.CallbackContext context)
     {
+        if(currentPlayerInputState == PlayerInputState.Inactive) { return; }
+
         isJumpHeld = true;
         isJumpPressed = true;
     }
@@ -325,6 +337,8 @@ public class InputSchemeManager : MonoBehaviour
 
     private void OnSubmitPerformed(InputAction.CallbackContext context)
     {
+        if (currentUIInputState == UIInputState.Inactive) { return; }
+
         IsSubmitHeld = true;
         IsSubmitPressed = true;
     }
@@ -336,6 +350,8 @@ public class InputSchemeManager : MonoBehaviour
 
     private void OnCancelPerformed(InputAction.CallbackContext context)
     {
+        if (currentUIInputState == UIInputState.Inactive) { return; }
+
         IsCancelHeld = true;
         IsCancelPressed = true;
     }
@@ -345,8 +361,23 @@ public class InputSchemeManager : MonoBehaviour
         IsCancelHeld = false;
     }
 
+    private void OnUIReloadPerformed(InputAction.CallbackContext context)
+    {
+        if (currentUIInputState == UIInputState.Inactive) { return; }
+
+        IsUIReloadHeld = true;
+        IsUIReloadPressed = true;
+    }
+
+    private void OnUIReloadCanceled(InputAction.CallbackContext context)
+    {
+        IsUIReloadHeld = false;
+    }
+
     private void OnSprintPerformed(InputAction.CallbackContext context)
     {
+        if (currentPlayerInputState == PlayerInputState.Inactive) { return; }
+
         isSprintHeld = true;
         isSprintPressed = true;
     }
@@ -358,6 +389,8 @@ public class InputSchemeManager : MonoBehaviour
 
     private void OnKickPerformed(InputAction.CallbackContext context)
     {
+        if (currentPlayerInputState == PlayerInputState.Inactive) { return; }
+
         isKickHeld = true;
         isKickPressed = true;
     }
@@ -369,6 +402,8 @@ public class InputSchemeManager : MonoBehaviour
 
     private void OnRightHandPerformed(InputAction.CallbackContext context)
     {
+        if (currentPlayerInputState == PlayerInputState.Inactive) { return; }
+
         isRightHandHeld = true;
         isRightHandPressed = true;
     }
@@ -380,6 +415,8 @@ public class InputSchemeManager : MonoBehaviour
 
     private void OnLeftHandPerformed(InputAction.CallbackContext context)
     {
+        if (currentPlayerInputState == PlayerInputState.Inactive) { return; }
+
         isLeftHandHeld = true;
         isLeftHandPressed = true;
     }
@@ -391,6 +428,8 @@ public class InputSchemeManager : MonoBehaviour
 
     private void OnInteractPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
+        if (currentPlayerInputState == PlayerInputState.Inactive) { return; }
+
         // When the button is first pressed down
         IsInteractHeld = true;
         IsInteractPressed = true;
@@ -398,12 +437,13 @@ public class InputSchemeManager : MonoBehaviour
 
     private void OnInteractCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-        // When the button is released
         IsInteractHeld = false;
     }
 
     private void OnDashPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
+        if (currentPlayerInputState == PlayerInputState.Inactive) { return; }
+
         // When the button is first pressed down
         isDashHeld = true;
         isDashPressed = true;
@@ -411,12 +451,13 @@ public class InputSchemeManager : MonoBehaviour
 
     private void OnDashCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-        // When the button is released
         isDashHeld = false;
     }
 
     private void OnMinimapPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
+        if (currentPlayerInputState == PlayerInputState.Inactive) { return; }
+
         // When the button is first pressed down
         IsMinimapHeld = true;
         IsMinimapPressed = true;
@@ -424,12 +465,13 @@ public class InputSchemeManager : MonoBehaviour
 
     private void OnMinimapCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-        // When the button is released
         IsMinimapHeld = false;
     }
 
     private void OnReloadPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
+        if (currentPlayerInputState == PlayerInputState.Inactive) { return; }
+
         // When the button is first pressed down
         IsReloadHeld = true;
         IsReloadPressed = true;
@@ -437,7 +479,6 @@ public class InputSchemeManager : MonoBehaviour
 
     private void OnReloadCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-        // When the button is released
         IsReloadHeld = false;
     }
 
@@ -450,25 +491,26 @@ public class InputSchemeManager : MonoBehaviour
 
     private void OnPauseCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-        // When the button is released
         IsPauseHeld = false;
     }
 
     private void OnToggleTwoHandedPerformed_Left(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-        // When the button is first pressed down
+        if (currentPlayerInputState == PlayerInputState.Inactive) { return; }
+
         IsToggleTwoHandedHeld_Left = true;
         IsToggleTwoHandedPressed_Left = true;
     }
 
     private void OnToggleTwoHandedCanceled_Left(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-        // When the button is released
         IsToggleTwoHandedHeld_Left = false;
     }
 
     private void OnToggleTwoHandedPerformed_Right(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
+        if (currentPlayerInputState == PlayerInputState.Inactive) { return; }
+
         // When the button is first pressed down
         IsToggleTwoHandedHeld_Right = true;
         IsToggleTwoHandedPressed_Right = true;
@@ -476,12 +518,13 @@ public class InputSchemeManager : MonoBehaviour
 
     private void OnToggleTwoHandedCanceled_Right(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-        // When the button is released
         IsToggleTwoHandedHeld_Right = false;
     }
 
     private void OnSwitchWeaponUpPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
+        if (currentPlayerInputState == PlayerInputState.Inactive) { return; }
+
         // When the button is first pressed down
         IsSwitchWeaponPressed_Up = true;
         IsSwitchWeaponHeld_Up = true;
@@ -489,12 +532,13 @@ public class InputSchemeManager : MonoBehaviour
 
     private void OnSwitchWeaponUpCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-        // When the button is released
         IsSwitchWeaponHeld_Up = false;
     }
 
     private void OnSwitchWeaponRightPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
+        if (currentPlayerInputState == PlayerInputState.Inactive) { return; }
+
         // When the button is first pressed down
         IsSwitchWeaponPressed_Right = true;
         IsSwitchWeaponHeld_Right = true;
@@ -502,11 +546,12 @@ public class InputSchemeManager : MonoBehaviour
 
     private void OnSwitchWeaponRightCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-        // When the button is released
         IsSwitchWeaponHeld_Right = false;
     }
     private void OnSwitchWeaponDownPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
+        if (currentPlayerInputState == PlayerInputState.Inactive) { return; }
+
         // When the button is first pressed down
         IsSwitchWeaponPressed_Down = true;
         IsSwitchWeaponHeld_Down = true;
@@ -514,11 +559,12 @@ public class InputSchemeManager : MonoBehaviour
 
     private void OnSwitchWeaponDownCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-        // When the button is released
         IsSwitchWeaponHeld_Down = false;
     }
     private void OnSwitchWeaponLeftPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
+        if (currentPlayerInputState == PlayerInputState.Inactive) { return; }
+
         // When the button is first pressed down
         IsSwitchWeaponPressed_Left = true;
         IsSwitchWeaponHeld_Left = true;
@@ -526,7 +572,6 @@ public class InputSchemeManager : MonoBehaviour
 
     private void OnSwitchWeaponLeftCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-        // When the button is released
         IsSwitchWeaponHeld_Left = false;
     }
 
@@ -592,7 +637,7 @@ public class InputSchemeManager : MonoBehaviour
                 if (instancesValid)
                 {
                     //bool isIdle = GameResultRoguelike.instance.currentState == GameResultState.Idle;
-                    bool isNotPaused = !PauseGame.instance.IsPaused && !EquipmentLoadOut.instance.isPanelActive;
+                    bool isNotPaused = !PauseGame.instance.IsPaused && !EquipmentLoadOut.instance.isPanelActive && !PerkSelectionManager.instance.isPanelActive;
                     bool isAlive = PlayerController.instance.CharacterHealthComponent.CurrentHP > 0f;
 
                     if (/*isIdle &&*/ isNotPaused && isAlive && !PauseGame.instance.isThisMainmenu)
@@ -603,7 +648,7 @@ public class InputSchemeManager : MonoBehaviour
                     }
                     else
                     {
-                        if(GameManager.instance.navigationMode == UINavigtionMode.Pointer && !isNotPaused && !PerkSelectionManager.instance.isPanelActive)
+                        if(GameManager.instance.navigationMode == UINavigtionMode.Pointer && !isNotPaused)
                         {
                             Cursor.visible = true;
                             Cursor.lockState = CursorLockMode.None;
@@ -632,7 +677,6 @@ public class InputSchemeManager : MonoBehaviour
     private void InputActiveCheck()
     {
         bool isNotPaused = !PauseGame.instance.IsPaused && !EquipmentLoadOut.instance.isPanelActive && !PerkSelectionManager.instance.isPanelActive;
-
         var playerInputActions_Player = playerInputActions.Player;
         var playerInputActions_UI = playerInputActions.UI;
 
@@ -818,5 +862,6 @@ public class InputSchemeManager : MonoBehaviour
 
         IsSubmitPressed = false;
         IsCancelPressed = false;
+        IsUIReloadPressed = false;
     }
 }

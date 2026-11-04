@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.Playables;
 using UnityEngine.UI;
@@ -112,9 +113,9 @@ public class PlayerController : PlayerEntity
 
     protected override void Update()
     {
-        if(CharacterHealthComponent.CurrentHP > 0)
+        if (CharacterHealthComponent.CurrentHP > 0)
         {
-            if(PauseGame.instance != null && EquipmentLoadOut.instance != null)
+            if (PauseGame.instance != null && EquipmentLoadOut.instance != null)
             {
                 if (!PauseGame.instance.IsPaused && !EquipmentLoadOut.instance.isPanelActive)
                 {
@@ -144,7 +145,7 @@ public class PlayerController : PlayerEntity
                 // 2. Check if there is an enemy in front we can execute
                 EnemyEntity targetEnemy = PlayerWeaponManager.instance.GetEnemyInFront();
 
-                if (targetEnemy != null && targetEnemy.isStunned)
+                if (targetEnemy != null && targetEnemy.isStunned && !isExecuting)
                 {
                     // Branch A: Execution!
                     RumbleManager.instance.RumblePulse(1f, 2.5f, 0.3f);
@@ -268,8 +269,15 @@ public class PlayerController : PlayerEntity
                 adjustedSensitivity *= 0.05f;
             }
 
+
             float mouseX = lookValue.x * adjustedSensitivity;
             float mouseY = lookValue.y * adjustedSensitivity;
+
+            if (ControllerValueInputManager.instance)
+            {
+                mouseX *= ControllerValueInputManager.instance.modifiedValue;
+                mouseY *= ControllerValueInputManager.instance.modifiedValue;
+            }
 
             verticalRotation -= mouseY;
             verticalRotation = Mathf.Clamp(verticalRotation, -maxLookAngle, maxLookAngle);
@@ -393,6 +401,8 @@ public class PlayerController : PlayerEntity
 
     public void TakeSwordHit(EnemyEntity enemy)
     {
+        if(isExecuting) { return; }
+
         if (playerWeaponManager.currentParryLeft > 0f || playerWeaponManager.currentParryRight > 0f)
         {
             BlockedOrParriedEffect(enemy.eyesTransform.position);
@@ -456,6 +466,8 @@ public class PlayerController : PlayerEntity
 
     public void TakeArrowHit(ArrowProjectile arrow)
     {
+        if (isExecuting) { return; }
+
         if (playerWeaponManager.currentParryLeft > 0f || playerWeaponManager.currentParryRight > 0f)
         {
             BlockedOrParriedEffect(arrow.gameObject.transform.position);

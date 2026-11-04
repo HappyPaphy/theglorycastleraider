@@ -408,11 +408,11 @@ PrefabInstance:
     - target: {fileID: 987887682291842045, guid: 13cbc4bcde22b514dba970752d61e221, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 6754617943701281964}
+      objectReference: {fileID: 0}
     - target: {fileID: 987887682291842045, guid: 13cbc4bcde22b514dba970752d61e221, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 6754617943701281964}
+      objectReference: {fileID: 0}
     - target: {fileID: 987887682291842045, guid: 13cbc4bcde22b514dba970752d61e221, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ChangeLanguage
@@ -532,11 +532,11 @@ PrefabInstance:
     - target: {fileID: 1765869076460479468, guid: 13cbc4bcde22b514dba970752d61e221, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 6754617943701281964}
+      objectReference: {fileID: 0}
     - target: {fileID: 1765869076460479468, guid: 13cbc4bcde22b514dba970752d61e221, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 6754617943701281964}
+      objectReference: {fileID: 0}
     - target: {fileID: 1765869076460479468, guid: 13cbc4bcde22b514dba970752d61e221, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ChangeLanguage
@@ -41849,6 +41849,9 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls: []
+  onSelected:
+    m_PersistentCalls:
+      m_Calls: []
   clickSound: {fileID: 0}
 --- !u!114 &659744090
 MonoBehaviour:
@@ -63625,6 +63628,67 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7aa8574e6339c5f469ddc2f1d327a797, type: 3}
+--- !u!1001 &939905882
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1955701498589951469, guid: 439e65dcb3b64ed4f9c617d464ed7471, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 121.88084
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955701498589951469, guid: 439e65dcb3b64ed4f9c617d464ed7471, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1000.18243
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955701498589951469, guid: 439e65dcb3b64ed4f9c617d464ed7471, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955701498589951469, guid: 439e65dcb3b64ed4f9c617d464ed7471, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955701498589951469, guid: 439e65dcb3b64ed4f9c617d464ed7471, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955701498589951469, guid: 439e65dcb3b64ed4f9c617d464ed7471, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955701498589951469, guid: 439e65dcb3b64ed4f9c617d464ed7471, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955701498589951469, guid: 439e65dcb3b64ed4f9c617d464ed7471, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955701498589951469, guid: 439e65dcb3b64ed4f9c617d464ed7471, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1955701498589951469, guid: 439e65dcb3b64ed4f9c617d464ed7471, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8148180855469415424, guid: 439e65dcb3b64ed4f9c617d464ed7471, type: 3}
+      propertyPath: m_Name
+      value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8148180855469415424, guid: 439e65dcb3b64ed4f9c617d464ed7471, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 439e65dcb3b64ed4f9c617d464ed7471, type: 3}
 --- !u!43 &940713401
 Mesh:
   m_ObjectHideFlags: 0
@@ -81685,6 +81749,9 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls: []
+  onSelected:
+    m_PersistentCalls:
+      m_Calls: []
   clickSound: {fileID: 0}
 --- !u!114 &1268319435
 MonoBehaviour:
@@ -81730,7 +81797,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6754617943701281964}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LocalizedFontChangerManager, Assembly-CSharp
         m_MethodName: ChangeLanguage
         m_Mode: 5
@@ -81742,7 +81809,7 @@ MonoBehaviour:
           m_StringArgument: th
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 6754617943701281964}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LocalizedFontChangerManager, Assembly-CSharp
         m_MethodName: UpdateAllFonts
         m_Mode: 2
@@ -115056,6 +115123,9 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls: []
+  onSelected:
+    m_PersistentCalls:
+      m_Calls: []
   clickSound: {fileID: 0}
 --- !u!114 &1783962220
 MonoBehaviour:
@@ -115101,7 +115171,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6754617943701281964}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LocalizedFontChangerManager, Assembly-CSharp
         m_MethodName: ChangeLanguage
         m_Mode: 5
@@ -115113,7 +115183,7 @@ MonoBehaviour:
           m_StringArgument: en
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 6754617943701281964}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LocalizedFontChangerManager, Assembly-CSharp
         m_MethodName: UpdateAllFonts
         m_Mode: 2
@@ -128407,82 +128477,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7aa8574e6339c5f469ddc2f1d327a797, type: 3}
---- !u!1001 &6754617943701281963
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1955701498589951469, guid: 439e65dcb3b64ed4f9c617d464ed7471, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.43758
-      objectReference: {fileID: 0}
-    - target: {fileID: 1955701498589951469, guid: 439e65dcb3b64ed4f9c617d464ed7471, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.3182
-      objectReference: {fileID: 0}
-    - target: {fileID: 1955701498589951469, guid: 439e65dcb3b64ed4f9c617d464ed7471, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.29733
-      objectReference: {fileID: 0}
-    - target: {fileID: 1955701498589951469, guid: 439e65dcb3b64ed4f9c617d464ed7471, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1955701498589951469, guid: 439e65dcb3b64ed4f9c617d464ed7471, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1955701498589951469, guid: 439e65dcb3b64ed4f9c617d464ed7471, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1955701498589951469, guid: 439e65dcb3b64ed4f9c617d464ed7471, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1955701498589951469, guid: 439e65dcb3b64ed4f9c617d464ed7471, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1955701498589951469, guid: 439e65dcb3b64ed4f9c617d464ed7471, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1955701498589951469, guid: 439e65dcb3b64ed4f9c617d464ed7471, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3982992093126580887, guid: 439e65dcb3b64ed4f9c617d464ed7471, type: 3}
-      propertyPath: eventSystem
-      value: 
-      objectReference: {fileID: 283804170}
-    - target: {fileID: 7411133707959285392, guid: 439e65dcb3b64ed4f9c617d464ed7471, type: 3}
-      propertyPath: postProcessVolume
-      value: 
-      objectReference: {fileID: 759029101}
-    - target: {fileID: 8148180855469415424, guid: 439e65dcb3b64ed4f9c617d464ed7471, type: 3}
-      propertyPath: m_Name
-      value: GameManager
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 439e65dcb3b64ed4f9c617d464ed7471, type: 3}
---- !u!114 &6754617943701281964 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4204224526721519685, guid: 439e65dcb3b64ed4f9c617d464ed7471, type: 3}
-  m_PrefabInstance: {fileID: 6754617943701281963}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1cc9954e4e4c79041a295ecbc9fd61dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LocalizedFontChangerManager
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -128493,7 +128487,6 @@ SceneRoots:
   - {fileID: 1351327325}
   - {fileID: 1623637237}
   - {fileID: 283804171}
-  - {fileID: 6754617943701281963}
   - {fileID: 101188515}
   - {fileID: 726198389}
   - {fileID: 94673593}
@@ -128501,3 +128494,4 @@ SceneRoots:
   - {fileID: 34830384}
   - {fileID: 277071616}
   - {fileID: 763782598}
+  - {fileID: 939905882}

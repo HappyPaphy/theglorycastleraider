@@ -105,7 +105,10 @@ public class PauseGame : MonoBehaviour
 
             if (InputSchemeManager.instance != null)
             {
-                if (PerkSelectionManager.instance.isPanelActive) { return; }
+                if (PerkSelectionManager.instance)
+                {
+                    if (PerkSelectionManager.instance.isPanelActive) { return; }
+                }
             }
 
             if (EquipmentLoadOut.instance != null)
@@ -123,9 +126,9 @@ public class PauseGame : MonoBehaviour
 
             PauseTheGame();
         }
-        else if(InputSchemeManager.instance.IsPausePressed && isPaused && !isHowToPlayOn && !isReadingScroll)
+        else if(InputSchemeManager.instance.IsCancelPressed && isPaused && !isHowToPlayOn && !isReadingScroll)
         {
-            InputSchemeManager.instance.IsPausePressed = false;
+            InputSchemeManager.instance.IsCancelPressed = false;
 
             if (TutorialManager.instance != null)
             {
@@ -134,7 +137,10 @@ public class PauseGame : MonoBehaviour
 
             if (InputSchemeManager.instance != null)
             {
-                if (PerkSelectionManager.instance.isPanelActive) { return; }
+                if (PerkSelectionManager.instance)
+                {
+                    if (PerkSelectionManager.instance.isPanelActive) { return; }
+                }
             }
 
             if (EquipmentLoadOut.instance != null)

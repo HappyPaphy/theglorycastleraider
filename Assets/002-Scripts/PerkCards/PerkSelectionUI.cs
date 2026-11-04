@@ -1,7 +1,7 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using TMPro;
-using UnityEditor.Build.Pipeline.Interfaces;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -12,6 +12,7 @@ public class PerkSelectionUI : MonoBehaviour
     public class OfferSlotUI
     {
         public Image fillImage;
+        public Image shufflefillImage;
         public Button button;
         public Image icon;
         public TMP_Text levelText;
@@ -74,7 +75,10 @@ public class PerkSelectionUI : MonoBehaviour
         0.85f, 0.75f, 0.15f);
 
     [SerializeField] private float holdDuration = 1.0f;
+    [SerializeField] private float shuffleCooldownDuration = 0.5f;
     private float currentHoldTime;
+    private float currentShuffleCooldownTime;
+    private float currentShuffleHoldTime;
     [HideInInspector] public int CurrentAddingPerkSlotIndex;
 
     [Header("========== MANAGER ==========")]
@@ -100,6 +104,7 @@ public class PerkSelectionUI : MonoBehaviour
     {
         HandleCurrentSelectedOffer();
         HandleCurrentSelectedInventorySlot();
+        HandleUpdateAllOfferFillImage();
     }
 
     private void HandleCurrentSelectedOffer()
@@ -156,6 +161,47 @@ public class PerkSelectionUI : MonoBehaviour
         }
     }
 
+    private void HandleUpdateAllOfferFillImage()
+    {
+        if(currentShuffleCooldownTime > 0f)
+        {
+            currentShuffleCooldownTime -= Time.unscaledDeltaTime;
+            return;
+        }
+
+        if (InputSchemeManager.instance.IsUIReloadHeld)
+        {
+            currentShuffleHoldTime += Time.unscaledDeltaTime;
+
+            if (currentShuffleHoldTime >= holdDuration)
+            {
+                currentShuffleHoldTime = 0f;
+                currentShuffleCooldownTime = shuffleCooldownDuration;
+                selectionManager.Shuffle();
+            }
+
+            foreach (OfferSlotUI offer in offerSlotsUI)
+            {
+                offer.shufflefillImage.fillAmount = Mathf.Clamp01(
+                currentShuffleHoldTime / holdDuration);
+
+                if (currentShuffleHoldTime >= holdDuration)
+                {
+                    offer.shufflefillImage.fillAmount = 0f;
+                }
+            }
+        }
+        else
+        {
+            currentShuffleHoldTime = 0f;
+
+            foreach (OfferSlotUI offer in offerSlotsUI)
+            {
+                offer.shufflefillImage.fillAmount = 0f;
+            }
+        }
+    }
+
     private void ResetHoldProgress()
     {
         currentHoldTime = 0f;
@@ -199,9 +245,6 @@ public class PerkSelectionUI : MonoBehaviour
             Button button = offerSlotsUI[i].button;
 
             button.onClick.RemoveAllListeners();
-
-            button.onClick.AddListener(
-                () => OnOfferClicked(index));
 
             UIFeedback uiFeedback =
                 button.GetComponent<UIFeedback>();
@@ -252,9 +295,6 @@ public class PerkSelectionUI : MonoBehaviour
             Button button = inventorySlotsUI[i].button;
 
             button.onClick.RemoveAllListeners();
-
-            button.onClick.AddListener(
-                () => OnInventorySlotClicked(index));
 
             UIFeedback uiFeedback =
                 button.GetComponent<UIFeedback>();
@@ -336,6 +376,8 @@ public class PerkSelectionUI : MonoBehaviour
         if (panelRoot != null)
         {
             panelRoot.DOFade(1f, 0.25f).SetUpdate(true);
+            panelRoot.interactable = true;
+            panelRoot.blocksRaycasts = true;
         }
 
         Refresh(
@@ -353,6 +395,8 @@ public class PerkSelectionUI : MonoBehaviour
         if (panelRoot != null)
         {
             panelRoot.DOFade(0f, 0.25f).SetUpdate(true);
+            panelRoot.interactable = false;
+            panelRoot.blocksRaycasts = false;
         }
 
         yield return new WaitForSecondsRealtime(0.25f);
@@ -618,7 +662,7 @@ public class PerkSelectionUI : MonoBehaviour
             if (slot.levelText != null)
             {
                 slot.levelText.text =
-                    $"{runtimeCard.level}";
+                    $"LV. {runtimeCard.level}";
             }
 
             if (slot.button != null)
@@ -718,7 +762,7 @@ public class PerkSelectionUI : MonoBehaviour
                     : 0;
 
             shuffleCostText.text =
-                $"SHUFFLE ({cost} COIN)";
+                $"SHUFFLE ({cost} COIN) (Hold)";
         }
     }
 
@@ -744,26 +788,6 @@ public class PerkSelectionUI : MonoBehaviour
         {
             EventSystem.current.SetSelectedGameObject(offerSlotsUI[0].button.gameObject);
         }
-    }
-
-    // =========================================================
-    // INPUT CALLBACKS
-    // =========================================================
-
-    private void OnOfferClicked(int index)
-    {
-        if (selectionManager == null)
-            return;
-
-        selectionManager.SelectOffer(index);
-    }
-
-    private void OnInventorySlotClicked(int index)
-    {
-        if (selectionManager == null)
-            return;
-
-        selectionManager.SelectReplacementSlot(index);
     }
 
     // =========================================================

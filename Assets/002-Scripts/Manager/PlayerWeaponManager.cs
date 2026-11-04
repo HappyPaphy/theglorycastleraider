@@ -483,7 +483,7 @@ public class PlayerWeaponManager : MonoBehaviour
             case ItemType.HealthPotion_Small:
                 SoundManager.instance.PotionDrinkingSound(playerController.transform.position);
                 postProcressEffect.TriggerHealEffect();
-                playerController.CharacterHealthComponent.Heal(40f);
+                playerController.CharacterHealthComponent.Heal(60f);
                 playerController.HealthEffect(true);
                 break;
             case ItemType.HealthPotion_Medium:

@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Destroy(instance);
+            Destroy(gameObject);
         }
 
         playerInputActions = GetComponent<PlayerInputActions>();

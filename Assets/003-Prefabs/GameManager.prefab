@@ -73,6 +73,238 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InputSchemeManager
   currentInputMode: 0
+  currentPlayerInputState: 0
+  currentUIInputState: 0
+  input_Jump:
+    m_Name: Input_Jump
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: c7d6932c-bc46-488e-b850-e76280be4160
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  input_Sprint:
+    m_Name: Input_Sprint
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 69692ae8-65c4-4bb2-a222-8806c5c7df3e
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  input_Move:
+    m_Name: Input_Move
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: f6a1a994-b89e-4737-ae5a-13383e4f9385
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  input_Look:
+    m_Name: Input_Look
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 99deb9dd-2198-464e-8a3d-e0564eed873e
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  input_Interact:
+    m_Name: Input_Interact
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: ae7317e2-b374-4cf3-a0ab-77a56ba3e758
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  input_Reload:
+    m_Name: Input_Reload
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 41bc83ee-05f6-41ef-aa14-d512352a97d9
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  input_Dash:
+    m_Name: Input_Dash
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 195a5d01-cf8e-4a49-9b18-20f287a478ad
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  input_Minimap:
+    m_Name: Input_Minimap
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 41c12911-c8de-4457-b66a-f2de910ebb20
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  input_Pause:
+    m_Name: Input_Pause
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 68006c4e-5c03-43c9-b205-996df65f4b4a
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  input_ToggleTwoHanded_Left:
+    m_Name: Input_Toggle Two Handed_Left
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: e7bccb0d-70eb-439c-ad8a-92c79adcb82d
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  input_ToggleTwoHanded_Right:
+    m_Name: Input_Toggle Two Handed_Right
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 26b1ec0c-4af8-44fa-b9dc-67c249a8ab74
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  input_SwitchWeapon_Up:
+    m_Name: Input_Switch Weapon_Up
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: b7f6072d-74d9-418c-80d1-342016ba4d05
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  input_SwitchWeapon_Right:
+    m_Name: Input_Switch Weapon_Right
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 912c188c-9c92-4ebe-99ed-38bdaac7d373
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  input_SwitchWeapon_Down:
+    m_Name: Input_Switch Weapon_Down
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: c9002272-a838-476f-9f24-6978b82bf112
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  input_SwitchWeapon_Left:
+    m_Name: Input_Switch Weapon_Left
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 21ca8c3a-57dc-422c-8a82-0062bd3d2afe
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  input_ToggleLoadout:
+    m_Name: Input_Toggle Loadout
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 49ae79a3-8277-49e0-9e9a-b462c538e93e
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  input_Kick:
+    m_Name: Input_Kick
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: cf49bbc8-ed54-48bd-a276-cb0298b1dc54
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  input_PerformRightHand:
+    m_Name: Input_Perform Right Hand
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 8f320729-a955-47e6-b1e0-d6464ede3b05
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  input_PerformLeftHand:
+    m_Name: Input_Perform Left Hand
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 11a658d9-5e57-49d0-886b-f473cf14796a
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  input_Submit:
+    m_Name: Input_Submit
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 0fd5485d-518f-402f-a14b-def078613a06
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  input_Cancel:
+    m_Name: Input_Cancel
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: b2e997a9-2951-47ba-917f-353fa974a733
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  InteractSprite_Keyboard: {fileID: 0}
+  InteractSprite_XBox: {fileID: 0}
+  IsInteractHeld: 0
+  IsInteractPressed: 0
+  isDashHeld: 0
+  isDashPressed: 0
+  IsMinimapHeld: 0
+  IsMinimapPressed: 0
+  IsPauseHeld: 0
+  IsPausePressed: 0
+  IsSwitchWeaponPressed_Up: 0
+  IsSwitchWeaponPressed_Right: 0
+  IsSwitchWeaponPressed_Down: 0
+  IsSwitchWeaponPressed_Left: 0
+  IsSwitchWeaponHeld_Up: 0
+  IsSwitchWeaponHeld_Right: 0
+  IsSwitchWeaponHeld_Down: 0
+  IsSwitchWeaponHeld_Left: 0
+  isJumpHeld: 0
+  isJumpPressed: 0
+  isSprintHeld: 0
+  isSprintPressed: 0
+  isKickHeld: 0
+  isKickPressed: 0
+  isRightHandHeld: 0
+  isRightHandPressed: 0
+  isLeftHandHeld: 0
+  isLeftHandPressed: 0
+  IsReloadHeld: 0
+  IsReloadPressed: 0
+  IsToggleTwoHandedHeld_Left: 0
+  IsToggleTwoHandedPressed_Left: 0
+  IsToggleTwoHandedHeld_Right: 0
+  IsToggleTwoHandedPressed_Right: 0
+  IsToggleLoadoutHeld: 0
+  IsToggleLoadoutPressed: 0
+  IsSubmitPressed: 0
+  IsSubmitHeld: 0
+  IsCancelPressed: 0
+  IsCancelHeld: 0
+  isMouseVisible: 0
   uiNavigations: []
 --- !u!114 &8235768346859379138
 MonoBehaviour:
