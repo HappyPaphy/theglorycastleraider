@@ -39,6 +39,9 @@ public class PerkSelectionManager : MonoBehaviour
 
     private EnergyOrbDefinition currentOrb;
 
+    // The world orb the panel was opened from (null when opened by the test keys)
+    private EnergyOrbPickup currentOrbPickup;
+
     private PerkOffer[] offers = new PerkOffer[3];
 
     public int selectedOfferIndex = -1;
@@ -87,7 +90,9 @@ public class PerkSelectionManager : MonoBehaviour
             Open(uniqueOrb);
         }
 
-        if (InputSchemeManager.instance.IsCancelPressed)
+        // Only while open: closing an already closed panel would reset Time.timeScale to 1
+        // (e.g. while the pause menu or a tutorial popup is using Cancel)
+        if (CurrentState != SelectionState.Closed && InputSchemeManager.instance.IsCancelPressed)
         {
             InputSchemeManager.instance.IsCancelPressed = false;
             Cancel();
@@ -102,18 +107,46 @@ public class PerkSelectionManager : MonoBehaviour
         return offers[index];
     }
 
+    /// <summary>Opens from a world Energy Orb. Reuses the cards already rolled for that orb.</summary>
+    public void Open(EnergyOrbPickup orbPickup)
+    {
+        if (orbPickup == null || orbPickup.Definition == null)
+            return;
+
+        Open(orbPickup.Definition, orbPickup);
+    }
+
     public void Open(EnergyOrbDefinition orb)
+    {
+        Open(orb, null);
+    }
+
+    private void Open(EnergyOrbDefinition orb, EnergyOrbPickup orbPickup)
     {
         if (orb == null)
             return;
 
+        if (isPanelActive)
+            return;
+
         currentOrb = orb;
+        currentOrbPickup = orbPickup;
         isPanelActive = true;
 
         selectedOfferIndex = -1;
         selectedReplacementSlot = -1;
 
-        GenerateOffers();
+        PerkOffer[] savedOffers = orbPickup != null ? orbPickup.GetSavedOffers() : null;
+
+        if (savedOffers != null && savedOffers.Length == offers.Length)
+        {
+            // Same orb again: show the same set until it's shuffled
+            offers = savedOffers;
+        }
+        else
+        {
+            GenerateOffers();
+        }
 
         CurrentState = SelectionState.Choosing;
 
@@ -223,6 +256,7 @@ public class PerkSelectionManager : MonoBehaviour
 
             OnChanged.Invoke();
 
+            ConsumeCurrentOrb();
             Close();
             return;
         }
@@ -292,7 +326,19 @@ public class PerkSelectionManager : MonoBehaviour
         OnChanged.Invoke();
 
         if (success)
+        {
+            ConsumeCurrentOrb();
             Close();
+        }
+    }
+
+    private void ConsumeCurrentOrb()
+    {
+        if (currentOrbPickup != null)
+        {
+            currentOrbPickup.Consume();
+            currentOrbPickup = null;
+        }
     }
 
     public void Cancel()
@@ -325,6 +371,7 @@ public class PerkSelectionManager : MonoBehaviour
         CurrentState = SelectionState.Closed;
 
         currentOrb = null;
+        currentOrbPickup = null; // cancelled: the orb stays in the world with its saved cards
         selectedOfferIndex = -1;
         selectedReplacementSlot = -1;
 
@@ -393,5 +440,9 @@ public class PerkSelectionManager : MonoBehaviour
 
             picked.Add(selected);
         }
+
+        // Remember this roll on the world orb so reopening shows the same cards
+        if (currentOrbPickup != null)
+            currentOrbPickup.SaveOffers(offers);
     }
 }

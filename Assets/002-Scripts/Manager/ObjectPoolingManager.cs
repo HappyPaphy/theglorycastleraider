@@ -99,7 +99,9 @@ public class ObjectPoolingManager : MonoBehaviour
         if (!obj.activeSelf) return; // Prevent double-enqueuing
 
         var pooledFragCollider = obj.GetComponent<Collider>();
-        pooledFragCollider.enabled = true;
+
+        if(pooledFragCollider != null )
+            pooledFragCollider.enabled = true;
 
         obj.SetActive(false);
         obj.transform.SetParent(transform);

@@ -69,6 +69,7 @@ public class InputSchemeManager : MonoBehaviour
     public InputAction input_Submit;
     public InputAction input_Cancel;
     public InputAction input_UIReload;
+    public InputAction input_UIToggleLoadout;
 
 
     public Sprite InteractSprite_Keyboard;
@@ -257,6 +258,11 @@ public class InputSchemeManager : MonoBehaviour
         input_UIReload.Enable();
         input_UIReload.performed += OnUIReloadPerformed;
         input_UIReload.canceled += OnUIReloadCanceled;
+
+        input_UIToggleLoadout = playerControls.UI.Loadout;
+        input_UIToggleLoadout.Enable();
+        input_UIToggleLoadout.performed += OnToggleLoadoutPerformed;
+        input_UIToggleLoadout.canceled += OnToggleLoadoutCanceled;
     }
 
     private void OnDisable()
@@ -287,6 +293,7 @@ public class InputSchemeManager : MonoBehaviour
         input_Submit.Disable();
         input_Cancel.Disable();
         input_UIReload.Disable();
+        input_UIToggleLoadout.Disable();
     }
 
     private void ApplyLoadedBindings()
@@ -630,7 +637,7 @@ public class InputSchemeManager : MonoBehaviour
                 if (instancesValid)
                 {
                     //bool isIdle = GameResultRoguelike.instance.currentState == GameResultState.Idle;
-                    bool isNotPaused = !PauseGame.instance.IsPaused && !EquipmentLoadOut.instance.isPanelActive && !PerkSelectionManager.instance.isPanelActive;
+                    bool isNotPaused = !PauseGame.instance.IsPaused && !EquipmentLoadOut.instance.isPanelActive && !PerkSelectionManager.instance.isPanelActive && !(TutorialManager.instance != null && TutorialManager.instance.isPanelActive);
                     bool isAlive = PlayerController.instance.CharacterHealthComponent.CurrentHP > 0f;
 
                     if (/*isIdle &&*/ isNotPaused && isAlive && !PauseGame.instance.isThisMainmenu)
@@ -669,7 +676,7 @@ public class InputSchemeManager : MonoBehaviour
 
     private void InputActiveCheck()
     {
-        bool isNotPaused = !PauseGame.instance.IsPaused && !EquipmentLoadOut.instance.isPanelActive && !PerkSelectionManager.instance.isPanelActive;
+        bool isNotPaused = !PauseGame.instance.IsPaused && !EquipmentLoadOut.instance.isPanelActive && !PerkSelectionManager.instance.isPanelActive && !(TutorialManager.instance != null && TutorialManager.instance.isPanelActive);
         var playerInputActions_Player = playerControls.Player;
         var playerInputActions_UI = playerControls.UI;
 

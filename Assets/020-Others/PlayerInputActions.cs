@@ -926,6 +926,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Loadout"",
+                    ""type"": ""Button"",
+                    ""id"": ""dac806a6-08f6-45bb-bfe8-c1fbd075a175"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1467,6 +1476,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""NavigateTabRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""49ed3465-1fe0-4b8b-a5e4-cd0aedf5b4a9"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Loadout"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2ebc8d93-7e07-40a0-9af3-c173937c49a0"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Loadout"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1570,6 +1601,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
         m_UI_NavigateTabLeft = m_UI.FindAction("NavigateTabLeft", throwIfNotFound: true);
         m_UI_NavigateTabRight = m_UI.FindAction("NavigateTabRight", throwIfNotFound: true);
+        m_UI_Loadout = m_UI.FindAction("Loadout", throwIfNotFound: true);
     }
 
     ~@PlayerInputActions()
@@ -1958,6 +1990,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_TrackedDeviceOrientation;
     private readonly InputAction m_UI_NavigateTabLeft;
     private readonly InputAction m_UI_NavigateTabRight;
+    private readonly InputAction m_UI_Loadout;
     /// <summary>
     /// Provides access to input actions defined in input action map "UI".
     /// </summary>
@@ -2021,6 +2054,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "UI/NavigateTabRight".
         /// </summary>
         public InputAction @NavigateTabRight => m_Wrapper.m_UI_NavigateTabRight;
+        /// <summary>
+        /// Provides access to the underlying input action "UI/Loadout".
+        /// </summary>
+        public InputAction @Loadout => m_Wrapper.m_UI_Loadout;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -2086,6 +2123,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @NavigateTabRight.started += instance.OnNavigateTabRight;
             @NavigateTabRight.performed += instance.OnNavigateTabRight;
             @NavigateTabRight.canceled += instance.OnNavigateTabRight;
+            @Loadout.started += instance.OnLoadout;
+            @Loadout.performed += instance.OnLoadout;
+            @Loadout.canceled += instance.OnLoadout;
         }
 
         /// <summary>
@@ -2136,6 +2176,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @NavigateTabRight.started -= instance.OnNavigateTabRight;
             @NavigateTabRight.performed -= instance.OnNavigateTabRight;
             @NavigateTabRight.canceled -= instance.OnNavigateTabRight;
+            @Loadout.started -= instance.OnLoadout;
+            @Loadout.performed -= instance.OnLoadout;
+            @Loadout.canceled -= instance.OnLoadout;
         }
 
         /// <summary>
@@ -2473,5 +2516,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnNavigateTabRight(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Loadout" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnLoadout(InputAction.CallbackContext context);
     }
 }

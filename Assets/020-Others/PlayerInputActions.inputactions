@@ -840,6 +840,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Loadout",
+                    "type": "Button",
+                    "id": "dac806a6-08f6-45bb-bfe8-c1fbd075a175",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1379,6 +1388,28 @@
                     "processors": "",
                     "groups": ";Gamepad",
                     "action": "NavigateTabRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "49ed3465-1fe0-4b8b-a5e4-cd0aedf5b4a9",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Loadout",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2ebc8d93-7e07-40a0-9af3-c173937c49a0",
+                    "path": "<Gamepad>/select",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Loadout",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

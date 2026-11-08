@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9238193a2682d8c438384b3e96a8860e, type: 3}
+  m_Name: Tutorial_PickUp
+  m_EditorClassIdentifier: Assembly-CSharp::TutorialData
+  showOnlyOnce: 1
+  pages:
+  - gifFrames:
+    - {fileID: 21300000, guid: 2d70c0061002df345b902ff2d6e9e8d0, type: 3}
+    framesPerSecond: 1
+    header: PickUp
+    description: '[Pick Up] your sword from the ground. You gonna need it. '
+  hints:
+  - text: Press {key} to pick up sword
+    dismissAction: 7
+    autoHideTime: 0

@@ -25,8 +25,40 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2413334437057466463, guid: 5073a0b4edfc3bf47aaf2e6904ba1f6b, type: 3}
+      propertyPath: energyOrbPrefab
+      value: 
+      objectReference: {fileID: 8259988526995763502, guid: 6d4a4f8bf29c8d24abe9ca3dcc3926b8, type: 3}
+    - target: {fileID: 2413334437057466463, guid: 5073a0b4edfc3bf47aaf2e6904ba1f6b, type: 3}
+      propertyPath: energyOrbDrops.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2413334437057466463, guid: 5073a0b4edfc3bf47aaf2e6904ba1f6b, type: 3}
       propertyPath: potentialDrops.Array.size
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2413334437057466463, guid: 5073a0b4edfc3bf47aaf2e6904ba1f6b, type: 3}
+      propertyPath: energyOrbDrops.Array.data[0].orb
+      value: 
+      objectReference: {fileID: 11400000, guid: 4c12ae53bd205fb40bc03c477068ccfd, type: 2}
+    - target: {fileID: 2413334437057466463, guid: 5073a0b4edfc3bf47aaf2e6904ba1f6b, type: 3}
+      propertyPath: energyOrbDrops.Array.data[1].orb
+      value: 
+      objectReference: {fileID: 11400000, guid: 32461e3352283154db5c47cb3c06e2e8, type: 2}
+    - target: {fileID: 2413334437057466463, guid: 5073a0b4edfc3bf47aaf2e6904ba1f6b, type: 3}
+      propertyPath: energyOrbDrops.Array.data[2].orb
+      value: 
+      objectReference: {fileID: 11400000, guid: a02c2118207b15a4ca2326b83686e191, type: 2}
+    - target: {fileID: 2413334437057466463, guid: 5073a0b4edfc3bf47aaf2e6904ba1f6b, type: 3}
+      propertyPath: energyOrbDrops.Array.data[0].dropChance
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2413334437057466463, guid: 5073a0b4edfc3bf47aaf2e6904ba1f6b, type: 3}
+      propertyPath: energyOrbDrops.Array.data[1].dropChance
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2413334437057466463, guid: 5073a0b4edfc3bf47aaf2e6904ba1f6b, type: 3}
+      propertyPath: energyOrbDrops.Array.data[2].dropChance
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2413334437057466463, guid: 5073a0b4edfc3bf47aaf2e6904ba1f6b, type: 3}
       propertyPath: potentialDrops.Array.data[0].dropChance
@@ -78,7 +110,7 @@ PrefabInstance:
       objectReference: {fileID: 380057338341773006, guid: df776dd590951ad4fba7e48dd4044ac9, type: 3}
     - target: {fileID: 2628002776702642408, guid: 5073a0b4edfc3bf47aaf2e6904ba1f6b, type: 3}
       propertyPath: m_Name
-      value: ItemBox
+      value: ItemBox (Equipment)
       objectReference: {fileID: 0}
     - target: {fileID: 5470954049114211094, guid: 5073a0b4edfc3bf47aaf2e6904ba1f6b, type: 3}
       propertyPath: m_SelectedEditorRenderState
