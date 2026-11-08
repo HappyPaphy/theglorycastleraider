@@ -56,7 +56,8 @@ public class PerkSelectionManager : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        if(instance == null)
+            instance = this;
     }
 
     private void Start()
@@ -65,6 +66,8 @@ public class PerkSelectionManager : MonoBehaviour
         {
             coinWallet = PlayerController.instance.coinWallet;
         }
+
+        Close();
     }
 
     private void Update()
@@ -314,7 +317,7 @@ public class PerkSelectionManager : MonoBehaviour
         Close();
     }
 
-    private void Close()
+    public void Close()
     {
         Debug.Log("[Perk] Closing Panel");
         isPanelActive = false;
@@ -327,7 +330,10 @@ public class PerkSelectionManager : MonoBehaviour
 
         StartCoroutine(ui.Hide());
 
-        InputSchemeManager.instance.OnInputActiveChange.Invoke();
+        if (InputSchemeManager.instance != null)
+        {
+            InputSchemeManager.instance.OnInputActiveChange.Invoke();
+        }
     }
 
     private void GenerateOffers()

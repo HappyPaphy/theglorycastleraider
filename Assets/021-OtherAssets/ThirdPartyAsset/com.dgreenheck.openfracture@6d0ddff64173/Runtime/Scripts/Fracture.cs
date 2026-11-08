@@ -25,7 +25,8 @@ public class Fracture : MonoBehaviour
     public float fragmentExplosionForce = 15f;
     [Tooltip("The radius of the explosion force")]
     public float fragmentExplosionRadius = 5f;
-    public float timeBeforeFragmentDestroy = 2f;
+    public float timeBeforeFragmentObjDestroyed = 0.8f;
+    public float timeBeforeFragmentColliderDisable = 4f;
 
     [HideInInspector]
     public int currentRefractureCount = 0;
@@ -232,7 +233,7 @@ public class Fracture : MonoBehaviour
                 fragRb.AddExplosionForce(fragmentExplosionForce, hitPosition, fragmentExplosionRadius, 0.5f, ForceMode.Impulse);
             }
 
-            ObjectPoolingManager.instance.ReturnObjectDelayed("Fragment", fragment.gameObject, timeBeforeFragmentDestroy);
+            ObjectPoolingManager.instance.ReturnObjectDelayed("Fragment", fragment.gameObject, timeBeforeFragmentObjDestroyed, timeBeforeFragmentColliderDisable);
         }
     }
 

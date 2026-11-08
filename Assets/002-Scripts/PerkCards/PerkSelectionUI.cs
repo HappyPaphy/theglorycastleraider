@@ -11,6 +11,7 @@ public class PerkSelectionUI : MonoBehaviour
     [System.Serializable]
     public class OfferSlotUI
     {
+        public Image borderImage;
         public Image fillImage;
         public Image shufflefillImage;
         public Button button;
@@ -21,6 +22,7 @@ public class PerkSelectionUI : MonoBehaviour
     [System.Serializable]
     public class InventorySlotUI
     {
+        public Image borderImage;
         public Image fillImage;
         public Button button;
         public Image icon;
@@ -90,7 +92,7 @@ public class PerkSelectionUI : MonoBehaviour
         SetupOfferButtons();
         SetupInventoryButtons();
 
-        StartCoroutine(Hide());
+        //selectionManager.Close();
 
         selectionManager.OnChanged += RefreshInventory;
     }
@@ -333,6 +335,9 @@ public class PerkSelectionUI : MonoBehaviour
             !inventory.IsSlotUnlocked(index) ||
             !inventory.IsSlotOccupied(index))
         {
+            if (perkNameText != null)
+                perkNameText.color = Color.white;
+
             ClearDescription();
             return;
         }
@@ -342,6 +347,9 @@ public class PerkSelectionUI : MonoBehaviour
         if (runtimeCard == null ||
             runtimeCard.definition == null)
         {
+            if (perkNameText != null)
+                perkNameText.color = Color.white;
+
             ClearDescription();
             return;
         }
@@ -349,15 +357,22 @@ public class PerkSelectionUI : MonoBehaviour
         PerkCardDefinition definition = runtimeCard.definition;
 
         if (perkNameText != null)
+        {
+            perkNameText.color = GetTierColor(definition.Tier);
             perkNameText.text = $"{definition.DisplayName} [LV.{definition.Level}]";
+        }
 
         if (perkLevelText != null)
+        {
+            perkLevelText.color = GetTierColor(definition.Tier);
             perkLevelText.text = $"[LV. {runtimeCard.level}]";
+        }
 
         if (perkDescriptionText != null)
+        {
+            perkDescriptionText.color = GetTierColor(definition.Tier);
             perkDescriptionText.text = definition.Description;
-
-        
+        }        
     }
 
     // =========================================================
@@ -420,6 +435,7 @@ public class PerkSelectionUI : MonoBehaviour
 
         UpdateHeader(orb);
         UpdateOffers(
+            orb,
             offers,
             selectedOfferIndex);
 
@@ -482,6 +498,7 @@ public class PerkSelectionUI : MonoBehaviour
     // =========================================================
 
     private void UpdateOffers(
+        EnergyOrbDefinition orb,
         PerkOffer[] offers,
         int selectedOfferIndex)
     {
@@ -494,6 +511,8 @@ public class PerkSelectionUI : MonoBehaviour
 
             if (slot == null)
                 continue;
+
+            slot.borderImage.color = GetTierColor(orb.Tier);
 
             bool hasOffer =
                 offers != null &&
@@ -623,6 +642,11 @@ public class PerkSelectionUI : MonoBehaviour
 
             if (!occupied || runtimeCard.definition == null)
             {
+                if(slot.borderImage != null)
+                {
+                    slot.borderImage.color = Color.white;
+                }
+
                 if (slot.icon != null)
                 {
                     slot.icon.sprite = null;
@@ -650,6 +674,9 @@ public class PerkSelectionUI : MonoBehaviour
 
             if (slot.icon != null && runtimeCard.definition != null)
             {
+                if (slot.borderImage != null)
+                    slot.borderImage.color = GetTierColor(runtimeCard.definition.Tier);
+
                 slot.icon.sprite =
                     runtimeCard.definition.Icon;
 
@@ -717,17 +744,21 @@ public class PerkSelectionUI : MonoBehaviour
             definition.Description;
 
         if (perkNameText != null)
-            perkNameText.text =
-                $"{definition.DisplayName} [LV.{definition.Level}]";
+        {
+            perkNameText.color = GetTierColor(definition.Tier);
+            perkNameText.text = $"{definition.DisplayName} [LV.{definition.Level}]";
+        }
 
         if (perkLevelText != null)
-            perkLevelText.text =
-                $"[LV. {offer.level}]";
+        {
+            perkLevelText.color = GetTierColor(definition.Tier);
+            perkLevelText.text = $"[LV. {offer.level}]";
+        }
 
         if (perkDescriptionText != null)
         {
-            perkDescriptionText.text =
-                cardDescription;
+            perkDescriptionText.color = GetTierColor(definition.Tier);
+            perkDescriptionText.text = cardDescription;
         }
     }
 

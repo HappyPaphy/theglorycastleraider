@@ -24181,16 +24181,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   CharacterHealthComponent:
-    _maxHP: 150
-    _currentHP: 150
+    _maxHP: 100
+    _currentHP: 100
     _executePercentage: 0
   slider_HP: {fileID: 5876758899349765164}
   CharacterStaminaComponent:
     _maxStamina: 100
     _currentStamina: 100
   CharacterUltimateComponent:
-    _maxUltimate: 200
-    _currentUltimate: 200
+    _maxUltimate: 100
+    _currentUltimate: 100
   PlayerInventoryComponent:
     _curDragonFruit: 0
     _curCartPart_Player: 0

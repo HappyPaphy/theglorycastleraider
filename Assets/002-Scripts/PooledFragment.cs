@@ -3,11 +3,13 @@ using UnityEngine;
 public class PooledFragment : MonoBehaviour
 {
     private MeshFilter meshFilter;
+    private Collider meshCollider;
     [HideInInspector] public int spawnSessionId = 0;
 
     private void Awake()
     {
         meshFilter = GetComponent<MeshFilter>();
+        meshCollider = GetComponent<Collider>();
     }
 
     private void OnDisable()

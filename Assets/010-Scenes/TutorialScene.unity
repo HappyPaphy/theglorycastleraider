@@ -334,6 +334,103 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
+--- !u!1001 &16932912
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1866055257366459025, guid: fa2928a0fe1f4a24eb478fa5f693ac17, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1866055257366459025, guid: fa2928a0fe1f4a24eb478fa5f693ac17, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1866055257366459025, guid: fa2928a0fe1f4a24eb478fa5f693ac17, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1866055257366459025, guid: fa2928a0fe1f4a24eb478fa5f693ac17, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1866055257366459025, guid: fa2928a0fe1f4a24eb478fa5f693ac17, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1866055257366459025, guid: fa2928a0fe1f4a24eb478fa5f693ac17, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1866055257366459025, guid: fa2928a0fe1f4a24eb478fa5f693ac17, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1866055257366459025, guid: fa2928a0fe1f4a24eb478fa5f693ac17, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1866055257366459025, guid: fa2928a0fe1f4a24eb478fa5f693ac17, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1866055257366459025, guid: fa2928a0fe1f4a24eb478fa5f693ac17, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1866055257366459025, guid: fa2928a0fe1f4a24eb478fa5f693ac17, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1866055257366459025, guid: fa2928a0fe1f4a24eb478fa5f693ac17, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1866055257366459025, guid: fa2928a0fe1f4a24eb478fa5f693ac17, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1866055257366459025, guid: fa2928a0fe1f4a24eb478fa5f693ac17, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1866055257366459025, guid: fa2928a0fe1f4a24eb478fa5f693ac17, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1866055257366459025, guid: fa2928a0fe1f4a24eb478fa5f693ac17, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1866055257366459025, guid: fa2928a0fe1f4a24eb478fa5f693ac17, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1866055257366459025, guid: fa2928a0fe1f4a24eb478fa5f693ac17, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1866055257366459025, guid: fa2928a0fe1f4a24eb478fa5f693ac17, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1866055257366459025, guid: fa2928a0fe1f4a24eb478fa5f693ac17, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4388469522981696153, guid: fa2928a0fe1f4a24eb478fa5f693ac17, type: 3}
+      propertyPath: m_Name
+      value: PerkCardManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fa2928a0fe1f4a24eb478fa5f693ac17, type: 3}
 --- !u!1001 &41645129
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -158181,6 +158278,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6252371824048329371, guid: 6c6a70510cadb9547a1d6247c6cbe4b4, type: 3}
+      propertyPath: sprintStaminaCost
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6252371824048329371, guid: 6c6a70510cadb9547a1d6247c6cbe4b4, type: 3}
       propertyPath: postProcressEffect
       value: 
       objectReference: {fileID: 647443179}
@@ -158229,5 +158330,6 @@ SceneRoots:
   - {fileID: 196082041}
   - {fileID: 51842108}
   - {fileID: 86237967}
+  - {fileID: 16932912}
   - {fileID: 266007872}
   - {fileID: 5539916625010010032}

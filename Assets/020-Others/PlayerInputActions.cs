@@ -1430,7 +1430,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": "";Gamepad"",
+                    ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""NavigateTabLeft"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -1441,7 +1441,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/leftShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": "";Gamepad"",
                     ""action"": ""NavigateTabLeft"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -1452,7 +1452,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": "";Touch"",
+                    ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""NavigateTabRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -1463,7 +1463,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/rightShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": "";Gamepad"",
                     ""action"": ""NavigateTabRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false

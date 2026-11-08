@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 417a9a21e5b926f43989ffc4290d2fa0, type: 3}
+  m_Name: 'PerkCard_Executioner LV2 [R]'
+  m_EditorClassIdentifier: Assembly-CSharp::PerkCardDefinition
+  perkStat: 1
+  id: perkcard_executioner_02
+  displayName: Executioner
+  description: Execute an enemy increases attack speed by 20% for 3 seconds
+  icon: {fileID: -338123884, guid: b93cdbc235e06374f822f54a31a04c98, type: 3}
+  level: 2
+  tier: 1

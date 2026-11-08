@@ -989,7 +989,7 @@ public class PlayerWeaponManager : MonoBehaviour
         {
             if (playerController.CharacterStaminaComponent.CurrentStamina > 0f)
             {
-                if (Time.time >= lastAttackTime + weapon.attackCooldown)
+                if (Time.time >= (lastAttackTime + weapon.attackCooldown) * PlayerPerkManager.Instance.CurrentMoveSpeedMultiplier_Executioner)
                 {
                     PerformAttack(weapon, isLeftHand);
                 }
@@ -1040,7 +1040,7 @@ public class PlayerWeaponManager : MonoBehaviour
         {
             if (playerController.CharacterStaminaComponent.CurrentStamina > spell.flatStaminaCost &&
                 playerController.CharacterUltimateComponent.CurrentUltimate >= spell.flatManaCost &&
-                Time.time >= lastAttackTime + weapon.attackCooldown)
+                Time.time >= (lastAttackTime + weapon.attackCooldown) * PlayerPerkManager.Instance.CurrentMoveSpeedMultiplier_Executioner)
             {
                 StartCoroutine(SpellCastSequence(weapon, spell, isLeftHand));
             }
@@ -1170,6 +1170,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
     private IEnumerator ExecutionSequence(EnemyEntity targetEnemy)
     {
+        /////////////////// MOVE TOWARD TO ENEMY START /////////////////////////
         playerController.isAttacking = true;
         playerController.isExecuting = true;
 
@@ -1215,6 +1216,44 @@ public class PlayerWeaponManager : MonoBehaviour
             yield return null;
         }
 
+        /////////////////// MOVE TOWARD TO ENEMY END /////////////////////////
+
+        StartCoroutine(KickHeadOffFinisher(targetYaw, targetPitch, targetEnemy));
+
+        /*if (rightHandWeapon == null && leftHandWeapon == null)
+        {
+            StartCoroutine(KickHeadOffFinisher(targetYaw, targetPitch, targetEnemy));
+            yield break;
+        }
+
+        if (rightHandWeapon != null && leftHandWeapon != null && (!isTwoHanding_Left && !isTwoHanding_Right))
+        {
+            int randomIndex = Random.Range(0, 2);
+
+            switch (randomIndex)
+            {
+                case 0: StartCoroutine(WeaponFinisher(leftHandWeapon, targetYaw, targetPitch, targetEnemy)); break;
+                case 1: StartCoroutine(WeaponFinisher(rightHandWeapon ,targetYaw, targetPitch, targetEnemy)); break;
+            }
+
+            yield break;
+        }
+
+        if(leftHandWeapon != null)
+        {
+            StartCoroutine(WeaponFinisher(leftHandWeapon, targetYaw, targetPitch, targetEnemy));
+            yield break;
+        }
+
+        if (rightHandWeapon != null)
+        {
+            StartCoroutine(WeaponFinisher(rightHandWeapon, targetYaw, targetPitch, targetEnemy));
+            yield break;
+        }*/
+    }
+
+    private IEnumerator KickHeadOffFinisher(float targetYaw, float targetPitch, EnemyEntity targetEnemy)
+    {
         playerController.EnableKick();
         transform.eulerAngles = new Vector3(0f, targetYaw, 0f);
         playerController.verticalRotation = targetPitch;
@@ -1223,13 +1262,12 @@ public class PlayerWeaponManager : MonoBehaviour
 
         targetEnemy.GotExecuted();
 
-        
-
         cameraFollow.isSmoothing = false;
         cameraBob.TriggerShake(0.293f, 0.05f);
         cameraBob.TriggerZoomEffect(40f, 0.293f, 0.25f);
 
         yield return new WaitForSeconds(0.293f);
+        PlayerPerkManager.Instance.OnEnemyKilled(true);
 
         if (targetEnemy.decapitatedHeadPrefab != null)
         {
@@ -1354,14 +1392,24 @@ public class PlayerWeaponManager : MonoBehaviour
                 ArrowProjectile arrow = hit.collider.GetComponent<ArrowProjectile>();
                 FractureTrigger fractureTrigger = hit.collider.GetComponent<FractureTrigger>();
 
+                float calculatedDamage = weapon.damage;
+
+                if(PlayerPerkManager.Instance != null)
+                {
+                    calculatedDamage *= PlayerPerkManager.Instance.CurrentAttackPowerMultiplier_OnEnemyKill;
+                }
+
+                Debug.LogError($"calculatedDamage: {calculatedDamage}");
+
+
                 if (targetEnemy != null && processedTargets.Add(targetEnemy))
                 {
-                    targetEnemy.TakeSwordHit(isLeftAttack, hit.point, weapon.damage, true, isLeftHand, weapon.damageImpactSound);
+                    targetEnemy.TakeSwordHit(isLeftAttack, hit.point, calculatedDamage, true, isLeftHand, weapon.damageImpactSound);
                     hitSomething = true;
                 }
                 else if (destructible != null && processedTargets.Add(destructible))
                 {
-                    destructible.TakeDamage(weapon.damage, hit.collider, hit.point);
+                    destructible.TakeDamage(calculatedDamage, hit.collider, hit.point);
                     hitSomething = true;
 
                     if (fractureTrigger != null)

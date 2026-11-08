@@ -98,20 +98,28 @@ public class ObjectPoolingManager : MonoBehaviour
     {
         if (!obj.activeSelf) return; // Prevent double-enqueuing
 
+        var pooledFragCollider = obj.GetComponent<Collider>();
+        pooledFragCollider.enabled = true;
+
         obj.SetActive(false);
         obj.transform.SetParent(transform);
         poolDictionary[poolName].Enqueue(obj); // Put it back at the end of the line
     }
 
-    public void ReturnObjectDelayed(string poolName, GameObject obj, float delay)
+    public void ReturnObjectDelayed(string poolName, GameObject obj, float delay, float colliderDelay)
     {
         var pooledFrag = obj.GetComponent<PooledFragment>();
         int targetSession = pooledFrag != null ? pooledFrag.spawnSessionId : 0;
-        StartCoroutine(ReturnRoutine(poolName, obj, delay, targetSession));
+        StartCoroutine(ReturnRoutine(poolName, obj, delay, targetSession, colliderDelay));
     }
 
-    private IEnumerator ReturnRoutine(string poolName, GameObject obj, float delay, int targetSession)
+    private IEnumerator ReturnRoutine(string poolName, GameObject obj, float delay, int targetSession, float colliderDelay)
     {
+        yield return new WaitForSeconds(colliderDelay);
+
+        var pooledFragCollider = obj.GetComponent<Collider>();
+        pooledFragCollider.enabled = false;
+
         yield return new WaitForSeconds(delay);
 
         var pooledFrag = obj.GetComponent<PooledFragment>();

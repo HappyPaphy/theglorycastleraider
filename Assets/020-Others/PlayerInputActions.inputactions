@@ -1344,7 +1344,7 @@
                     "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Gamepad",
+                    "groups": ";Keyboard&Mouse",
                     "action": "NavigateTabLeft",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -1355,7 +1355,7 @@
                     "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Gamepad",
                     "action": "NavigateTabLeft",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -1366,7 +1366,7 @@
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Touch",
+                    "groups": ";Keyboard&Mouse",
                     "action": "NavigateTabRight",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -1377,7 +1377,7 @@
                     "path": "<Gamepad>/rightShoulder",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Gamepad",
                     "action": "NavigateTabRight",
                     "isComposite": false,
                     "isPartOfComposite": false

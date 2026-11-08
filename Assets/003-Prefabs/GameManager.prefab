@@ -264,6 +264,15 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+  input_UIReload:
+    m_Name: Input_UI Reload
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 2deed1dd-a8be-4775-a503-0beb83554374
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
   InteractSprite_Keyboard: {fileID: 0}
   InteractSprite_XBox: {fileID: 0}
   IsInteractHeld: 0
@@ -304,6 +313,8 @@ MonoBehaviour:
   IsSubmitHeld: 0
   IsCancelPressed: 0
   IsCancelHeld: 0
+  IsUIReloadPressed: 0
+  IsUIReloadHeld: 0
   isMouseVisible: 0
   uiNavigations: []
 --- !u!114 &8235768346859379138
@@ -510,6 +521,8 @@ MonoBehaviour:
     iconSprite: {fileID: 21300000, guid: c76b396159af6c6489bacd2638ea6d61, type: 3}
   - controlPath: <Mouse>/middleButton
     iconSprite: {fileID: 21300000, guid: 28b9b3f9e9ed6d04e831f1fd884751b9, type: 3}
+  - controlPath: <Keyboard>/escape
+    iconSprite: {fileID: 21300000, guid: 358d5a35f400ab44b950271cfb91b67e, type: 3}
   xboxIcons:
   - controlPath: <Gamepad>/leftStick
     iconSprite: {fileID: 21300000, guid: 139b83464b859cd429d0370dc816028c, type: 3}

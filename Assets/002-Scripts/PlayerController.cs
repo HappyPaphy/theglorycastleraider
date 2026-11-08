@@ -215,7 +215,10 @@ public class PlayerController : PlayerEntity
                 if (targetEnemy != null && processedTargets.Add(targetEnemy))
                 {
                     SoundManager.instance.KickSound_Human(transform.position);
-                    targetEnemy.GotKicked(hit.point, kickDamage, 8f);
+
+                    float knockbackValue = PlayerPerkManager.Instance.GetJumpKickKnockback(8f);
+
+                    targetEnemy.GotKicked(hit.point, kickDamage, knockbackValue);
                     hitSomething = true;
                 }
                 else if (destructible != null && processedTargets.Add(destructible))
@@ -358,6 +361,7 @@ public class PlayerController : PlayerEntity
         {
             slideTimer -= Time.deltaTime;
             currentSpeed = Mathf.Lerp(walkSpeed, slideSpeed, slideTimer / slideDuration);
+
             finalMove = slideDirection;
 
             if (slideTimer <= 0)
@@ -383,6 +387,11 @@ public class PlayerController : PlayerEntity
             finalMove = standardMove;
         }
 
+        /*if (PlayerPerkManager.Instance != null)
+        {
+            currentSpeed *= PlayerPerkManager.Instance.CurrentMoveSpeedMultiplier_OnEnemyKill;
+        }*/
+
         controller.Move(finalMove * currentSpeed * Time.deltaTime);
 
         if (InputSchemeManager.instance.isJumpPressed && isGrounded && !isSliding && !isAttacking)
@@ -405,6 +414,7 @@ public class PlayerController : PlayerEntity
 
         if (playerWeaponManager.currentParryLeft > 0f || playerWeaponManager.currentParryRight > 0f)
         {
+            PlayerPerkManager.Instance.OnParrySuccess();
             BlockedOrParriedEffect(enemy.eyesTransform.position);
             RumbleManager.instance.RumblePulse(1f, 3f, 0.4f);
             cameraBob.TriggerShake(0.293f, 0.05f);
@@ -457,7 +467,10 @@ public class PlayerController : PlayerEntity
                 SoundManager.instance.PlayerHurtSound(transform.position);
                 cameraBob.TriggerShake(0.293f, 0.1f);
                 HealthEffect(false);
-                CharacterHealthComponent.TakeDamage(enemy.attackDamage * GameManager.instance.playerTakeHPDamage);
+
+                float rawDamage = enemy.attackDamage * GameManager.instance.playerTakeHPDamage;
+                float calculatedDamage = PlayerPerkManager.Instance.CalculateIncomingDamage(rawDamage);
+                CharacterHealthComponent.TakeDamage(calculatedDamage);
                 TriggerMeleeJolt(new Vector3(30f, 0f, 0f));
                 RumbleManager.instance.RumblePulse(1f, 2.5f, 0.2f);
             }
@@ -470,6 +483,7 @@ public class PlayerController : PlayerEntity
 
         if (playerWeaponManager.currentParryLeft > 0f || playerWeaponManager.currentParryRight > 0f)
         {
+            PlayerPerkManager.Instance.OnParrySuccess();
             BlockedOrParriedEffect(arrow.gameObject.transform.position);
             RumbleManager.instance.RumblePulse(1f, 2.5f, 0.1f);
             cameraBob.TriggerShake(0.293f, 0.05f);
@@ -518,7 +532,11 @@ public class PlayerController : PlayerEntity
                 SoundManager.instance.PlayerHurtSound(transform.position);
                 cameraBob.TriggerShake(0.293f, 0.1f);
                 HealthEffect(false);
-                CharacterHealthComponent.TakeDamage(arrow.damage * GameManager.instance.playerTakeHPDamage);
+
+                float rawDamage = arrow.damage * GameManager.instance.playerTakeHPDamage;
+                float calculatedDamage = PlayerPerkManager.Instance.CalculateIncomingDamage(rawDamage);
+
+                CharacterHealthComponent.TakeDamage(calculatedDamage);
                 TriggerMeleeJolt(new Vector3(30f, 0f, 0f));
                 RumbleManager.instance.RumblePulse(1f, 2.5f, 0.1f);
             }

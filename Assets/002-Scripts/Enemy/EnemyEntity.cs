@@ -328,8 +328,12 @@ public class EnemyEntity : CharacterEntity
     public virtual void TakeDamage(float damage)
     {
         CharacterHealthComponent.TakeDamage(damage);
+    }
 
-        
+    public override void Die()
+    {
+        PlayerPerkManager.Instance.OnEnemyKilled(false);
+        base.Die();
     }
 
     private void OnDrawGizmosSelected()

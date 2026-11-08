@@ -380,6 +380,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91fc9178a0b0c3d4bb8b6d91b16d9893, type: 3}
   m_Name: 
   m_EditorClassIdentifier: RuntimeAssembly::Fracture
+  isCanBeDamage: 1
   maxHealth: 5
   currentHealth: 5
   collisionDamageMultiplier: 0
@@ -437,7 +438,8 @@ MonoBehaviour:
         m_Calls: []
   fragmentExplosionForce: 1
   fragmentExplosionRadius: 1
-  timeBeforeFragmentDestroy: 2
+  timeBeforeFragmentObjDestroyed: 0.8
+  timeBeforeFragmentColliderDisable: 4
   currentRefractureCount: 0
 --- !u!64 &3045173145494446904
 MeshCollider:

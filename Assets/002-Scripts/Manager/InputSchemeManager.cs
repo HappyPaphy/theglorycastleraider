@@ -132,8 +132,6 @@ public class InputSchemeManager : MonoBehaviour
     private Sprite spr_ButtonWest;
     private Sprite spr_ButtonNorth;
 
-    private PlayerInputActions playerInputActions;
-
     // --- Properties ---
     public InputMode CurrentInputMode => currentInputMode;
     public PlayerInputState CurrentPlayerInputState => currentPlayerInputState;
@@ -581,13 +579,8 @@ public class InputSchemeManager : MonoBehaviour
         {
             instance = this;
         }
-        else
-        {
-            Destroy(this);
-        }
 
         playerControls = new PlayerInputActions();
-        playerInputActions = new PlayerInputActions();
 
         SetInputMode(InputMode.PC);
 
@@ -677,8 +670,8 @@ public class InputSchemeManager : MonoBehaviour
     private void InputActiveCheck()
     {
         bool isNotPaused = !PauseGame.instance.IsPaused && !EquipmentLoadOut.instance.isPanelActive && !PerkSelectionManager.instance.isPanelActive;
-        var playerInputActions_Player = playerInputActions.Player;
-        var playerInputActions_UI = playerInputActions.UI;
+        var playerInputActions_Player = playerControls.Player;
+        var playerInputActions_UI = playerControls.UI;
 
 
         if (isNotPaused && !PauseGame.instance.isThisMainmenu)
@@ -818,12 +811,12 @@ public class InputSchemeManager : MonoBehaviour
         if(isEnable)
         {
             currentPlayerInputState = PlayerInputState.Active;
-            playerInputActions.Player.Enable();
+            playerControls.Player.Enable();
         }
         else
         {
             currentPlayerInputState = PlayerInputState.Inactive;
-            playerInputActions.Player.Disable();
+            playerControls.Player.Disable();
         }
     }
 
@@ -832,12 +825,12 @@ public class InputSchemeManager : MonoBehaviour
         if (isEnable)
         {
             currentUIInputState = UIInputState.Active;
-            playerInputActions.UI.Enable();
+            playerControls.UI.Enable();
         }
         else
         {
             currentUIInputState = UIInputState.Inactive;
-            playerInputActions.UI.Disable();
+            playerControls.UI.Disable();
         }
     }
     private void ResetActionInputPressed()

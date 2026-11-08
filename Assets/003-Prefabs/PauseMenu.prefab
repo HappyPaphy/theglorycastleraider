@@ -219,6 +219,16 @@ MonoBehaviour:
   text: {fileID: 0}
   alpha: 60
   activeGameObjectOnHover: {fileID: 0}
+  isButtonInteractble: 1
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onClick:
+    m_PersistentCalls:
+      m_Calls: []
+  onSelected:
+    m_PersistentCalls:
+      m_Calls: []
   clickSound: {fileID: 0}
 --- !u!1 &486912473108011034
 GameObject:
@@ -655,6 +665,16 @@ MonoBehaviour:
   text: {fileID: 0}
   alpha: 60
   activeGameObjectOnHover: {fileID: 0}
+  isButtonInteractble: 1
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onClick:
+    m_PersistentCalls:
+      m_Calls: []
+  onSelected:
+    m_PersistentCalls:
+      m_Calls: []
   clickSound: {fileID: 0}
 --- !u!1 &918523537532941463
 GameObject:
@@ -1613,7 +1633,6 @@ MonoBehaviour:
   restartConfirmPanel: {fileID: 2366943073744414048}
   mainMenuConfirmPanel: {fileID: 6058749998444889708}
   isPaused: 0
-  isHowToPlayOn: 0
   isThisRoguelikeMode: 1
   isThisDemoVersion: 0
   isThisMainmenu: 0
@@ -2167,6 +2186,16 @@ MonoBehaviour:
   text: {fileID: 0}
   alpha: 60
   activeGameObjectOnHover: {fileID: 0}
+  isButtonInteractble: 1
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onClick:
+    m_PersistentCalls:
+      m_Calls: []
+  onSelected:
+    m_PersistentCalls:
+      m_Calls: []
   clickSound: {fileID: 0}
 --- !u!1 &5419028920347674257
 GameObject:
@@ -2545,6 +2574,16 @@ MonoBehaviour:
   text: {fileID: 0}
   alpha: 60
   activeGameObjectOnHover: {fileID: 0}
+  isButtonInteractble: 1
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onClick:
+    m_PersistentCalls:
+      m_Calls: []
+  onSelected:
+    m_PersistentCalls:
+      m_Calls: []
   clickSound: {fileID: 0}
 --- !u!1 &5740316593749302980
 GameObject:
@@ -2906,6 +2945,16 @@ MonoBehaviour:
   text: {fileID: 0}
   alpha: 60
   activeGameObjectOnHover: {fileID: 0}
+  isButtonInteractble: 1
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onClick:
+    m_PersistentCalls:
+      m_Calls: []
+  onSelected:
+    m_PersistentCalls:
+      m_Calls: []
   clickSound: {fileID: 0}
 --- !u!1 &5867946644098258272
 GameObject:
@@ -3048,6 +3097,16 @@ MonoBehaviour:
   text: {fileID: 0}
   alpha: 60
   activeGameObjectOnHover: {fileID: 0}
+  isButtonInteractble: 1
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onClick:
+    m_PersistentCalls:
+      m_Calls: []
+  onSelected:
+    m_PersistentCalls:
+      m_Calls: []
   clickSound: {fileID: 0}
 --- !u!1 &5908694484193528664
 GameObject:
@@ -4134,6 +4193,16 @@ MonoBehaviour:
   text: {fileID: 0}
   alpha: 60
   activeGameObjectOnHover: {fileID: 0}
+  isButtonInteractble: 1
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onClick:
+    m_PersistentCalls:
+      m_Calls: []
+  onSelected:
+    m_PersistentCalls:
+      m_Calls: []
   clickSound: {fileID: 0}
 --- !u!1 &8138421657363489256
 GameObject:
@@ -4933,6 +5002,16 @@ MonoBehaviour:
   text: {fileID: 0}
   alpha: 60
   activeGameObjectOnHover: {fileID: 0}
+  isButtonInteractble: 1
+  onHover:
+    m_PersistentCalls:
+      m_Calls: []
+  onClick:
+    m_PersistentCalls:
+      m_Calls: []
+  onSelected:
+    m_PersistentCalls:
+      m_Calls: []
   clickSound: {fileID: 0}
 --- !u!1001 &357184891787347228
 PrefabInstance:
@@ -4956,7 +5035,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2072972671047598731, guid: a3e1c695ced597d478ca9d42a3a454fc, type: 3}
       propertyPath: m_text
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2269657696490045568, guid: a3e1c695ced597d478ca9d42a3a454fc, type: 3}
       propertyPath: languageScales.Array.data[1].SpacingCharacter
@@ -4964,12 +5043,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3146484775873255372, guid: a3e1c695ced597d478ca9d42a3a454fc, type: 3}
       propertyPath: m_text
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3628795547803013021, guid: a3e1c695ced597d478ca9d42a3a454fc, type: 3}
       propertyPath: m_Name
       value: SettingsManager
       objectReference: {fileID: 0}
+    - target: {fileID: 3695477526810486120, guid: a3e1c695ced597d478ca9d42a3a454fc, type: 3}
+      propertyPath: mainMixer
+      value: 
+      objectReference: {fileID: 24100000, guid: 88a5a1addff0c854681849b35a5df558, type: 2}
     - target: {fileID: 3854830561807081944, guid: a3e1c695ced597d478ca9d42a3a454fc, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

@@ -57,8 +57,6 @@ public class PauseGame : MonoBehaviour
     [SerializeField] private bool isPaused = false;
     public bool IsPaused { get { return isPaused; } set { isPaused = value; } }
 
-    [SerializeField] private bool isHowToPlayOn = false;
-
     private bool isReadingScroll = false;
     public bool IsReadingScroll { get { return isReadingScroll; } set { isReadingScroll = value; } }
 
@@ -92,7 +90,7 @@ public class PauseGame : MonoBehaviour
 
     void Update()
     {
-        if (InputSchemeManager.instance.IsPausePressed && !isPaused && !isHowToPlayOn && !isReadingScroll 
+        if (InputSchemeManager.instance.IsPausePressed && !isPaused && !isReadingScroll 
             /*&& !EquipmentManager.instance.isReplacePanelActive*/ && !isThisMainmenu && !GameOver.instance.isTriggerOnce
             )
         {
@@ -126,8 +124,9 @@ public class PauseGame : MonoBehaviour
 
             PauseTheGame();
         }
-        else if(InputSchemeManager.instance.IsCancelPressed && isPaused && !isHowToPlayOn && !isReadingScroll)
+        else if((InputSchemeManager.instance.IsCancelPressed || InputSchemeManager.instance.IsPausePressed) && isPaused && !isReadingScroll)
         {
+            InputSchemeManager.instance.IsPausePressed = false;
             InputSchemeManager.instance.IsCancelPressed = false;
 
             if (TutorialManager.instance != null)
@@ -281,7 +280,6 @@ public class PauseGame : MonoBehaviour
         }
 
         MakePanelActive(pauseMenuPanel, false);
-        Invoke("SetActivePauseMenuPanel", 0.2f);
 
         InputSchemeManager.instance.OnInputActiveChange.Invoke();
     }

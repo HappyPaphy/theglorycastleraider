@@ -17,5 +17,10 @@ MonoBehaviour:
   offerCount: 3
   minCardLevel: 1
   maxCardLevel: 3
-  cardPool: []
+  cardPool:
+  - {fileID: 11400000, guid: 3958551ba55440c449ea3b9479df40af, type: 2}
+  - {fileID: 11400000, guid: a783cf9f3ed35944ea327d32acf5559f, type: 2}
+  - {fileID: 11400000, guid: f0dcf79f4610dea438e8e28f59ac14f5, type: 2}
+  - {fileID: 11400000, guid: 1c3d3a309b388764b81df96e8e317e00, type: 2}
+  - {fileID: 11400000, guid: 4342b7a45d9bf07478f1010306d8fb52, type: 2}
   allowDuplicateOffers: 0
