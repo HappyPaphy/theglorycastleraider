@@ -16,6 +16,10 @@ public class PerkOffer
     public PerkCardDefinition definition;
     public int level;
 
+    /// <summary>Level the player already has of this perk (0 = a new perk). Above 0 the offer upgrades that slot.</summary>
+    public int upgradeFromLevel;
+    public bool IsUpgrade => upgradeFromLevel > 0;
+
     public PerkOffer(
         PerkCardDefinition definition,
         int level)
@@ -31,6 +35,11 @@ public class PerkSelectionManager : MonoBehaviour
     [SerializeField] private PerkCardInventory inventory;
     [SerializeField] private PerkSelectionUI ui;
     [SerializeField] private CoinWallet coinWallet;
+
+    [Header("All Perk Cards")]
+    [Tooltip("Every perk card (all levels). Used to find the next level when a card upgrades a perk you own. " +
+             "Filled by Tools > Perks > Fill Perk Card List.")]
+    [SerializeField] private List<PerkCardDefinition> allCards = new List<PerkCardDefinition>();
 
     [Header("Testing")]
     [SerializeField] private EnergyOrbDefinition commonOrb;
@@ -245,6 +254,30 @@ public class PerkSelectionManager : MonoBehaviour
             return;
         }
 
+        // Already own this perk: upgrade that slot instead of taking a new one
+        int ownedSlot = inventory.FindSlotWithPerk(selectedOffer.definition.PerkStat);
+        if (ownedSlot >= 0)
+        {
+            int ownedLevel = inventory.GetSlot(ownedSlot).level;
+            PerkCardDefinition upgraded = selectedOffer.definition;
+
+            // Offer was rolled before you got the perk elsewhere: still give the next level
+            if (selectedOffer.level <= ownedLevel)
+            {
+                upgraded = GetCard(selectedOffer.definition.PerkStat, ownedLevel + 1);
+            }
+
+            if (upgraded != null)
+            {
+                inventory.Replace(ownedSlot, upgraded, upgraded.Level);
+                OnChanged?.Invoke();
+            }
+
+            ConsumeCurrentOrb();
+            Close();
+            return;
+        }
+
         // There is an empty unlocked slot.
         if (inventory.HasFreeUnlockedSlot())
         {
@@ -332,6 +365,23 @@ public class PerkSelectionManager : MonoBehaviour
         }
     }
 
+    /// <summary>The card for this perk at this level, or null if there's no such card.</summary>
+    public PerkCardDefinition GetCard(PerkType perkType, int level)
+    {
+        foreach (PerkCardDefinition card in allCards)
+        {
+            if (card != null && card.PerkStat == perkType && card.Level == level)
+                return card;
+        }
+        return null;
+    }
+
+    /// <summary>Tell listeners (perk stats, inventory UI) the inventory changed, e.g. after a slot unlock.</summary>
+    public void NotifyChanged()
+    {
+        OnChanged?.Invoke();
+    }
+
     private void ConsumeCurrentOrb()
     {
         if (currentOrbPickup != null)
@@ -385,60 +435,63 @@ public class PerkSelectionManager : MonoBehaviour
 
     private void GenerateOffers()
     {
-        List<PerkCardDefinition> pool =
-            new List<PerkCardDefinition>();
+        // Build the candidates: perks you don't own as they are; perks you own become their next level
+        // (an UPGRADE offer). Maxed perks, and upgrades above this orb's tier, are left out.
+        List<PerkOffer> candidates = new List<PerkOffer>();
+        HashSet<PerkCardDefinition> seen = new HashSet<PerkCardDefinition>();
 
-        foreach (PerkCardDefinition card
-                 in currentOrb.CardPool)
+        foreach (PerkCardDefinition card in currentOrb.CardPool)
         {
-            if (card != null)
-                pool.Add(card);
+            if (card == null)
+                continue;
+
+            int owned = inventory.GetOwnedLevel(card.PerkStat);
+            PerkCardDefinition offerCard = card;
+
+            if (owned > 0)
+            {
+                offerCard = GetCard(card.PerkStat, owned + 1);
+                if (offerCard == null || offerCard.Tier > currentOrb.Tier)
+                    continue;
+            }
+
+            if (!seen.Add(offerCard))
+                continue;
+
+            candidates.Add(new PerkOffer(offerCard, offerCard.Level) { upgradeFromLevel = owned });
         }
 
-        if (pool.Count == 0)
+        // Nothing left (everything maxed): fall back to the plain pool so the orb still shows cards
+        if (candidates.Count == 0)
+        {
+            foreach (PerkCardDefinition card in currentOrb.CardPool)
+            {
+                if (card != null && seen.Add(card))
+                    candidates.Add(new PerkOffer(card, card.Level));
+            }
+        }
+
+        if (candidates.Count == 0)
             return;
 
-        List<PerkCardDefinition> picked =
-            new List<PerkCardDefinition>();
-
-        int count =
-            Mathf.Min(3, offers.Length);
+        int count = Mathf.Min(3, offers.Length);
+        List<PerkOffer> remaining = new List<PerkOffer>(candidates);
 
         for (int i = 0; i < count; i++)
         {
-            List<PerkCardDefinition> candidates =
-                new List<PerkCardDefinition>();
-
-            foreach (PerkCardDefinition card in pool)
+            if (remaining.Count == 0)
             {
-                if (!currentOrb.AllowDuplicateOffers &&
-                    picked.Contains(card))
-                {
-                    continue;
-                }
-
-                candidates.Add(card);
+                // Fewer candidates than slots: repeat only if this orb allows duplicates
+                if (!currentOrb.AllowDuplicateOffers) { offers[i] = null; continue; }
+                remaining.AddRange(candidates);
             }
 
-            // If there are not enough unique cards,
-            // fall back to the entire pool.
-            if (candidates.Count == 0)
-                candidates.AddRange(pool);
+            int index = UnityEngine.Random.Range(0, remaining.Count);
+            PerkOffer pick = remaining[index];
+            offers[i] = new PerkOffer(pick.definition, pick.level) { upgradeFromLevel = pick.upgradeFromLevel };
 
-            PerkCardDefinition selected =
-                candidates[
-                    UnityEngine.Random.Range(
-                        0,
-                        candidates.Count)
-                ];
-
-            int level =
-                selected.Level;
-
-            offers[i] =
-                new PerkOffer(selected, level);
-
-            picked.Add(selected);
+            if (!currentOrb.AllowDuplicateOffers)
+                remaining.RemoveAt(index);
         }
 
         // Remember this roll on the world orb so reopening shows the same cards

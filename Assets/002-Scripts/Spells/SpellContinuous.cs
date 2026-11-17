@@ -101,7 +101,7 @@ public class SpellContinuous : MonoBehaviour
             }
             else if (destructible != null)
             {
-                destructible.TakeDamage(damagePerTick, col, col.ClosestPoint(transform.position));
+                destructible.TakeDamage(damagePerTick, col, col.ClosestPoint(transform.position), col.bounds.center - transform.position);
             }
         }
     }

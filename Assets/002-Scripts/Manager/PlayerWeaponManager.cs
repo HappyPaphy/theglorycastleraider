@@ -89,11 +89,31 @@ public class PlayerWeaponManager : MonoBehaviour
 
     [HideInInspector] public bool isBlockingRight = false;
     [HideInInspector] public bool isBlockingLeft = false;
+
+    [Header("Guard (Block button)")]
+    [Tooltip("Block stamina cost multiplier when guarding with a single one-handed sword.")]
+    [SerializeField] private float oneHandSwordBlockMultiplier = 1.5f;
+    [Tooltip("Block stamina cost multiplier when guarding with a sword in each hand.")]
+    [SerializeField] private float dualSwordBlockMultiplier = 1.25f;
+    [Tooltip("Block stamina cost multiplier when guarding with a two-handed sword (the best sword guard).")]
+    [SerializeField] private float twoHandedBlockMultiplier = 1f;
+
+    // Which button drives each hand this frame (set by HandleCombatInput)
+    private enum HandButton { None, Attack, Block }
+    private HandButton leftHandButton = HandButton.None;
+    private HandButton rightHandButton = HandButton.None;
+    private bool nextDualAttackIsLeft = false; // dual swords: right swings first, then alternate
     [HideInInspector] public float currentParryRight = 0f;
     [HideInInspector] public float currentParryLeft = 0f;
 
     private float parryDuration = 0.3f;
     private float blockCooldownDuration = 0.15f;
+
+    [Header("Parry-only weapons (e.g. dagger)")]
+    [Tooltip("How long the parry pose (Block animation) shows after a tap.")]
+    [SerializeField] private float parryPoseDuration = 0.25f;
+    private float parryPoseTimerLeft;
+    private float parryPoseTimerRight;
     private float currentBlockCooldownRight = 0f;
     private float currentBlockCooldownLeft = 0f;
 
@@ -155,8 +175,7 @@ public class PlayerWeaponManager : MonoBehaviour
         HandleItemAndSpellSprites();
         HandleWeaponSwitching();
         HandleItemUsage();
-        HandleRightHandInput();
-        HandleLeftHandInput();
+        HandleCombatInput();
         HandleWeaponSwitchUI();
 
         if (InputSchemeManager.instance.IsToggleTwoHandedPressed_Right)
@@ -657,6 +676,12 @@ public class PlayerWeaponManager : MonoBehaviour
 
     public void ToggleTwoHandedStance(bool isLeftHand)
     {
+        // Weapons that can't be two-handed (e.g. daggers) ignore the toggle. Leaving a two-handed stance
+        // (pressing while the other hand is two-handing) still works.
+        bool isEnteringTwoHanded = !isTwoHanding_Left && !isTwoHanding_Right;
+        Weapon toggled = isLeftHand ? leftHandWeapon : rightHandWeapon;
+        if (isEnteringTwoHanded && toggled != null && !toggled.canTwoHand) { return; }
+
         if (isBlockingRight || isBlockingLeft)
         {
             isBlockingRight = false;
@@ -885,43 +910,269 @@ public class PlayerWeaponManager : MonoBehaviour
         }
     }
 
-    private void HandleRightHandInput()
+    // =========================================================
+    // COMBAT INPUT
+    //   Attack button (left mouse / right trigger)  -> attack
+    //   Block button  (right mouse / left trigger)  -> block + parry
+    //
+    //   Two-handing a sword : Attack = swing, Block = two-handed guard (best stamina)
+    //   Shield + anything   : Attack = other hand's weapon, Block = shield
+    //   Sword + sword       : Attack = alternate right/left swings, Block = both swords guard (one-hand pose each)
+    //   One sword only      : Attack = swing, Block = one-hand sword guard
+    //   Anything else       : no guard. Attack = right-hand weapon, Block button = left-hand weapon's attack
+    //                         (if only one hand holds a weapon, it uses the Attack button)
+    // =========================================================
+
+    private bool AttackPressed => InputSchemeManager.instance.isLeftHandPressed;
+    private bool AttackHeld => InputSchemeManager.instance.isLeftHandHeld;
+    private bool BlockPressed => InputSchemeManager.instance.isRightHandPressed;
+    private bool BlockHeld => InputSchemeManager.instance.isRightHandHeld;
+
+    private bool HandPressed(bool isLeftHand)
     {
-        // --- FIX: Block input if the Left hand is currently two-handing ---
-        if (rightHandWeapon == null || isTwoHanding_Left) return;
+        HandButton button = isLeftHand ? leftHandButton : rightHandButton;
+        return button == HandButton.Attack ? AttackPressed : button == HandButton.Block && BlockPressed;
+    }
+
+    private bool HandHeld(bool isLeftHand)
+    {
+        HandButton button = isLeftHand ? leftHandButton : rightHandButton;
+        return button == HandButton.Attack ? AttackHeld : button == HandButton.Block && BlockHeld;
+    }
+
+    // Attack cooldown with upgrades and the weapon's two-handed modifier
+    private float AttackCooldown(Weapon weapon)
+    {
+        float cooldown = PlayerUpgrades.GetAttackCooldown(weapon);
+        return IsTwoHanded(weapon) ? cooldown * weapon.twoHandedCooldownMultiplier : cooldown;
+    }
+
+    private bool IsTwoHanded(Weapon weapon)
+    {
+        return weapon != null && ((isTwoHanding_Left && leftHandWeapon == weapon) || (isTwoHanding_Right && rightHandWeapon == weapon));
+    }
+
+    private static bool IsMelee(Weapon w) => w != null && w.weaponCategory == WeaponCategory.Melee;
+    private static bool IsShield(Weapon w) => w != null && w.weaponCategory == WeaponCategory.Shield;
+
+    private void HandleCombatInput()
+    {
         if (EquipmentLoadOut.instance.isPanelActive) { return; }
         if (isQuickMenuActive) { return; }
 
-        switch (rightHandWeapon.weaponCategory)
+        Weapon right = rightHandWeapon;
+        Weapon left = leftHandWeapon;
+        leftHandButton = HandButton.None;
+        rightHandButton = HandButton.None;
+
+        // 1. Two-handing: only that weapon is used
+        if ((isTwoHanding_Right && right != null) || (isTwoHanding_Left && left != null))
         {
-            case WeaponCategory.Shield: HandleShieldInput(rightHandWeapon, isLeftHand: false); break;
-            case WeaponCategory.Melee: HandleMeleeInput(rightHandWeapon, isLeftHand: false); break;
-            case WeaponCategory.Bow: HandleBowInput(rightHandWeapon, isLeftHand: false); break;
-            case WeaponCategory.PyromancyFlame: HandlePyromancyInput(rightHandWeapon, isLeftHand: false); break;
-            case WeaponCategory.SorceryCatalyst: HandleMagicInput(rightHandWeapon, isLeftHand: false); break;
+            bool twoHandLeft = isTwoHanding_Left && left != null;
+            Weapon weapon = twoHandLeft ? left : right;
+
+            if (IsMelee(weapon))
+            {
+                SetHandButton(twoHandLeft, HandButton.Attack);
+                Guard(twoHandLeft, BlockHeld, PerformActionState.Block);
+                HandleMeleeInput(weapon, twoHandLeft);
+            }
+            else
+            {
+                SetHandButton(twoHandLeft, HandButton.Attack);
+                HandleHandWeapon(weapon, twoHandLeft);
+            }
+            return;
+        }
+
+        // 2. Shield in either hand: Block = shield, Attack = the other hand
+        if (IsShield(right) || IsShield(left))
+        {
+            bool shieldLeft = IsShield(left); // two shields: the left one guards
+            SetHandButton(shieldLeft, HandButton.Block);
+            HandleShieldInput(shieldLeft ? left : right, shieldLeft);
+
+            Weapon other = shieldLeft ? right : left;
+            if (other != null && !IsShield(other))
+            {
+                SetHandButton(!shieldLeft, HandButton.Attack);
+                HandleHandWeapon(other, !shieldLeft);
+            }
+            return;
+        }
+
+        // 3. A sword in each hand: alternate swings, guard with both
+        if (IsMelee(right) && IsMelee(left))
+        {
+            Guard(true, BlockHeld, PerformActionState.Block);
+            Guard(false, BlockHeld, PerformActionState.Block);
+            if (isBlockingLeft || isBlockingRight) { return; }
+
+            if (AttackPressed && !playerController.isKicking && playerController.CharacterStaminaComponent.CurrentStamina > 0f)
+            {
+                bool useLeft = nextDualAttackIsLeft;
+                if (TryMeleeAttack(useLeft ? left : right, useLeft))
+                {
+                    nextDualAttackIsLeft = !nextDualAttackIsLeft;
+                }
+            }
+            return;
+        }
+
+        // 4. One sword, other hand empty: swing + one-hand guard
+        if ((IsMelee(right) && left == null) || (IsMelee(left) && right == null))
+        {
+            bool swordLeft = IsMelee(left);
+            SetHandButton(swordLeft, HandButton.Attack);
+            Guard(swordLeft, BlockHeld, PerformActionState.Block);
+            HandleMeleeInput(swordLeft ? left : right, swordLeft);
+            return;
+        }
+
+        // 5. No guard possible: right hand on Attack, left hand on the Block button
+        //    (a single weapon always uses Attack)
+        if (right != null && left != null)
+        {
+            SetHandButton(false, HandButton.Attack);
+            SetHandButton(true, HandButton.Block);
+        }
+        else if (right != null) { SetHandButton(false, HandButton.Attack); }
+        else if (left != null) { SetHandButton(true, HandButton.Attack); }
+
+        ReleaseGuard(true);
+        ReleaseGuard(false);
+        if (right != null) { HandleHandWeapon(right, false); }
+        if (left != null) { HandleHandWeapon(left, true); }
+    }
+
+    private void SetHandButton(bool isLeftHand, HandButton button)
+    {
+        if (isLeftHand) { leftHandButton = button; } else { rightHandButton = button; }
+    }
+
+    // The weapon's own action, driven by whatever button the hand is mapped to
+    private void HandleHandWeapon(Weapon weapon, bool isLeftHand)
+    {
+        switch (weapon.weaponCategory)
+        {
+            case WeaponCategory.Shield: HandleShieldInput(weapon, isLeftHand); break;
+            case WeaponCategory.Melee: HandleMeleeInput(weapon, isLeftHand); break;
+            case WeaponCategory.Bow: HandleBowInput(weapon, isLeftHand); break;
+            case WeaponCategory.PyromancyFlame: HandlePyromancyInput(weapon, isLeftHand); break;
+            case WeaponCategory.SorceryCatalyst: HandleMagicInput(weapon, isLeftHand); break;
         }
     }
 
-    private void HandleLeftHandInput()
+    // Raise / lower a sword guard on one hand (parry window opens when the guard goes up)
+    private void Guard(bool isLeftHand, bool isHeld, PerformActionState guardState)
     {
-        // --- FIX: Block input if the Right hand is currently two-handing ---
-        if (leftHandWeapon == null || isTwoHanding_Right) return;
-        if (EquipmentLoadOut.instance.isPanelActive) { return; }
-        if (isQuickMenuActive) { return; }
-
-        switch (leftHandWeapon.weaponCategory)
+        // Parry-only weapons (daggers): a tap parries, there is no held block
+        Weapon guardWeapon = isLeftHand ? leftHandWeapon : rightHandWeapon;
+        if (guardWeapon != null && guardWeapon.blockOnlyWhenTwoHanded && !IsTwoHanded(guardWeapon)) { isHeld = false; } // e.g. spear one-handed
+        if (guardWeapon != null && guardWeapon.parryOnly)
         {
-            case WeaponCategory.Shield: HandleShieldInput(leftHandWeapon, isLeftHand: true); break;
-            case WeaponCategory.Melee: HandleMeleeInput(leftHandWeapon, isLeftHand: true); break;
-            case WeaponCategory.Bow: HandleBowInput(leftHandWeapon, isLeftHand: true); break;
-            case WeaponCategory.PyromancyFlame: HandlePyromancyInput(leftHandWeapon, isLeftHand: true); break;
-            case WeaponCategory.SorceryCatalyst: HandleMagicInput(leftHandWeapon, isLeftHand: true); break;
+            ParryOnly(isLeftHand, guardState);
+            return;
         }
+
+        ref float blockCooldown = ref (isLeftHand ? ref currentBlockCooldownLeft : ref currentBlockCooldownRight);
+        ref bool isBlocking = ref (isLeftHand ? ref isBlockingLeft : ref isBlockingRight);
+        ref PerformActionState currentState = ref (isLeftHand ? ref currentState_LeftHand : ref currentState_Righthand);
+        ref float currentParry = ref (isLeftHand ? ref currentParryLeft : ref currentParryRight);
+
+        if (isHeld && blockCooldown <= 0f && !playerController.isKicking)
+        {
+            if (playerController.CharacterStaminaComponent.CurrentStamina > 0f && !isBlocking)
+            {
+                RumbleManager.instance.RumblePulse(1f, 2f, 0.15f);
+                isBlocking = true;
+                currentState = guardState;
+                currentParry = parryDuration;
+            }
+        }
+        else if (!isHeld && isBlocking)
+        {
+            isBlocking = false;
+            blockCooldown = blockCooldownDuration;
+            currentState = PerformActionState.Idle;
+        }
+    }
+
+    // Tap Block: open the parry window and show the parry pose briefly. Hits outside the window aren't blocked.
+    private void ParryOnly(bool isLeftHand, PerformActionState poseState)
+    {
+        ref float cooldown = ref (isLeftHand ? ref currentBlockCooldownLeft : ref currentBlockCooldownRight);
+        ref bool isBlocking = ref (isLeftHand ? ref isBlockingLeft : ref isBlockingRight);
+        ref PerformActionState currentState = ref (isLeftHand ? ref currentState_LeftHand : ref currentState_Righthand);
+        ref float currentParry = ref (isLeftHand ? ref currentParryLeft : ref currentParryRight);
+        ref float poseTimer = ref (isLeftHand ? ref parryPoseTimerLeft : ref parryPoseTimerRight);
+
+        isBlocking = false; // never a held block
+
+        // Parrying is free: no stamina cost, and it works even with an empty stamina bar
+        if (BlockPressed && cooldown <= 0f && !playerController.isKicking)
+        {
+            RumbleManager.instance.RumblePulse(0.6f, 1.5f, 0.1f);
+            currentParry = parryDuration;
+            currentState = poseState;
+            poseTimer = parryPoseDuration;
+            Weapon parryWeapon = isLeftHand ? leftHandWeapon : rightHandWeapon;
+            cooldown = parryWeapon != null ? parryWeapon.parryCooldown : 0.6f; // per weapon (dagger: 0.35 s)
+        }
+
+        if (poseTimer > 0f)
+        {
+            poseTimer -= Time.deltaTime;
+            if (poseTimer <= 0f && currentState == poseState) { currentState = PerformActionState.Idle; }
+        }
+    }
+
+    private void ReleaseGuard(bool isLeftHand)
+    {
+        ref bool isBlocking = ref (isLeftHand ? ref isBlockingLeft : ref isBlockingRight);
+        if (!isBlocking) { return; }
+
+        isBlocking = false;
+        if (isLeftHand) { currentBlockCooldownLeft = blockCooldownDuration; currentState_LeftHand = PerformActionState.Idle; }
+        else { currentBlockCooldownRight = blockCooldownDuration; currentState_Righthand = PerformActionState.Idle; }
+    }
+
+    /// <summary>
+    /// Block stamina cost multiplier for the guarding hand: the weapon's own modifier, scaled by how it's held
+    /// (shields use only their own modifier; two-handing is the best sword guard).
+    /// </summary>
+    public float GetBlockStaminaModifier(bool isLeftHand)
+    {
+        Weapon weapon = isLeftHand ? leftHandWeapon : rightHandWeapon;
+        if (weapon == null) { return 1f; }
+
+        float modifier = weapon.blockStaminaDamageModifier;
+        if (IsMelee(weapon))
+        {
+            if (isTwoHanding_Left || isTwoHanding_Right) { modifier *= twoHandedBlockMultiplier; }
+            else if (IsMelee(leftHandWeapon) && IsMelee(rightHandWeapon)) { modifier *= dualSwordBlockMultiplier; }
+            else { modifier *= oneHandSwordBlockMultiplier; }
+        }
+        return modifier * PlayerCurses.BlockStaminaMultiplier * PlayerRings.BlockStaminaMultiplier; // curses (e.g. Brittle), rings
+    }
+
+    // Swing if this hand's attack cooldown is ready. Returns true when a swing happened.
+    private bool TryMeleeAttack(Weapon weapon, bool isLeftHand)
+    {
+        float lastAttackTime = isLeftHand ? lastAttackTimeLeft : lastAttackTimeRight;
+        if (Time.time < (lastAttackTime + AttackCooldown(weapon)) * PlayerPerkManager.Instance.CurrentMoveSpeedMultiplier_Executioner)
+        {
+            return false;
+        }
+        // Swinging while sliding or jumping is allowed
+
+        PerformAttack(weapon, isLeftHand);
+        return true;
     }
 
     private void HandleShieldInput(Weapon weapon, bool isLeftHand)
     {
-        bool isHeld = isLeftHand ? InputSchemeManager.instance.isLeftHandHeld : InputSchemeManager.instance.isRightHandHeld;
+        bool isHeld = HandHeld(isLeftHand);
         ref float blockCooldown = ref (isLeftHand ? ref currentBlockCooldownLeft : ref currentBlockCooldownRight);
         ref bool isBlocking = ref (isLeftHand ? ref isBlockingLeft : ref isBlockingRight);
         ref float currentParry = ref (isLeftHand ? ref currentParryLeft : ref currentParryRight);
@@ -949,39 +1200,10 @@ public class PlayerWeaponManager : MonoBehaviour
 
     private void HandleMeleeInput(Weapon weapon, bool isLeftHand)
     {
-        bool isPressed = isLeftHand ? InputSchemeManager.instance.isLeftHandPressed : InputSchemeManager.instance.isRightHandPressed;
+        bool isPressed = HandPressed(isLeftHand);
         ref float lastAttackTime = ref (isLeftHand ? ref lastAttackTimeLeft : ref lastAttackTimeRight);
 
-        // --- FIX: Determine if THIS specific hand is two-handing ---
-        bool isTwoHandingThisWeapon = isLeftHand ? isTwoHanding_Left : isTwoHanding_Right;
-
-        if (isTwoHandingThisWeapon)
-        {
-            // If two-handing LEFT, Right trigger blocks. If two-handing RIGHT, Left trigger blocks.
-            bool isBlockHeld = isLeftHand ? InputSchemeManager.instance.isRightHandHeld : InputSchemeManager.instance.isLeftHandHeld;
-            ref float blockCooldown = ref (isLeftHand ? ref currentBlockCooldownLeft : ref currentBlockCooldownRight);
-            ref bool isBlocking = ref (isLeftHand ? ref isBlockingLeft : ref isBlockingRight);
-            ref PerformActionState currentState = ref (isLeftHand ? ref currentState_LeftHand : ref currentState_Righthand);
-            ref float currentParry = ref (isLeftHand ? ref currentParryLeft : ref currentParryRight);
-
-            if (isBlockHeld && blockCooldown <= 0f && !playerController.isKicking)
-            {
-                if (playerController.CharacterStaminaComponent.CurrentStamina > 0f && !isBlocking)
-                {
-                    RumbleManager.instance.RumblePulse(1f, 2f, 0.15f);
-                    isBlocking = true;
-                    currentState = PerformActionState.Block;
-                    currentParry = parryDuration;
-                }
-            }
-            else if (!isBlockHeld && isBlocking)
-            {
-                isBlocking = false;
-                blockCooldown = blockCooldownDuration;
-                currentState = PerformActionState.Idle;
-            }
-        }
-
+        // (Guarding with swords is handled by HandleCombatInput / Guard)
         bool isThisHandBlocking = isLeftHand ? isBlockingLeft : isBlockingRight;
         if (isThisHandBlocking) return;
 
@@ -989,7 +1211,7 @@ public class PlayerWeaponManager : MonoBehaviour
         {
             if (playerController.CharacterStaminaComponent.CurrentStamina > 0f)
             {
-                if (Time.time >= (lastAttackTime + weapon.attackCooldown) * PlayerPerkManager.Instance.CurrentMoveSpeedMultiplier_Executioner)
+                if (Time.time >= (lastAttackTime + AttackCooldown(weapon)) * PlayerPerkManager.Instance.CurrentMoveSpeedMultiplier_Executioner)
                 {
                     PerformAttack(weapon, isLeftHand);
                 }
@@ -999,8 +1221,8 @@ public class PlayerWeaponManager : MonoBehaviour
 
     private void HandleBowInput(Weapon weapon, bool isLeftHand)
     {
-        bool isHeld = isLeftHand ? InputSchemeManager.instance.isLeftHandHeld : InputSchemeManager.instance.isRightHandHeld;
-        bool isPressed = isLeftHand ? InputSchemeManager.instance.isLeftHandPressed : InputSchemeManager.instance.isRightHandPressed;
+        bool isHeld = HandHeld(isLeftHand);
+        bool isPressed = HandPressed(isLeftHand);
 
         // Press to draw string (Hold1), release to shoot (Press1)
         if (isHeld)
@@ -1032,7 +1254,7 @@ public class PlayerWeaponManager : MonoBehaviour
     private void ProcessSpellInput(Weapon weapon, Item spell, bool isLeftHand)
     {
         PerformActionState currentState = isLeftHand ? currentState_LeftHand : currentState_Righthand;
-        bool isPressed = isLeftHand ? InputSchemeManager.instance.isLeftHandPressed : InputSchemeManager.instance.isRightHandPressed;
+        bool isPressed = HandPressed(isLeftHand);
         ref float lastAttackTime = ref (isLeftHand ? ref lastAttackTimeLeft : ref lastAttackTimeRight);
 
         // Only begin a cast if the hand is Idle, the attack cooldown has passed, and we aren't kicking
@@ -1040,7 +1262,7 @@ public class PlayerWeaponManager : MonoBehaviour
         {
             if (playerController.CharacterStaminaComponent.CurrentStamina > spell.flatStaminaCost &&
                 playerController.CharacterUltimateComponent.CurrentUltimate >= spell.flatManaCost &&
-                Time.time >= (lastAttackTime + weapon.attackCooldown) * PlayerPerkManager.Instance.CurrentMoveSpeedMultiplier_Executioner)
+                Time.time >= (lastAttackTime + AttackCooldown(weapon)) * PlayerPerkManager.Instance.CurrentMoveSpeedMultiplier_Executioner)
             {
                 StartCoroutine(SpellCastSequence(weapon, spell, isLeftHand));
             }
@@ -1148,7 +1370,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
     private bool IsHandHeld(bool isLeftHand)
     {
-        return isLeftHand ? InputSchemeManager.instance.isLeftHandHeld : InputSchemeManager.instance.isRightHandHeld;
+        return HandHeld(isLeftHand);
     }
 
     private void EndSpellCast(Weapon weapon, bool isLeftHand)
@@ -1158,13 +1380,13 @@ public class PlayerWeaponManager : MonoBehaviour
         {
             lastAttackTimeLeft = Time.time;
             anim_LeftHand.Play("Idle");
-            attackStateResetTimerLeft = weapon.attackCooldown;
+            attackStateResetTimerLeft = AttackCooldown(weapon);
         }
         else
         {
             lastAttackTimeRight = Time.time;
             anim_RightHand.Play("Idle");
-            attackStateResetTimerRight = weapon.attackCooldown;
+            attackStateResetTimerRight = AttackCooldown(weapon);
         }
     }
 
@@ -1268,6 +1490,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.293f);
         PlayerPerkManager.Instance.OnEnemyKilled(true);
+        if (targetEnemy != null) { targetEnemy.MarkKillReported(); } // don't count it again when it dies
 
         if (targetEnemy.decapitatedHeadPrefab != null)
         {
@@ -1313,21 +1536,21 @@ public class PlayerWeaponManager : MonoBehaviour
 
     private void PerformAttack(Weapon weapon, bool isLeftHand)
     {
-        if (!playerController.isGrounded || playerController.isSliding) { return; }
+        // Swinging while sliding or jumping is allowed
 
         ApplyAttackJolt(weapon, isLeftHand);
 
-        playerController.TriggerAttackMovement(weapon.attackCooldown, lungeForce);
+        playerController.TriggerAttackMovement(AttackCooldown(weapon), lungeForce);
 
         if (isLeftHand)
         {
             lastAttackTimeLeft = Time.time;
-            attackStateResetTimerLeft = weapon.attackCooldown;
+            attackStateResetTimerLeft = AttackCooldown(weapon);
         }
         else
         {
             lastAttackTimeRight = Time.time;
-            attackStateResetTimerRight = weapon.attackCooldown;
+            attackStateResetTimerRight = AttackCooldown(weapon);
         }
     }
 
@@ -1338,17 +1561,20 @@ public class PlayerWeaponManager : MonoBehaviour
 
         if (isLeftHand)
         {
-            if (Time.time > lastAttackTimeLeft + weapon.attackCooldown + 0.5f) comboStepLeft = 0;
+            if (Time.time > lastAttackTimeLeft + AttackCooldown(weapon) + 0.5f) comboStepLeft = 0;
         }
         else
         {
-            if (Time.time > lastAttackTimeRight + weapon.attackCooldown + 0.5f) comboStepRight = 0;
+            if (Time.time > lastAttackTimeRight + AttackCooldown(weapon) + 0.5f) comboStepRight = 0;
         }
 
         Vector3 joltDirection = Vector3.zero;
-        Vector3 castStart = cameraTransform.position - (cameraTransform.forward * attackRadius);
+        // Per-weapon attack shape (e.g. spear: longer, narrower thrust)
+        float radius = weapon.attackRadiusOverride > 0f ? weapon.attackRadiusOverride : attackRadius;
+        float range = attackRange * weapon.attackRangeMultiplier;
+        Vector3 castStart = cameraTransform.position - (cameraTransform.forward * radius);
         Ray rayAttack = new Ray(castStart, cameraTransform.forward);
-        float totalRange = attackRange + attackRadius;
+        float totalRange = range + radius;
         bool isLeftAttack = isLeftHand;
         int currentCombo = isLeftHand ? comboStepLeft : comboStepRight;
 
@@ -1378,8 +1604,13 @@ public class PlayerWeaponManager : MonoBehaviour
                 break;
         }
 
-        RaycastHit[] hits = Physics.SphereCastAll(rayAttack, attackRadius, totalRange, attackLayerMask);
+        RaycastHit[] hits = Physics.SphereCastAll(rayAttack, radius, totalRange, attackLayerMask);
         bool hitSomething = false;
+
+        // Nearest first, so a target limit (spear: 3) takes the closest enemies in the line
+        if (weapon.maxTargets > 0 && hits.Length > 1) { System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance)); }
+        int enemiesHit = 0;
+        bool twoHanded = IsTwoHanded(weapon);
 
         if (hits.Length > 0)
         {
@@ -1393,23 +1624,36 @@ public class PlayerWeaponManager : MonoBehaviour
                 FractureTrigger fractureTrigger = hit.collider.GetComponent<FractureTrigger>();
 
                 float calculatedDamage = weapon.damage;
+                if (twoHanded) { calculatedDamage *= weapon.twoHandedDamageMultiplier; }
 
                 if(PlayerPerkManager.Instance != null)
                 {
-                    calculatedDamage *= PlayerPerkManager.Instance.CurrentAttackPowerMultiplier_OnEnemyKill;
+                    calculatedDamage *= PlayerPerkManager.Instance.OutgoingDamageMultiplier; // Blood Lust x Glass Jaw
                 }
 
-                Debug.LogError($"calculatedDamage: {calculatedDamage}");
-
+                if (targetEnemy != null && !processedTargets.Contains(targetEnemy) && weapon.maxTargets > 0 && enemiesHit >= weapon.maxTargets)
+                {
+                    continue; // already hit as many enemies as this weapon pierces
+                }
 
                 if (targetEnemy != null && processedTargets.Add(targetEnemy))
                 {
+                    enemiesHit++;
+
+                    // Too close for the weapon's tip (spear)
+                    if (weapon.closeRangePenaltyDistance > 0f)
+                    {
+                        Vector3 toEnemy = targetEnemy.transform.position - transform.position;
+                        toEnemy.y = 0f;
+                        if (toEnemy.magnitude < weapon.closeRangePenaltyDistance) { calculatedDamage *= weapon.closeRangeDamageMultiplier; }
+                    }
+
                     targetEnemy.TakeSwordHit(isLeftAttack, hit.point, calculatedDamage, true, isLeftHand, weapon.damageImpactSound);
                     hitSomething = true;
                 }
                 else if (destructible != null && processedTargets.Add(destructible))
                 {
-                    destructible.TakeDamage(calculatedDamage, hit.collider, hit.point);
+                    destructible.TakeDamage(calculatedDamage, hit.collider, hit.point, cameraTransform.forward);
                     hitSomething = true;
 
                     if (fractureTrigger != null)
@@ -1429,7 +1673,11 @@ public class PlayerWeaponManager : MonoBehaviour
             }
         }
 
-        if (!hitSomething)
+        // Riposte Echo: a stored parry charge turns this swing into a shockwave
+        bool releasedRiposte = PlayerPerkManager.Instance != null &&
+            PlayerPerkManager.Instance.TryReleaseRiposte(cameraTransform.position, cameraTransform.forward, weapon.damage);
+
+        if (!hitSomething && !releasedRiposte)
         {
             SoundManager.instance.SwordSound_Air(transform.position);
         }
@@ -1439,12 +1687,12 @@ public class PlayerWeaponManager : MonoBehaviour
         if (isLeftHand)
         {
             comboStepLeft++;
-            if (comboStepLeft > 1) comboStepLeft = 0;
+            if (comboStepLeft >= Mathf.Clamp(weapon.comboLength, 1, 3)) comboStepLeft = 0;
         }
         else
         {
             comboStepRight++;
-            if (comboStepRight > 1) comboStepRight = 0;
+            if (comboStepRight >= Mathf.Clamp(weapon.comboLength, 1, 3)) comboStepRight = 0;
         }
     }
 

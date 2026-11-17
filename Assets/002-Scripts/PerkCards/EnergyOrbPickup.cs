@@ -73,7 +73,8 @@ public class EnergyOrbPickup : MonoBehaviour
         PerkSelectionManager perkManager = PerkSelectionManager.instance;
 
         bool canInteract = orbDefinition != null && perkManager != null && !perkManager.isPanelActive;
-        bool isPlayerNear = canInteract && Physics.OverlapSphere(transform.position, pickupRadius, playerLayer).Length > 0;
+        bool isPlayerNear = canInteract && PhysicsQuery.Any(transform.position, pickupRadius, playerLayer)
+                            && InteractFacing.IsPlayerFacing(transform.position);
 
         if (uiButtonPrompt != null && uiButtonPrompt.activeSelf != isPlayerNear)
         {

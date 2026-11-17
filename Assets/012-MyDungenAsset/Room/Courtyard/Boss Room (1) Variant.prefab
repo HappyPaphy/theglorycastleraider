@@ -1,5 +1,164 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3115096029685035543
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1755405812994733683}
+  - component: {fileID: 2532780574286199674}
+  m_Layer: 8
+  m_Name: Floor Slab Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1755405812994733683
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3115096029685035543}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -6.35, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8767118784663669135}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2532780574286199674
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3115096029685035543}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.5, y: 0.17999983, z: 2.5}
+  m_Center: {x: -4.25, y: 5.9911146, z: 0.25}
+--- !u!1 &5206109748145209301
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4163413316070573472}
+  - component: {fileID: 1982779151902056848}
+  m_Layer: 8
+  m_Name: Floor Slab Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4163413316070573472
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5206109748145209301}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -9, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1543024893316408398}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1982779151902056848
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5206109748145209301}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 12, y: 0.17999983, z: 12}
+  m_Center: {x: -4, y: 6, z: 0}
+--- !u!1 &6549732090924541959
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2587236407828820874}
+  - component: {fileID: 7933093740810881005}
+  m_Layer: 8
+  m_Name: Floor Slab Collider
+  m_TagString: Dirt
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2587236407828820874
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6549732090924541959}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7036241443738691193}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &7933093740810881005
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6549732090924541959}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 12, y: 0.18, z: 12}
+  m_Center: {x: -4, y: 0, z: 0}
 --- !u!1001 &2561927125530575968
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -54,6 +213,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 4767072805367652889, guid: cb592cb4d4c0b844da51b4c9b16aa70b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2587236407828820874}
+    - targetCorrespondingSourceObject: {fileID: 3955330158655021102, guid: cb592cb4d4c0b844da51b4c9b16aa70b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4163413316070573472}
+    - targetCorrespondingSourceObject: {fileID: 6496120512777309679, guid: cb592cb4d4c0b844da51b4c9b16aa70b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1755405812994733683}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb592cb4d4c0b844da51b4c9b16aa70b, type: 3}
+--- !u!4 &1543024893316408398 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3955330158655021102, guid: cb592cb4d4c0b844da51b4c9b16aa70b, type: 3}
+  m_PrefabInstance: {fileID: 2561927125530575968}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7036241443738691193 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4767072805367652889, guid: cb592cb4d4c0b844da51b4c9b16aa70b, type: 3}
+  m_PrefabInstance: {fileID: 2561927125530575968}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8767118784663669135 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6496120512777309679, guid: cb592cb4d4c0b844da51b4c9b16aa70b, type: 3}
+  m_PrefabInstance: {fileID: 2561927125530575968}
+  m_PrefabAsset: {fileID: 0}

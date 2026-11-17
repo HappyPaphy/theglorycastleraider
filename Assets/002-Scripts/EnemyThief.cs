@@ -90,7 +90,7 @@ public class EnemyThief : EnemyEntity
 
     protected override void Awake()
     {
-        agent.speed = moveSpeed;
+        agent.speed = (moveSpeed) * SpeedMultiplier;
         agent.updateRotation = false;
 
         base.Awake();
@@ -106,6 +106,9 @@ public class EnemyThief : EnemyEntity
 
     protected override void Update()
     {
+        // Once executed, nothing may change the state back (it plays the headless death)
+        if (isExecuted) { currentState = EnemyThiefState.Executed; }
+
         ChooseAnimation();
         HandleState();
         HandleBalance();
@@ -121,9 +124,9 @@ public class EnemyThief : EnemyEntity
         if (playerTransform == null) { return; }
         if (PlayerController.instance.CharacterHealthComponent.CurrentHP <= 0) { return; }
 
-        Collider[] hits = Physics.OverlapSphere(transform.position, preAttackRadius, playerLayer);
+        bool playerInReach = PhysicsQuery.Any(transform.position, preAttackRadius, playerLayer);
 
-        if (hits.Length > 0)
+        if (playerInReach)
         {
             Vector3 directionToPlayer = (playerTransform.position - eyesTransform.position).normalized;
 
@@ -204,13 +207,13 @@ public class EnemyThief : EnemyEntity
 
         if (currentState == EnemyThiefState.Run)
         {
-            anim.speed = 1.8f;
-            agent.speed = moveSpeed * 1.8f;
+            anim.speed = (1.8f) * SpeedMultiplier;
+            agent.speed = (moveSpeed * 1.8f) * SpeedMultiplier;
         }
         else
         {
-            anim.speed = 1f;
-            agent.speed = moveSpeed;
+            anim.speed = (1f) * SpeedMultiplier;
+            agent.speed = (moveSpeed) * SpeedMultiplier;
         }
     }
 
@@ -354,8 +357,26 @@ public class EnemyThief : EnemyEntity
         ApplyKnockback(damageKnockbackForce);
     }
 
+    protected override bool OnKnockDown(float duration)
+    {
+        if (isExecuted) { return false; }
+        currentState = EnemyThiefState.Kicked;
+        isKicked = true;
+        kickTimer = Mathf.Max(kickTimer, duration);
+        SafeStopAgent(true);
+        return true;
+    }
+
+    protected override void OnKnockDownInterrupted()
+    {
+        // Back up next frame (the hit's own reaction still plays)
+        if (isKicked) { kickTimer = 0f; }
+    }
+
     public override void GotExecuted()
     {
+        // Stop attack / kick / leap coroutines: when they finish they set Run/Chase and would undo the execution
+        StopAllCoroutines();
         currentState = EnemyThiefState.Executed;
         isExecuted = true;
 
@@ -640,9 +661,20 @@ public class EnemyThief : EnemyEntity
                         Transform target = PlayerController.instance.transform;
                         SafeSetDesitinationAgent(target.position);
 
+                        // Door/furniture in the way: hit it with the normal attack until it breaks
+                        if (UpdateBlockingObstacle(target.position))
+                        {
+                            FaceBlockingObstacle(10f);
+                            if (currentAttackCooldown <= 0f && stateTimer <= 0f && kickTimer <= 0f)
+                            {
+                                currentState = EnemyThiefState.Attack1;
+                                break;
+                            }
+                        }
+
                         Vector3 lookDir = (target.position - transform.position).normalized;
                         lookDir.y = 0;
-                        if (lookDir != Vector3.zero)
+                        if (lookDir != Vector3.zero && !HasBlockingObstacle)
                         {
                             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDir), Time.deltaTime * 10f);
                         }
@@ -764,7 +796,8 @@ public class EnemyThief : EnemyEntity
             }
 
             SoundManager.instance.HumanSound_Attack(sprRndr.transform.position);
-            yield return new WaitForSeconds(preAttackDuration);
+            IncomingAttackIndicator.Warn(transform, preAttackDuration / SpeedMultiplier); // red warning if it's behind the player
+            yield return new WaitForSeconds(preAttackDuration / SpeedMultiplier);
 
             if(stateTimer > 0 || kickTimer > 0 && isParried && isDied) { yield break; }
 
@@ -779,9 +812,13 @@ public class EnemyThief : EnemyEntity
                 {
                     hitPlayers[0].GetComponent<PlayerController>().TakeSwordHit(this);
                 }
+                else
+                {
+                    HitBlockingObstacle();
+                }
 
                 // Apply the cooldown
-                currentAttackCooldown = attackCooldownDuration;
+                currentAttackCooldown = attackCooldownDuration / SpeedMultiplier;
 
                 // 3. IMPORTANT: Free the enemy from the Attack state so they can move again
 

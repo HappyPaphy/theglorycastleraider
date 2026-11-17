@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
+// Submesh layout: 0..N-1 = the source mesh's own submeshes (one per material), N = cut faces (inside material).
+// "CutFace" is resolved to the last submesh of each FragmentData, see FragmentData.SubmeshIndex.
 public enum SlicedMeshSubmesh
 {
     Default = 0,
@@ -27,6 +29,11 @@ public class FragmentData
     /// Index buffer for each submesh
     /// </summary>
     public List<int>[] Triangles;
+
+    /// <summary>
+    /// Index of the cut-face submesh (always the last one, after all of the source mesh's own submeshes)
+    /// </summary>
+    public int CutFaceSubmesh => this.Triangles.Length - 1;
 
     /// <summary>
     /// List of edges constraints for the cut-face triangulation
@@ -78,16 +85,19 @@ public class FragmentData
     /// <param name="name">The name of the mesh</param>
     /// <param name="vertexCount">Vertex count used to initialize lists. Initializing lists to approximate size reduces resizes and GC.</param>
     /// <param name="triangleCount">Triangle count used to initialize lists. Initializing lists to approximate size reduces resizes and GC.</param>
-    public FragmentData(int vertexCount, int triangleCount)
+    public FragmentData(int vertexCount, int triangleCount, int submeshCount = 2)
     {
         this.Vertices = new List<MeshVertex>(vertexCount);
         this.CutVertices = new List<MeshVertex>(vertexCount / 10);
 
-        // Store triangles for each submesh separately
-        this.Triangles = new List<int>[] {
-            new List<int>(triangleCount),
-            new List<int>(triangleCount / 10)
-        };
+        // Store triangles for each submesh separately (surface submeshes + cut face last)
+        submeshCount = Mathf.Max(2, submeshCount);
+        this.Triangles = new List<int>[submeshCount];
+        for (int i = 0; i < submeshCount - 1; i++)
+        {
+            this.Triangles[i] = new List<int>(triangleCount / (submeshCount - 1));
+        }
+        this.Triangles[submeshCount - 1] = new List<int>(triangleCount / 10);
 
         this.Constraints = new List<EdgeConstraint>();
         this.IndexMap = new int[vertexCount];
@@ -114,18 +124,15 @@ public class FragmentData
             this.Vertices.Add(new MeshVertex(positions[i], normals[i], uv[i]));
         }
 
-        // Only meshes with one submesh are currently supported
-        this.Triangles = new List<int>[2];
-        this.Triangles[0] = new List<int>(mesh.GetTriangles(0));
-        
-        if (mesh.subMeshCount >= 2)
+        // Every submesh of the source mesh (one per material) keeps its own triangles,
+        // and a new, empty submesh is added at the end for the cut faces
+        int surfaceCount = Mathf.Max(1, mesh.subMeshCount);
+        this.Triangles = new List<int>[surfaceCount + 1];
+        for (int i = 0; i < surfaceCount; i++)
         {
-            this.Triangles[1] = new List<int>(mesh.GetTriangles(1));
+            this.Triangles[i] = new List<int>(mesh.GetTriangles(i));
         }
-        else
-        {
-            this.Triangles[1] = new List<int>(mesh.triangles.Length / 10);
-        }
+        this.Triangles[surfaceCount] = new List<int>(mesh.triangles.Length / 10);
 
         this.CalculateBounds();
     }
@@ -169,9 +176,17 @@ public class FragmentData
     /// <param name="subMesh">The sub-mesh to add the triangle to</param>
     public void AddTriangle(int v1, int v2, int v3, SlicedMeshSubmesh subMesh)
     {
-        this.Triangles[(int)subMesh].Add(v1);
-        this.Triangles[(int)subMesh].Add(v2);
-        this.Triangles[(int)subMesh].Add(v3);
+        AddTriangle(v1, v2, v3, SubmeshIndex(subMesh));
+    }
+
+    /// <summary>
+    /// Adds a new triangle to the submesh with this index
+    /// </summary>
+    public void AddTriangle(int v1, int v2, int v3, int subMesh)
+    {
+        this.Triangles[subMesh].Add(v1);
+        this.Triangles[subMesh].Add(v2);
+        this.Triangles[subMesh].Add(v3);
     }
 
     /// <summary>
@@ -184,9 +199,17 @@ public class FragmentData
     /// <param name="subMesh">The sub-mesh to add the triangle to</param>
     public void AddMappedTriangle(int v1, int v2, int v3, SlicedMeshSubmesh subMesh)
     {
-        this.Triangles[(int)subMesh].Add(IndexMap[v1]);
-        this.Triangles[(int)subMesh].Add(IndexMap[v2]);
-        this.Triangles[(int)subMesh].Add(IndexMap[v3]);
+        AddMappedTriangle(v1, v2, v3, SubmeshIndex(subMesh));
+    }
+
+    /// <summary>
+    /// Adds a new triangle (source mesh indices, remapped) to the submesh with this index
+    /// </summary>
+    public void AddMappedTriangle(int v1, int v2, int v3, int subMesh)
+    {
+        this.Triangles[subMesh].Add(IndexMap[v1]);
+        this.Triangles[subMesh].Add(IndexMap[v2]);
+        this.Triangles[subMesh].Add(IndexMap[v3]);
     }
 
     /// <summary>
@@ -249,6 +272,14 @@ public class FragmentData
     /// </summary>
     /// <param name="subMeshIndex">The index of the submesh</param>
     /// <returns></returns>
+    /// <summary>
+    /// Default = first surface submesh, CutFace = the last submesh
+    /// </summary>
+    public int SubmeshIndex(SlicedMeshSubmesh subMesh)
+    {
+        return subMesh == SlicedMeshSubmesh.CutFace ? this.CutFaceSubmesh : 0;
+    }
+
     public int[] GetTriangles(int subMeshIndex)
     {
         return this.Triangles[subMeshIndex].ToArray();

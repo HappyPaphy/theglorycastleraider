@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85415f97c9a5df542b589d4ca2be1aa9, type: 3}
+  m_Name: Weapon_ShortSword
+  m_EditorClassIdentifier: Assembly-CSharp::ShopItemDefinition
+  displayName: Short Sword
+  description: A quick, reliable blade.
+  icon: {fileID: -321605396, guid: 3c62a0a01a3cad74a8b515df0c16207e, type: 3}
+  price: 120
+  kind: 1
+  itemPrefab: {fileID: 1293784877024911070, guid: f6863ede6c6095d45b69841fffc4ae6b, type: 3}
+  keyType: 0
+  attackSpeedBonus: 0.1
+  stockPerShop: 1
+  maxPurchasesPerRun: 0

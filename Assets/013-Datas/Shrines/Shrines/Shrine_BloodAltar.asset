@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 573c48cc13b05df4fb94f43c970edd62, type: 3}
+  m_Name: Shrine_BloodAltar
+  m_EditorClassIdentifier: Assembly-CSharp::ShrineDefinition
+  displayName: Blood Altar
+  flavour: Power, paid in blood.
+  color: {r: 0.9, g: 0.15, b: 0.2, a: 1}
+  icon: {fileID: 21300000, guid: 1a3acdd31a216c74b8ea3844e415813d, type: 3}
+  weight: 1
+  minFloor: 1
+  coinCost: 0
+  maxHealthCost: 0.15
+  maxStaminaCost: 0
+  curseCount: 0
+  energyOrb: 2
+  healFraction: 0
+  cleanseCurses: 0
+  damageBonus: 0
+  maxHealthBonus: 0
+  gambleOutcomes: []

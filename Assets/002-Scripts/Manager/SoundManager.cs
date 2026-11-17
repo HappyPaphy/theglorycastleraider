@@ -68,6 +68,11 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioSource[] sfx_Wooden_Hit;
     [SerializeField] private AudioSource[] sfx_Wooden_Break;
 
+    [Header("Door")]
+    [SerializeField] private AudioSource[] sfx_Door_Open;
+    [SerializeField] private AudioSource[] sfx_Door_Close;
+    [SerializeField] private AudioSource[] sfx_Door_Impact; // Thud when the door hits its stop (open or shut)
+
     [Header("FootStep")]
     [SerializeField] private AudioSource[] sfx_FootStep_Brick;
     [SerializeField] private AudioSource[] sfx_FootStep_Wood;
@@ -316,6 +321,27 @@ public class SoundManager : MonoBehaviour
     {
         int rndIndex = Random.Range(0, sfx_Wooden_Break.Length);
         PlayNewSound(sfx_Wooden_Break[rndIndex], soundPosition, 100f);
+    }
+
+    public void DoorSound_Open(Vector3 soundPosition)
+    {
+        if (sfx_Door_Open == null || sfx_Door_Open.Length == 0) return;
+        int rndIndex = Random.Range(0, sfx_Door_Open.Length);
+        PlayNewSound(sfx_Door_Open[rndIndex], soundPosition, 30f);
+    }
+
+    public void DoorSound_Close(Vector3 soundPosition)
+    {
+        if (sfx_Door_Close == null || sfx_Door_Close.Length == 0) return;
+        int rndIndex = Random.Range(0, sfx_Door_Close.Length);
+        PlayNewSound(sfx_Door_Close[rndIndex], soundPosition, 30f);
+    }
+
+    public void DoorSound_Impact(Vector3 soundPosition)
+    {
+        if (sfx_Door_Impact == null || sfx_Door_Impact.Length == 0) return;
+        int rndIndex = Random.Range(0, sfx_Door_Impact.Length);
+        PlayNewSound(sfx_Door_Impact[rndIndex], soundPosition, 30f);
     }
 
     public void PlayFootStep(Vector3 soundPosition, SurfaceType surfaceType)

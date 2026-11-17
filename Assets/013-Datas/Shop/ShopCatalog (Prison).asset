@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1512b17c8da5a334ea49e4da47feb466, type: 3}
+  m_Name: ShopCatalog (Prison)
+  m_EditorClassIdentifier: Assembly-CSharp::ShopCatalog
+  itemsPerShop: 8
+  entries:
+  - item: {fileID: 11400000, guid: a7eb9a32ebc9c4b4ab35338e4837473f, type: 2}
+    alwaysStocked: 1
+    weight: 1
+  - item: {fileID: 11400000, guid: b6349a3f771c4ef46a1b47e47a1789e3, type: 2}
+    alwaysStocked: 0
+    weight: 3
+  - item: {fileID: 11400000, guid: cff683ba7425a4246aa3c8e651022e61, type: 2}
+    alwaysStocked: 0
+    weight: 2
+  - item: {fileID: 11400000, guid: a047ba77a72c6fb429179745cdcac1e3, type: 2}
+    alwaysStocked: 1
+    weight: 1
+  - item: {fileID: 11400000, guid: bed8362d12da076428cdc0787f233d04, type: 2}
+    alwaysStocked: 0
+    weight: 2.5
+  - item: {fileID: 11400000, guid: 13ae26b0125e6cf4dada7163a5e9b8e9, type: 2}
+    alwaysStocked: 0
+    weight: 1.5
+  - item: {fileID: 11400000, guid: 022d120e832288c4e8065d3887c516ef, type: 2}
+    alwaysStocked: 0
+    weight: 1.5
+  - item: {fileID: 11400000, guid: f7e8e8353a6ed5744943c0321e2d838b, type: 2}
+    alwaysStocked: 0
+    weight: 1.5
+  - item: {fileID: 11400000, guid: ded73dfc0aaa074418fb0da502cd52dd, type: 2}
+    alwaysStocked: 0
+    weight: 1.2
+  - item: {fileID: 11400000, guid: 2e7bbf96bb1f70c4bbeddf535e74450d, type: 2}
+    alwaysStocked: 0
+    weight: 0.8
+  - item: {fileID: 11400000, guid: dfa341c8c9eaff64183512680f465e67, type: 2}
+    alwaysStocked: 0
+    weight: 0.8
+  - item: {fileID: 11400000, guid: 229c8884cf6c9a64690f4ba608973af4, type: 2}
+    alwaysStocked: 0
+    weight: 0.8
+  - item: {fileID: 11400000, guid: 11d3a6ab70b148f4e81d6ebf5365b30c, type: 2}
+    alwaysStocked: 0
+    weight: 0.8
+  - item: {fileID: 11400000, guid: d7ef427b0d10e014bb23ae1570ec2f70, type: 2}
+    alwaysStocked: 0
+    weight: 1.2
+  - item: {fileID: 11400000, guid: 8c6beb785ba600646941d0f8978ac9a0, type: 2}
+    alwaysStocked: 0
+    weight: 0.9
+  - item: {fileID: 11400000, guid: aee54250097bf99449d88d53b6068c1f, type: 2}
+    alwaysStocked: 0
+    weight: 1.2
+  - item: {fileID: 11400000, guid: ead41368452a189458b13d81ea289989, type: 2}
+    alwaysStocked: 0
+    weight: 0.8
+  - item: {fileID: 11400000, guid: 0b3827ac91e8b4c43800022625315dfe, type: 2}
+    alwaysStocked: 0
+    weight: 0.5
+  - item: {fileID: 11400000, guid: 8ca429a465233294b9f7d2ca197352f3, type: 2}
+    alwaysStocked: 0
+    weight: 1
+  - item: {fileID: 11400000, guid: d7757704d6cfebe42ad1ec02554f1984, type: 2}
+    alwaysStocked: 0
+    weight: 1.5
+  - item: {fileID: 11400000, guid: 3f51d3a8fd7f6d24d8e260c545cf3b57, type: 2}
+    alwaysStocked: 0
+    weight: 1.5
+  guaranteeFloorKeys: 1

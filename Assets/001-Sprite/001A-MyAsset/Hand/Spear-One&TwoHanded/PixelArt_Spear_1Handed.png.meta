@@ -1,0 +1,2603 @@
+fileFormatVersion: 2
+guid: defc5e9776acd894681e743ff05734a0
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 16384
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4887
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8771f0c2415873b4e92ad20537db6785
+      internalID: -693752215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_1
+      rect:
+        serializedVersion: 2
+        x: 722
+        y: 4887
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 828f64f7bd2c38f4cab41905e83af0ed
+      internalID: -1233693743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_2
+      rect:
+        serializedVersion: 2
+        x: 1444
+        y: 4887
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c851ad4ab2cfa6847a15eb04756b6b76
+      internalID: -2046488149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_3
+      rect:
+        serializedVersion: 2
+        x: 2166
+        y: 4887
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee2a2e39a2069a64dbb3bf5ec7946f04
+      internalID: -1293683711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_4
+      rect:
+        serializedVersion: 2
+        x: 2888
+        y: 4887
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 15e926cd210a1154fb554cb50b72d050
+      internalID: -1472603396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_5
+      rect:
+        serializedVersion: 2
+        x: 3610
+        y: 4887
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df845312b9da2a748a927971389fb50c
+      internalID: 1564161353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_6
+      rect:
+        serializedVersion: 2
+        x: 4332
+        y: 4887
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78aded1956dc8364893601b3c5646d1f
+      internalID: 1090531834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_7
+      rect:
+        serializedVersion: 2
+        x: 5054
+        y: 4887
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2416c8d1df524d64c83793699fcb6a7e
+      internalID: 2116825970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_8
+      rect:
+        serializedVersion: 2
+        x: 5776
+        y: 4887
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1dfea4d5ff827c46a4a1a49441a62f5
+      internalID: 1059347837
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4344
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0658ab8af7f3fdd41a5ccf11bef3ea20
+      internalID: -672564895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_10
+      rect:
+        serializedVersion: 2
+        x: 722
+        y: 4344
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 064c4a2fdccf5a14ea6290fb9998cd74
+      internalID: 2080598818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_11
+      rect:
+        serializedVersion: 2
+        x: 1444
+        y: 4344
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b16115560e2b13f4b8fd3bf98679d5e3
+      internalID: 490367152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_12
+      rect:
+        serializedVersion: 2
+        x: 2166
+        y: 4344
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8426574fde5f2624e84a17a921bfe94d
+      internalID: 1079463889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_13
+      rect:
+        serializedVersion: 2
+        x: 2888
+        y: 4344
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59944078dece57440934d7c8fe8d19e3
+      internalID: -1744263357
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_14
+      rect:
+        serializedVersion: 2
+        x: 3610
+        y: 4344
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e091d18413deda742aea5e09ea9f5d1d
+      internalID: 881030539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_15
+      rect:
+        serializedVersion: 2
+        x: 4332
+        y: 4344
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a981d865843f15b41bf1c6bfe8b96321
+      internalID: -1895980535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_16
+      rect:
+        serializedVersion: 2
+        x: 5054
+        y: 4344
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b48c113f7a821ae4cb73be76c85bea2b
+      internalID: 972524136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_17
+      rect:
+        serializedVersion: 2
+        x: 5776
+        y: 4344
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41e33bb20d3d67f4b9c691b04bd7214e
+      internalID: -76814105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_18
+      rect:
+        serializedVersion: 2
+        x: 6498
+        y: 4344
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d681a60b93c16bc40ab940f7305ce08b
+      internalID: 40624019
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_19
+      rect:
+        serializedVersion: 2
+        x: 7220
+        y: 4344
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09438512003b96c458946247f9a3139c
+      internalID: -2098335090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_20
+      rect:
+        serializedVersion: 2
+        x: 7942
+        y: 4344
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce9681198c61fd64a898d5599bf11faf
+      internalID: 1256218607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_21
+      rect:
+        serializedVersion: 2
+        x: 8664
+        y: 4344
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a0b82b8158fd8e4caf8358754927455
+      internalID: 1893375062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_22
+      rect:
+        serializedVersion: 2
+        x: 9386
+        y: 4344
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1deddecd3ebd4044db15957f3a6bf6ac
+      internalID: -1661817156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_23
+      rect:
+        serializedVersion: 2
+        x: 10108
+        y: 4344
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: beac8623e900cea4891263a586cc7af8
+      internalID: -2076420343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3801
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7a6b59c78c0f9b47a33c21764434d0d
+      internalID: -1634393695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_25
+      rect:
+        serializedVersion: 2
+        x: 722
+        y: 3801
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cba8a39df65763646b4ce01805b42983
+      internalID: 527203629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_26
+      rect:
+        serializedVersion: 2
+        x: 1444
+        y: 3801
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88c83341da08db149853bbc315bcd0ce
+      internalID: 968474041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_27
+      rect:
+        serializedVersion: 2
+        x: 2166
+        y: 3801
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83a5787519a4c544cb3e3b31efbdc73a
+      internalID: 1506453387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_28
+      rect:
+        serializedVersion: 2
+        x: 2888
+        y: 3801
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9811a3c791608fc43847d346794d30e0
+      internalID: -1080848924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_29
+      rect:
+        serializedVersion: 2
+        x: 3610
+        y: 3801
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b02cacd02d01aa4469e77bc30ef45d5e
+      internalID: 1786836995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_30
+      rect:
+        serializedVersion: 2
+        x: 4332
+        y: 3801
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9fc0a59cedd2cb94b900a892d765564d
+      internalID: 916438057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_31
+      rect:
+        serializedVersion: 2
+        x: 5054
+        y: 3801
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a111cd4a341e584eb685dd617853e9b
+      internalID: 1377895875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_32
+      rect:
+        serializedVersion: 2
+        x: 5776
+        y: 3801
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26b8bf88c9a17094ab045e544c85aba5
+      internalID: 237608768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_33
+      rect:
+        serializedVersion: 2
+        x: 6498
+        y: 3801
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6122dade90d803449d55e89f07aeff4
+      internalID: 1245274051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_34
+      rect:
+        serializedVersion: 2
+        x: 7220
+        y: 3801
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 298f2464f16ab6540912aeaec96da953
+      internalID: -317404559
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_35
+      rect:
+        serializedVersion: 2
+        x: 7942
+        y: 3801
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 955f48af801c9f043adac543633f6aa2
+      internalID: 438203956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_36
+      rect:
+        serializedVersion: 2
+        x: 8664
+        y: 3801
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5cc8bf2c128595b4082ff69a25e268f4
+      internalID: 1525913970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_37
+      rect:
+        serializedVersion: 2
+        x: 9386
+        y: 3801
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 223a39a1406364a46b0f48c735f1d23d
+      internalID: -1455254397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_38
+      rect:
+        serializedVersion: 2
+        x: 10108
+        y: 3801
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a6691724a8687cf41b6f5d0cfbfdb8cb
+      internalID: 1918360346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_39
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3258
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4600ee9be032dd3458b1883f9b601bfa
+      internalID: -525030702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_40
+      rect:
+        serializedVersion: 2
+        x: 722
+        y: 3258
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebaf0de22fc58f342a45b787e68747ea
+      internalID: 232203968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_41
+      rect:
+        serializedVersion: 2
+        x: 1444
+        y: 3258
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d904e00606af5aa47a4144fe6b9d5d9b
+      internalID: 1665286988
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_42
+      rect:
+        serializedVersion: 2
+        x: 2166
+        y: 3258
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 159dca08cdcaae745af219314fe7bfea
+      internalID: 518147260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_43
+      rect:
+        serializedVersion: 2
+        x: 2888
+        y: 3258
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3db71e9c124025479670ef202034979
+      internalID: 1862887236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_44
+      rect:
+        serializedVersion: 2
+        x: 3610
+        y: 3258
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62a08689be7b6bf4aa54e33f3a693b5b
+      internalID: 720554572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_45
+      rect:
+        serializedVersion: 2
+        x: 4332
+        y: 3258
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: babbac1c8ca4f0b4d944e179c857340b
+      internalID: -914636574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_46
+      rect:
+        serializedVersion: 2
+        x: 5054
+        y: 3258
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6695760ff6d3bdc469bcaaea9762e284
+      internalID: 1236868198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_47
+      rect:
+        serializedVersion: 2
+        x: 5776
+        y: 3258
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 325db3d9c3e23014cae523f7d2eff905
+      internalID: 1536374874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_48
+      rect:
+        serializedVersion: 2
+        x: 6498
+        y: 3258
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 230ab27baa0f7e74183d42ee8edafa2d
+      internalID: 2110354885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_49
+      rect:
+        serializedVersion: 2
+        x: 7220
+        y: 3258
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab9810d96ef3a0c4db9f05da38b656f8
+      internalID: -811149850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_50
+      rect:
+        serializedVersion: 2
+        x: 7942
+        y: 3258
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c86b3d0882c6cf4085954290d65de23
+      internalID: -1815114857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_51
+      rect:
+        serializedVersion: 2
+        x: 8664
+        y: 3258
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de7fc7b7d22393f4a8eaa81b51f6b928
+      internalID: 1625796435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_52
+      rect:
+        serializedVersion: 2
+        x: 9386
+        y: 3258
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e3c07fe6cb707f46b4e1079212dfa07
+      internalID: 771747373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_53
+      rect:
+        serializedVersion: 2
+        x: 10108
+        y: 3258
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ffd0b4c812ff82c409d23bc18507fac4
+      internalID: 1271355178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_54
+      rect:
+        serializedVersion: 2
+        x: 10830
+        y: 3258
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc84eb027041b7c46917a7d6417128de
+      internalID: 537505970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_55
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2715
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b786eb8bc889cf44860d56deca92f7c
+      internalID: -164232207
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_56
+      rect:
+        serializedVersion: 2
+        x: 722
+        y: 2715
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 896858c417877f64ebd03c0d706857ac
+      internalID: -2014576632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_57
+      rect:
+        serializedVersion: 2
+        x: 1444
+        y: 2715
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87b7756adacce7b43b4e133cd5aadd3a
+      internalID: 161244743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_58
+      rect:
+        serializedVersion: 2
+        x: 2166
+        y: 2715
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc0f35b526e4bd942885286afd10ac27
+      internalID: 1753962891
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_59
+      rect:
+        serializedVersion: 2
+        x: 2888
+        y: 2715
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e42d811f9c2163e44a2e3337cfee34da
+      internalID: 1474286679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_60
+      rect:
+        serializedVersion: 2
+        x: 3610
+        y: 2715
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5989d3e38f8c48a448b1216da0d05f8e
+      internalID: -1432106473
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_61
+      rect:
+        serializedVersion: 2
+        x: 4332
+        y: 2715
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b422fed2ae5caf48855423effafbc97
+      internalID: -600488469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_62
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2172
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7986703fca2193e4f8d0d6b5bfefdbbc
+      internalID: 1781361215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_63
+      rect:
+        serializedVersion: 2
+        x: 722
+        y: 2172
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: adb1700587975c7469d2dcf36d9e24ee
+      internalID: -1481961806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_64
+      rect:
+        serializedVersion: 2
+        x: 1444
+        y: 2172
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ac192e8b2850af438c3f6899da5a223
+      internalID: 564310851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_65
+      rect:
+        serializedVersion: 2
+        x: 2166
+        y: 2172
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 27f252a4fc3abd749a35b92416bcdb2c
+      internalID: 303676969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_66
+      rect:
+        serializedVersion: 2
+        x: 2888
+        y: 2172
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d35b3b7d24f82b3488dd3af8dc63179b
+      internalID: 689893222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_67
+      rect:
+        serializedVersion: 2
+        x: 3610
+        y: 2172
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61d02b6137339b041a46b85eb9e0c20c
+      internalID: -1458902253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_68
+      rect:
+        serializedVersion: 2
+        x: 4332
+        y: 2172
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 109128e631280dd418a2781a95e74c5c
+      internalID: -1706703358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_69
+      rect:
+        serializedVersion: 2
+        x: 5054
+        y: 2172
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7079f79122a1f7b4bb93b8c9c0ab7b45
+      internalID: -1889199350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_70
+      rect:
+        serializedVersion: 2
+        x: 5776
+        y: 2172
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0eaa66c7dc98643468551107b81032ab
+      internalID: -28236920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_71
+      rect:
+        serializedVersion: 2
+        x: 6498
+        y: 2172
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d8311de7ada90544bb4356b41121b31
+      internalID: -1637696896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_72
+      rect:
+        serializedVersion: 2
+        x: 7220
+        y: 2172
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a263c49fac7bc7543bd0fcdbee40c160
+      internalID: -1641882543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_73
+      rect:
+        serializedVersion: 2
+        x: 7942
+        y: 2172
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67e49b7af59cd9d4c8b3ba8e40b44efa
+      internalID: -172446935
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_74
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1629
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 359333d98cfd9194dbdc3ebefe7fe3e7
+      internalID: 2072035353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_75
+      rect:
+        serializedVersion: 2
+        x: 722
+        y: 1629
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a32a69503ce83f8438ed2885ff39a528
+      internalID: 557975193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_76
+      rect:
+        serializedVersion: 2
+        x: 1444
+        y: 1629
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f20281cbc530c644b8d82e88d0dff132
+      internalID: 630886997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_77
+      rect:
+        serializedVersion: 2
+        x: 2166
+        y: 1629
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 483faf0c51ffc3b4d929fc477b9aa4b3
+      internalID: 1762409671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_78
+      rect:
+        serializedVersion: 2
+        x: 2888
+        y: 1629
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7d4edca07493144c985e6009a7631ea
+      internalID: -1381659050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_79
+      rect:
+        serializedVersion: 2
+        x: 3610
+        y: 1629
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 922fb8dc5306cd942af011d978d6e2f8
+      internalID: 324947485
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_80
+      rect:
+        serializedVersion: 2
+        x: 4332
+        y: 1629
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96f488f31552b754a9392d889445c053
+      internalID: -1434857953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_81
+      rect:
+        serializedVersion: 2
+        x: 5054
+        y: 1629
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ac5d13c4559a4c43b99ce8fd00d56af
+      internalID: -948272789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_82
+      rect:
+        serializedVersion: 2
+        x: 5776
+        y: 1629
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b11485fd79e17b54ab5ab78011ddeb3a
+      internalID: 94394619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_83
+      rect:
+        serializedVersion: 2
+        x: 6498
+        y: 1629
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 899a911be3fd6ed41ba4dbc1bcbf0a4e
+      internalID: 1595242296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_84
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1086
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25901d326e1a1ba40bd00aa5b450512c
+      internalID: 586541239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_85
+      rect:
+        serializedVersion: 2
+        x: 722
+        y: 1086
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a20ac13302b0814c97f52ffbb42b467
+      internalID: -509962353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_86
+      rect:
+        serializedVersion: 2
+        x: 1444
+        y: 1086
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f00f89c30a6d844a865c3593d7bf93c
+      internalID: 1740342240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_87
+      rect:
+        serializedVersion: 2
+        x: 2166
+        y: 1086
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 723b0f88294023e43ae0a4d896d9b905
+      internalID: -1362030057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_88
+      rect:
+        serializedVersion: 2
+        x: 2888
+        y: 1086
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd4942e42b1dfe7459694b9ada6b23d3
+      internalID: 121463349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_89
+      rect:
+        serializedVersion: 2
+        x: 3610
+        y: 1086
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ebb00f798e8ff74d893aa2ffae54a73
+      internalID: 1760637550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_90
+      rect:
+        serializedVersion: 2
+        x: 4332
+        y: 1086
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cec84444213e86d43a0a58cc28c506c8
+      internalID: -2068761805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_91
+      rect:
+        serializedVersion: 2
+        x: 5054
+        y: 1086
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b309883d41284644be727514ae64302
+      internalID: -101291332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_92
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 543
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f58c81ed0361ce546a4f55215463699f
+      internalID: 409954152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_93
+      rect:
+        serializedVersion: 2
+        x: 722
+        y: 543
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 399e613f13072224296b3f9fccb8b39c
+      internalID: 1806528800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_94
+      rect:
+        serializedVersion: 2
+        x: 1444
+        y: 543
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 14c1fe0e3df93184499c70944ab2d5f1
+      internalID: 771954766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_95
+      rect:
+        serializedVersion: 2
+        x: 2166
+        y: 543
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a30d00840f4ed54ea423fbd0e96a41d
+      internalID: 232293461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_96
+      rect:
+        serializedVersion: 2
+        x: 2888
+        y: 543
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3a5b25fc050de94b9b96850dcae3bfa
+      internalID: -1799323758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_97
+      rect:
+        serializedVersion: 2
+        x: 3610
+        y: 543
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5727fc375e84d6469db8a974ea33a0f
+      internalID: -1452680510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_98
+      rect:
+        serializedVersion: 2
+        x: 4332
+        y: 543
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e178892c1816a844b2d921b249785eb
+      internalID: 248669367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_99
+      rect:
+        serializedVersion: 2
+        x: 5054
+        y: 543
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ccd11f2ccfb1720489c943f6ca137571
+      internalID: -1480460556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_100
+      rect:
+        serializedVersion: 2
+        x: 5776
+        y: 543
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e368af13bf90ff418764f2aaa96a8c5
+      internalID: -1203872620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_101
+      rect:
+        serializedVersion: 2
+        x: 6498
+        y: 543
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0c9a2059eefa1548b3e5c6ff980c6f2
+      internalID: 2028069505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_102
+      rect:
+        serializedVersion: 2
+        x: 7220
+        y: 543
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1be48545121bf94fbda1406dc9a630d
+      internalID: 1631527280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_103
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f8d01f20a27401419c3bf7e1b9e67c3
+      internalID: -195700228
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_104
+      rect:
+        serializedVersion: 2
+        x: 722
+        y: 0
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d24f1b241dc228488f70068e45d789e
+      internalID: 1573278267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_105
+      rect:
+        serializedVersion: 2
+        x: 1444
+        y: 0
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4cdea448324f2d147b60d8ce67c79a11
+      internalID: -1502264230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_106
+      rect:
+        serializedVersion: 2
+        x: 2166
+        y: 0
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39c9701ab167cf442bb0ddf8db900a5c
+      internalID: 233469003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PixelArt_Spear_1Handed_107
+      rect:
+        serializedVersion: 2
+        x: 2888
+        y: 0
+        width: 722
+        height: 543
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fba4f7f41a46b8d43913292f27f1bfe1
+      internalID: -10614697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 9c868f667de98f84ead10d359b4bea82
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":722.0,"y":543.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      PixelArt_Spear_1Handed_0: -693752215
+      PixelArt_Spear_1Handed_1: -1233693743
+      PixelArt_Spear_1Handed_10: 2080598818
+      PixelArt_Spear_1Handed_100: -1203872620
+      PixelArt_Spear_1Handed_101: 2028069505
+      PixelArt_Spear_1Handed_102: 1631527280
+      PixelArt_Spear_1Handed_103: -195700228
+      PixelArt_Spear_1Handed_104: 1573278267
+      PixelArt_Spear_1Handed_105: -1502264230
+      PixelArt_Spear_1Handed_106: 233469003
+      PixelArt_Spear_1Handed_107: -10614697
+      PixelArt_Spear_1Handed_11: 490367152
+      PixelArt_Spear_1Handed_12: 1079463889
+      PixelArt_Spear_1Handed_13: -1744263357
+      PixelArt_Spear_1Handed_14: 881030539
+      PixelArt_Spear_1Handed_15: -1895980535
+      PixelArt_Spear_1Handed_16: 972524136
+      PixelArt_Spear_1Handed_17: -76814105
+      PixelArt_Spear_1Handed_18: 40624019
+      PixelArt_Spear_1Handed_19: -2098335090
+      PixelArt_Spear_1Handed_2: -2046488149
+      PixelArt_Spear_1Handed_20: 1256218607
+      PixelArt_Spear_1Handed_21: 1893375062
+      PixelArt_Spear_1Handed_22: -1661817156
+      PixelArt_Spear_1Handed_23: -2076420343
+      PixelArt_Spear_1Handed_24: -1634393695
+      PixelArt_Spear_1Handed_25: 527203629
+      PixelArt_Spear_1Handed_26: 968474041
+      PixelArt_Spear_1Handed_27: 1506453387
+      PixelArt_Spear_1Handed_28: -1080848924
+      PixelArt_Spear_1Handed_29: 1786836995
+      PixelArt_Spear_1Handed_3: -1293683711
+      PixelArt_Spear_1Handed_30: 916438057
+      PixelArt_Spear_1Handed_31: 1377895875
+      PixelArt_Spear_1Handed_32: 237608768
+      PixelArt_Spear_1Handed_33: 1245274051
+      PixelArt_Spear_1Handed_34: -317404559
+      PixelArt_Spear_1Handed_35: 438203956
+      PixelArt_Spear_1Handed_36: 1525913970
+      PixelArt_Spear_1Handed_37: -1455254397
+      PixelArt_Spear_1Handed_38: 1918360346
+      PixelArt_Spear_1Handed_39: -525030702
+      PixelArt_Spear_1Handed_4: -1472603396
+      PixelArt_Spear_1Handed_40: 232203968
+      PixelArt_Spear_1Handed_41: 1665286988
+      PixelArt_Spear_1Handed_42: 518147260
+      PixelArt_Spear_1Handed_43: 1862887236
+      PixelArt_Spear_1Handed_44: 720554572
+      PixelArt_Spear_1Handed_45: -914636574
+      PixelArt_Spear_1Handed_46: 1236868198
+      PixelArt_Spear_1Handed_47: 1536374874
+      PixelArt_Spear_1Handed_48: 2110354885
+      PixelArt_Spear_1Handed_49: -811149850
+      PixelArt_Spear_1Handed_5: 1564161353
+      PixelArt_Spear_1Handed_50: -1815114857
+      PixelArt_Spear_1Handed_51: 1625796435
+      PixelArt_Spear_1Handed_52: 771747373
+      PixelArt_Spear_1Handed_53: 1271355178
+      PixelArt_Spear_1Handed_54: 537505970
+      PixelArt_Spear_1Handed_55: -164232207
+      PixelArt_Spear_1Handed_56: -2014576632
+      PixelArt_Spear_1Handed_57: 161244743
+      PixelArt_Spear_1Handed_58: 1753962891
+      PixelArt_Spear_1Handed_59: 1474286679
+      PixelArt_Spear_1Handed_6: 1090531834
+      PixelArt_Spear_1Handed_60: -1432106473
+      PixelArt_Spear_1Handed_61: -600488469
+      PixelArt_Spear_1Handed_62: 1781361215
+      PixelArt_Spear_1Handed_63: -1481961806
+      PixelArt_Spear_1Handed_64: 564310851
+      PixelArt_Spear_1Handed_65: 303676969
+      PixelArt_Spear_1Handed_66: 689893222
+      PixelArt_Spear_1Handed_67: -1458902253
+      PixelArt_Spear_1Handed_68: -1706703358
+      PixelArt_Spear_1Handed_69: -1889199350
+      PixelArt_Spear_1Handed_7: 2116825970
+      PixelArt_Spear_1Handed_70: -28236920
+      PixelArt_Spear_1Handed_71: -1637696896
+      PixelArt_Spear_1Handed_72: -1641882543
+      PixelArt_Spear_1Handed_73: -172446935
+      PixelArt_Spear_1Handed_74: 2072035353
+      PixelArt_Spear_1Handed_75: 557975193
+      PixelArt_Spear_1Handed_76: 630886997
+      PixelArt_Spear_1Handed_77: 1762409671
+      PixelArt_Spear_1Handed_78: -1381659050
+      PixelArt_Spear_1Handed_79: 324947485
+      PixelArt_Spear_1Handed_8: 1059347837
+      PixelArt_Spear_1Handed_80: -1434857953
+      PixelArt_Spear_1Handed_81: -948272789
+      PixelArt_Spear_1Handed_82: 94394619
+      PixelArt_Spear_1Handed_83: 1595242296
+      PixelArt_Spear_1Handed_84: 586541239
+      PixelArt_Spear_1Handed_85: -509962353
+      PixelArt_Spear_1Handed_86: 1740342240
+      PixelArt_Spear_1Handed_87: -1362030057
+      PixelArt_Spear_1Handed_88: 121463349
+      PixelArt_Spear_1Handed_89: 1760637550
+      PixelArt_Spear_1Handed_9: -672564895
+      PixelArt_Spear_1Handed_90: -2068761805
+      PixelArt_Spear_1Handed_91: -101291332
+      PixelArt_Spear_1Handed_92: 409954152
+      PixelArt_Spear_1Handed_93: 1806528800
+      PixelArt_Spear_1Handed_94: 771954766
+      PixelArt_Spear_1Handed_95: 232293461
+      PixelArt_Spear_1Handed_96: -1799323758
+      PixelArt_Spear_1Handed_97: -1452680510
+      PixelArt_Spear_1Handed_98: 248669367
+      PixelArt_Spear_1Handed_99: -1480460556
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

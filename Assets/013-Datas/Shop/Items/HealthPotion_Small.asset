@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85415f97c9a5df542b589d4ca2be1aa9, type: 3}
+  m_Name: HealthPotion_Small
+  m_EditorClassIdentifier: Assembly-CSharp::ShopItemDefinition
+  displayName: Small Health Potion
+  description: Restores a little health.
+  icon: {fileID: 289664515, guid: d443114fb77e54246a8a92492b54239c, type: 3}
+  price: 30
+  kind: 0
+  itemPrefab: {fileID: 7266188067607101063, guid: 589029928fc2356459b06eb3b1733989, type: 3}
+  keyType: 0
+  attackSpeedBonus: 0.1
+  stockPerShop: 3
+  maxPurchasesPerRun: 0

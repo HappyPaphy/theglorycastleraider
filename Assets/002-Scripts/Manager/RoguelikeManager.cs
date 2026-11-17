@@ -117,6 +117,16 @@ public class RoguelikeManager : MonoBehaviour
         if(dungeonIndex < dungeonFlows.Length)
         {
             dungeonIndex++;
+
+            // Curses only last one floor
+            PlayerCurses.OnNewFloor();
+
+            // Each new floor unlocks another perk card slot
+            if (PerkSelectionManager.instance != null && PerkSelectionManager.instance.Inventory != null &&
+                PerkSelectionManager.instance.Inventory.UnlockNextSlot())
+            {
+                PerkSelectionManager.instance.NotifyChanged();
+            }
         }
         else
         {

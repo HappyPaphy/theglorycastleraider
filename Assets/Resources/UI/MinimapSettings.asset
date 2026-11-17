@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0628569a6c0e237478af9363411d2f10, type: 3}
+  m_Name: MinimapSettings
+  m_EditorClassIdentifier: Assembly-CSharp::MinimapSettings
+  size: 260
+  margin: {x: 28, y: 28}
+  pixelsPerMeter: 7
+  rotateWithPlayer: 0
+  roomGap: 0.5
+  showNeighbourRooms: 1
+  backgroundColor: {r: 0.05, g: 0.04, b: 0.03, a: 0.6}
+  borderColor: {r: 0.85, g: 0.7, b: 0.4, a: 1}
+  exploredRoomColor: {r: 0.62, g: 0.56, b: 0.46, a: 0.9}
+  currentRoomColor: {r: 0.95, g: 0.85, b: 0.6, a: 1}
+  neighbourRoomColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.35}
+  doorColor: {r: 0.85, g: 0.75, b: 0.55, a: 1}
+  playerColor: {r: 1, g: 0.95, b: 0.85, a: 1}
+  iconSize: 22
+  shopIcon: {fileID: 21300000, guid: e826ee19915d9a7479882fedbd80b44e, type: 3}
+  shrineIcon: {fileID: 21300000, guid: 50769d701e5d5a04fb945839b436a811, type: 3}
+  challengeIcon: {fileID: 21300000, guid: a408e78afb5299a4e8a958f6ea40b1e0, type: 3}
+  treasureIcon: {fileID: 21300000, guid: 7495d1c14b7ae8844a3b17ac1ee35227, type: 3}
+  exitIcon: {fileID: 21300000, guid: 7dad4c52d0641ee4ebd2a7177fc76259, type: 3}
+  bossIcon: {fileID: 21300000, guid: 610a1538737deb641ab8d7d2b2d6dec0, type: 3}

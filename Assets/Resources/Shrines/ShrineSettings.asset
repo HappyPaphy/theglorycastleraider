@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30f719dbf474d7c47a965782ddf09481, type: 3}
+  m_Name: ShrineSettings
+  m_EditorClassIdentifier: Assembly-CSharp::ShrineSettings
+  shrinePool:
+  - {fileID: 11400000, guid: 573e944491c51f744ba48a97a838d5d5, type: 2}
+  - {fileID: 11400000, guid: 39b381e2b388c9b409f5f942645f0f6d, type: 2}
+  - {fileID: 11400000, guid: 2499e1fcf78325244a3306dbaa4772f5, type: 2}
+  - {fileID: 11400000, guid: 3f7a1b837d3b33843bc0d3f0a51ad78d, type: 2}
+  - {fileID: 11400000, guid: f931c1f8ce1db284ab3d0124bb314709, type: 2}
+  cursePool:
+  - {fileID: 11400000, guid: c7794e09a7ccabf4497c251dcfbc509b, type: 2}
+  - {fileID: 11400000, guid: 67192922676428e4abd5765544d5d364, type: 2}
+  - {fileID: 11400000, guid: ad6c70417e8ad784cbacd9b94310c389, type: 2}
+  - {fileID: 11400000, guid: 43d7be7949b3d194b84b049c3078a750, type: 2}
+  - {fileID: 11400000, guid: c27b7a08b33a76040bc78cef5cf497c9, type: 2}
+  - {fileID: 11400000, guid: 43a78466579843443861156b93f9d09d, type: 2}
+  energyOrbPrefab: {fileID: 8259988526995763502, guid: 6d4a4f8bf29c8d24abe9ca3dcc3926b8, type: 3}
+  commonOrb: {fileID: 11400000, guid: 4c12ae53bd205fb40bc03c477068ccfd, type: 2}
+  rareOrb: {fileID: 11400000, guid: 32461e3352283154db5c47cb3c06e2e8, type: 2}
+  uniqueOrb: {fileID: 11400000, guid: a02c2118207b15a4ca2326b83686e191, type: 2}
+  confirmWindow: 3
+  interactRadius: 2
+  labelHeight: 1.68
+  labelFontSize: 1.5
+  spentColor: {r: 0.35, g: 0.35, b: 0.38, a: 1}

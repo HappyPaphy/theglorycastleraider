@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5949059691857095748}
   - component: {fileID: 7266188067607101063}
+  - component: {fileID: 4989619322057467061}
   m_Layer: 14
   m_Name: Ring_Vitality
   m_TagString: Untagged
@@ -48,7 +49,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   itemCategory: 2
   itemType: 7
-  spr_Icon: {fileID: 1787037904, guid: ff92568342be1ca45a6259941b1a1c8a, type: 3}
+  spr_Icon_Frame: {fileID: 1787037904, guid: ff92568342be1ca45a6259941b1a1c8a, type: 3}
+  spr_Icon_NoFrame: {fileID: 2027280318, guid: e0b9c428cfc3c6d42b03f1dc05c279b1, type: 3}
   equipmentName: Ring of Vitality
   pickupRadius: 1
   playerLayer:
@@ -72,6 +74,29 @@ MonoBehaviour:
   continuousManaDrainRate: 15
   continuousStaminaDrainRate: 15
   spellPrefab: {fileID: 0}
+  isCollectedOnStart: 0
+--- !u!114 &4989619322057467061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 380057338341773006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f516b65ca20c0554a9bf8262cd4d429d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RingEffect
+  effectDescription: 
+  maxHealthBonus: 30
+  maxStaminaBonus: 0
+  staminaRegenMultiplier: 1
+  blockStaminaMultiplier: 1
+  damageDealtMultiplier: 1
+  damageTakenMultiplier: 1
+  attackSpeedMultiplier: 1
+  moveSpeedMultiplier: 1
+  coinMultiplier: 1
 --- !u!1 &3288727578148725994
 GameObject:
   m_ObjectHideFlags: 0
@@ -304,6 +329,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6ae444cebf517f1499809c012e86e050, type: 3}
       propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6ae444cebf517f1499809c012e86e050, type: 3}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 6ae444cebf517f1499809c012e86e050, type: 3}

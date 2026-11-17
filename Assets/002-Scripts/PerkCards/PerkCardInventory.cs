@@ -129,6 +129,50 @@ public class PerkCardInventory : MonoBehaviour
         slotUnlocked[slotIndex] = unlocked;
     }
 
+    /// <summary>Slot holding a card of this perk, or -1.</summary>
+    public int FindSlotWithPerk(PerkType perkType)
+    {
+        for (int i = 0; i < MaxSlots; i++)
+        {
+            if (slotUnlocked[i] && slots[i] != null && slots[i].definition != null && slots[i].definition.PerkStat == perkType)
+                return i;
+        }
+        return -1;
+    }
+
+    /// <summary>Level of this perk in the inventory (0 = not owned).</summary>
+    public int GetOwnedLevel(PerkType perkType)
+    {
+        int slot = FindSlotWithPerk(perkType);
+        return slot >= 0 ? slots[slot].level : 0;
+    }
+
+    public int UnlockedSlotCount
+    {
+        get
+        {
+            int count = 0;
+            for (int i = 0; i < MaxSlots; i++) { if (slotUnlocked[i]) count++; }
+            return count;
+        }
+    }
+
+    public bool HasLockedSlot => UnlockedSlotCount < MaxSlots;
+
+    /// <summary>Unlocks the first locked slot. Returns false if every slot is already unlocked.</summary>
+    public bool UnlockNextSlot()
+    {
+        for (int i = 0; i < MaxSlots; i++)
+        {
+            if (slotUnlocked[i]) continue;
+
+            slotUnlocked[i] = true;
+            if (slots[i] == null) slots[i] = new RuntimePerkCard();
+            return true;
+        }
+        return false;
+    }
+
     private bool IsValidIndex(int index)
     {
         return index >= 0 && index < MaxSlots;

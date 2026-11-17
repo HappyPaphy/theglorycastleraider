@@ -17,6 +17,15 @@ public class ObjectPoolingManager : MonoBehaviour
     [Header("Pool Settings")]
     public List<Pool> pools;
 
+    [Header("Fracture Pieces")]
+    [Tooltip("Most fracture pieces alive at once. When more spawn, the oldest are recycled early. " +
+             "Bounds memory (each piece has its own mesh + convex collider) and physics cost.")]
+    [SerializeField] private int maxActiveFragments = 120;
+
+    private const string FragmentPool = "Fragment";
+    private readonly LinkedList<GameObject> activeFragments = new LinkedList<GameObject>();
+    private readonly Dictionary<GameObject, LinkedListNode<GameObject>> activeFragmentNodes = new Dictionary<GameObject, LinkedListNode<GameObject>>();
+
     // Dictionaries let us look up the correct queue and prefab using the poolName string
     private Dictionary<string, Queue<GameObject>> poolDictionary;
     private Dictionary<string, GameObject> prefabDictionary;
@@ -91,12 +100,23 @@ public class ObjectPoolingManager : MonoBehaviour
         objectToSpawn.transform.position = position;
         objectToSpawn.SetActive(true);
 
+        if (poolName == FragmentPool) { TrackFragment(objectToSpawn); }
+
         return objectToSpawn;
     }
 
     public void ReturnObject(string poolName, GameObject obj)
     {
-        if (!obj.activeSelf) return; // Prevent double-enqueuing
+        if (obj == null || !obj.activeSelf) return; // Prevent double-enqueuing
+
+        if (poolName == FragmentPool)
+        {
+            UntrackFragment(obj);
+
+            // Free the generated mesh now that the piece is done (see PooledFragment)
+            var pooled = obj.GetComponent<PooledFragment>();
+            if (pooled != null) { pooled.ReleaseMesh(); }
+        }
 
         var pooledFragCollider = obj.GetComponent<Collider>();
 
@@ -106,6 +126,37 @@ public class ObjectPoolingManager : MonoBehaviour
         obj.SetActive(false);
         obj.transform.SetParent(transform);
         poolDictionary[poolName].Enqueue(obj); // Put it back at the end of the line
+    }
+
+    // Keep a list of live pieces, oldest first; recycle the oldest when over the cap
+    private void TrackFragment(GameObject obj)
+    {
+        UntrackFragment(obj);
+        activeFragmentNodes[obj] = activeFragments.AddLast(obj);
+
+        while (activeFragments.Count > Mathf.Max(1, maxActiveFragments))
+        {
+            GameObject oldest = activeFragments.First.Value;
+            if (oldest == obj) { break; }
+
+            if (oldest == null || !oldest.activeSelf)
+            {
+                activeFragmentNodes.Remove(oldest);
+                activeFragments.RemoveFirst();
+                continue;
+            }
+
+            ReturnObject(FragmentPool, oldest); // also untracks it
+        }
+    }
+
+    private void UntrackFragment(GameObject obj)
+    {
+        if (obj != null && activeFragmentNodes.TryGetValue(obj, out var node))
+        {
+            activeFragments.Remove(node);
+            activeFragmentNodes.Remove(obj);
+        }
     }
 
     public void ReturnObjectDelayed(string poolName, GameObject obj, float delay, float colliderDelay)
@@ -119,11 +170,17 @@ public class ObjectPoolingManager : MonoBehaviour
     {
         yield return new WaitForSeconds(colliderDelay);
 
+        // Recycled early (fragment cap) or destroyed meanwhile: nothing to do
+        if (obj == null) { yield break; }
+        var sessionCheck = obj.GetComponent<PooledFragment>();
+        if (sessionCheck != null && sessionCheck.spawnSessionId != targetSession) { yield break; }
+
         var pooledFragCollider = obj.GetComponent<Collider>();
-        pooledFragCollider.enabled = false;
+        if (pooledFragCollider != null) { pooledFragCollider.enabled = false; }
 
         yield return new WaitForSeconds(delay);
 
+        if (obj == null) { yield break; }
         var pooledFrag = obj.GetComponent<PooledFragment>();
         if (pooledFrag != null && pooledFrag.spawnSessionId != targetSession)
         {

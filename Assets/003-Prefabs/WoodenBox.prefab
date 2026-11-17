@@ -440,6 +440,13 @@ MonoBehaviour:
   fragmentExplosionRadius: 1
   timeBeforeFragmentObjDestroyed: 0.8
   timeBeforeFragmentColliderDisable: 4
+  hitDirectionSpeed: 8
+  hitUpwardSpeed: 2
+  hitDirectionSpread: 0.35
+  hitSpin: 16
+  maxFragmentSpeed: 15
+  maxDepenetrationVelocity: 2
+  fragmentSceneCollisionDelay: 0
   currentRefractureCount: 0
 --- !u!64 &3045173145494446904
 MeshCollider:
@@ -563,6 +570,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74a4eb4e2514f18479299c2956360d7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropItemOnDead
+  energyOrbPrefab: {fileID: 0}
+  energyOrbDrops: []
+  energyOrbSpawnOffset: {x: 0, y: 0.75, z: 0}
   maxDropsAllowed: 1
   isNeedAtLeastOneDrop: 0
   potentialDrops: []

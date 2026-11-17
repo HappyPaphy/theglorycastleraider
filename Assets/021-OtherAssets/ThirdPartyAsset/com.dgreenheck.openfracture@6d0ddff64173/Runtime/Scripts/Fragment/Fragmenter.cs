@@ -214,7 +214,8 @@ public static class Fragmenter
                                        ref int i)
     {
         // If there is no mesh data, don't create an object
-        if (fragmentMeshData.Triangles.Length == 0)
+        // (Triangles.Length is the submesh count, which is never 0: check the actual triangles)
+        if (fragmentMeshData.triangleCount < 3)
         {
             return;
         }
@@ -237,13 +238,36 @@ public static class Fragmenter
         var parentSize = sourceObject.GetComponent<MeshFilter>().sharedMesh.bounds.size;
         var parentMass = sourceObject.GetComponent<Rigidbody>().mass;
 
+        // Mass is split by volume. Guard against zero-size / zero-mass sources (would give 0 or NaN mass).
+        float parentVolume = Mathf.Max(parentSize.x * parentSize.y * parentSize.z, 1e-6f);
+        float density = parentVolume / Mathf.Max(parentMass, 0.01f);
+
+        // The whole-fragment mesh is only kept if it is itself one of the pieces
+        bool keepFragmentMesh = false;
+
         for (int k = 0; k < meshes.Length; k++)
         {
+            // Skip slivers: a convex hull needs real volume. Cooking near-flat / tiny meshes is slow and is a
+            // known PhysX crash source, and pieces this small aren't visible anyway.
+            if (!IsUsableFragmentMesh(meshes[k]))
+            {
+                if (meshes[k] != fragmentMesh) { UnityEngine.Object.Destroy(meshes[k]); }
+                continue;
+            }
+            if (meshes[k] == fragmentMesh) { keepFragmentMesh = true; }
+
             // --- REMOVED STANDARD INSTANTIATE ---
             // GameObject fragment = GameObject.Instantiate(fragmentTemplate, parent); 
 
             // --- ADDED OBJECT POOLING ---
             GameObject fragment = ObjectPoolingManager.instance.SpawnObject("Fragment", Vector3.zero);
+            if (fragment == null)
+            {
+                // The whole-fragment mesh is freed after the loop; island meshes are freed here
+                if (meshes[k] == fragmentMesh) { keepFragmentMesh = false; }
+                else { UnityEngine.Object.Destroy(meshes[k]); }
+                continue;
+            }
             fragment.transform.SetParent(parent);
             
 
@@ -259,7 +283,10 @@ public static class Fragmenter
 
             var meshFilter = fragment.GetComponent<MeshFilter>();
             if (meshFilter == null) meshFilter = fragment.AddComponent<MeshFilter>();
-            meshFilter.sharedMesh = meshes[k];
+
+            // The pooled piece owns the mesh and frees it when it goes back to the pool
+            if (fragment.TryGetComponent<PooledFragment>(out var pooled)) { pooled.SetMesh(meshes[k]); }
+            else { meshFilter.sharedMesh = meshes[k]; }
 
             var meshRenderer = fragment.GetComponent<MeshRenderer>();
             if (meshRenderer == null)
@@ -281,19 +308,11 @@ public static class Fragmenter
                     insideMat = sourceFracture.fractureOptions.insideMaterial;
                 }
 
-                Material sourceMat = sourceRenderer.sharedMaterial != null
-                    ? sourceRenderer.sharedMaterial
-                    : (sourceRenderer.sharedMaterials.Length > 0 ? sourceRenderer.sharedMaterials[0] : null);
-
-                if (insideMat != null && sourceMat != null)
-                {
-                    // Submesh 0 = outside texture, Submesh 1 = inside cut texture
-                    meshRenderer.sharedMaterials = new Material[] { sourceMat, insideMat };
-                }
-                else
-                {
-                    meshRenderer.sharedMaterials = sourceRenderer.sharedMaterials;
-                }
+                // Submeshes 0..N-1 = the source's own materials, last submesh = inside (cut) material
+                meshRenderer.sharedMaterials = global::Fracture.BuildFragmentMaterials(
+                    sourceRenderer.sharedMaterials,
+                    sourceObject.GetComponent<MeshFilter>().sharedMesh,
+                    insideMat);
             }
 
             var collider = fragment.GetComponent<MeshCollider>();
@@ -310,9 +329,8 @@ public static class Fragmenter
             var parentRigidBody = sourceObject.GetComponent<Rigidbody>();
             var rigidBody = fragment.GetComponent<Rigidbody>();
 
-            var size = fragmentMesh.bounds.size;
-            float density = (parentSize.x * parentSize.y * parentSize.z) / parentMass;
-            rigidBody.mass = (size.x * size.y * size.z) / density;
+            var size = meshes[k].bounds.size;
+            rigidBody.mass = Mathf.Max(0.01f, (size.x * size.y * size.z) / density);
 
             // This code only compiles for the editor
 #if UNITY_EDITOR
@@ -325,5 +343,21 @@ public static class Fragmenter
 
             i++;
         }
+
+        // "Detect floating fragments" splits the mesh into new island meshes: the original isn't used then
+        if (!keepFragmentMesh && fragmentMesh != null)
+        {
+            UnityEngine.Object.Destroy(fragmentMesh);
+        }
+    }
+
+    // Minimum size of a piece on every axis (local units) and enough vertices for a 3D convex hull
+    private const float MinFragmentExtent = 0.01f;
+
+    private static bool IsUsableFragmentMesh(Mesh mesh)
+    {
+        if (mesh == null || mesh.vertexCount < 4) { return false; }
+        Vector3 size = mesh.bounds.size;
+        return size.x >= MinFragmentExtent && size.y >= MinFragmentExtent && size.z >= MinFragmentExtent;
     }
 }

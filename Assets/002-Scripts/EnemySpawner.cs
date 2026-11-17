@@ -53,6 +53,10 @@ public class EnemySpawner : MonoBehaviour
             {
                 GameObject enemy = Instantiate(data.enemyPrefab, transform.position, transform.rotation);
 
+                // Floor 1 = index 0. Elites get more common deeper in the run.
+                int floorIndex = RoguelikeManager.instance != null ? Mathf.Max(0, RoguelikeManager.instance.dungeonIndex) : 0;
+                EliteEnemy.TryMakeElite(enemy, floorIndex);
+
                 if (RoguelikeManager.instance != null)
                 {
                     RoguelikeManager.instance.obj_Enemies.Add(enemy);

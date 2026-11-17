@@ -21,6 +21,12 @@ public class FractureTrigger : MonoBehaviour
 
     public void TriggerMaterialSound_Break()
     {
+        // Called by Fracture.onFracture on every breakable prop, so it's the hook for Splinter Storm
+        if (PlayerPerkManager.Instance != null)
+        {
+            PlayerPerkManager.Instance.OnFurnitureBroken(transform.position);
+        }
+
         switch (materialType)
         {
             case MaterialType.Wood:

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85415f97c9a5df542b589d4ca2be1aa9, type: 3}
+  m_Name: Ring_Vitality
+  m_EditorClassIdentifier: Assembly-CSharp::ShopItemDefinition
+  displayName: Ring of Vitality
+  description: A ring that strengthens the body.
+  icon: {fileID: 2027280318, guid: e0b9c428cfc3c6d42b03f1dc05c279b1, type: 3}
+  price: 140
+  kind: 0
+  itemPrefab: {fileID: 7266188067607101063, guid: 196f88bc5b2ea704891b7167eb20f9f1, type: 3}
+  keyType: 0
+  attackSpeedBonus: 0.1
+  stockPerShop: 1
+  maxPurchasesPerRun: 0

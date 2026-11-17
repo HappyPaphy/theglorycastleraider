@@ -49,7 +49,7 @@ public class SpellProjectile : MonoBehaviour
         else if (destructible != null)
         {
             SoundManager.instance.WoodenSound_Hit(other.ClosestPoint(transform.position));
-            destructible.TakeDamage(damage, other, other.ClosestPoint(transform.position));
+            destructible.TakeDamage(damage, other, other.ClosestPoint(transform.position), transform.forward);
         }
 
         // Spawn explosion/impact particles

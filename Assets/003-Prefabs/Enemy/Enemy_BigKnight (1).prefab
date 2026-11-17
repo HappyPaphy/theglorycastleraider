@@ -62,6 +62,9 @@ MonoBehaviour:
   goreSprite_67HP: {fileID: 0}
   animGore34: {fileID: 0}
   animGore67: {fileID: 0}
+  animationController_34HP: {fileID: 0}
+  animationController_67HP: {fileID: 0}
+  animationController_100HP: {fileID: 0}
   agent: {fileID: 4478492244184408934}
   blockKnockbackForce: 3
   knockbackDecay: 10
@@ -87,6 +90,16 @@ MonoBehaviour:
   isPlayerDetected: 0
   isDied: 0
   isDiedOnce: 0
+  coinDropMin: 25
+  coinDropMax: 40
+  coinDropMaxPieces: 8
+  canBreakObstacles: 1
+  obstacleDamagePerHit: 4
+  obstacleReach: 1.7
+  obstacleBreakLayers:
+    serializedVersion: 2
+    m_Bits: 1024
+  obstacleStuckTime: 0.8
   balanceSlider: {fileID: 699179245239101252}
   capsuleCol: {fileID: 1787044116909206213}
   sprRndr: {fileID: 3490362455931948197}

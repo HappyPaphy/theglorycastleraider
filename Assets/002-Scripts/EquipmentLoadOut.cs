@@ -109,6 +109,8 @@ public class EquipmentLoadOut : MonoBehaviour
             if(PauseGame.instance.IsPaused) { return; }
         }
 
+        if (ShopUI.IsOpen) { return; }
+
         if (InputSchemeManager.instance.IsToggleLoadoutPressed)
         {
             InputSchemeManager.instance.IsToggleLoadoutPressed = false;
@@ -450,7 +452,8 @@ public void PreviewItemDetails(EquipmentSlotType slotType, int index)
             detailCategoryText_Loadout.text = targetItem.itemCategory.ToString();
             detailNameLeftText_Loadout.text = targetItem.equipmentName; // Can append upgrade levels later
             detailNameRightText_Loadout.text = targetItem.equipmentName;
-            detailDescriptionText_Loadout.text = "Description mapped from Item data...";
+            RingEffect ringEffect = targetItem.GetComponent<RingEffect>();
+            detailDescriptionText_Loadout.text = ringEffect != null ? ringEffect.Describe() : "Description mapped from Item data...";
         }
         else
         {

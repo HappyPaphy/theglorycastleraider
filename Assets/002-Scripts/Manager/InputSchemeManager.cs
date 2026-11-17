@@ -50,6 +50,25 @@ public class InputSchemeManager : MonoBehaviour
     public InputAction input_Move;
     public InputAction input_Look;
     public InputAction input_Interact;
+    public InputAction input_InteractDoor;
+
+    /// <summary>
+    /// 0..1 while the gamepad door button is being held (Hold interaction not finished yet), otherwise 0.
+    /// Keyboard presses open doors instantly, so they never report progress.
+    /// </summary>
+    public float DoorHoldProgress
+    {
+        get
+        {
+            if (input_InteractDoor == null || !input_InteractDoor.enabled) { return 0f; }
+            if (input_InteractDoor.phase != InputActionPhase.Started) { return 0f; }
+
+            InputControl control = input_InteractDoor.activeControl;
+            if (control == null || !(control.device is Gamepad)) { return 0f; }
+
+            return Mathf.Clamp01(input_InteractDoor.GetTimeoutCompletionPercentage());
+        }
+    }
     public InputAction input_Reload;
     public InputAction input_Dash;
     public InputAction input_Minimap;
@@ -77,6 +96,9 @@ public class InputSchemeManager : MonoBehaviour
 
     [HideInInspector] public bool IsInteractHeld = false;
     [HideInInspector] public bool IsInteractPressed = false;
+    // Doors use their own action (keyboard V, gamepad hold North) so they never fight with item pickup
+    [HideInInspector] public bool IsDoorInteractHeld = false;
+    [HideInInspector] public bool IsDoorInteractPressed = false;
     [HideInInspector] public bool isDashHeld = false;
     [HideInInspector] public bool isDashPressed = false;
     [HideInInspector] public bool IsMinimapHeld = false;
@@ -199,6 +221,11 @@ public class InputSchemeManager : MonoBehaviour
         input_Interact.performed += OnInteractPerformed;
         input_Interact.canceled += OnInteractCanceled;
 
+        input_InteractDoor = playerControls.Player.InteractDoor;
+        input_InteractDoor.Enable();
+        input_InteractDoor.performed += OnInteractDoorPerformed;
+        input_InteractDoor.canceled += OnInteractDoorCanceled;
+
         input_Reload = playerControls.Player.Reload;
         input_Reload.Enable();
         input_Reload.performed += OnReloadPerformed;
@@ -278,6 +305,7 @@ public class InputSchemeManager : MonoBehaviour
         input_PerformLeftHand.Disable();
         input_PerformRightHand.Disable();
         input_Interact.Disable();
+        input_InteractDoor.Disable();
         input_Reload.Disable();
         input_Dash.Disable();
         input_Minimap.Disable();
@@ -443,6 +471,19 @@ public class InputSchemeManager : MonoBehaviour
     private void OnInteractCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
         IsInteractHeld = false;
+    }
+
+    private void OnInteractDoorPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        if (currentPlayerInputState == PlayerInputState.Inactive) { return; }
+
+        IsDoorInteractHeld = true;
+        IsDoorInteractPressed = true;
+    }
+
+    private void OnInteractDoorCanceled(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        IsDoorInteractHeld = false;
     }
 
     private void OnDashPerformed(UnityEngine.InputSystem.InputAction.CallbackContext context)
@@ -637,7 +678,7 @@ public class InputSchemeManager : MonoBehaviour
                 if (instancesValid)
                 {
                     //bool isIdle = GameResultRoguelike.instance.currentState == GameResultState.Idle;
-                    bool isNotPaused = !PauseGame.instance.IsPaused && !EquipmentLoadOut.instance.isPanelActive && !PerkSelectionManager.instance.isPanelActive && !(TutorialManager.instance != null && TutorialManager.instance.isPanelActive);
+                    bool isNotPaused = !PauseGame.instance.IsPaused && !EquipmentLoadOut.instance.isPanelActive && !PerkSelectionManager.instance.isPanelActive && !(TutorialManager.instance != null && TutorialManager.instance.isPanelActive) && !ShopUI.IsOpen;
                     bool isAlive = PlayerController.instance.CharacterHealthComponent.CurrentHP > 0f;
 
                     if (/*isIdle &&*/ isNotPaused && isAlive && !PauseGame.instance.isThisMainmenu)
@@ -676,7 +717,7 @@ public class InputSchemeManager : MonoBehaviour
 
     private void InputActiveCheck()
     {
-        bool isNotPaused = !PauseGame.instance.IsPaused && !EquipmentLoadOut.instance.isPanelActive && !PerkSelectionManager.instance.isPanelActive && !(TutorialManager.instance != null && TutorialManager.instance.isPanelActive);
+        bool isNotPaused = !PauseGame.instance.IsPaused && !EquipmentLoadOut.instance.isPanelActive && !PerkSelectionManager.instance.isPanelActive && !(TutorialManager.instance != null && TutorialManager.instance.isPanelActive) && !ShopUI.IsOpen;
         var playerInputActions_Player = playerControls.Player;
         var playerInputActions_UI = playerControls.UI;
 
@@ -843,6 +884,7 @@ public class InputSchemeManager : MonoBehaviour
     private void ResetActionInputPressed()
     {
         IsInteractPressed = false;
+        IsDoorInteractPressed = false;
         isDashPressed = false;
         IsMinimapPressed = false;
         IsReloadPressed = false;

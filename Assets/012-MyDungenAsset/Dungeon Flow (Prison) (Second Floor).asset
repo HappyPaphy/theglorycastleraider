@@ -29,7 +29,67 @@ MonoBehaviour:
   KeyManager: {fileID: 0}
   DoorwayConnectionChance: 0
   RestrictConnectionToSameSection: 0
-  TileInjectionRules: []
+  TileInjectionRules:
+  - TileSet: {fileID: 11400000, guid: 6d3c5e553c2d97c4fa2e78ca3edac983, type: 2}
+    NormalizedPathDepth:
+      Min: 0.4
+      Max: 0.6
+    NormalizedBranchDepth:
+      Min: 0
+      Max: 1
+    CanAppearOnMainPath: 0
+    CanAppearOnBranchPath: 1
+    IsRequired: 1
+    IsLocked: 0
+    LockID: 0
+  - TileSet: {fileID: 11400000, guid: 3e2ea829d3e0a54428a06703930f66ba, type: 2}
+    NormalizedPathDepth:
+      Min: 0
+      Max: 1
+    NormalizedBranchDepth:
+      Min: 1
+      Max: 1
+    CanAppearOnMainPath: 0
+    CanAppearOnBranchPath: 1
+    IsRequired: 1
+    IsLocked: 0
+    LockID: 0
+  - TileSet: {fileID: 11400000, guid: 3e2ea829d3e0a54428a06703930f66ba, type: 2}
+    NormalizedPathDepth:
+      Min: 0
+      Max: 1
+    NormalizedBranchDepth:
+      Min: 1
+      Max: 1
+    CanAppearOnMainPath: 0
+    CanAppearOnBranchPath: 1
+    IsRequired: 1
+    IsLocked: 0
+    LockID: 0
+  - TileSet: {fileID: 11400000, guid: ad9861514efe10d41a1538022e0549a7, type: 2}
+    NormalizedPathDepth:
+      Min: 0.2
+      Max: 0.85
+    NormalizedBranchDepth:
+      Min: 0
+      Max: 1
+    CanAppearOnMainPath: 0
+    CanAppearOnBranchPath: 1
+    IsRequired: 1
+    IsLocked: 0
+    LockID: 0
+  - TileSet: {fileID: 11400000, guid: 42f4872971ba2a442981b9a8a5196737, type: 2}
+    NormalizedPathDepth:
+      Min: 0.3
+      Max: 0.8
+    NormalizedBranchDepth:
+      Min: 0
+      Max: 1
+    CanAppearOnMainPath: 1
+    CanAppearOnBranchPath: 1
+    IsRequired: 1
+    IsLocked: 0
+    LockID: 0
   TileTagConnectionMode: 0
   TileConnectionTags: []
   DoorwayTagConnectionMode: 1

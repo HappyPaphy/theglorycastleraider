@@ -89,6 +89,16 @@ MonoBehaviour:
   isPlayerDetected: 0
   isDied: 0
   isDiedOnce: 0
+  coinDropMin: 4
+  coinDropMax: 8
+  coinDropMaxPieces: 4
+  canBreakObstacles: 1
+  obstacleDamagePerHit: 8
+  obstacleReach: 1.7
+  obstacleBreakLayers:
+    serializedVersion: 2
+    m_Bits: 1024
+  obstacleStuckTime: 0.8
   capsuleCol: {fileID: 1141512163243296553}
   sprRndr: {fileID: 2840626006574473545}
   currentState: 0

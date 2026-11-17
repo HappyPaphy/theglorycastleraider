@@ -110,7 +110,8 @@ public class InventoryManager : MonoBehaviour
                 // PyromancyFlame and SorceryCatalyst handled here if they are categorized as Weapons
         }
 
-        if (currentCount < 2)
+        // Base carry limit is 2 of each weapon; the shop's Weapon Carry upgrade raises it
+        if (currentCount < 2 + PlayerUpgrades.Instance.BonusWeaponCarry)
         {
             weapons.Add(newWeapon);
             StoreItemSafely(newWeapon);

@@ -18,9 +18,15 @@ public class PlayerController : PlayerEntity
 {
     [Header("Components")]
     public CoinWallet coinWallet;
+
+    [Header("Guard")]
+    [Tooltip("Blocks and parries only stop attacks coming from within this many degrees left/right of where you look.")]
+    [SerializeField] private float guardAngle = 70f;
+    public float GuardAngle => guardAngle;
     [SerializeField] private CameraFollow cameraFollow;
     [SerializeField] private GameObject deadCamPrefab;
     [SerializeField] private CameraPostProcessEffect postProcressEffect;
+    public CameraPostProcessEffect PostProcessEffect => postProcressEffect;
     public CameraBob cameraBob;
     [SerializeField] private PlayerWeaponManager playerWeaponManager;
     [SerializeField] private WeaponSway weaponSway;
@@ -101,6 +107,7 @@ public class PlayerController : PlayerEntity
     protected override void Start()
     {
         controller = GetComponent<CharacterController>();
+        PlayerRings.EnsureOn(gameObject); // ring effects
 
         if (cameraTransform == null)
             cameraTransform = GetComponentInChildren<Camera>().transform;
@@ -194,6 +201,10 @@ public class PlayerController : PlayerEntity
         RumbleManager.instance.RumblePulse(1f, 2.5f, 0.1f);
         StaminaDepleted(kickStaminaCost);
 
+        // Ember Guard: stored embers burst out with the kick
+        bool releasedEmbers = PlayerPerkManager.Instance.TryReleaseEmbers(cameraTransform.position, cameraTransform.forward);
+        float finalKickDamage = kickDamage * PlayerPerkManager.Instance.OutgoingDamageMultiplier; // Blood Lust / Glass Jaw
+
         Vector3 joltDirection = new Vector3(-20f, 0f, 0f);
         Vector3 castStart = cameraTransform.position - (cameraTransform.forward * kickRadius);
         Ray rayAttack = new Ray(castStart, cameraTransform.forward);
@@ -216,15 +227,24 @@ public class PlayerController : PlayerEntity
                 {
                     SoundManager.instance.KickSound_Human(transform.position);
 
-                    float knockbackValue = PlayerPerkManager.Instance.GetJumpKickKnockback(8f);
+                    float knockbackValue = PlayerPerkManager.Instance.GetJumpKickKnockback(11f);
 
-                    targetEnemy.GotKicked(hit.point, kickDamage, knockbackValue);
+                    targetEnemy.GotKicked(hit.point, finalKickDamage, knockbackValue);
+                    if (targetEnemy.Elite != null) { targetEnemy.Elite.OnKicked(); } // breaks a Warded elite's ward
+                    PlayerPerkManager.Instance.OnEnemyKicked(targetEnemy, transform.position, knockbackValue); // Warden's Boot
                     hitSomething = true;
                 }
                 else if (destructible != null && processedTargets.Add(destructible))
                 {
-                    destructible.TakeDamage(kickDamage, hit.collider, hit.point);
                     hitSomething = true;
+
+                    // Battering Ram: a kicked door blasts off its hinges
+                    if (PlayerPerkManager.Instance.TryBatteringRam(destructible, hit.collider, hit.point, transform.position))
+                    {
+                        continue;
+                    }
+
+                    destructible.TakeDamage(finalKickDamage, hit.collider, hit.point, cameraTransform.forward);
 
                     if (fractureTrigger != null)
                     {
@@ -234,7 +254,7 @@ public class PlayerController : PlayerEntity
             }
         }
 
-        if (!hitSomething)
+        if (!hitSomething && !releasedEmbers)
         {
             SoundManager.instance.KickSound_Air(transform.position);
         }
@@ -334,6 +354,7 @@ public class PlayerController : PlayerEntity
                 isSliding = true;
                 slideTimer = slideDuration;
                 slideDirection = standardMove.normalized;
+                if (PlayerPerkManager.Instance != null) { PlayerPerkManager.Instance.OnSlideStarted(); } // Greased Slide
                 controller.height = slideHeight;
 
                 weaponSway.TriggerSlideImpulse();
@@ -363,6 +384,7 @@ public class PlayerController : PlayerEntity
             currentSpeed = Mathf.Lerp(walkSpeed, slideSpeed, slideTimer / slideDuration);
 
             finalMove = slideDirection;
+            if (PlayerPerkManager.Instance != null) { PlayerPerkManager.Instance.OnSliding(transform.position, slideDirection); } // Greased Slide
 
             if (slideTimer <= 0)
             {
@@ -392,6 +414,7 @@ public class PlayerController : PlayerEntity
             currentSpeed *= PlayerPerkManager.Instance.CurrentMoveSpeedMultiplier_OnEnemyKill;
         }*/
 
+        currentSpeed *= PlayerRings.MoveSpeedMultiplier; // rings
         controller.Move(finalMove * currentSpeed * Time.deltaTime);
 
         if (InputSchemeManager.instance.isJumpPressed && isGrounded && !isSliding && !isAttacking)
@@ -412,7 +435,10 @@ public class PlayerController : PlayerEntity
     {
         if(isExecuting) { return; }
 
-        if (playerWeaponManager.currentParryLeft > 0f || playerWeaponManager.currentParryRight > 0f)
+        // Blocks and parries only work against attacks from in front (the way the camera faces)
+        bool isFacingAttacker = IsFacingAttack(enemy.transform.position);
+
+        if (isFacingAttacker && (playerWeaponManager.currentParryLeft > 0f || playerWeaponManager.currentParryRight > 0f))
         {
             PlayerPerkManager.Instance.OnParrySuccess();
             BlockedOrParriedEffect(enemy.eyesTransform.position);
@@ -434,8 +460,9 @@ public class PlayerController : PlayerEntity
         {
             enemy.AttackSuccessful();
 
-            if (playerWeaponManager.isBlockingLeft || playerWeaponManager.isBlockingRight)
+            if (isFacingAttacker && (playerWeaponManager.isBlockingLeft || playerWeaponManager.isBlockingRight))
             {
+                PlayerPerkManager.Instance.OnHitBlocked(); // Ember Guard
                 BlockedOrParriedEffect(enemy.eyesTransform.position);
                 //playerWeaponManager.PerformBlock();
                 cameraBob.TriggerShake(0.293f, 0.05f);
@@ -445,13 +472,13 @@ public class PlayerController : PlayerEntity
                 if(playerWeaponManager.isBlockingLeft)
                 {
                     StaminaEffect(false);
-                    StaminaDepleted(enemy.staminaDamage * playerWeaponManager.leftHandWeapon.blockStaminaDamageModifier * GameManager.instance.playerTakeStaminaDamage);
+                    StaminaDepleted(enemy.staminaDamage * playerWeaponManager.GetBlockStaminaModifier(true) * GameManager.instance.playerTakeStaminaDamage);
                     SoundManager.instance.BlockOrParrySound(playerWeaponManager.leftHandWeapon.audioClips_BlockSound ,transform.position);
                 }
                 else if(playerWeaponManager.isBlockingRight)
                 {
                     StaminaEffect(false);
-                    StaminaDepleted(enemy.staminaDamage * playerWeaponManager.rightHandWeapon.blockStaminaDamageModifier * GameManager.instance.playerTakeStaminaDamage);
+                    StaminaDepleted(enemy.staminaDamage * playerWeaponManager.GetBlockStaminaModifier(false) * GameManager.instance.playerTakeStaminaDamage);
                     SoundManager.instance.BlockOrParrySound(playerWeaponManager.rightHandWeapon.audioClips_BlockSound, transform.position);
                 }
             }
@@ -471,6 +498,7 @@ public class PlayerController : PlayerEntity
                 float rawDamage = enemy.attackDamage * GameManager.instance.playerTakeHPDamage;
                 float calculatedDamage = PlayerPerkManager.Instance.CalculateIncomingDamage(rawDamage);
                 CharacterHealthComponent.TakeDamage(calculatedDamage);
+                if (enemy.Elite != null) { enemy.Elite.OnDealtDamage(calculatedDamage); } // Vampiric elites
                 TriggerMeleeJolt(new Vector3(30f, 0f, 0f));
                 RumbleManager.instance.RumblePulse(1f, 2.5f, 0.2f);
             }
@@ -481,7 +509,9 @@ public class PlayerController : PlayerEntity
     {
         if (isExecuting) { return; }
 
-        if (playerWeaponManager.currentParryLeft > 0f || playerWeaponManager.currentParryRight > 0f)
+        bool isFacingAttacker = IsFacingAttack(transform.position - arrow.transform.forward * 3f);
+
+        if (isFacingAttacker && (playerWeaponManager.currentParryLeft > 0f || playerWeaponManager.currentParryRight > 0f))
         {
             PlayerPerkManager.Instance.OnParrySuccess();
             BlockedOrParriedEffect(arrow.gameObject.transform.position);
@@ -499,7 +529,7 @@ public class PlayerController : PlayerEntity
         }
         else
         {
-            if (playerWeaponManager.isBlockingLeft ||playerWeaponManager.isBlockingRight)
+            if (isFacingAttacker && (playerWeaponManager.isBlockingLeft || playerWeaponManager.isBlockingRight))
             {
                 BlockedOrParriedEffect(arrow.gameObject.transform.position);
                 //playerWeaponManager.PerformBlock();
@@ -509,13 +539,13 @@ public class PlayerController : PlayerEntity
                 if(playerWeaponManager.isBlockingLeft)
                 {
                     StaminaEffect(false);
-                    StaminaDepleted(arrow.staminaDamage * playerWeaponManager.leftHandWeapon.blockStaminaDamageModifier * GameManager.instance.playerTakeStaminaDamage);
+                    StaminaDepleted(arrow.staminaDamage * playerWeaponManager.GetBlockStaminaModifier(true) * GameManager.instance.playerTakeStaminaDamage);
                     SoundManager.instance.BlockOrParrySound(playerWeaponManager.leftHandWeapon.audioClips_BlockSound ,transform.position);
                 }
                 else if(playerWeaponManager.isBlockingRight)
                 {
                     StaminaEffect(false);
-                    StaminaDepleted(arrow.staminaDamage * playerWeaponManager.rightHandWeapon.blockStaminaDamageModifier * GameManager.instance.playerTakeStaminaDamage);
+                    StaminaDepleted(arrow.staminaDamage * playerWeaponManager.GetBlockStaminaModifier(false) * GameManager.instance.playerTakeStaminaDamage);
                     SoundManager.instance.BlockOrParrySound(playerWeaponManager.rightHandWeapon.audioClips_BlockSound, transform.position);
                 }
             }
@@ -541,6 +571,32 @@ public class PlayerController : PlayerEntity
                 RumbleManager.instance.RumblePulse(1f, 2.5f, 0.1f);
             }
         }
+    }
+
+    /// <summary>
+    /// Damage that can't be blocked or parried (e.g. a Volatile elite exploding). Still goes through the
+    /// damage perks (Iron Skin, Last Stand, Revive Totem...).
+    /// </summary>
+    public void TakeUnblockableHit(float rawDamage, Vector3 source)
+    {
+        if (isExecuting || CharacterHealthComponent.CurrentHP <= 0f) { return; }
+        if (AsyncLoaderManager.instance != null && AsyncLoaderManager.instance.isTransitioning) { return; }
+
+        postProcressEffect.TriggerDamageEffect();
+        SoundManager.instance.PlayerHurtSound(transform.position);
+        cameraBob.TriggerShake(0.3f, 0.12f);
+        HealthEffect(false);
+
+        float calculatedDamage = PlayerPerkManager.Instance.CalculateIncomingDamage(rawDamage * GameManager.instance.playerTakeHPDamage);
+        CharacterHealthComponent.TakeDamage(calculatedDamage);
+        TriggerMeleeJolt(new Vector3(30f, 0f, 0f));
+        RumbleManager.instance.RumblePulse(1f, 3f, 0.3f);
+    }
+
+    // Is the attack coming from inside the guard cone (in front of where the camera looks)?
+    private bool IsFacingAttack(Vector3 attackOrigin)
+    {
+        return InteractFacing.IsPlayerFacing(attackOrigin, guardAngle);
     }
 
     public void StaminaDepleted(float value)
@@ -573,7 +629,7 @@ public class PlayerController : PlayerEntity
         {
             if (CharacterStaminaComponent.CurrentStamina < CharacterStaminaComponent.MaxStamina)
             {
-                float staminaToRecover = reStaminaRate * Time.deltaTime * reStaminaSpeed;
+                float staminaToRecover = reStaminaRate * Time.deltaTime * reStaminaSpeed * PlayerRings.StaminaRegenMultiplier;
                 CharacterStaminaComponent.Recover(staminaToRecover);
             }
         }
@@ -611,15 +667,11 @@ public class PlayerController : PlayerEntity
 
     public void TriggerAttackMovement(float lockDuration, float initialLungeSpeed)
     {
+        // Attacking mid-slide or mid-air: keep the slide / air movement, no lunge and no movement lock
+        if (isSliding || !isGrounded) { return; }
+
         isAttacking = true;
         attackLockTimer = lockDuration;
-
-        // If the player attacks while sliding, immediately cancel the slide
-        if (isSliding)
-        {
-            isSliding = false;
-            controller.height = normalHeight;
-        }
 
         // Thrust the player forward based on where the camera is looking
         attackLungeVelocity = cameraTransform.forward * initialLungeSpeed;

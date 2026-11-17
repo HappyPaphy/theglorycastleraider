@@ -2,22 +2,40 @@ using System.Collections.Generic;
 using DunGen;
 using UnityEngine;
 
+/// <summary>
+/// Hides a room's structure when it's far from the player (more than a few rooms away) or outside the camera view,
+/// and tells the RoguelikeManager which room the player is in.
+///
+/// Optimised: each room caches its bounds and renderers once; the camera frustum and the set of nearby rooms
+/// are computed once per frame for the whole dungeon (the nearby set only when the player changes room);
+/// renderers are only switched when the room's visibility actually changes. No per-frame allocations.
+/// </summary>
 public class TileRenderOptimization : MonoBehaviour
 {
     public GameObject structureRoot;
     [SerializeField] private Tile tile;
     [SerializeField] private bool isThisTileStart = false;
-    private int maxNeighborDepth = 4;
+    private const int MaxNeighborDepth = 4;
 
-    private Camera mainCam;
-    private Plane[] frustumPlanes;
+    // ---------- per room (cached once) ----------
+    private Renderer[] structureRenderers;
+    private Bounds bounds;
+    private bool boundsReady;
+    private int visibilityState = -1; // -1 unknown, 0 hidden, 1 shown
     private Transform playerTransform;
+
+    // ---------- shared by every room, refreshed once per frame ----------
+    private static Camera mainCam;
+    private static readonly Plane[] FrustumPlanes = new Plane[6];
+    private static int frustumFrame = -1;
+
+    private static readonly HashSet<Tile> NearTiles = new HashSet<Tile>();
+    private static readonly Queue<(Tile tile, int depth)> SearchQueue = new Queue<(Tile, int)>();
+    private static Tile nearTilesCenter;
 
     private void Start()
     {
-        mainCam = Camera.main;
-
-        if(isThisTileStart)
+        if (isThisTileStart && RoguelikeManager.instance != null)
         {
             RoguelikeManager.instance.currentActiveTile = tile;
         }
@@ -31,124 +49,137 @@ public class TileRenderOptimization : MonoBehaviour
         {
             RoguelikeManager.instance.allDungeonTiles.Add(tile);
         }
+
+        if (structureRoot != null)
+        {
+            structureRenderers = structureRoot.GetComponentsInChildren<Renderer>(true);
+        }
     }
 
     private void Update()
     {
+        if (!boundsReady) { CacheBounds(); }
+
         CheckPlayerPosition();
         EvaluateVisibility();
     }
 
+    // Bounds of everything in the room, measured once (the room doesn't move after the dungeon is built)
+    private void CacheBounds()
+    {
+        bounds = CalculateBounds(tile);
+        boundsReady = true;
+    }
 
     private void EvaluateVisibility()
     {
-        if (mainCam == null || RoguelikeManager.instance == null) return;
+        RoguelikeManager manager = RoguelikeManager.instance;
+        if (manager == null) { return; }
 
-        // 1. Check if this tile is the current active room or an immediate neighbor
-        bool isWithinRange = IsTileWithinDepthRange();
-
-        if (!isWithinRange)
+        // 1. Nearby? (within a few rooms of the player's room)
+        if (!IsTileWithinDepthRange(manager))
         {
-            // Too far away, force structure hidden
-            SetStructureActive(false);
+            SetStructureVisible(false);
             return;
         }
 
-        // 2. Check if the tile bounds are inside the camera's view frustum
-        frustumPlanes = GeometryUtility.CalculateFrustumPlanes(mainCam);
-        Bounds bounds = GetTileBounds(tile);
-        bool isInCameraView = GeometryUtility.TestPlanesAABB(frustumPlanes, bounds);
-
-        // Room renders only if it's nearby AND visible to the camera
-        SetStructureActive(isInCameraView);
+        // 2. In the camera view?
+        if (!RefreshFrustum()) { return; }
+        SetStructureVisible(GeometryUtility.TestPlanesAABB(FrustumPlanes, bounds));
     }
 
-    private bool IsTileWithinDepthRange()
+    // Camera frustum, computed once per frame for all rooms (non-allocating)
+    private static bool RefreshFrustum()
     {
-        var manager = RoguelikeManager.instance;
-        if (manager == null || manager.currentActiveTile == null) return true;
+        if (mainCam == null || !mainCam.isActiveAndEnabled) { mainCam = Camera.main; }
+        if (mainCam == null) { return false; }
 
-        if (manager.currentActiveTile == tile) return true;
-
-        // Breadth-First Search (BFS) to find all connected tiles up to maxNeighborDepth
-        HashSet<Tile> visited = new HashSet<Tile>();
-        Queue<(Tile tile, int depth)> queue = new Queue<(Tile, int)>();
-
-        queue.Enqueue((manager.currentActiveTile, 0));
-        visited.Add(manager.currentActiveTile);
-
-        while (queue.Count > 0)
+        if (frustumFrame != Time.frameCount)
         {
-            var (current, depth) = queue.Dequeue();
+            GeometryUtility.CalculateFrustumPlanes(mainCam, FrustumPlanes);
+            frustumFrame = Time.frameCount;
+        }
+        return true;
+    }
 
-            if (current == tile) return true;
+    private bool IsTileWithinDepthRange(RoguelikeManager manager)
+    {
+        Tile current = manager.currentActiveTile;
+        if (current == null || current == tile) { return true; }
 
-            if (depth < maxNeighborDepth && current.UsedDoorways != null)
+        // The nearby set only changes when the player changes room
+        if (nearTilesCenter != current) { RebuildNearTiles(current); }
+        return NearTiles.Contains(tile);
+    }
+
+    // Breadth-first search from the player's room, up to MaxNeighborDepth doorways away
+    private static void RebuildNearTiles(Tile center)
+    {
+        nearTilesCenter = center;
+        NearTiles.Clear();
+        SearchQueue.Clear();
+
+        NearTiles.Add(center);
+        SearchQueue.Enqueue((center, 0));
+
+        while (SearchQueue.Count > 0)
+        {
+            var (current, depth) = SearchQueue.Dequeue();
+            if (depth >= MaxNeighborDepth || current == null || current.UsedDoorways == null) { continue; }
+
+            foreach (Doorway doorway in current.UsedDoorways)
             {
-                foreach (Doorway doorway in current.UsedDoorways)
+                if (doorway == null || doorway.ConnectedDoorway == null) { continue; }
+                Tile neighbor = doorway.ConnectedDoorway.Tile;
+                if (neighbor != null && NearTiles.Add(neighbor))
                 {
-                    if (doorway.ConnectedDoorway != null && doorway.ConnectedDoorway.Tile != null)
-                    {
-                        Tile neighbor = doorway.ConnectedDoorway.Tile;
-                        if (!visited.Contains(neighbor))
-                        {
-                            visited.Add(neighbor);
-                            queue.Enqueue((neighbor, depth + 1));
-                        }
-                    }
+                    SearchQueue.Enqueue((neighbor, depth + 1));
                 }
             }
         }
-
-        return false;
     }
 
-    private void SetStructureActive(bool state)
+    // Only touches the renderers when the visibility actually changes
+    private void SetStructureVisible(bool visible)
     {
-        if (structureRoot == null) return;
+        int state = visible ? 1 : 0;
+        if (state == visibilityState || structureRenderers == null) { return; }
+        visibilityState = state;
 
-        Renderer[] renderers = structureRoot.GetComponentsInChildren<Renderer>(true);
-        foreach (Renderer rend in renderers)
+        for (int i = 0; i < structureRenderers.Length; i++)
         {
-            rend.enabled = state;
+            if (structureRenderers[i] != null) { structureRenderers[i].enabled = visible; }
         }
     }
 
     private void CheckPlayerPosition()
-    { 
-        if (RoguelikeManager.instance.currentActiveTile == tile) {return;}
-
-        Bounds bounds = GetTileBounds(tile);
+    {
+        RoguelikeManager manager = RoguelikeManager.instance;
+        if (manager == null || playerTransform == null || manager.currentActiveTile == tile) { return; }
 
         if (bounds.Contains(playerTransform.position))
         {
-            RoguelikeManager.instance.ChangeCurrentTile(tile);
+            manager.ChangeCurrentTile(tile);
         }
     }
 
-    private Bounds GetTileBounds(Tile tile)
+    private static Bounds CalculateBounds(Tile tile)
     {
-        // Fallback bounds calculation based on renderers or colliders inside the tile
+        // Everything rendered inside the room
         Renderer[] renderers = tile.GetComponentsInChildren<Renderer>();
-        if (renderers.Length == 0) return new Bounds(tile.transform.position, Vector3.one * 10f);
+        if (renderers.Length == 0) { return new Bounds(tile.transform.position, Vector3.one * 10f); }
 
-        Bounds bounds = renderers[0].bounds;
-        for (int i = 1; i < renderers.Length; i++)
-        {
-            bounds.Encapsulate(renderers[i].bounds);
-        }
-        return bounds;
+        Bounds b = renderers[0].bounds;
+        for (int i = 1; i < renderers.Length; i++) { b.Encapsulate(renderers[i].bounds); }
+        return b;
     }
 
     private void OnDrawGizmos()
     {
-        if (tile == null) return;
+        if (tile == null) { return; }
 
-        // Calculate bounds using your existing method
-        Bounds bounds = GetTileBounds(tile);
-
-        // Draw a green wire cube representing the tile's bounding box
+        Bounds b = boundsReady ? bounds : CalculateBounds(tile);
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(bounds.center, bounds.size);
+        Gizmos.DrawWireCube(b.center, b.size);
     }
 }

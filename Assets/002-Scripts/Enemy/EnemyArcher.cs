@@ -56,7 +56,7 @@ public class EnemyArcher : EnemyEntity
 
     protected override void Awake()
     {
-        agent.speed = moveSpeed;
+        agent.speed = (moveSpeed) * SpeedMultiplier;
         agent.updateRotation = false;
         base.Awake();
     }
@@ -69,6 +69,9 @@ public class EnemyArcher : EnemyEntity
 
     protected override void Update()
     {
+        // Once executed, nothing may change the state back (it plays the headless death)
+        if (isExecuted) { currentState = EnemyArcherState.Executed; }
+
         ChooseAnimation();
         HandleState();
         HandleBalance();
@@ -189,8 +192,9 @@ public class EnemyArcher : EnemyEntity
 
         // 1. Pre-attack: Draw the bow (Aiming phase)
         SoundManager.instance.BowSound_String(sprRndr.transform.position);
+        IncomingAttackIndicator.Warn(transform, preAttackDuration / SpeedMultiplier); // red warning if it's behind the player
 
-        yield return new WaitForSeconds(preAttackDuration);
+        yield return new WaitForSeconds(preAttackDuration / SpeedMultiplier);
 
         // 2. Fire if not interrupted by damage/death
         if (!isDied && currentState == EnemyArcherState.Attack && playerTransform != null)
@@ -213,7 +217,7 @@ public class EnemyArcher : EnemyEntity
             // Optional: Play bow string sound
             // SoundManager.instance.BowSound_Release();
 
-            currentCooldown = shootCooldown;
+            currentCooldown = shootCooldown / SpeedMultiplier;
             currentState = EnemyArcherState.Reposition;
         }
     }
@@ -341,8 +345,26 @@ public class EnemyArcher : EnemyEntity
     }
 
 
+    protected override bool OnKnockDown(float duration)
+    {
+        if (isExecuted) { return false; }
+        currentState = EnemyArcherState.Kicked;
+        isKicked = true;
+        kickTimer = Mathf.Max(kickTimer, duration);
+        SafeStopAgent(true);
+        return true;
+    }
+
+    protected override void OnKnockDownInterrupted()
+    {
+        // Back up next frame (the hit's own reaction still plays)
+        if (isKicked) { kickTimer = 0f; }
+    }
+
     public override void GotExecuted()
     {
+        // Stop attack / kick / leap coroutines: when they finish they set Run/Chase and would undo the execution
+        StopAllCoroutines();
         currentState = EnemyArcherState.Executed;
         isExecuted = true;
         SafeStopAgent(true);

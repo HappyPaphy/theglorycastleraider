@@ -4225,6 +4225,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be24a1fe40988234087c146ef55f9d66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerPerkManager
+  inventory: {fileID: 0}
+  wardenSlamDamagePerLevel: 15
+  wardenMinSlamDistance: 0.8
+  wardenMaxSlamDistance: 3
+  riposteDamageMultiplier: 1.5
+  riposteRadius: 2.6
+  riposteKnockback: 7
+  riposteChargeLifetime: 6
+  parriesPerRiposteCharge: 4
+  splinterDamagePerLevel: 12
+  splinterRadius: 2.5
+  splinterChainDelay: 0.12
+  headsmanRadius: 5
+  headsmanDamagePerLevel: 10
+  headsmanKnockback: 6
+  headsmanHealAtLevel2: 10
+  glassJawDamagePerLevel: 0.4
+  slideHitRadius: 0.8
+  slideDamagePerLevel: 5
+  slideKnockbackBase: 6
+  emberDamagePerEmber: 8
+  emberRadius: 2.5
+  emberChargeLifetime: 10
+  lastStandCooldownLV1: 90
+  lastStandCooldownLV2: 45
+  lastStandInvulnerability: 1.5
+  lastStandHealAtLevel2: 20
+  ramRadius: 3.5
+  ramDamagePerLevel: 15
+  ramKnockback: 12
+  ramKnockdownDuration: 4
 --- !u!114 &2391427641614407424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4240,6 +4271,45 @@ MonoBehaviour:
   inventory: {fileID: 4166100882718624895}
   ui: {fileID: 3244259692743699895}
   coinWallet: {fileID: 0}
+  allCards:
+  - {fileID: 11400000, guid: bdeccdcd9d9f49559ad9708ef846f459, type: 2}
+  - {fileID: 11400000, guid: 7018f99d792648409940ee49f9571d7e, type: 2}
+  - {fileID: 11400000, guid: 7300c55d6906cf24fbe4e87d7300e5e0, type: 2}
+  - {fileID: 11400000, guid: 3958551ba55440c449ea3b9479df40af, type: 2}
+  - {fileID: 11400000, guid: 30822d9a095416941a4aac756d4fe3e9, type: 2}
+  - {fileID: 11400000, guid: 0f56e664d2254f44e895fac9fbad0f04, type: 2}
+  - {fileID: 11400000, guid: cd88a2cd1ef64894a03045731a105636, type: 2}
+  - {fileID: 11400000, guid: 0d89273c3c784c988156d2966d1c7a2f, type: 2}
+  - {fileID: 11400000, guid: 96188bb8f0fba7d4b80990ad9ec73ef7, type: 2}
+  - {fileID: 11400000, guid: 08494ce492d876d4d9d51345a18d4cb6, type: 2}
+  - {fileID: 11400000, guid: 16606883bc6b48fabd2e23911d295d49, type: 2}
+  - {fileID: 11400000, guid: ed31e7778e1e4598944e72a47977459e, type: 2}
+  - {fileID: 11400000, guid: d804c09d307e4be9824e940bfad0a93d, type: 2}
+  - {fileID: 11400000, guid: 598a2951c5f84ae68a372555fc51b0e4, type: 2}
+  - {fileID: 11400000, guid: d9d7159ac56217f438a6bdeb622aaab7, type: 2}
+  - {fileID: 11400000, guid: 0fd23d9db7f147b4cb06d02756e2fd08, type: 2}
+  - {fileID: 11400000, guid: 67a46f7d505e4ba4bba1987fa9d9c3b8, type: 2}
+  - {fileID: 11400000, guid: 4cbaf540a3b1475ba6cf17993f42bb4e, type: 2}
+  - {fileID: 11400000, guid: 1c9062dd4bc5a6f4ababb3468b0f4a14, type: 2}
+  - {fileID: 11400000, guid: a69af11107cd9e143a00a29f0a13cb30, type: 2}
+  - {fileID: 11400000, guid: 713cacd0d6a64f4097414a83c625f771, type: 2}
+  - {fileID: 11400000, guid: 81a351f3f2d14b1499b795a36b2b9c8f, type: 2}
+  - {fileID: 11400000, guid: edf50f408874f144e95c85a25a9af515, type: 2}
+  - {fileID: 11400000, guid: 016cfbf52b4a23046af432fc9fde2c89, type: 2}
+  - {fileID: 11400000, guid: 8c3fd47e927144b28838c0ea6b816de8, type: 2}
+  - {fileID: 11400000, guid: 982434f2142b4ee1b60d19ffc71a1a4b, type: 2}
+  - {fileID: 11400000, guid: 9f2961c40a68d434593c12f34844cf63, type: 2}
+  - {fileID: 11400000, guid: a783cf9f3ed35944ea327d32acf5559f, type: 2}
+  - {fileID: 11400000, guid: 02086d19d5424ff4aa2a9b4ff0fe447e, type: 2}
+  - {fileID: 11400000, guid: ea6438d017fe38d4f97bcf5f55ba5ea5, type: 2}
+  - {fileID: 11400000, guid: f0dcf79f4610dea438e8e28f59ac14f5, type: 2}
+  - {fileID: 11400000, guid: 0f87c809fa6d4b6b84084a3a2fcdcbc8, type: 2}
+  - {fileID: 11400000, guid: 320ad17e00a84116a83464a392e59a8e, type: 2}
+  - {fileID: 11400000, guid: 1c3d3a309b388764b81df96e8e317e00, type: 2}
+  - {fileID: 11400000, guid: 39b6a13d788624345a5ff3715aa08648, type: 2}
+  - {fileID: 11400000, guid: 4342b7a45d9bf07478f1010306d8fb52, type: 2}
+  - {fileID: 11400000, guid: 79fe32ae434c4e369872cf4807b1102b, type: 2}
+  - {fileID: 11400000, guid: 001690ebfd4243b1a13b5cbe48bf078c, type: 2}
   commonOrb: {fileID: 11400000, guid: 4c12ae53bd205fb40bc03c477068ccfd, type: 2}
   rareOrb: {fileID: 11400000, guid: 32461e3352283154db5c47cb3c06e2e8, type: 2}
   uniqueOrb: {fileID: 11400000, guid: a02c2118207b15a4ca2326b83686e191, type: 2}

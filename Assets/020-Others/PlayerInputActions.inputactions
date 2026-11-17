@@ -61,6 +61,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "InteractDoor",
+                    "type": "Button",
+                    "id": "39f731fe-b7d5-4803-b694-7af7ec2b168d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "ToggleTwoHanded_Right",
                     "type": "Button",
                     "id": "fc6d2966-ac4a-4e1e-80b1-74ac89e7ef2c",
@@ -303,7 +312,7 @@
                 {
                     "name": "",
                     "id": "143bb1cd-cc10-4eca-a2f0-a3664166fe91",
-                    "path": "<Gamepad>/rightTrigger",
+                    "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
@@ -336,7 +345,7 @@
                 {
                     "name": "",
                     "id": "023e4f50-c4b8-44c7-9029-c5d584e23afa",
-                    "path": "<Gamepad>/leftTrigger",
+                    "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
@@ -359,10 +368,32 @@
                     "name": "",
                     "id": "f203c189-97c8-4567-9db5-91e564dfb22b",
                     "path": "<Gamepad>/buttonNorth",
-                    "interactions": "",
+                    "interactions": "Tap(duration=0.35)",
                     "processors": "",
                     "groups": ";Gamepad",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "54011206-c4dc-4667-a69b-bd1dd8b5afe4",
+                    "path": "<Keyboard>/t",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "InteractDoor",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b294b29e-a408-47ea-af27-dab88f3a017f",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "Hold(duration=0.4)",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "InteractDoor",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

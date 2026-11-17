@@ -114,9 +114,10 @@ public class Item : MonoBehaviour
     {
         if (isCollected) { return; }
 
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, pickupRadius, playerLayer);
+        bool isPlayerNear = PhysicsQuery.Any(transform.position, pickupRadius, playerLayer);
 
-        if (hitColliders.Length > 0)
+        // Near it AND looking at it
+        if (isPlayerNear && InteractFacing.IsPlayerFacing(transform.position))
         {
             uiButtonPrompt.SetActive(true);
 
@@ -137,12 +138,29 @@ public class Item : MonoBehaviour
         CollectItem();
     }
 
+    // Set by the pickup logic so code that gives items directly (e.g. the shop) knows if it worked
+    protected bool lastCollectSucceeded;
+
+    /// <summary>
+    /// Runs the normal pickup logic without the player having to walk over and press Interact.
+    /// Returns false if the inventory could not take it (the caller should destroy the object then).
+    /// </summary>
+    public bool GiveToPlayer()
+    {
+        lastCollectSucceeded = false;
+        Collecting();
+        return lastCollectSucceeded;
+    }
+
     private void CollectItem()
     {
+        lastCollectSucceeded = false;
+
         if (InventoryManager.instance.TryAddGeneralItem(this))
         {
+            lastCollectSucceeded = true;
             isCollected = true;
-            uiButtonPrompt.SetActive(false);
+            if (uiButtonPrompt != null) uiButtonPrompt.SetActive(false);
             if (obj_RotateObject != null) obj_RotateObject.SetActive(false);
 
             if (EquipmentLoadOut.instance != null && PlayerWeaponManager.instance != null)

@@ -85,10 +85,10 @@ public class Slice : MonoBehaviour
 
         // Add materials. Normal material goes in slot 1, cut material in slot 2
         var meshRenderer = obj.AddComponent<MeshRenderer>();
-        meshRenderer.sharedMaterials = new Material[2] {
-            this.GetComponent<MeshRenderer>().sharedMaterial,
-            this.sliceOptions.insideMaterial
-        };
+        meshRenderer.sharedMaterials = Fracture.BuildFragmentMaterials(
+            this.GetComponent<MeshRenderer>().sharedMaterials,
+            this.GetComponent<MeshFilter>().sharedMesh,
+            this.sliceOptions.insideMaterial);
 
         // Copy collider properties to fragment
         var thisCollider = this.GetComponent<Collider>();

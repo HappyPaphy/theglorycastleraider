@@ -114,6 +114,9 @@ public class PauseGame : MonoBehaviour
                 if (EquipmentLoadOut.instance.isPanelActive) { return; }
             }
 
+            // The shop uses Cancel to close itself
+            if (ShopUI.IsOpen) { return; }
+
             if (RoguelikeManager.instance != null)
             {
                 /*if (RoguelikeManager.instance.roguelikePhase != RoguelikePhase.PlaySequence)

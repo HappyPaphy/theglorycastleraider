@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84c6694742b89144b8e5a777418d62c9, type: 3}
+  m_Name: ChallengeSettings
+  m_EditorClassIdentifier: Assembly-CSharp::ChallengeSettings
+  challengePool:
+  - {fileID: 11400000, guid: b16f7980573ebd542b049a7ad7c2ffb0, type: 2}
+  - {fileID: 11400000, guid: 24e844280340ac442ab132ef6194eb8d, type: 2}
+  - {fileID: 11400000, guid: f4537a0eddf0ee14594b6383a9fd7493, type: 2}
+  defaultEnemies:
+  - prefab: {fileID: 1742776970562387968, guid: ddf2e17e311c2c24e82b5704c3442adf, type: 3}
+    weight: 3
+    minFloor: 1
+  - prefab: {fileID: 1742776970562387968, guid: 2087c2d02cc952545b21f0b7bbef205c, type: 3}
+    weight: 2.5
+    minFloor: 1
+  - prefab: {fileID: 1742776970562387968, guid: 980b27a22998c614d8df7d1f4b762998, type: 3}
+    weight: 2
+    minFloor: 1
+  - prefab: {fileID: 1742776970562387968, guid: 0a2f55e16d16426478806f57ca857b9d, type: 3}
+    weight: 2.5
+    minFloor: 1
+  bronzeChest: {fileID: 7589437371463405693, guid: 8ecc927fada9cc2458801de8b553777b, type: 3}
+  silverChest: {fileID: 5297560688724294864, guid: aa4e0fd0c02607140bfc41281ed9dad4, type: 3}
+  goldChest: {fileID: 6657067289857275748, guid: a692bf0a1731b744380616d17caee551, type: 3}
+  confirmWindow: 3
+  interactRadius: 2
+  iconHeight: 1.4
+  labelHeight: 1.68

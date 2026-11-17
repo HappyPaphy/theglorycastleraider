@@ -1095,7 +1095,7 @@ MonoBehaviour:
     - 0
     triggerKey: 0
   fractureOptions:
-    fragmentCount: 5
+    fragmentCount: 12
     xAxis: 1
     yAxis: 1
     zAxis: 1
@@ -1143,6 +1143,13 @@ MonoBehaviour:
   fragmentExplosionRadius: 1
   timeBeforeFragmentObjDestroyed: 0.8
   timeBeforeFragmentColliderDisable: 4
+  hitDirectionSpeed: 4.5
+  hitUpwardSpeed: 1.2
+  hitDirectionSpread: 0.35
+  hitSpin: 10
+  maxFragmentSpeed: 9
+  maxDepenetrationVelocity: 2
+  fragmentSceneCollisionDelay: 0
   currentRefractureCount: 0
 --- !u!64 &757388057589181335
 MeshCollider:

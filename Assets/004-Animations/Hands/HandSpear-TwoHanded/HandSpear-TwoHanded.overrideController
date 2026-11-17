@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: HandSpear-TwoHanded
+  m_Controller: {fileID: 9100000, guid: 6d727605931cd5643bfe8be6aa293f15, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: b29809a5e5a2fbd49b7d9f3b46084e17, type: 2}
+    m_OverrideClip: {fileID: 0}
+  - m_OriginalClip: {fileID: 7400000, guid: de4d36588139ffa409d2deda8bb109ce, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 1a5656558b3b31b42834efd0d3b91614, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: f00bebd3d1ddce7478558b189cb722d0, type: 2}
+    m_OverrideClip: {fileID: 0}
+  - m_OriginalClip: {fileID: 7400000, guid: 79a591480a6377b4a82aabb8080ff61e, type: 2}
+    m_OverrideClip: {fileID: 0}
+  - m_OriginalClip: {fileID: 7400000, guid: c386985bf335c7d40a79fda71aa1ee74, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 059aee738a39e3e4497a137caa3ded47, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 8769db9542b4a304194995fcd8f3acf4, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 08f269b271ae7b9458c9c233f3bac493, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 4f15e494ecf6608418ff2cb79fbe6c6b, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: cd2b9d8845cb4f34c8f575993e754b9a, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 087550aae5e7f194882c7ca3a5ddfb9f, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: af14bf1a8960528469a5b67a20a56774, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: ff16f9022f970f848b4c44b4db207be0, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: a82177c39851c1e45a2007dd309c85ca, type: 2}

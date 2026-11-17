@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e515c57bdfa32446811dbeedf047836, type: 3}
+  m_Name: EliteSettings
+  m_EditorClassIdentifier: Assembly-CSharp::EliteSettings
+  baseChance: 0.08
+  chancePerFloor: 0.16
+  maxChance: 0.35
+  traitPool:
+  - {fileID: 11400000, guid: c6f76b088f5387649bd0ce61e2ddecb6, type: 2}
+  - {fileID: 11400000, guid: 28ec9ee0e182a2d428fed6cb511d8d4f, type: 2}
+  - {fileID: 11400000, guid: fb408b94a46b7fa428f02c5a92782a9d, type: 2}
+  - {fileID: 11400000, guid: 3908194ff268cda4d9f9bca7faf8bfa9, type: 2}
+  - {fileID: 11400000, guid: 30fe8c60ea27aae45bb0daaf1e5c9ee9, type: 2}
+  - {fileID: 11400000, guid: 9703f784027577e45bde3e881314f946, type: 2}
+  maxTraits: 1
+  extraTraitsFromFloor: 1
+  extraTraitChance: 0
+  potionDrops:
+  - itemPrefab: {fileID: 380057338341773006, guid: 589029928fc2356459b06eb3b1733989, type: 3}
+    weight: 4
+  - itemPrefab: {fileID: 380057338341773006, guid: 28710982d35f8a6469bb6b453151c8bf, type: 3}
+    weight: 3
+  - itemPrefab: {fileID: 380057338341773006, guid: 67899f728805b2b47aa38aa4c3e79c92, type: 3}
+    weight: 1.5
+  - itemPrefab: {fileID: 380057338341773006, guid: df776dd590951ad4fba7e48dd4044ac9, type: 3}
+    weight: 3
+  - itemPrefab: {fileID: 380057338341773006, guid: d8a4d08e6c1ae814f94c64ff44f38bdc, type: 3}
+    weight: 2
+  - itemPrefab: {fileID: 380057338341773006, guid: b56b8d4f0e24f3149a1cafbb2f0f27e4, type: 3}
+    weight: 1
+  potionCountMin: 1
+  potionCountMax: 2
+  dropEnergyOrb: 0
+  energyOrbPrefab: {fileID: 8259988526995763502, guid: 6d4a4f8bf29c8d24abe9ca3dcc3926b8, type: 3}
+  commonOrb: {fileID: 11400000, guid: 4c12ae53bd205fb40bc03c477068ccfd, type: 2}
+  rareOrb: {fileID: 11400000, guid: 32461e3352283154db5c47cb3c06e2e8, type: 2}
+  uniqueOrb: {fileID: 11400000, guid: a02c2118207b15a4ca2326b83686e191, type: 2}
+  commonOrbChance: 0.3
+  rareOrbChance: 0.6
+  coinMultiplier: 2.5
+  sizeMultiplier: 1.12
+  labelHeight: 0.25
+  labelFontSize: 1.6
+  labelSeparator: " \xB7 "
+  ringDiameter: 1.6
+  ringSpinSpeed: 40
+  ringPulseSpeed: 4
+  wardBrokenColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  explosionWarningColor: {r: 1, g: 0.5, b: 0.1, a: 1}

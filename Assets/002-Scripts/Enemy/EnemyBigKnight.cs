@@ -95,7 +95,7 @@ public class EnemyBigKnight : EnemyEntity
 
     protected override void Awake()
     {
-        agent.speed = moveSpeed;
+        agent.speed = (moveSpeed) * SpeedMultiplier;
         agent.updateRotation = false;
         base.Awake();
     }
@@ -117,6 +117,9 @@ public class EnemyBigKnight : EnemyEntity
 
     protected override void Update()
     {
+        // Once executed, nothing may change the state back (it plays the headless death)
+        if (isExecuted) { currentState = EnemyBigKnightState.Executed; }
+
         ChooseAnimation();
         HandleState();
         HandleBalance();
@@ -142,17 +145,17 @@ public class EnemyBigKnight : EnemyEntity
         // Adjust Agent Speed based on state
         if (currentState == EnemyBigKnightState.Run)
         {
-            anim.speed = 1.2f;
-            agent.speed = moveSpeed;
+            anim.speed = (1.2f) * SpeedMultiplier;
+            agent.speed = (moveSpeed) * SpeedMultiplier;
         }
         else if (currentState == EnemyBigKnightState.Flank)
         {
-            anim.speed = 1f;
-            agent.speed = flankSpeed;
+            anim.speed = (1f) * SpeedMultiplier;
+            agent.speed = (flankSpeed) * SpeedMultiplier;
         }
         else
         {
-            anim.speed = 1f;
+            anim.speed = (1f) * SpeedMultiplier;
         }
     }
 
@@ -255,9 +258,22 @@ public class EnemyBigKnight : EnemyEntity
                     Transform target = PlayerController.instance.transform;
                     SafeSetDesitinationAgent(target.position);
 
+                    // Door/furniture in the way: smash through it with the normal combo
+                    if (UpdateBlockingObstacle(target.position))
+                    {
+                        FaceBlockingObstacle(8f);
+                        if (currentAttackCooldown <= 0f)
+                        {
+                            currentState = EnemyBigKnightState.Attack1;
+                            SafeStopAgent(true);
+                            StartCoroutine(AttackSequence());
+                            break;
+                        }
+                    }
+
                     Vector3 lookDir = (target.position - transform.position).normalized;
                     lookDir.y = 0;
-                    if (lookDir != Vector3.zero)
+                    if (lookDir != Vector3.zero && !HasBlockingObstacle)
                     {
                         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDir), Time.deltaTime * 8f);
                     }
@@ -362,8 +378,8 @@ public class EnemyBigKnight : EnemyEntity
     {
         if (isDied || playerTransform == null || PlayerController.instance.CharacterHealthComponent.CurrentHP <= 0) return;
 
-        Collider[] hits = Physics.OverlapSphere(transform.position, preAttackRadius, playerLayer);
-        if (hits.Length > 0)
+        bool playerInReach = PhysicsQuery.Any(transform.position, preAttackRadius, playerLayer);
+        if (playerInReach)
         {
             Vector3 directionToPlayer = (playerTransform.position - eyesTransform.position).normalized;
             float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
@@ -389,7 +405,8 @@ public class EnemyBigKnight : EnemyEntity
         for (comboStep = 1; comboStep <= 3; comboStep++)
         {
             SoundManager.instance.BigKnightSound_Attack(sprRndr.transform.position);
-            yield return new WaitForSeconds(preAttackDuration);
+            IncomingAttackIndicator.Warn(transform, preAttackDuration / SpeedMultiplier); // red warning if it's behind the player
+            yield return new WaitForSeconds(preAttackDuration / SpeedMultiplier);
 
             // Cancel if interrupted by parry/stagger
             if (currentState != EnemyBigKnightState.Attack1 &&
@@ -404,6 +421,10 @@ public class EnemyBigKnight : EnemyEntity
             if (hitPlayers.Length > 0)
             {
                 hitPlayers[0].GetComponent<PlayerController>().TakeSwordHit(this);
+            }
+            else
+            {
+                HitBlockingObstacle(2f); // heavy hitter
             }
 
             // Gap between swings
@@ -426,7 +447,7 @@ public class EnemyBigKnight : EnemyEntity
             currentState == EnemyBigKnightState.Attack2 ||
             currentState == EnemyBigKnightState.Attack3)
         {
-            currentAttackCooldown = attackCooldownDuration;
+            currentAttackCooldown = attackCooldownDuration / SpeedMultiplier;
             currentState = EnemyBigKnightState.Run;
         }
 
@@ -437,8 +458,9 @@ public class EnemyBigKnight : EnemyEntity
     {
         SafeStopAgent(true);
         SoundManager.instance.BigKnightSound_Attack(transform.position);
+        IncomingAttackIndicator.Warn(transform, 0.4f / SpeedMultiplier);
 
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.4f / SpeedMultiplier);
 
         if (currentState == EnemyBigKnightState.Kick)
         {
@@ -458,7 +480,7 @@ public class EnemyBigKnight : EnemyEntity
                 SoundManager.instance.KickSound_Air(transform.position);
             }
 
-            yield return new WaitForSeconds(kickRecoveryTime);
+            yield return new WaitForSeconds(kickRecoveryTime / SpeedMultiplier);
 
             if (currentState == EnemyBigKnightState.Kick)
             {
@@ -641,6 +663,8 @@ public class EnemyBigKnight : EnemyEntity
 
     public override void GotExecuted()
     {
+        // Stop attack / kick / leap coroutines: when they finish they set Run/Chase and would undo the execution
+        StopAllCoroutines();
         currentState = EnemyBigKnightState.Executed;
         isExecuted = true;
         SafeStopAgent(true);

@@ -32,7 +32,6 @@ Transform:
   m_Children:
   - {fileID: 4103204585991551067}
   - {fileID: 1765773236831214594}
-  - {fileID: 396373761022600237}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7266188067607101063
@@ -74,6 +73,7 @@ MonoBehaviour:
   continuousManaDrainRate: 15
   continuousStaminaDrainRate: 15
   spellPrefab: {fileID: 0}
+  isCollectedOnStart: 0
 --- !u!1 &3288727578148725994
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,7 +240,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 396373761022600237}
   m_Father: {fileID: 5949059691857095748}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &147082394530530246
@@ -249,7 +250,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 5949059691857095748}
+    m_TransformParent: {fileID: 4103204585991551067}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: ceda840441b11904dbfcf349a61f2a3f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -290,6 +291,10 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: ceda840441b11904dbfcf349a61f2a3f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: ceda840441b11904dbfcf349a61f2a3f, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ceda840441b11904dbfcf349a61f2a3f, type: 3}
       propertyPath: m_Name

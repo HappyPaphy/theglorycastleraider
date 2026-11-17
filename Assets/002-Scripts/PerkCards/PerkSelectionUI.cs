@@ -543,8 +543,9 @@ public class PerkSelectionUI : MonoBehaviour
             // Level
             if (slot.levelText != null)
             {
-                slot.levelText.text =
-                    $"LV. {offer.level}";
+                slot.levelText.text = offer.IsUpgrade
+                    ? $"UP LV. {offer.upgradeFromLevel} > {offer.level}"
+                    : $"LV. {offer.level}";
             }
 
             // Button

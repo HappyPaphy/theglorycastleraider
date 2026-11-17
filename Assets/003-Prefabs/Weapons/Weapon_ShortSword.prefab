@@ -73,6 +73,7 @@ MonoBehaviour:
   continuousManaDrainRate: 15
   continuousStaminaDrainRate: 15
   spellPrefab: {fileID: 0}
+  isCollectedOnStart: 0
   damageImpactSound: 1
   weaponCategory: 1
   meleeType: 1
@@ -80,12 +81,24 @@ MonoBehaviour:
   bowType: 0
   pyromancyType: 0
   sorceryType: 0
-  damageKnockbackForce: 8
+  damageKnockbackForce: 4
   damage: 18
   attackCooldown: 0.3
   staminaCost: 7
   manaCost: 0
   blockStaminaDamageModifier: 1
+  canTwoHand: 1
+  parryOnly: 0
+  parryCooldown: 0.6
+  blockOnlyWhenTwoHanded: 0
+  comboLength: 2
+  attackRangeMultiplier: 1
+  attackRadiusOverride: 0
+  maxTargets: 0
+  closeRangePenaltyDistance: 0
+  closeRangeDamageMultiplier: 1
+  twoHandedDamageMultiplier: 1
+  twoHandedCooldownMultiplier: 1
   audioClips_BlockSound:
   - {fileID: 8300000, guid: 9b51803bf4ca0744b8ec79f0696d2867, type: 3}
   - {fileID: 8300000, guid: f2bc45810b6e0df44b0f0b991f12b58a, type: 3}
@@ -312,6 +325,10 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 563a5024b33ee944fa734e3b9e5bca91, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 563a5024b33ee944fa734e3b9e5bca91, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 563a5024b33ee944fa734e3b9e5bca91, type: 3}
       propertyPath: m_Name

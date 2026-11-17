@@ -1441,6 +1441,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4111947789811241691}
     m_Modifications:
+    - target: {fileID: 178596347972143875, guid: b9fc7f196d774754a9e22c7661379195, type: 3}
+      propertyPath: m_Size.x
+      value: 1.4922361
+      objectReference: {fileID: 0}
+    - target: {fileID: 178596347972143875, guid: b9fc7f196d774754a9e22c7661379195, type: 3}
+      propertyPath: m_Center.x
+      value: 1.2484516
+      objectReference: {fileID: 0}
     - target: {fileID: 289528862007423506, guid: b9fc7f196d774754a9e22c7661379195, type: 3}
       propertyPath: m_VersionIndex
       value: 2156
@@ -1448,6 +1456,22 @@ PrefabInstance:
     - target: {fileID: 323350556870829588, guid: b9fc7f196d774754a9e22c7661379195, type: 3}
       propertyPath: m_Constraints
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 546356043333249255, guid: b9fc7f196d774754a9e22c7661379195, type: 3}
+      propertyPath: m_Size.x
+      value: 1.4745911
+      objectReference: {fileID: 0}
+    - target: {fileID: 546356043333249255, guid: b9fc7f196d774754a9e22c7661379195, type: 3}
+      propertyPath: m_Center.x
+      value: -1.2625813
+      objectReference: {fileID: 0}
+    - target: {fileID: 1096444808738312702, guid: b9fc7f196d774754a9e22c7661379195, type: 3}
+      propertyPath: m_Center.x
+      value: -0.0114760995
+      objectReference: {fileID: 0}
+    - target: {fileID: 1096444808738312702, guid: b9fc7f196d774754a9e22c7661379195, type: 3}
+      propertyPath: m_Center.z
+      value: 1.8749666
       objectReference: {fileID: 0}
     - target: {fileID: 3478874366731486504, guid: b9fc7f196d774754a9e22c7661379195, type: 3}
       propertyPath: m_Layer
@@ -1563,6 +1587,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4111947789811241691}
     m_Modifications:
+    - target: {fileID: 130022453792246165, guid: 413a068067ba49245bab5dbd2504222b, type: 3}
+      propertyPath: m_Size.x
+      value: 3.4953794
+      objectReference: {fileID: 0}
+    - target: {fileID: 130022453792246165, guid: 413a068067ba49245bab5dbd2504222b, type: 3}
+      propertyPath: m_Center.x
+      value: 2.255423
+      objectReference: {fileID: 0}
+    - target: {fileID: 297911816684006001, guid: 413a068067ba49245bab5dbd2504222b, type: 3}
+      propertyPath: m_Size.x
+      value: 3.4558911
+      objectReference: {fileID: 0}
+    - target: {fileID: 297911816684006001, guid: 413a068067ba49245bab5dbd2504222b, type: 3}
+      propertyPath: m_Center.x
+      value: -2.247831
+      objectReference: {fileID: 0}
     - target: {fileID: 555053408822734980, guid: 413a068067ba49245bab5dbd2504222b, type: 3}
       propertyPath: m_VersionIndex
       value: 2286

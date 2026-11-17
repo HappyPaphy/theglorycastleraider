@@ -13,7 +13,18 @@ public enum PerkType
     ShieldOfAsh,
     SwordTime,
     VampiricGene,
-    BigFoot
+    BigFoot,
+    // "Move changer" perks: they change what a kick / parry / broken furniture does, not just a number.
+    // Always add new values at the end so existing card assets keep their serialized value.
+    WardensBoot,
+    RiposteEcho,
+    SplinterStorm,
+    HeadsmansToll,
+    GlassJaw,
+    GreasedSlide,
+    EmberGuard,
+    LastStand,
+    BatteringRam
 }
 
 [CreateAssetMenu(

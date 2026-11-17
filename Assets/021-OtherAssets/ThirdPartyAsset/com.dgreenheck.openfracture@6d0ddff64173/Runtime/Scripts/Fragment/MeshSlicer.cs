@@ -24,8 +24,8 @@ public static class MeshSlicer
                              out FragmentData topSlice,
                              out FragmentData bottomSlice)
     {
-        topSlice = new FragmentData(meshData.vertexCount, meshData.triangleCount);
-        bottomSlice = new FragmentData(meshData.vertexCount, meshData.triangleCount);
+        topSlice = new FragmentData(meshData.vertexCount, meshData.triangleCount, meshData.Triangles.Length);
+        bottomSlice = new FragmentData(meshData.vertexCount, meshData.triangleCount, meshData.Triangles.Length);
 
         // Keep track of what side of the cutting plane each vertex is on
         bool[] side = new bool[meshData.vertexCount];
@@ -48,8 +48,11 @@ public static class MeshSlicer
             slice.AddMappedVertex(vertex, i + offset);
         }
 
-        SplitTriangles(meshData, topSlice, bottomSlice, sliceNormal, sliceOrigin, side, SlicedMeshSubmesh.Default);
-        SplitTriangles(meshData, topSlice, bottomSlice, sliceNormal, sliceOrigin, side, SlicedMeshSubmesh.CutFace);
+        // Every submesh: the source's own ones (one per material) and the cut faces (last)
+        for (int subMesh = 0; subMesh < meshData.Triangles.Length; subMesh++)
+        {
+            SplitTriangles(meshData, topSlice, bottomSlice, sliceNormal, sliceOrigin, side, subMesh);
+        }
 
         // Fill in the cut plane for each mesh.
         // The slice normal points to the "above" mesh, so the face normal for the cut face
@@ -148,9 +151,9 @@ public static class MeshSlicer
                                        Vector3 sliceNormal,
                                        Vector3 sliceOrigin,
                                        bool[] side,
-                                       SlicedMeshSubmesh subMesh)
+                                       int subMesh)
     {
-        int[] triangles = meshData.GetTriangles((int)subMesh);
+        int[] triangles = meshData.GetTriangles(subMesh);
 
         // Keep track of vertices that lie on the intersection plane
         int a, b, c;
@@ -225,7 +228,7 @@ public static class MeshSlicer
                                       FragmentData meshData,
                                       FragmentData topSlice,
                                       FragmentData bottomSlice,
-                                      SlicedMeshSubmesh subMesh,
+                                      int subMesh,
                                       bool v3BelowCutPlane)       
     {
         // - `v1`, `v2`, `v3` are the indexes of the triangle relative to the original mesh data

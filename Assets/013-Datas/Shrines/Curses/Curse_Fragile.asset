@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b48efe16f6fcea94f8b29295c79e0125, type: 3}
+  m_Name: Curse_Fragile
+  m_EditorClassIdentifier: Assembly-CSharp::CurseDefinition
+  displayName: Fragile
+  description: Take 25% more damage
+  color: {r: 0.95, g: 0.35, b: 0.3, a: 1}
+  weight: 1
+  damageTakenMultiplier: 1.25
+  blockStaminaMultiplier: 1
+  coinDropMultiplier: 1
+  damageDealtMultiplier: 1
+  eliteChanceBonus: 0
+  disableRearWarning: 0

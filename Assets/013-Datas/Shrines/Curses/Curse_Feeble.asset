@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b48efe16f6fcea94f8b29295c79e0125, type: 3}
+  m_Name: Curse_Feeble
+  m_EditorClassIdentifier: Assembly-CSharp::CurseDefinition
+  displayName: Feeble
+  description: Deal 20% less damage
+  color: {r: 0.6, g: 0.8, b: 0.6, a: 1}
+  weight: 1
+  damageTakenMultiplier: 1
+  blockStaminaMultiplier: 1
+  coinDropMultiplier: 1
+  damageDealtMultiplier: 0.8
+  eliteChanceBonus: 0
+  disableRearWarning: 0

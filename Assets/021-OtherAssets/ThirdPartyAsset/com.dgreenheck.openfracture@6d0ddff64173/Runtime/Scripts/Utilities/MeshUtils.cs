@@ -39,7 +39,8 @@ public static class MeshUtils
         int subMeshSize = mesh.GetTriangles(subMeshIndex).Length / 3;
         for (int i = 0; i < triangles.Length / 3; i++)
         {
-            if (i >= subMeshSize)
+            // "while", not "if": a submesh can be empty (e.g. a material with no triangles in this piece)
+            while (i >= subMeshSize && subMeshIndex < mesh.subMeshCount - 1)
             {
                 subMeshIndex++;
                 subMeshSize += mesh.GetTriangles(subMeshIndex).Length / 3;

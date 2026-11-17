@@ -16,8 +16,15 @@ public class CameraPostProcessEffect : MonoBehaviour
     [SerializeField] private float defaultVignetteIntensity = 0f; // Normal baseline
     [SerializeField] private float recoverySpeed = 5f;
 
+    [Header("Riposte Ready (blue border)")]
+    [SerializeField] private Color colorVignette_Riposte = new Color(0.2f, 0.55f, 1f, 1f);
+    [SerializeField] private float riposteVignetteIntensity = 0.55f;
+    [Tooltip("Seconds the blue border stays at full strength before fading out.")]
+    [SerializeField] private float riposteHoldDuration = 0.5f;
+
     private Vignette vignette;
     private LensDistortion lensDistortion;
+    private float vignetteHoldTimer;
 
     private void Awake()
     {
@@ -39,7 +46,15 @@ public class CameraPostProcessEffect : MonoBehaviour
                 defaultVignetteIntensity = 0.8f;
             }
 
-            vignette.intensity.value = Mathf.Lerp(vignette.intensity.value, defaultVignetteIntensity, Time.deltaTime * recoverySpeed);
+            // Hold the current flash (e.g. Riposte ready) before fading
+            if (vignetteHoldTimer > 0f)
+            {
+                vignetteHoldTimer -= Time.deltaTime;
+            }
+            else
+            {
+                vignette.intensity.value = Mathf.Lerp(vignette.intensity.value, defaultVignetteIntensity, Time.deltaTime * recoverySpeed);
+            }
 
             if(vignette.intensity.value <= 0f)
             {
@@ -65,6 +80,8 @@ public class CameraPostProcessEffect : MonoBehaviour
     /// </summary>
     public void TriggerDamageEffect()
     {
+        vignetteHoldTimer = 0f; // getting hit always overrides other flashes
+
         if (vignette != null)
         {
             vignette.color.value = colorVignette_Damage;
@@ -90,6 +107,22 @@ public class CameraPostProcessEffect : MonoBehaviour
         {
             // Optional: You can punch or warp lens distortion on impact too
             lensDistortion.intensity.value = -0.4f;
+        }
+    }
+
+    /// <summary>Blue screen border: Riposte Echo charges are full and ready to release.</summary>
+    public void TriggerRiposteReadyEffect()
+    {
+        if (vignette != null)
+        {
+            vignette.color.value = colorVignette_Riposte;
+            vignette.intensity.value = riposteVignetteIntensity;
+            vignetteHoldTimer = riposteHoldDuration;
+        }
+
+        if (lensDistortion != null)
+        {
+            lensDistortion.intensity.value = -0.2f;
         }
     }
 

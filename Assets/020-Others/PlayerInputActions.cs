@@ -147,6 +147,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""InteractDoor"",
+                    ""type"": ""Button"",
+                    ""id"": ""39f731fe-b7d5-4803-b694-7af7ec2b168d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""ToggleTwoHanded_Right"",
                     ""type"": ""Button"",
                     ""id"": ""fc6d2966-ac4a-4e1e-80b1-74ac89e7ef2c"",
@@ -389,7 +398,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""143bb1cd-cc10-4eca-a2f0-a3664166fe91"",
-                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
@@ -422,7 +431,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""023e4f50-c4b8-44c7-9029-c5d584e23afa"",
-                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
@@ -445,10 +454,32 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""f203c189-97c8-4567-9db5-91e564dfb22b"",
                     ""path"": ""<Gamepad>/buttonNorth"",
-                    ""interactions"": """",
+                    ""interactions"": ""Tap(duration=0.35)"",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
                     ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""54011206-c4dc-4667-a69b-bd1dd8b5afe4"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""InteractDoor"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b294b29e-a408-47ea-af27-dab88f3a017f"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": ""Hold(duration=0.4)"",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""InteractDoor"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1573,6 +1604,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_RightHand = m_Player.FindAction("RightHand", throwIfNotFound: true);
         m_Player_LeftHand = m_Player.FindAction("LeftHand", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        m_Player_InteractDoor = m_Player.FindAction("InteractDoor", throwIfNotFound: true);
         m_Player_ToggleTwoHanded_Right = m_Player.FindAction("ToggleTwoHanded_Right", throwIfNotFound: true);
         m_Player_ToggleTwoHanded_Left = m_Player.FindAction("ToggleTwoHanded_Left", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
@@ -1689,6 +1721,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_RightHand;
     private readonly InputAction m_Player_LeftHand;
     private readonly InputAction m_Player_Interact;
+    private readonly InputAction m_Player_InteractDoor;
     private readonly InputAction m_Player_ToggleTwoHanded_Right;
     private readonly InputAction m_Player_ToggleTwoHanded_Left;
     private readonly InputAction m_Player_Dash;
@@ -1737,6 +1770,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Interact".
         /// </summary>
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/InteractDoor".
+        /// </summary>
+        public InputAction @InteractDoor => m_Wrapper.m_Player_InteractDoor;
         /// <summary>
         /// Provides access to the underlying input action "Player/ToggleTwoHanded_Right".
         /// </summary>
@@ -1833,6 +1870,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @InteractDoor.started += instance.OnInteractDoor;
+            @InteractDoor.performed += instance.OnInteractDoor;
+            @InteractDoor.canceled += instance.OnInteractDoor;
             @ToggleTwoHanded_Right.started += instance.OnToggleTwoHanded_Right;
             @ToggleTwoHanded_Right.performed += instance.OnToggleTwoHanded_Right;
             @ToggleTwoHanded_Right.canceled += instance.OnToggleTwoHanded_Right;
@@ -1901,6 +1941,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @InteractDoor.started -= instance.OnInteractDoor;
+            @InteractDoor.performed -= instance.OnInteractDoor;
+            @InteractDoor.canceled -= instance.OnInteractDoor;
             @ToggleTwoHanded_Right.started -= instance.OnToggleTwoHanded_Right;
             @ToggleTwoHanded_Right.performed -= instance.OnToggleTwoHanded_Right;
             @ToggleTwoHanded_Right.canceled -= instance.OnToggleTwoHanded_Right;
@@ -2326,6 +2369,13 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnInteract(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "InteractDoor" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnInteractDoor(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "ToggleTwoHanded_Right" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

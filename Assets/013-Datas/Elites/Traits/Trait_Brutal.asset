@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 304b6b7d2f103ed43a5b39eb22648901, type: 3}
+  m_Name: Trait_Brutal
+  m_EditorClassIdentifier: Assembly-CSharp::EliteTraitDefinition
+  displayName: Brutal
+  color: {r: 1, g: 0.43723905, b: 0, a: 1}
+  weight: 1
+  minFloor: 1
+  incompatibleWith: []
+  damageMultiplier: 3
+  staminaDamageMultiplier: 3
+  healthMultiplier: 2
+  sizeMultiplier: 1.35
+  speedMultiplier: 1.5
+  damageTakenMultiplier: 1
+  hasWard: 0
+  wardDamageTaken: 0.35
+  wardBreakDuration: 5
+  lifeSteal: 0
+  explodesOnDeath: 0
+  explosionFuse: 1.2
+  explosionRadius: 2.8
+  explosionDamage: 25
+  explosionEnemyDamage: 40
+  bonusCoinMultiplier: 0

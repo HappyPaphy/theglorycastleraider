@@ -64,7 +64,7 @@ public class EnemyDog : EnemyEntity
 
     protected override void Awake()
     {
-        agent.speed = runSpeed;
+        agent.speed = (runSpeed) * SpeedMultiplier;
         agent.updateRotation = false;
         base.Awake();
     }
@@ -79,6 +79,9 @@ public class EnemyDog : EnemyEntity
 
     protected override void Update()
     {
+        // Once executed, nothing may change the state back (it plays the headless death)
+        if (isExecuted) { currentState = EnemyDogState.Executed; }
+
         ChooseAnimation();
         HandleState();
         HandleRecoveryTimers();
@@ -114,18 +117,18 @@ public class EnemyDog : EnemyEntity
         // Speed adjustments based on state
         if (currentState == EnemyDogState.Chase)
         {
-            anim.speed = 1.5f;
-            agent.speed = runSpeed;
+            anim.speed = (1.5f) * SpeedMultiplier;
+            agent.speed = (runSpeed) * SpeedMultiplier;
         }
         else if (currentState == EnemyDogState.Flank)
         {
-            anim.speed = 1f;
-            agent.speed = flankSpeed;
+            anim.speed = (1f) * SpeedMultiplier;
+            agent.speed = (flankSpeed) * SpeedMultiplier;
         }
         else
         {
-            anim.speed = 1f;
-            agent.speed = runSpeed;
+            anim.speed = (1f) * SpeedMultiplier;
+            agent.speed = (runSpeed) * SpeedMultiplier;
         }
     }
 
@@ -181,9 +184,21 @@ public class EnemyDog : EnemyEntity
                     Transform target = PlayerController.instance.transform;
                     SafeSetDesitinationAgent(target.position);
 
+                    // Door/furniture in the way: bite it (no leap) until it breaks
+                    if (UpdateBlockingObstacle(target.position))
+                    {
+                        FaceBlockingObstacle(12f);
+                        if (currentAttackCooldown <= 0f)
+                        {
+                            isObstacleBite = true;
+                            currentState = EnemyDogState.LeapAttack;
+                            break;
+                        }
+                    }
+
                     Vector3 lookDir = (target.position - transform.position).normalized;
                     lookDir.y = 0;
-                    if (lookDir != Vector3.zero)
+                    if (lookDir != Vector3.zero && !HasBlockingObstacle)
                     {
                         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDir), Time.deltaTime * 12f);
                     }
@@ -257,8 +272,8 @@ public class EnemyDog : EnemyEntity
     {
         if (isDied || playerTransform == null || PlayerController.instance.CharacterHealthComponent.CurrentHP <= 0) return;
 
-        Collider[] hits = Physics.OverlapSphere(transform.position, preAttackRadius, playerLayer);
-        if (hits.Length > 0)
+        bool playerInReach = PhysicsQuery.Any(transform.position, preAttackRadius, playerLayer);
+        if (playerInReach)
         {
             Vector3 directionToPlayer = (playerTransform.position - eyesTransform.position).normalized;
             float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
@@ -278,16 +293,33 @@ public class EnemyDog : EnemyEntity
         }
     }
 
+    private bool isObstacleBite;
+
     private IEnumerator PounceSequence()
     {
         // 1. Telegraph (Snarl/Crouch)
-        yield return new WaitForSeconds(preAttackDuration);
+        if (!isObstacleBite) { IncomingAttackIndicator.Warn(transform, preAttackDuration / SpeedMultiplier); } // red warning if it's behind the player
+        yield return new WaitForSeconds(preAttackDuration / SpeedMultiplier);
+
+        // Biting a door/furniture: stay in place (leaping would pass through the obstacle)
+        if (isObstacleBite)
+        {
+            isObstacleBite = false;
+            if (currentState == EnemyDogState.LeapAttack)
+            {
+                SoundManager.instance.DogSound_Attack(sprRndr.transform.position);
+                HitBlockingObstacle();
+                currentAttackCooldown = attackCooldownDuration / SpeedMultiplier;
+                currentState = EnemyDogState.Chase;
+            }
+            yield break;
+        }
 
         SoundManager.instance.DogSound_Attack(sprRndr.transform.position); // Replace with dog growl
         if (currentState == EnemyDogState.LeapAttack)
         {
             // 2. The Leap (Physical movement forward)
-            float leapDuration = 0.25f;
+            float leapDuration = 0.25f / SpeedMultiplier; // same distance, faster leap
             float elapsed = 0f;
             Vector3 startPos = transform.position;
             Vector3 targetPos = startPos + (transform.forward * pounceRange);
@@ -299,10 +331,10 @@ public class EnemyDog : EnemyEntity
                 transform.position = Vector3.Lerp(startPos, targetPos, elapsed / leapDuration);
 
                 // Damage Check during the leap
-                Collider[] hitPlayers = Physics.OverlapSphere(transform.position + (transform.forward * 0.5f), attackRadius, playerLayer);
-                if (hitPlayers.Length > 0)
+                Collider hitPlayer = PhysicsQuery.First(transform.position + (transform.forward * 0.5f), attackRadius, playerLayer);
+                if (hitPlayer != null)
                 {
-                    hitPlayers[0].GetComponent<PlayerController>().TakeSwordHit(this); // Takes generic physical hit
+                    hitPlayer.GetComponent<PlayerController>().TakeSwordHit(this); // Takes generic physical hit
                     break; // Stop checking if hit connects
                 }
 
@@ -312,7 +344,7 @@ public class EnemyDog : EnemyEntity
             // 3. Recovery
             if (currentState == EnemyDogState.LeapAttack)
             {
-                currentAttackCooldown = attackCooldownDuration;
+                currentAttackCooldown = attackCooldownDuration / SpeedMultiplier;
                 currentState = EnemyDogState.Chase;
                 SafeSetDesitinationAgent(transform.position);
             }
@@ -398,6 +430,20 @@ public class EnemyDog : EnemyEntity
         }
     }
 
+    protected override bool OnKnockDown(float duration)
+    {
+        if (isExecuted) { return false; }
+        currentState = EnemyDogState.Kicked;
+        stateTimer = Mathf.Max(stateTimer, duration);
+        SafeStopAgent(true);
+        return true;
+    }
+
+    protected override void OnKnockDownInterrupted()
+    {
+        if (currentState == EnemyDogState.Kicked) { stateTimer = 0f; }
+    }
+
     public override void GotParried(bool isLeftHand)
     {
         SoundManager.instance.DogSound_Grunt(sprRndr.transform.position);
@@ -418,6 +464,8 @@ public class EnemyDog : EnemyEntity
 
     public override void GotExecuted()
     {
+        // Stop attack / kick / leap coroutines: when they finish they set Run/Chase and would undo the execution
+        StopAllCoroutines();
         currentState = EnemyDogState.Executed;
         isExecuted = true;
         SafeStopAgent(true);

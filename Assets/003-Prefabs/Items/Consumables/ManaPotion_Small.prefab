@@ -73,6 +73,7 @@ MonoBehaviour:
   continuousManaDrainRate: 15
   continuousStaminaDrainRate: 15
   spellPrefab: {fileID: 0}
+  isCollectedOnStart: 0
 --- !u!1 &3288727578148725994
 GameObject:
   m_ObjectHideFlags: 0
@@ -290,6 +291,10 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: aeea3fa3d66c63949a94f36dbb870d9d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: aeea3fa3d66c63949a94f36dbb870d9d, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: aeea3fa3d66c63949a94f36dbb870d9d, type: 3}
       propertyPath: m_Name
