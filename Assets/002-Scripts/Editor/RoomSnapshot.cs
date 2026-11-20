@@ -38,11 +38,14 @@ public static class RoomSnapshot
     }
 
     [MenuItem("Tools/Biomes/Snapshot Castle Rooms")]
-    public static void Run()
+    public static void Run() => RunFor(Rooms);
+
+    /// <summary>Snapshots any room prefabs (used by the room builders to check their result).</summary>
+    public static void RunFor(params string[] paths)
     {
         Directory.CreateDirectory(OutDir);
         var report = new System.Text.StringBuilder();
-        foreach (string path in Rooms)
+        foreach (string path in paths)
         {
             GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
             if (prefab == null) { report.AppendLine("missing " + path); continue; }
@@ -71,7 +74,7 @@ public static class RoomSnapshot
                 }
 
                 // Top-down: hide anything above 2.3 m (ceilings, lights' sprites)
-                var hidden = room.GetComponentsInChildren<Renderer>().Where(r => r.bounds.min.y > 2.3f || r.name.StartsWith("Ceiling") || r.name.StartsWith("Floor & Poles (1)")).ToList();
+                var hidden = room.GetComponentsInChildren<Renderer>().Where(r => r.bounds.min.y > 4.9f || r.name.StartsWith("Ceiling") || r.name.StartsWith("Floor & Poles (1)")).ToList();
                 foreach (Renderer r in hidden) { r.enabled = false; }
                 Render(scene, prefab.name + "_top", b, top: true);
                 Render(scene, prefab.name + "_angle", b, top: false);
