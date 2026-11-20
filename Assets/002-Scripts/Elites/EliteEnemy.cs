@@ -120,6 +120,7 @@ public class EliteEnemy : MonoBehaviour
         EliteSettings settings = EliteSettings.Load();
         EnemyEntity entity = enemyObject != null ? enemyObject.GetComponentInChildren<EnemyEntity>() : null;
         if (entity == null || settings == null) { return null; }
+        if (!entity.canBeElite) { return null; } // e.g. the Brute
 
         List<EliteTraitDefinition> picked = forcedTraits != null && forcedTraits.Length > 0
             ? new List<EliteTraitDefinition>(forcedTraits)

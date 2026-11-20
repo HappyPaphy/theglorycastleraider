@@ -98,6 +98,23 @@ public class RoguelikeManager : MonoBehaviour
         
     }
 
+    public int FloorCount => dungeonFlows != null ? dungeonFlows.Length : 0;
+
+    /// <summary>
+    /// Dev shortcut (DevFloorSkipper): jump straight to a floor (0 = Floor 1-1) through the normal
+    /// next-floor transition, so everything a new floor does still happens.
+    /// </summary>
+    public bool SkipToFloor(int floorIndex)
+    {
+        if (isProceedNextFloorOnce || !IsDungeonReady || FloorCount == 0) { return false; }
+
+        floorIndex = Mathf.Clamp(floorIndex, 0, FloorCount - 1);
+        isProceedNextFloorOnce = true;
+        dungeonIndex = floorIndex - 1; // ProceedToNextFloor steps it up by one
+        StartCoroutine(ProceedToNextFloor());
+        return true;
+    }
+
     private IEnumerator ProceedToNextFloor()
     {
         IsDungeonReady = false;
@@ -114,7 +131,7 @@ public class RoguelikeManager : MonoBehaviour
 
         allDungeonTiles.Clear();
 
-        if(dungeonIndex < dungeonFlows.Length)
+        if(dungeonIndex < dungeonFlows.Length - 1)
         {
             dungeonIndex++;
 
@@ -130,7 +147,9 @@ public class RoguelikeManager : MonoBehaviour
         }
         else
         {
+            // Last floor cleared: the run is over
             AsyncLoaderManager.instance.LoadLevel("MainMenu", false);
+            yield break;
         }
 
         runtimeDungeon.Generator.Settings.DungeonFlow = dungeonFlows[dungeonIndex];  

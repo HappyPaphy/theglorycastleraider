@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89377a5c2dcb66b40af385ad8492cda9, type: 3}
+  m_Name: Dungeon Archetype (Castle)
+  m_EditorClassIdentifier: DunGen::DunGen.DungeonArchetype
+  StraightenChance: 0
+  TileSets:
+  - {fileID: 11400000, guid: ba5361211fa3eb649bb49912a094de13, type: 2}
+  BranchStartTileSets: []
+  BranchStartType: 0
+  BranchCapTileSets:
+  - {fileID: 11400000, guid: ce2481b3d16f8dc418618c9b08bf7c81, type: 2}
+  BranchCapType: 0
+  BranchingDepth:
+    Min: 1
+    Max: 3
+  BranchCount:
+    Min: 4
+    Max: 5
+  StraighteningSettings:
+    OverrideStraightenChance: 0
+    StraightenChance: 0
+    OverrideCanStraightenMainPath: 0
+    CanStraightenMainPath: 1
+    OverrideCanStraightenBranchPaths: 0
+    CanStraightenBranchPaths: 0
+  Unique: 0
+  fileVersion: 1

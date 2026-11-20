@@ -18,7 +18,11 @@ public enum EnemyThiefState
     Kicked,
     Stunned,
     Executed,
-    Died
+    Died,
+    // Brute only
+    PreAttack,   // grab wind-up (kick opening)
+    Hug,         // holding the player
+    BlockKick    // shrugs off a kick outside the wind-up
 }
 
 public class EnemyThief : EnemyEntity
@@ -88,8 +92,15 @@ public class EnemyThief : EnemyEntity
     private bool isPreAttackOnce = false;
     private bool isLowHealthStunnedOnce = false;
 
+    private BruteGrab grab; // Brute: grabs instead of swinging
+
+    [Header("Brute")]
+    [Tooltip("Brute only: how long he holds the Block Kicked pose after shrugging off a kick.")]
+    [SerializeField] private float blockKickDuration = 0.7f;
+
     protected override void Awake()
     {
+        grab = GetComponent<BruteGrab>();
         agent.speed = (moveSpeed) * SpeedMultiplier;
         agent.updateRotation = false;
 
@@ -385,6 +396,7 @@ public class EnemyThief : EnemyEntity
 
     public override void GotStunned()
     {
+        if (grab != null) { grab.ForceRelease(); }
         currentState = EnemyThiefState.Stunned;
         isStunned = true;
         stunTimer = stunRecoveryTime;
@@ -434,6 +446,13 @@ public class EnemyThief : EnemyEntity
 
     public override void GotKicked(Vector3 hitPoint, float damageValue, float knockBackValue)
     {
+        // Brute: a kick during the grab wind-up cancels the grab and knocks him down (Kicked -> Loop Kicked);
+        // any other time he blocks it (Block Kicked)
+        if (grab != null && !isStunned && !isDied && !grab.InterruptByKick())
+        {
+            BlockKick();
+            return;
+        }
         if (!isStunned)
         {
             currentState = EnemyThiefState.Kicked;
@@ -551,6 +570,7 @@ public class EnemyThief : EnemyEntity
 
     public override void Die()
     {
+        if (grab != null) { grab.ForceRelease(); }
         if(!isDiedOnce)
         {
             isDied = true;
@@ -573,6 +593,16 @@ public class EnemyThief : EnemyEntity
         }
 
         base.Die();
+    }
+
+    // Brute: shrugs off a kick outside the grab wind-up
+    private void BlockKick()
+    {
+        currentState = EnemyThiefState.BlockKick;
+        stateTimer = blockKickDuration;
+        SafeStopAgent(true);
+        if (ObjectPoolingManager.instance != null) { ObjectPoolingManager.instance.SpawnObject("Spark", eyesTransform.position); }
+        SoundManager.instance.KickSound_Human(sprRndr.transform.position);
     }
 
     private void ApplyBlockState(bool isLeft)
@@ -603,6 +633,15 @@ public class EnemyThief : EnemyEntity
     private void HandleState()
     {
         if(isDied) { return; }
+
+        // Brute winding up / holding the player: stand still and let the grab play out
+        if (grab != null && grab.IsBusy)
+        {
+            SafeStopAgent(true);
+            if (!isStunned && !isKicked) { currentState = grab.IsHolding ? EnemyThiefState.Hug : EnemyThiefState.PreAttack; }
+            return;
+        }
+        if (currentState == EnemyThiefState.PreAttack || currentState == EnemyThiefState.Hug) { currentState = EnemyThiefState.Run; }
 
         // Countdown the timer for temporary states (Damage, Block, etc.)
         if ((stateTimer > 0) && !isStunned)
@@ -693,7 +732,11 @@ public class EnemyThief : EnemyEntity
                         }
                     }
 
-                    if(currentAttackCooldown <= 0f)
+                    if (grab != null)
+                    {
+                        grab.TryStart(); // Brute: grab instead of the normal attack
+                    }
+                    else if(currentAttackCooldown <= 0f)
                     {
                         CheckAttackVision();
                     }
@@ -879,6 +922,32 @@ public class EnemyThief : EnemyEntity
         { EnemyThiefState.Kicked, Animator.StringToHash("IsKicked") },
         { EnemyThiefState.Stunned, Animator.StringToHash("IsStunned") },
         { EnemyThiefState.Executed, Animator.StringToHash("IsExecuted") },
+        { EnemyThiefState.Died, Animator.StringToHash("IsDied") },
+        { EnemyThiefState.PreAttack, Animator.StringToHash("IsAttack1") },
+        { EnemyThiefState.Hug, Animator.StringToHash("IsAttack2") },
+        { EnemyThiefState.BlockKick, Animator.StringToHash("IsBlockLeft") }
+    };
+
+    // Brute animator (Enemy_Brute.controller): Idle, Run, PreAttack, Attack, Kicked -> Loop Kicked, Block Kicked,
+    // Block Sword (Left/Right), Damaged Left/Right, Stunned -> Loop Stunned, Died, Executed
+    private static readonly Dictionary<EnemyThiefState, int> BruteStateToHash = new Dictionary<EnemyThiefState, int>
+    {
+        { EnemyThiefState.Idle, Animator.StringToHash("IsIdle") },
+        { EnemyThiefState.Run, Animator.StringToHash("IsRun") },
+        { EnemyThiefState.Flank, Animator.StringToHash("IsRun") },
+        { EnemyThiefState.Attack1, Animator.StringToHash("IsPreAttack") },  // door / furniture bashing
+        { EnemyThiefState.Attack2, Animator.StringToHash("IsAttack") },
+        { EnemyThiefState.PreAttack, Animator.StringToHash("IsPreAttack") },
+        { EnemyThiefState.Hug, Animator.StringToHash("IsAttack") },
+        { EnemyThiefState.Kicked, Animator.StringToHash("IsKicked") },
+        { EnemyThiefState.Parried, Animator.StringToHash("IsKicked") },
+        { EnemyThiefState.BlockKick, Animator.StringToHash("IsBlockKick") },
+        { EnemyThiefState.BlockLeft, Animator.StringToHash("IsBlockLeft") },
+        { EnemyThiefState.BlockRight, Animator.StringToHash("IsBlockRight") },
+        { EnemyThiefState.DamageLeft, Animator.StringToHash("IsDamageLeft") },
+        { EnemyThiefState.DamageRight, Animator.StringToHash("IsDamageRight") },
+        { EnemyThiefState.Stunned, Animator.StringToHash("IsStunned") },
+        { EnemyThiefState.Executed, Animator.StringToHash("IsExecuted") },
         { EnemyThiefState.Died, Animator.StringToHash("IsDied") }
     };
 
@@ -886,8 +955,9 @@ public class EnemyThief : EnemyEntity
 
     private void ChooseAnimation()
     {
-        // 1. Get the hash for the current state
-        if (StateToHash.TryGetValue(currentState, out int currentHash))
+        // 1. Get the hash for the current state (the Brute has his own animator parameters)
+        var stateMap = grab != null ? BruteStateToHash : StateToHash;
+        if (stateMap.TryGetValue(currentState, out int currentHash))
         {
             // 2. Only update if the state actually changed
             if (currentHash == lastStateHash) return;

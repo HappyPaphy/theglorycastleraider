@@ -28,9 +28,12 @@ public class EnemySpawner : MonoBehaviour
 
         int currentDungeonIndex = RoguelikeManager.instance.dungeonIndex;
 
+        // A biome can override the room's list (e.g. the Castle's own enemies)
+        List<EnemySpawnData> source = FloorEnemyTable.ForFloor(currentDungeonIndex) ?? enemySpawnData;
+
         // 1. Filter valid enemies based on the level index requirement
         
-        foreach (EnemySpawnData data in enemySpawnData)
+        foreach (EnemySpawnData data in source)
         {
             if (data.enemyPrefab != null && currentDungeonIndex >= data.levelIndexRequirement)
             {

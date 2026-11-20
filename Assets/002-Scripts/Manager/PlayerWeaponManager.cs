@@ -444,6 +444,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
     private void HandleItemUsage()
     {
+        if (playerController.isHeld) { return; } // held by a Brute
         if (EquipmentLoadOut.instance.isPanelActive) { return; }
         if (PauseGame.instance.IsPaused) { return; }
 
@@ -957,6 +958,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
     private void HandleCombatInput()
     {
+        if (playerController.isHeld) { return; } // held by a Brute
         if (EquipmentLoadOut.instance.isPanelActive) { return; }
         if (isQuickMenuActive) { return; }
 

@@ -93,6 +93,11 @@ public class EnemyBigKnight : EnemyEntity
 
     private bool isParried = false;
 
+    /// <summary>Free to start a special move (e.g. the Castle Lord's slam): chasing, not attacking, stunned or tired.</summary>
+    public bool CanUseSpecial => !isDied && !isExecuted && !isStunned && !isParried &&
+                                 (currentState == EnemyBigKnightState.Run || currentState == EnemyBigKnightState.Flank);
+    public SpriteRenderer BodySprite => sprRndr;
+
     protected override void Awake()
     {
         agent.speed = (moveSpeed) * SpeedMultiplier;

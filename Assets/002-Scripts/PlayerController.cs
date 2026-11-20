@@ -76,6 +76,11 @@ public class PlayerController : PlayerEntity
 
     [HideInInspector] public bool isAttacking = false;
     [HideInInspector] public bool isExecuting = false;
+
+    // Held by a Brute: can't move, attack or be hit by others; mash Jump to break free
+    [HideInInspector] public bool isHeld = false;
+    private BruteGrab heldBy;
+    private Vector3 pushVelocity;
     [HideInInspector] public float verticalRotation = 0f;
     private float attackLockTimer = 0f;
     private Vector3 attackLungeVelocity;
@@ -141,7 +146,7 @@ public class PlayerController : PlayerEntity
 
     private void HandleKick()
     {
-        if (InputSchemeManager.instance.isKickPressed && !isKicking && PlayerWeaponManager.instance.currentState_Righthand == PerformActionState.Idle
+        if (InputSchemeManager.instance.isKickPressed && !isKicking && !isHeld && PlayerWeaponManager.instance.currentState_Righthand == PerformActionState.Idle
             && PlayerWeaponManager.instance.currentState_LeftHand == PerformActionState.Idle)
         {
             if (CharacterStaminaComponent.CurrentStamina > 0f)
@@ -337,14 +342,14 @@ public class PlayerController : PlayerEntity
         }
 
         Vector2 moveValue = Vector2.zero;
-        if (!isAttacking && !isExecuting)
+        if (!isAttacking && !isExecuting && !isHeld)
         {
             moveValue = InputSchemeManager.instance.input_Move.ReadValue<Vector2>();
         }
 
         Vector3 standardMove = transform.right * moveValue.x + transform.forward * moveValue.y;
 
-        if (InputSchemeManager.instance.isDashPressed && isGrounded && !isSliding && !isAttacking && !isExecuting && standardMove.sqrMagnitude > 0.01f)
+        if (InputSchemeManager.instance.isDashPressed && isGrounded && !isSliding && !isAttacking && !isExecuting && !isHeld && standardMove.sqrMagnitude > 0.01f)
         {
             if(CharacterStaminaComponent.CurrentStamina > 0f)
             {
@@ -415,9 +420,26 @@ public class PlayerController : PlayerEntity
         }*/
 
         currentSpeed *= PlayerRings.MoveSpeedMultiplier; // rings
+
+        // Held by a Brute: pinned in front of him
+        if (isHeld && heldBy != null)
+        {
+            finalMove = Vector3.zero;
+            Vector3 toHold = heldBy.HoldPoint - transform.position;
+            toHold.y = 0f;
+            controller.Move(toHold * Mathf.Min(1f, 10f * Time.deltaTime));
+        }
+
+        // Shoved away (breaking free)
+        if (pushVelocity.sqrMagnitude > 0.01f)
+        {
+            controller.Move(pushVelocity * Time.deltaTime);
+            pushVelocity = Vector3.MoveTowards(pushVelocity, Vector3.zero, 14f * Time.deltaTime);
+        }
+
         controller.Move(finalMove * currentSpeed * Time.deltaTime);
 
-        if (InputSchemeManager.instance.isJumpPressed && isGrounded && !isSliding && !isAttacking)
+        if (InputSchemeManager.instance.isJumpPressed && isGrounded && !isSliding && !isAttacking && !isHeld)
         {
             weaponSway.TriggerJumpImpulse();
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
@@ -433,7 +455,7 @@ public class PlayerController : PlayerEntity
 
     public void TakeSwordHit(EnemyEntity enemy)
     {
-        if(isExecuting) { return; }
+        if(isExecuting || isHeld) { return; } // while a Brute holds you, nobody else can hit you
 
         // Blocks and parries only work against attacks from in front (the way the camera faces)
         bool isFacingAttacker = IsFacingAttack(enemy.transform.position);
@@ -507,7 +529,7 @@ public class PlayerController : PlayerEntity
 
     public void TakeArrowHit(ArrowProjectile arrow)
     {
-        if (isExecuting) { return; }
+        if (isExecuting || isHeld) { return; }
 
         bool isFacingAttacker = IsFacingAttack(transform.position - arrow.transform.forward * 3f);
 
@@ -579,7 +601,7 @@ public class PlayerController : PlayerEntity
     /// </summary>
     public void TakeUnblockableHit(float rawDamage, Vector3 source)
     {
-        if (isExecuting || CharacterHealthComponent.CurrentHP <= 0f) { return; }
+        if (isExecuting || isHeld || CharacterHealthComponent.CurrentHP <= 0f) { return; }
         if (AsyncLoaderManager.instance != null && AsyncLoaderManager.instance.isTransitioning) { return; }
 
         postProcressEffect.TriggerDamageEffect();
@@ -591,6 +613,47 @@ public class PlayerController : PlayerEntity
         CharacterHealthComponent.TakeDamage(calculatedDamage);
         TriggerMeleeJolt(new Vector3(30f, 0f, 0f));
         RumbleManager.instance.RumblePulse(1f, 3f, 0.3f);
+    }
+
+    // ---------- Brute grab ----------
+
+    public void BeginHeld(BruteGrab by)
+    {
+        isHeld = true;
+        heldBy = by;
+        pushVelocity = Vector3.zero;
+        if (isSliding)
+        {
+            isSliding = false;
+            controller.height = normalHeight;
+        }
+    }
+
+    public void EndHeld(Vector3 push)
+    {
+        isHeld = false;
+        heldBy = null;
+        push.y = 0f;
+        pushVelocity = push;
+    }
+
+    /// <summary>The Brute's crushing hug (only he can hurt you while you're held). Goes through the damage perks.</summary>
+    public void TakeGrabDamage(float rawDamage, bool strongFeedback)
+    {
+        if (CharacterHealthComponent.CurrentHP <= 0f) { return; }
+        if (AsyncLoaderManager.instance != null && AsyncLoaderManager.instance.isTransitioning) { return; }
+
+        HealthEffect(false);
+        cameraBob.TriggerShake(0.15f, strongFeedback ? 0.08f : 0.04f);
+        if (strongFeedback)
+        {
+            postProcressEffect.TriggerDamageEffect();
+            SoundManager.instance.PlayerHurtSound(transform.position);
+        }
+
+        float calculatedDamage = PlayerPerkManager.Instance.CalculateIncomingDamage(rawDamage * GameManager.instance.playerTakeHPDamage);
+        CharacterHealthComponent.TakeDamage(calculatedDamage);
+        RumbleManager.instance.RumblePulse(0.6f, 1.5f, 0.1f);
     }
 
     // Is the attack coming from inside the guard cone (in front of where the camera looks)?

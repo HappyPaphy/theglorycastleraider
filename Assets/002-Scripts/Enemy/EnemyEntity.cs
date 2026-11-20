@@ -54,7 +54,15 @@ public class EnemyEntity : CharacterEntity
     [HideInInspector] public EliteEnemy Elite;
 
     /// <summary>Movement speed multiplier from elite traits (Swift).</summary>
-    protected float SpeedMultiplier => Elite != null ? Elite.SpeedMultiplier : 1f;
+    protected float SpeedMultiplier => (Elite != null ? Elite.SpeedMultiplier : 1f) * bonusSpeedMultiplier;
+
+    /// <summary>Extra speed on top of elite traits (e.g. a boss enrage). Scales movement, animation and attack timings.</summary>
+    [HideInInspector] public float bonusSpeedMultiplier = 1f;
+
+    [Tooltip("Can this enemy roll as an elite (spawners, challenge rooms)? Off = always a normal enemy.")]
+    public bool canBeElite = true;
+    public bool IsPlayerDetected => isPlayerDetected;
+    public bool IsDead => isDied;
 
     protected void OnEnable()
     {
