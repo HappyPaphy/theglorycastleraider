@@ -139,29 +139,10 @@ public class DropItemOnDead : MonoBehaviour
                 return InventoryManager.instance.magics.Any(i => i.itemType == itemPrefab.itemType);
 
             case ItemCategory.Weapon:
-                // Capped at 2 per weapon sub-type
+                // Never drop a weapon kind the player already has 2 of (Weapon Carry upgrade doesn't change this)
                 if (itemPrefab is Weapon weaponPrefab)
                 {
-                    int currentCount = 0;
-                    switch (weaponPrefab.weaponCategory)
-                    {
-                        case WeaponCategory.Melee:
-                            currentCount = InventoryManager.instance.weapons.Count(w => w.weaponCategory == WeaponCategory.Melee && w.meleeType == weaponPrefab.meleeType);
-                            break;
-                        case WeaponCategory.Shield:
-                            currentCount = InventoryManager.instance.weapons.Count(w => w.weaponCategory == WeaponCategory.Shield && w.shieldType == weaponPrefab.shieldType);
-                            break;
-                        case WeaponCategory.Bow:
-                            currentCount = InventoryManager.instance.weapons.Count(w => w.weaponCategory == WeaponCategory.Bow && w.bowType == weaponPrefab.bowType);
-                            break;
-                        case WeaponCategory.PyromancyFlame:
-                            currentCount = InventoryManager.instance.weapons.Count(w => w.weaponCategory == WeaponCategory.PyromancyFlame && w.pyromancyType == weaponPrefab.pyromancyType);
-                            break;
-                        case WeaponCategory.SorceryCatalyst:
-                            currentCount = InventoryManager.instance.weapons.Count(w => w.weaponCategory == WeaponCategory.SorceryCatalyst && w.sorceryType == weaponPrefab.sorceryType);
-                            break;
-                    }
-                    return currentCount >= 2;
+                    return !InventoryManager.instance.CanLootWeapon(weaponPrefab);
                 }
                 return false;
 

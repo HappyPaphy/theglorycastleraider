@@ -27,6 +27,8 @@ public class SoundManager : MonoBehaviour
 
     [Header("Music")]
     [SerializeField] private AudioSource music_Background; // Route this manually in the Inspector
+    public AudioSource MusicSource => music_Background;     // biome music uses its mixer group
+    public AudioMixerGroup SfxGroup => sfxMixerGroup;
 
     [Header("Player")]
     [SerializeField] private AudioSource[] sfx_Player_Grunt;
@@ -92,6 +94,14 @@ public class SoundManager : MonoBehaviour
         instance = this;
 
         InitializeAudioPool();
+    }
+
+    void Start()
+    {
+        // Every scene starts at the saved Master / SFX / Music volumes (mixer values can't be set in Awake)
+        AudioMixer mixer = sfxMixerGroup != null ? sfxMixerGroup.audioMixer
+            : (music_Background != null && music_Background.outputAudioMixerGroup != null ? music_Background.outputAudioMixerGroup.audioMixer : null);
+        VolumeSettings.ApplyAll(mixer);
     }
 
     private void InitializeAudioPool()

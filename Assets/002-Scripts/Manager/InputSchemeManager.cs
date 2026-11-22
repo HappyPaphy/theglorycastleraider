@@ -678,7 +678,7 @@ public class InputSchemeManager : MonoBehaviour
                 if (instancesValid)
                 {
                     //bool isIdle = GameResultRoguelike.instance.currentState == GameResultState.Idle;
-                    bool isNotPaused = !PauseGame.instance.IsPaused && !EquipmentLoadOut.instance.isPanelActive && !PerkSelectionManager.instance.isPanelActive && !(TutorialManager.instance != null && TutorialManager.instance.isPanelActive) && !ShopUI.IsOpen;
+                    bool isNotPaused = !PauseGame.instance.IsPaused && !EquipmentLoadOut.instance.isPanelActive && !PerkSelectionManager.instance.isPanelActive && !(TutorialManager.instance != null && TutorialManager.instance.isPanelActive) && !ShopUI.IsOpen && !DevItemGiver.IsOpen && !GameOverMenu.IsOpen && !RunSummaryUI.HasFocus;
                     bool isAlive = PlayerController.instance.CharacterHealthComponent.CurrentHP > 0f;
 
                     if (/*isIdle &&*/ isNotPaused && isAlive && !PauseGame.instance.isThisMainmenu)
@@ -717,7 +717,7 @@ public class InputSchemeManager : MonoBehaviour
 
     private void InputActiveCheck()
     {
-        bool isNotPaused = !PauseGame.instance.IsPaused && !EquipmentLoadOut.instance.isPanelActive && !PerkSelectionManager.instance.isPanelActive && !(TutorialManager.instance != null && TutorialManager.instance.isPanelActive) && !ShopUI.IsOpen;
+        bool isNotPaused = !PauseGame.instance.IsPaused && !EquipmentLoadOut.instance.isPanelActive && !PerkSelectionManager.instance.isPanelActive && !(TutorialManager.instance != null && TutorialManager.instance.isPanelActive) && !ShopUI.IsOpen && !DevItemGiver.IsOpen && !GameOverMenu.IsOpen && !RunSummaryUI.HasFocus;
         var playerInputActions_Player = playerControls.Player;
         var playerInputActions_UI = playerControls.UI;
 

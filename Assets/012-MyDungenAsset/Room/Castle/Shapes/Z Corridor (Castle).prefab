@@ -62,8 +62,8 @@ Transform:
   m_GameObject: {fileID: 174709137186261819}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071067, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 6.2000003, y: 0.104, z: 4}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 7.7482, y: 0.104, z: 4}
+  m_LocalScale: {x: 1, y: 1, z: 0.5378}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2649238241848397340}
@@ -2644,8 +2644,8 @@ Transform:
   m_GameObject: {fileID: 2696768068098428290}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 1.7999997, y: 0.102000006, z: -0.00000010728832}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.38, y: 0.102000006, z: -0.00000010728832}
+  m_LocalScale: {x: 1, y: 1, z: 0.5761}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2649238241848397340}
@@ -5844,13 +5844,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4699754984128284572}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.0000004768371}
   m_LocalPosition: {x: 4, y: 0.125, z: 2}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.71153, y: 1, z: 1.5683}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2649238241848397340}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!23 &4407350885337531417
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -9040,7 +9040,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileRenderOptimization
   structureRoot: {fileID: 0}
-  tile: {fileID: 0}
+  tile: {fileID: 3286197516125147967}
   isThisTileStart: 0
 --- !u!1 &6740708356553681048
 GameObject:
@@ -12374,8 +12374,11 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 2c53b1376300e1349a9f5562ac424787, type: 2}
-    m_RemovedComponents:
-    - {fileID: 5426066408113306007, guid: b9fc7f196d774754a9e22c7661379195, type: 3}
+    - target: {fileID: 7154735390134610224, guid: b9fc7f196d774754a9e22c7661379195, type: 3}
+      propertyPath: m_VersionIndex
+      value: 2421
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -12719,8 +12722,11 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 2c53b1376300e1349a9f5562ac424787, type: 2}
-    m_RemovedComponents:
-    - {fileID: 5426066408113306007, guid: b9fc7f196d774754a9e22c7661379195, type: 3}
+    - target: {fileID: 7154735390134610224, guid: b9fc7f196d774754a9e22c7661379195, type: 3}
+      propertyPath: m_VersionIndex
+      value: 2421
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

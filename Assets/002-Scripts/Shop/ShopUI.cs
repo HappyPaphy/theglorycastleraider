@@ -255,8 +255,8 @@ public class ShopUI : MonoBehaviour
             }
             if (row.priceText != null)
             {
-                row.priceText.text = available ? slot.item.price.ToString() : "-";
-                row.priceText.color = !available ? soldOutColor : (coins >= slot.item.price ? affordableColor : tooExpensiveColor);
+                row.priceText.text = available ? slot.item.Price.ToString() : "-";
+                row.priceText.color = !available ? soldOutColor : (coins >= slot.item.Price ? affordableColor : tooExpensiveColor);
             }
             if (row.stockText != null)
             {
@@ -289,8 +289,8 @@ public class ShopUI : MonoBehaviour
             else if (!keeper.IsSlotAvailable(index)) { detailPrice.text = "Sold out"; detailPrice.color = soldOutColor; }
             else
             {
-                detailPrice.text = item.price + " coins";
-                detailPrice.color = Coins >= item.price ? affordableColor : tooExpensiveColor;
+                detailPrice.text = item.Price + " coins";
+                detailPrice.color = Coins >= item.Price ? affordableColor : tooExpensiveColor;
             }
         }
     }

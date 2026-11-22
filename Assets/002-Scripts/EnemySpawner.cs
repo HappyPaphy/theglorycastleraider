@@ -17,6 +17,9 @@ public class EnemySpawner : MonoBehaviour
     private List<EnemySpawnData> validEnemies = new List<EnemySpawnData>();
     private bool isSpawned = false;
 
+    /// <summary>This room's own enemy list (used when the floor has no FloorEnemyTable).</summary>
+    public List<EnemySpawnData> SpawnData => enemySpawnData;
+
     void Start()
     {
         SpawnEnemy();

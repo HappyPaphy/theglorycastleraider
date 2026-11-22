@@ -16,20 +16,4 @@ public class ControllerValueInputManager : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
     }
-
-    private void Update()
-    {
-        if (Keyboard.current.kKey.wasPressedThisFrame)
-        {
-            if (modifiedValue > 0.1f)
-            {
-                modifiedValue -= 0.1f;
-            }
-        }
-
-        if (Keyboard.current.lKey.wasPressedThisFrame)
-        {
-            modifiedValue += 0.1f;
-        }
-    }
 }

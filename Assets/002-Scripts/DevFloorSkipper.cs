@@ -1,9 +1,8 @@
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>
-/// Developer shortcut to move between floors while testing. Only exists in the Editor and in Development builds.
+/// Shortcut to move between floors (testing / cheat). Available in the Editor and in every build.
 ///   F9          next floor
 ///   F8          previous floor
 ///   Shift + F9  this world's boss floor (1-3, 2-3, 3-3)
@@ -48,4 +47,3 @@ public class DevFloorSkipper : MonoBehaviour
         manager.SkipToFloor(target); // the floor name shows on screen as usual
     }
 }
-#endif

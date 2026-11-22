@@ -18,6 +18,9 @@ public class PlayerEntity : CharacterEntity
     [SerializeField] protected TMPro.TMP_Text text_Stamina;
     [SerializeField] protected TMPro.TMP_Text text_Ultimate;
 
+    /// <summary>The health, stamina and mana bars (used by other HUD elements to stay clear of them).</summary>
+    public Slider[] HudBars => new[] { slider_HP, slider_Stamina, slider_Ultimate };
+
     public float curMaxHPLevelIndex;
     public float curMaxStaminaLevelIndex;
 

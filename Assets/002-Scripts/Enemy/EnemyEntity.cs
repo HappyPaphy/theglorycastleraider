@@ -576,8 +576,48 @@ public class EnemyEntity : CharacterEntity
 
     private bool hasReportedKill;
 
+    // Death / execution animations always play at normal speed. Movement code sets the animator speed
+    // every frame (running 1.8x, elite speed...), so this runs after it in LateUpdate.
+    private bool deathAnimSpeedLocked;
+    private Animator[] deathAnimators;
+
+    /// <summary>
+    /// Another hit from the same side as the hit animation already playing: the state doesn't change, so the
+    /// animator wouldn't be told anything and the one-shot clip would stay frozen on its last frame.
+    /// This restarts the playing (or incoming) animation from the start on the main and blood animators.
+    /// </summary>
+    protected void ReplayHitAnimation(Animator main)
+    {
+        Replay(main);
+        Replay(animGore34);
+        Replay(animGore67);
+    }
+
+    private static void Replay(Animator a)
+    {
+        if (a == null || !a.isActiveAndEnabled || a.runtimeAnimatorController == null) { return; }
+        AnimatorStateInfo info = a.IsInTransition(0) ? a.GetNextAnimatorStateInfo(0) : a.GetCurrentAnimatorStateInfo(0);
+        a.Play(info.fullPathHash, 0, 0f);
+    }
+
+    /// <summary>Called when an execution starts: from now on the animators play at speed 1.</summary>
+    protected void LockDeathAnimSpeed() => deathAnimSpeedLocked = true;
+
+    protected virtual void LateUpdate()
+    {
+        if (!deathAnimSpeedLocked && !isDied) { return; }
+        if (deathAnimators == null) { deathAnimators = GetComponentsInChildren<Animator>(true); }
+        foreach (Animator a in deathAnimators)
+        {
+            if (a != null && a.speed != 1f) { a.speed = 1f; }
+        }
+    }
+
     /// <summary>Called when the kill was already reported to the perks (e.g. as an execution).</summary>
-    public void MarkKillReported() => hasReportedKill = true;
+    public void MarkKillReported()
+    {
+        hasReportedKill = true;
+    }
 
     /// <summary>A random coin amount for this enemy, including the Greedy Raider bonus.</summary>
     public int RollCoinDrop()
@@ -594,11 +634,16 @@ public class EnemyEntity : CharacterEntity
         if (hasDroppedCoins) { return; }
         hasDroppedCoins = true;
 
-        int coins = RollCoinDrop();
-        if (coins <= 0) { return; }
-
         Transform from = eyesTransform != null ? eyesTransform : transform;
         Vector3 origin = new Vector3(transform.position.x, Mathf.Max(transform.position.y + 0.6f, from.position.y - 0.4f), transform.position.z);
+
+        // Emeralds (meta currency, kept between runs): bosses > elites / Brute > a chance on normal enemies
+        bool boss = this is EnemyBigKnight;
+        bool tough = Elite != null || !canBeElite;
+        CoinPickup.DropEmeralds(origin, MetaRun.RollEmeraldDrop(boss, tough));
+
+        int coins = RollCoinDrop();
+        if (coins <= 0) { return; }
         CoinPickup.Drop(origin, coins, coinDropMaxPieces);
     }
 

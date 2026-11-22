@@ -378,7 +378,7 @@ public class EnemyDog : EnemyEntity
     {
         if (!isStunned && currentState != EnemyDogState.Executed)
         {
-            currentState = isLeft ? EnemyDogState.DamageLeft : EnemyDogState.DamageRight;
+            { var hitState = isLeft ? EnemyDogState.DamageLeft : EnemyDogState.DamageRight; bool sameSide = hitState == currentState; currentState = hitState; if (sameSide) { ReplayHitAnimation(anim); } } // same side again: replay the hit instead of freezing
             stateTimer = damageStunDuration;
         }
 
@@ -468,6 +468,7 @@ public class EnemyDog : EnemyEntity
         StopAllCoroutines();
         currentState = EnemyDogState.Executed;
         isExecuted = true;
+        LockDeathAnimSpeed(); // the execution animation plays at normal speed
         SafeStopAgent(true);
     }
 

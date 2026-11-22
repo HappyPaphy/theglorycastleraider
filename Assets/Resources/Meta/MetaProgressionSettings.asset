@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9ddb464d2d81ea4b8da9bac42e51992, type: 3}
+  m_Name: MetaProgressionSettings
+  m_EditorClassIdentifier: Assembly-CSharp::MetaProgressionSettings
+  perEnemy: 1
+  perEliteBonus: 4
+  perFloorByWorld: 0a0000000f00000014000000
+  bossFloorBonusByWorld: 1e0000002d0000003c000000
+  perChallengeRoom: 15
+  victoryBonus: 100
+  startingPotion: {fileID: 7266188067607101063, guid: 589029928fc2356459b06eb3b1733989, type: 3}
+  coinsPerPurseLevel: 50
+  hpPerVitalityLevel: 10

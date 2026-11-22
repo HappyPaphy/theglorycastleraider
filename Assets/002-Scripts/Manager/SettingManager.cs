@@ -64,6 +64,10 @@ public class SettingManager : MonoBehaviour
     [SerializeField] private Slider sfxSlider;
     [SerializeField] private Slider musicSlider;
 
+    [Header("Look sensitivity sliders (optional)")]
+    [SerializeField] private Slider mouseSensitivitySlider;
+    [SerializeField] private Slider controllerSensitivitySlider;
+
     public static SettingManager instance;
 
     private void Awake()
@@ -124,7 +128,11 @@ public class SettingManager : MonoBehaviour
     void Update()
     {
         HandleGamepadTabNavigation();
+        VolumeSettings.SaveIfDirty();
     }
+
+    private void OnDisable() { VolumeSettings.SaveIfDirty(true); }
+    private void OnApplicationQuit() { VolumeSettings.SaveIfDirty(true); }
 
     private void SetSoundSettingOnStart()
     {
@@ -134,41 +142,35 @@ public class SettingManager : MonoBehaviour
 
         // Load saved volumes or default to 0.3f (30%) if no save exists
         LoadVolumeSettings();
+
+        SetUpSensitivitySlider(mouseSensitivitySlider, LookSensitivity.Mouse, v => LookSensitivity.Mouse = v);
+        SetUpSensitivitySlider(controllerSensitivitySlider, LookSensitivity.Controller, v => LookSensitivity.Controller = v);
     }
 
-    private void SetMasterVolume(float sliderValue)
+    // Look sensitivity: 0.1x .. 3x (1 = default), saved as soon as it changes
+    private static void SetUpSensitivitySlider(Slider slider, float value, UnityEngine.Events.UnityAction<float> onChange)
     {
-        // Convert linear slider (0.0001 to 1) to logarithmic dB (-80 to 0)
-        float decibels = Mathf.Log10(sliderValue) * 20f;
-        mainMixer.SetFloat("MasterVolume", decibels);
-        PlayerPrefs.SetFloat("SavedMasterVolume", sliderValue);
+        if (slider == null) { return; }
+        slider.minValue = LookSensitivity.Min;
+        slider.maxValue = LookSensitivity.Max;
+        slider.wholeNumbers = false;
+        slider.SetValueWithoutNotify(value);
+        slider.onValueChanged.AddListener(onChange);
     }
 
-    private void SetSFXVolume(float sliderValue)
-    {
-        float decibels = Mathf.Log10(sliderValue) * 20f;
-        mainMixer.SetFloat("SFXVolume", decibels);
-        PlayerPrefs.SetFloat("SavedSFXVolume", sliderValue);
-    }
-
-    private void SetMusicVolume(float sliderValue)
-    {
-        float decibels = Mathf.Log10(sliderValue) * 20f;
-        mainMixer.SetFloat("MusicVolume", decibels);
-        PlayerPrefs.SetFloat("SavedMusicVolume", sliderValue);
-    }
+    // Sliders run 0..1; VolumeSettings converts to decibels, applies to the mixer and saves
+    private void SetMasterVolume(float sliderValue) => VolumeSettings.Set(VolumeSettings.Channel.Master, sliderValue, mainMixer);
+    private void SetSFXVolume(float sliderValue) => VolumeSettings.Set(VolumeSettings.Channel.SFX, sliderValue, mainMixer);
+    private void SetMusicVolume(float sliderValue) => VolumeSettings.Set(VolumeSettings.Channel.Music, sliderValue, mainMixer);
 
     private void LoadVolumeSettings()
     {
-        // 0.3f represents the 30% default volume requirement
-        float masterVol = PlayerPrefs.GetFloat("SavedMasterVolume", 0.25f);
-        float sfxVol = PlayerPrefs.GetFloat("SavedSFXVolume", 1.5f);
-        float musicVol = PlayerPrefs.GetFloat("SavedMusicVolume", 1.5f);
-
-        // Update slider visuals (this automatically triggers the OnValueChanged events above)
-        masterSlider.value = masterVol;
-        sfxSlider.value = sfxVol;
-        musicSlider.value = musicVol;
+        // Show the saved values without re-saving them, and apply them to the mixer directly
+        // (a slider already at the saved value wouldn't fire its change event)
+        masterSlider.SetValueWithoutNotify(VolumeSettings.Get(VolumeSettings.Channel.Master));
+        sfxSlider.SetValueWithoutNotify(VolumeSettings.Get(VolumeSettings.Channel.SFX));
+        musicSlider.SetValueWithoutNotify(VolumeSettings.Get(VolumeSettings.Channel.Music));
+        VolumeSettings.ApplyAll(mainMixer);
     }
 
     private void HandleGamepadTabNavigation()

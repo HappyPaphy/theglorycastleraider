@@ -150,6 +150,9 @@ public class TreasureChest : MonoBehaviour
     {
         if (item == null || InventoryManager.instance == null) { return true; }
 
+        // Weapons: never a third of the same kind (always max 2, even with the Weapon Carry upgrade)
+        if (item is Weapon weapon) { return InventoryManager.instance.CanLootWeapon(weapon); }
+
         switch (item.itemCategory)
         {
             case ItemCategory.Ring: return !InventoryManager.instance.rings.Any(i => i.itemType == item.itemType);
@@ -177,6 +180,7 @@ public class TreasureChest : MonoBehaviour
         tmp.alignment = TextAlignmentOptions.Center;
         tmp.color = color;
         tmp.rectTransform.sizeDelta = new Vector2(3f, 0.6f);
+        SharpWorldText.Attach(tmp).hideBehindWalls = false; // short pop-up over the chest
 
         Camera cam = Camera.main;
         if (cam != null) { go.transform.rotation = Quaternion.LookRotation(position - cam.transform.position); }

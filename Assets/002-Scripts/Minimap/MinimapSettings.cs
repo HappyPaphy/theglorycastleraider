@@ -24,6 +24,18 @@ public class MinimapSettings : ScriptableObject
     [Tooltip("Rooms next to explored ones show faintly (fog of war). Off = only explored rooms show.")]
     public bool showNeighbourRooms = true;
 
+    [Header("Height levels")]
+    [Tooltip("Rooms above or below the player's level are drawn faded and underneath the player's level.")]
+    [Range(0f, 1f)] public float otherLevelAlpha = 0.3f;
+    [Tooltip("How far (metres) the player's feet may be below a room's floor and still count as being in it.")]
+    public float levelTolerance = 1f;
+    [Tooltip("A room's ceiling space (metres) that doesn't count as walkable when deciding the level.")]
+    public float ceilingClearance = 1.8f;
+    [Tooltip("Show a small up/down arrow on rooms that are above/below the player.")]
+    public bool showLevelMarkers = true;
+    public float levelMarkerSize = 12f;
+    public Color levelMarkerColor = new Color(0.95f, 0.85f, 0.6f, 0.9f);
+
     [Header("Colours")]
     public Color backgroundColor = new Color(0.05f, 0.04f, 0.03f, 0.6f);
     public Color borderColor = new Color(0.85f, 0.7f, 0.4f, 1f);

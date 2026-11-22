@@ -476,7 +476,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""b294b29e-a408-47ea-af27-dab88f3a017f"",
                     ""path"": ""<Gamepad>/buttonNorth"",
-                    ""interactions"": ""Hold(duration=0.4)"",
+                    ""interactions"": ""Hold(duration=0.2)"",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
                     ""action"": ""InteractDoor"",

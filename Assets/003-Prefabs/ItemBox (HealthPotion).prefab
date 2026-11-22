@@ -33,10 +33,6 @@ PrefabInstance:
       value: 0.3725
       objectReference: {fileID: 0}
     - target: {fileID: 1459748470742231666, guid: 5073a0b4edfc3bf47aaf2e6904ba1f6b, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1459748470742231666, guid: 5073a0b4edfc3bf47aaf2e6904ba1f6b, type: 3}
       propertyPath: m_VersionIndex
       value: 10099
       objectReference: {fileID: 0}
@@ -9269,6 +9265,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6312334937239222548, guid: 5073a0b4edfc3bf47aaf2e6904ba1f6b, type: 3}
+      propertyPath: fractureOptions.fragmentCount
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312334937239222548, guid: 5073a0b4edfc3bf47aaf2e6904ba1f6b, type: 3}
       propertyPath: fractureOptions.insideMaterial
       value: 
       objectReference: {fileID: 0}
@@ -9332,5 +9332,25 @@ PrefabInstance:
     - {fileID: 6692514631752964217, guid: 5073a0b4edfc3bf47aaf2e6904ba1f6b, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2628002776702642408, guid: 5073a0b4edfc3bf47aaf2e6904ba1f6b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3796730905778441674}
   m_SourcePrefab: {fileID: 100100000, guid: 5073a0b4edfc3bf47aaf2e6904ba1f6b, type: 3}
+--- !u!1 &5082541145979432084 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2628002776702642408, guid: 5073a0b4edfc3bf47aaf2e6904ba1f6b, type: 3}
+  m_PrefabInstance: {fileID: 7129297872367961212}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3796730905778441674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5082541145979432084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bc40cc76ac7b3f469e75fd65c1b5407, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FractureProxyMesh

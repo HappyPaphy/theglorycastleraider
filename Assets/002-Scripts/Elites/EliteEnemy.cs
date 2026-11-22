@@ -121,6 +121,7 @@ public class EliteEnemy : MonoBehaviour
         EnemyEntity entity = enemyObject != null ? enemyObject.GetComponentInChildren<EnemyEntity>() : null;
         if (entity == null || settings == null) { return null; }
         if (!entity.canBeElite) { return null; } // e.g. the Brute
+        if (!RoguelikeManager.EliteEnemiesEnabled) { return null; } // modifier on the RoguelikeManager
 
         List<EliteTraitDefinition> picked = forcedTraits != null && forcedTraits.Length > 0
             ? new List<EliteTraitDefinition>(forcedTraits)
@@ -425,6 +426,7 @@ public class EliteEnemy : MonoBehaviour
         label.rectTransform.sizeDelta = new Vector2(4f, 0.4f);
         label.outlineWidth = 0.25f;
         label.outlineColor = new Color32(0, 0, 0, 200);
+        SharpWorldText.Attach(label); // full-resolution text (the world renders at low resolution)
 
         var parts = new List<string>();
         foreach (EliteTraitDefinition trait in traits)

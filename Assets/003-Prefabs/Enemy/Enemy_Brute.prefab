@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 482324574376791486, guid: ddf2e17e311c2c24e82b5704c3442adf, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.41
+      objectReference: {fileID: 0}
     - target: {fileID: 1742776970562387968, guid: ddf2e17e311c2c24e82b5704c3442adf, type: 3}
       propertyPath: m_Name
       value: Enemy_Brute
@@ -28,17 +32,25 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2971637515779346058, guid: ddf2e17e311c2c24e82b5704c3442adf, type: 3}
+      propertyPath: m_Radius
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2971637515779346058, guid: ddf2e17e311c2c24e82b5704c3442adf, type: 3}
+      propertyPath: m_AgentTypeID
+      value: -1372625422
+      objectReference: {fileID: 0}
     - target: {fileID: 4452330985566056080, guid: ddf2e17e311c2c24e82b5704c3442adf, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.25
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4452330985566056080, guid: ddf2e17e311c2c24e82b5704c3442adf, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.25
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4452330985566056080, guid: ddf2e17e311c2c24e82b5704c3442adf, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.25
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4452330985566056080, guid: ddf2e17e311c2c24e82b5704c3442adf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -90,7 +102,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5033186074497395434, guid: ddf2e17e311c2c24e82b5704c3442adf, type: 3}
       propertyPath: kickRecoveryTime
-      value: 2.5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5033186074497395434, guid: ddf2e17e311c2c24e82b5704c3442adf, type: 3}
       propertyPath: damageStunDuration
@@ -156,12 +168,14 @@ MonoBehaviour:
   grabRange: 2.2
   windupTime: 1.1
   grabCooldown: 4
-  openingColor: {r: 1, g: 0.9, b: 0.3, a: 1}
+  openingColor: {r: 1, g: 0.29176334, b: 0.28490567, a: 1}
   hugDamagePerSecond: 7
   damageTick: 0.35
-  holdDistance: 1.1
-  strugglePerPress: 0.225
-  struggleDecay: 0.35
+  holdDistance: 0.05
+  liftHeight: 0.2
+  faceHeight: 1.3
+  strugglePerPress: 0.175
+  struggleDecay: 0.2
   releasePush: 6
   body: {fileID: 4216360734669196199}
 --- !u!212 &4216360734669196199 stripped

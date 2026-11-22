@@ -21,6 +21,7 @@ public class ChallengeAltar : MonoBehaviour
 
     private void Awake()
     {
+        SharpWorldText.Attach(label); // full-resolution text (the world renders at low resolution)
         settings = ChallengeSettings.Load();
         if (settings != null)
         {

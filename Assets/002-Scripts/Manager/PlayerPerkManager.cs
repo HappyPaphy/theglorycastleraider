@@ -20,26 +20,44 @@ public class PlayerPerkManager : MonoBehaviour
             Instance = this;
     }
 
+    // Whether we're listening to the perk selection (picking / upgrading / removing cards)
+    private bool subscribed;
+
     private void OnEnable()
     {
-        if (PerkSelectionManager.instance != null)
-            PerkSelectionManager.instance.OnChanged += RecalculateActivePerks;
+        TrySubscribe();
     }
 
     private void OnDisable()
     {
-        if (PerkSelectionManager.instance != null)
+        if (subscribed && PerkSelectionManager.instance != null)
             PerkSelectionManager.instance.OnChanged -= RecalculateActivePerks;
+        subscribed = false;
+
+        if (swordTimeActive) { EndSwordTime(); } // never leave the game stuck in slow motion
     }
 
     private void Start()
     {
+        // PerkSelectionManager may not exist yet in OnEnable (same object, script order): subscribe now as well,
+        // otherwise picked cards would never reach the perk effects
+        if (inventory == null && PerkSelectionManager.instance != null) { inventory = PerkSelectionManager.instance.Inventory; }
+        if (inventory == null) { inventory = GetComponentInChildren<PerkCardInventory>(); }
+        TrySubscribe();
         RecalculateActivePerks();
+    }
+
+    private void TrySubscribe()
+    {
+        if (subscribed || PerkSelectionManager.instance == null) { return; }
+        PerkSelectionManager.instance.OnChanged += RecalculateActivePerks;
+        subscribed = true;
     }
 
     public void RecalculateActivePerks()
     {
         activePerks.Clear();
+        if (inventory == null) { return; }
 
         for (int i = 0; i < inventory.SlotCount; i++)
         {
@@ -185,16 +203,17 @@ public class PlayerPerkManager : MonoBehaviour
         // Sword Time: Temporary slow time for 1s
         if (HasPerk(PerkType.SwordTime))
         {
-            StopCoroutine(nameof(SwordTimeRoutine));
-            StartCoroutine(SwordTimeRoutine(0.75f));
+            // Stop the previous one by reference (stopping by name doesn't stop coroutines started this way)
+            if (swordTimeRoutine != null) { StopCoroutine(swordTimeRoutine); }
+            swordTimeRoutine = StartCoroutine(SwordTimeRoutine(0.75f));
         }
     }
 
-    // Triggered on Jump Kick
-    public float GetJumpKickKnockback(float baseKnockback)
+    // Big Foot: only a kick done in the air (jump kick) gets the extra push. Kicks on the ground are normal.
+    public float GetJumpKickKnockback(float baseKnockback, bool airborne)
     {
         int bigFootLevel = GetPerkLevel(PerkType.BigFoot);
-        if (bigFootLevel > 0)
+        if (airborne && bigFootLevel > 0)
         {
             return baseKnockback * (1.0f + (1.5f * bigFootLevel)); // Pushes back far
         }
@@ -717,11 +736,74 @@ public class PlayerPerkManager : MonoBehaviour
         //CurrentMoveSpeedMultiplier_OnEnemyKill = 1.0f;
     }
 
+    [Header("Sword Time (parry slow-down) effect")]
+    [Tooltip("Played when the slow-down starts. Leave empty for no sound.")]
+    [SerializeField] private AudioClip swordTimeSound;
+    [SerializeField, Range(0f, 1f)] private float swordTimeSoundVolume = 1f;
+    [Tooltip("Stop the sound when the slow-down ends (or is cancelled by attacking).")]
+    [SerializeField] private bool stopSwordTimeSoundOnEnd = true;
+    // The blue camera look is on the camera's CameraPostProcessEffect (Sword Time section)
+
+    private Coroutine swordTimeRoutine;
+    private bool swordTimeActive;
+    private const float SwordTimeScale = 0.1f;
+
+    private AudioSource swordTimeAudio;
+
     private IEnumerator SwordTimeRoutine(float duration)
     {
-        Time.timeScale = 0.1f; // Slow time
+        swordTimeActive = true;
+        Time.timeScale = SwordTimeScale; // Slow time
+        PlaySwordTimeSound();
+        if (CameraPostProcessEffect.Instance != null) { CameraPostProcessEffect.Instance.SetSwordTime(true); } // camera turns blue
         yield return new WaitForSecondsRealtime(duration);
-        Time.timeScale = 1.0f;
+        EndSwordTime();
+    }
+
+    private void Update()
+    {
+        // Pressing attack (either hand) during the parry slow-down ends it right away, so the follow-up
+        // swing isn't stuck waiting for the effect to run out
+        if (!swordTimeActive) { return; }
+        InputSchemeManager input = InputSchemeManager.instance;
+        if (input == null) { return; }
+        bool attack = (input.input_PerformRightHand != null && input.input_PerformRightHand.WasPressedThisFrame()) ||
+                      (input.input_PerformLeftHand != null && input.input_PerformLeftHand.WasPressedThisFrame());
+        if (attack) { CancelSwordTime(); }
+    }
+
+    private void PlaySwordTimeSound()
+    {
+        if (swordTimeSound == null) { return; }
+        if (swordTimeAudio == null)
+        {
+            swordTimeAudio = gameObject.AddComponent<AudioSource>();
+            swordTimeAudio.playOnAwake = false;
+            swordTimeAudio.spatialBlend = 0f; // 2D
+            if (SoundManager.instance != null) { swordTimeAudio.outputAudioMixerGroup = SoundManager.instance.SfxGroup; } // SFX volume slider
+        }
+        swordTimeAudio.Stop();
+        swordTimeAudio.clip = swordTimeSound;
+        swordTimeAudio.volume = swordTimeSoundVolume;
+        swordTimeAudio.Play();
+    }
+
+    /// <summary>Ends the Sword Time slow-down now (attack pressed).</summary>
+    public void CancelSwordTime()
+    {
+        if (!swordTimeActive) { return; }
+        if (swordTimeRoutine != null) { StopCoroutine(swordTimeRoutine); swordTimeRoutine = null; }
+        EndSwordTime();
+    }
+
+    private void EndSwordTime()
+    {
+        swordTimeActive = false;
+        swordTimeRoutine = null;
+        if (stopSwordTimeSoundOnEnd && swordTimeAudio != null) { swordTimeAudio.Stop(); }
+        if (CameraPostProcessEffect.Instance != null) { CameraPostProcessEffect.Instance.SetSwordTime(false); }
+        // Only undo our own slow-down: if a menu paused the game (0) meanwhile, leave its time alone
+        if (Mathf.Approximately(Time.timeScale, SwordTimeScale)) { Time.timeScale = 1f; }
     }
 
     // --- CONTINUOUS TICK PERKS ---

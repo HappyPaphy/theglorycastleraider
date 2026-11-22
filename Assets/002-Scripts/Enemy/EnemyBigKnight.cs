@@ -567,7 +567,7 @@ public class EnemyBigKnight : EnemyEntity
     {
         if (!isStunned && currentState != EnemyBigKnightState.Executed)
         {
-            currentState = isLeft ? EnemyBigKnightState.DamageLeft : EnemyBigKnightState.DamageRight;
+            { var hitState = isLeft ? EnemyBigKnightState.DamageLeft : EnemyBigKnightState.DamageRight; bool sameSide = hitState == currentState; currentState = hitState; if (sameSide) { ReplayHitAnimation(anim); } } // same side again: replay the hit instead of freezing
             //stateTimer = damageStunDuration;
         }
 
@@ -672,6 +672,7 @@ public class EnemyBigKnight : EnemyEntity
         StopAllCoroutines();
         currentState = EnemyBigKnightState.Executed;
         isExecuted = true;
+        LockDeathAnimSpeed(); // the execution animation plays at normal speed
         SafeStopAgent(true);
     }
 

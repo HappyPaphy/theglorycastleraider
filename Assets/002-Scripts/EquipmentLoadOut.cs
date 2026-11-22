@@ -362,7 +362,7 @@ public class EquipmentLoadOut : MonoBehaviour
             detailLargeIcon_Inventory.sprite = item.spr_Icon_Frame;
             detailLargeIcon_Inventory.SetNativeSize();
             detailNameRightText_Inventory.text = item.equipmentName;
-            detailDescriptionText_Inventory.text = "Description mapped from Item data...";
+            detailDescriptionText_Inventory.text = item.GetDescription();
         }
         else
         {
@@ -452,8 +452,7 @@ public void PreviewItemDetails(EquipmentSlotType slotType, int index)
             detailCategoryText_Loadout.text = targetItem.itemCategory.ToString();
             detailNameLeftText_Loadout.text = targetItem.equipmentName; // Can append upgrade levels later
             detailNameRightText_Loadout.text = targetItem.equipmentName;
-            RingEffect ringEffect = targetItem.GetComponent<RingEffect>();
-            detailDescriptionText_Loadout.text = ringEffect != null ? ringEffect.Describe() : "Description mapped from Item data...";
+            detailDescriptionText_Loadout.text = targetItem.GetDescription();
         }
         else
         {

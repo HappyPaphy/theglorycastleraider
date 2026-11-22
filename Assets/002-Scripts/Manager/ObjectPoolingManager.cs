@@ -128,6 +128,21 @@ public class ObjectPoolingManager : MonoBehaviour
         poolDictionary[poolName].Enqueue(obj); // Put it back at the end of the line
     }
 
+    /// <summary>
+    /// Puts every live fracture piece back in the pool (used before a new floor is generated, so pieces
+    /// parented to the old rooms aren't destroyed along with them).
+    /// </summary>
+    public void ReturnAllFragments()
+    {
+        var live = new List<GameObject>(activeFragments);
+        foreach (GameObject obj in live)
+        {
+            if (obj != null) { ReturnObject(FragmentPool, obj); }
+        }
+        activeFragments.Clear();
+        activeFragmentNodes.Clear();
+    }
+
     // Keep a list of live pieces, oldest first; recycle the oldest when over the cap
     private void TrackFragment(GameObject obj)
     {

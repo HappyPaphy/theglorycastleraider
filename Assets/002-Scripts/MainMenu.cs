@@ -165,6 +165,17 @@ public class MainMenu : MonoBehaviour
         }
     }
 
+    // Renames a button's label (and stops a localization component from switching it back)
+    private static void SetButtonLabel(Button button, string text)
+    {
+        foreach (Component c in button.GetComponentsInChildren<Component>(true))
+        {
+            if (c is Behaviour b && c.GetType().Name.Contains("Localize")) { b.enabled = false; }
+        }
+        foreach (TMPro.TMP_Text t in button.GetComponentsInChildren<TMPro.TMP_Text>(true)) { t.text = text; }
+        foreach (UnityEngine.UI.Text t in button.GetComponentsInChildren<UnityEngine.UI.Text>(true)) { t.text = text; }
+    }
+
     public void CreditToMainMenu()
     {
         StartCoroutine(SetCanvasGroupActive(canvasGroup_MainMenu, 1.5f));
@@ -175,6 +186,17 @@ public class MainMenu : MonoBehaviour
 
     private void SetUpButton()
     {
+        // The Extras button (previously unused) opens the Camp: spend Emeralds on permanent unlocks
+        if (button_Extras != null)
+        {
+            // It was switched off with a padlock in the menu prefab: show it, without the lock
+            button_Extras.gameObject.SetActive(true);
+            Transform padlock = button_Extras.transform.Find("Lock");
+            if (padlock != null) { padlock.gameObject.SetActive(false); }
+            SetButtonLabel(button_Extras, "Camp");
+            button_Extras.onClick.AddListener(() => CampMenuUI.Open(button_Extras));
+        }
+
         button_Start.onClick.AddListener(() => {
             StartCoroutine(SetCanvasGroupActive(canvasGroup_Start, 0.525f));
             StartCoroutine(SetMenuElementActive(menuElement_MainMenu, false));

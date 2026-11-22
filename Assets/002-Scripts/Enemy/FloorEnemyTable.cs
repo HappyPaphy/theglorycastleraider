@@ -39,4 +39,34 @@ public class FloorEnemyTable : ScriptableObject
         }
         return null;
     }
+
+    /// <summary>
+    /// Every enemy the normal spawners can produce on this floor: the floor's table if it has one, otherwise
+    /// all the room spawner lists of the current dungeon. Level requirements are applied the same way.
+    /// Used so challenge rooms only bring in this floor's enemies.
+    /// </summary>
+    public static List<EnemySpawnData> Roster(int floorIndex)
+    {
+        var result = new List<EnemySpawnData>();
+        var seen = new HashSet<GameObject>();
+
+        void AddFrom(List<EnemySpawnData> list)
+        {
+            if (list == null) { return; }
+            foreach (EnemySpawnData d in list)
+            {
+                if (d == null || d.enemyPrefab == null || floorIndex < d.levelIndexRequirement) { continue; }
+                if (seen.Add(d.enemyPrefab)) { result.Add(d); }
+            }
+        }
+
+        List<EnemySpawnData> table = ForFloor(floorIndex);
+        if (table != null) { AddFrom(table); return result; }
+
+        foreach (EnemySpawner spawner in Object.FindObjectsByType<EnemySpawner>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+        {
+            if (spawner.gameObject.scene.IsValid()) { AddFrom(spawner.SpawnData); }
+        }
+        return result;
+    }
 }

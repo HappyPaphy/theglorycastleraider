@@ -358,6 +358,8 @@ public static class Fragmenter
     {
         if (mesh == null || mesh.vertexCount < 4) { return false; }
         Vector3 size = mesh.bounds.size;
+        // NaN fails the >= tests below; infinity / huge values mean a broken cut
+        if (!(size.x < 1e4f && size.y < 1e4f && size.z < 1e4f)) { return false; }
         return size.x >= MinFragmentExtent && size.y >= MinFragmentExtent && size.z >= MinFragmentExtent;
     }
 }

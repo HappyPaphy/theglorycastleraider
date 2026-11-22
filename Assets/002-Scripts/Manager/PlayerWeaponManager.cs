@@ -161,7 +161,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
     void Update()
     {
-        if (PauseGame.instance.IsPaused || playerController.CharacterHealthComponent.CurrentHP <= 0) return;
+        if (PauseGame.instance.IsPaused || DevItemGiver.IsOpen || playerController.CharacterHealthComponent.CurrentHP <= 0) return;
 
         ChooseAnimations();
 

@@ -43,6 +43,21 @@ public class Item : MonoBehaviour
     public Sprite spr_Icon_Frame;
     public Sprite spr_Icon_NoFrame;
     public string equipmentName;
+    [Tooltip("Shown in the equipment screen. Rings also list their stat bonuses under it automatically.")]
+    [TextArea(2, 5)] public string description;
+
+    /// <summary>Description for the UI: the written text, plus a ring's stat bonuses.</summary>
+    public string GetDescription()
+    {
+        string text = description != null ? description.Trim() : "";
+        RingEffect ring = GetComponent<RingEffect>();
+        if (ring != null)
+        {
+            string stats = ring.Describe();
+            if (!string.IsNullOrEmpty(stats)) { text = string.IsNullOrEmpty(text) ? stats : text + "\n\n" + stats; }
+        }
+        return text;
+    }
 
     [SerializeField] protected float pickupRadius = 1.5f;
     [SerializeField] protected LayerMask playerLayer;
@@ -76,6 +91,7 @@ public class Item : MonoBehaviour
     public GameObject spellPrefab;
 
     protected bool isCollected = false;
+    public bool IsCollected => isCollected;
     protected float rotationSpeed = 90f; // Degrees it spins per second
     protected float hoverSpeed = 2f;     // How fast it moves up and down
     protected float hoverHeight = 0.14f; // How high/low it moves from its center

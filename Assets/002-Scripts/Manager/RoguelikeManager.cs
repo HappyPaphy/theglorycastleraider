@@ -33,8 +33,20 @@ public class RoguelikeManager : MonoBehaviour
     [SerializeField] private CanvasGroup canvasGroup_ProceedNextFloor;
     [SerializeField] private CanvasGroup canvasGroup_BlackFadeUI;
 
+    [Header("Modifiers")]
+    [Tooltip("Off = no enemy becomes an elite (room spawns, challenge waves, curses included). " +
+             "Applies to enemies spawned from now on; can be switched during play.")]
+    public bool eliteEnemiesEnabled = true;
+
+    /// <summary>True unless a RoguelikeManager has elites switched off.</summary>
+    public static bool EliteEnemiesEnabled => instance == null || instance.eliteEnemiesEnabled;
+
+    /// <summary>Turn elite enemies on/off from code (menus, run modifiers...).</summary>
+    public void SetEliteEnemies(bool enabled) => eliteEnemiesEnabled = enabled;
+
     [HideInInspector] public bool isPlayerInTheLastRoom = false;
     private bool isProceedNextFloorOnce = false;
+    private bool isSkippingFloor = false;
 
     public static RoguelikeManager instance;
 
@@ -63,6 +75,8 @@ public class RoguelikeManager : MonoBehaviour
     private void Start()
     {
         isPlayerInTheLastRoom = false; 
+
+        MetaRun.BeginRun(); // meta progression: a new run starts (Emeralds, records)
 
         SetUpUI();
     }
@@ -110,6 +124,7 @@ public class RoguelikeManager : MonoBehaviour
 
         floorIndex = Mathf.Clamp(floorIndex, 0, FloorCount - 1);
         isProceedNextFloorOnce = true;
+        isSkippingFloor = true; // cheat skip (floor records only)
         dungeonIndex = floorIndex - 1; // ProceedToNextFloor steps it up by one
         StartCoroutine(ProceedToNextFloor());
         return true;
@@ -131,6 +146,11 @@ public class RoguelikeManager : MonoBehaviour
 
         allDungeonTiles.Clear();
 
+        // Meta progression: reaching the exit clears this floor (cheat skips don't count)
+        if (!isSkippingFloor) { MetaRun.FloorCleared(dungeonIndex); }
+        bool wasSkip = isSkippingFloor;
+        isSkippingFloor = false;
+
         if(dungeonIndex < dungeonFlows.Length - 1)
         {
             dungeonIndex++;
@@ -148,11 +168,22 @@ public class RoguelikeManager : MonoBehaviour
         else
         {
             // Last floor cleared: the run is over
+            // Run won: show the run summary (Emeralds earned), then the main menu
+            if (!wasSkip)
+            {
+                MetaRun.EndRun(true);
+                canvasGroup_BlackFadeUI.DOKill();
+                canvasGroup_BlackFadeUI.DOFade(0.85f, 0.3f).SetUpdate(true);
+                yield return RunSummaryUI.ShowAndWait(true);
+            }
             AsyncLoaderManager.instance.LoadLevel("MainMenu", false);
             yield break;
         }
 
-        runtimeDungeon.Generator.Settings.DungeonFlow = dungeonFlows[dungeonIndex];  
+        // Remove loose loot, orbs, chests and pieces from the old floor (DunGen only clears its tiles)
+        FloorCleanup.Clear();
+
+        runtimeDungeon.Generator.Settings.DungeonFlow = dungeonFlows[dungeonIndex];
 
         runtimeDungeon.Generate();
         isPlayerInTheLastRoom = false;
@@ -185,6 +216,10 @@ public class RoguelikeManager : MonoBehaviour
             BakeDungeonNavMesh();
 
             StartCoroutine(ShowFloorNumber());
+
+            // Meta progression: record the floor; on the first floor of the run, apply bought Camp boosts
+            MetaRun.EnteredFloor(dungeonIndex);
+            MetaRun.ApplyBoosts();
         }
     }
 
@@ -223,7 +258,8 @@ public class RoguelikeManager : MonoBehaviour
     {
         if (navMeshSurface != null)
         {
-            navMeshSurface.BuildNavMesh();
+            // One surface per agent type (Humanoid, Large for the Brute) on the same object
+            foreach (NavMeshSurface surface in navMeshSurface.GetComponents<NavMeshSurface>()) { surface.BuildNavMesh(); }
 
             IsDungeonReady = true;
             OnDungeonReady?.Invoke();

@@ -134,7 +134,10 @@ public class EnemyArcher : EnemyEntity
                         SafeStopAgent(true);
 
                         // Raycast to ensure we aren't shooting a wall[cite: 6]
-                        if (currentCooldown <= 0f && !Physics.Raycast(eyesTransform.position, lookDir, distanceToPlayer, obstacleLayer))
+                        // Check the real 3D line to the player's chest (the arrow's path), not a flat one at eye level
+                        Vector3 eyes = eyesTransform.position;
+                        Vector3 toTarget = PlayerAimPoint() - eyes;
+                        if (currentCooldown <= 0f && !Physics.Raycast(eyes, toTarget.normalized, toTarget.magnitude, obstacleLayer))
                         {
                             currentState = EnemyArcherState.Attack;
                         }
@@ -186,6 +189,18 @@ public class EnemyArcher : EnemyEntity
         }
     }
 
+    // Chest height of the player's capsule (the transform pivot is at the feet or the middle depending on setup)
+    private Vector3 PlayerAimPoint()
+    {
+        CharacterController cc = playerTransform.GetComponent<CharacterController>();
+        if (cc != null)
+        {
+            Bounds b = cc.bounds;
+            return new Vector3(b.center.x, Mathf.Lerp(b.min.y, b.max.y, 0.65f), b.center.z);
+        }
+        return playerTransform.position + Vector3.up * 1f;
+    }
+
     private IEnumerator ShootSequence()
     {
         if(isDied) { yield break; }
@@ -199,9 +214,8 @@ public class EnemyArcher : EnemyEntity
         // 2. Fire if not interrupted by damage/death
         if (!isDied && currentState == EnemyArcherState.Attack && playerTransform != null)
         {
-            // Calculate direction to player's center/chest
-            Vector3 targetPos = playerTransform.position;
-            targetPos.y = firePoint.position.y;
+            // Aim at the player's chest in 3D, so arrows tilt up/down at players above or below (stairs, ledges)
+            Vector3 targetPos = PlayerAimPoint();
 
             Vector3 shootDir = (targetPos - firePoint.position).normalized;
 
@@ -231,7 +245,7 @@ public class EnemyArcher : EnemyEntity
         // Archers don't block. They just take the hit.
         if(!isStunned)
         {
-            currentState = isLeft ? EnemyArcherState.DamageLeft : EnemyArcherState.DamageRight;
+            { var hitState = isLeft ? EnemyArcherState.DamageLeft : EnemyArcherState.DamageRight; bool sameSide = hitState == currentState; currentState = hitState; if (sameSide) { ReplayHitAnimation(anim); } } // same side again: replay the hit instead of freezing
             stateTimer = damageStunDuration;
         }
 
@@ -281,7 +295,7 @@ public class EnemyArcher : EnemyEntity
         // Archers don't block. They just take the hit.
         if (!isStunned)
         {
-            currentState = isLeft ? EnemyArcherState.DamageLeft : EnemyArcherState.DamageRight;
+            { var hitState = isLeft ? EnemyArcherState.DamageLeft : EnemyArcherState.DamageRight; bool sameSide = hitState == currentState; currentState = hitState; if (sameSide) { ReplayHitAnimation(anim); } } // same side again: replay the hit instead of freezing
             stateTimer = damageStunDuration;
         }
 
@@ -367,6 +381,7 @@ public class EnemyArcher : EnemyEntity
         StopAllCoroutines();
         currentState = EnemyArcherState.Executed;
         isExecuted = true;
+        LockDeathAnimSpeed(); // the execution animation plays at normal speed
         SafeStopAgent(true);
     }
 

@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07cf00f23d9fa3b48a743aca0efa9933, type: 3}
+  m_Name: BiomeAudio
+  m_EditorClassIdentifier: Assembly-CSharp::BiomeAudioSettings
+  crossfadeTime: 2
+  biomes:
+  - name: Prison (Floors 1-1 to 1-3)
+    fromFloor: 0
+    toFloor: 2
+    music: {fileID: 8300000, guid: aee80d1b62bc4c848ba5099809111922, type: 3}
+    musicVolume: 1
+    bossFloorMusic: {fileID: 8300000, guid: 1fb9197e364659644be2d257dfc16404, type: 3}
+    ambience: {fileID: 0}
+    ambienceVolume: 0.35
+  - name: Maze Yard (Floors 2-1 to 2-3)
+    fromFloor: 3
+    toFloor: 5
+    music: {fileID: 8300000, guid: 02c8ff255c987d942a6c14d662926f0d, type: 3}
+    musicVolume: 1
+    bossFloorMusic: {fileID: 8300000, guid: 1fb9197e364659644be2d257dfc16404, type: 3}
+    ambience: {fileID: 0}
+    ambienceVolume: 0.35
+  - name: Castle (Floors 3-1 to 3-3)
+    fromFloor: 6
+    toFloor: 8
+    music: {fileID: 8300000, guid: ca0eabcf71961024db1a32355d306b47, type: 3}
+    musicVolume: 1
+    bossFloorMusic: {fileID: 8300000, guid: 1fb9197e364659644be2d257dfc16404, type: 3}
+    ambience: {fileID: 0}
+    ambienceVolume: 0.35

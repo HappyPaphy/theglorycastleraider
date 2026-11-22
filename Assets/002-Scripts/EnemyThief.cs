@@ -22,7 +22,8 @@ public enum EnemyThiefState
     // Brute only
     PreAttack,   // grab wind-up (kick opening)
     Hug,         // holding the player
-    BlockKick    // shrugs off a kick outside the wind-up
+    BlockKick,   // shrugs off a kick outside the wind-up
+    KickedLoop   // knocked down, back in the sitting loop after a hit
 }
 
 public class EnemyThief : EnemyEntity
@@ -97,10 +98,18 @@ public class EnemyThief : EnemyEntity
     [Header("Brute")]
     [Tooltip("Brute only: how long he holds the Block Kicked pose after shrugging off a kick.")]
     [SerializeField] private float blockKickDuration = 0.7f;
+    private float bruteDamagedTime = 0.4f; // length of his Damaged animation (read from the animator)
 
     protected override void Awake()
     {
         grab = GetComponent<BruteGrab>();
+        if (grab != null && anim != null && anim.runtimeAnimatorController != null)
+        {
+            foreach (AnimationClip clip in anim.runtimeAnimatorController.animationClips)
+            {
+                if (clip != null && clip.name.Contains("Damaged")) { bruteDamagedTime = Mathf.Max(bruteDamagedTime, clip.length); }
+            }
+        }
         agent.speed = (moveSpeed) * SpeedMultiplier;
         agent.updateRotation = false;
 
@@ -232,6 +241,14 @@ public class EnemyThief : EnemyEntity
     {
         if (isDied) { return; }
 
+        // Brute: blocks every weapon hit unless he's knocked down (kicked), stunned or parried
+        if (grab != null)
+        {
+            if (BruteIsOpen()) { ApplyDamageState(isLeft, hitPoint, damageValue, isLeftHand, damageImpactSound); BruteHitTimer(); }
+            else { ApplyBlockState(isLeft); }
+            return;
+        }
+
         // Refresh the combo reset timer every time a hit lands
         hitResetTimer = comboResetTime;
 
@@ -286,6 +303,14 @@ public class EnemyThief : EnemyEntity
     public override void TakeSpellHit(bool isLeft, Vector3 hitPoint, float damageValue, bool isBlockable, float knockBackValue, DamageImpactSound damageImpactSound)
     {
         if (isDied) { return; }
+
+        // Brute: blocks blockable spells too, unless he's knocked down / stunned / parried
+        if (grab != null)
+        {
+            if (BruteIsOpen() || !isBlockable) { ApplyDamageState(isLeft, hitPoint, damageValue, knockBackValue, damageImpactSound); BruteHitTimer(); }
+            else { ApplyBlockState(isLeft); }
+            return;
+        }
 
         // Refresh the combo reset timer every time a hit lands
         hitResetTimer = comboResetTime;
@@ -390,6 +415,7 @@ public class EnemyThief : EnemyEntity
         StopAllCoroutines();
         currentState = EnemyThiefState.Executed;
         isExecuted = true;
+        LockDeathAnimSpeed(); // the execution animation plays at normal speed
 
         SafeStopAgent(true);
     }
@@ -446,12 +472,24 @@ public class EnemyThief : EnemyEntity
 
     public override void GotKicked(Vector3 hitPoint, float damageValue, float knockBackValue)
     {
-        // Brute: a kick during the grab wind-up cancels the grab and knocks him down (Kicked -> Loop Kicked);
-        // any other time he blocks it (Block Kicked)
-        if (grab != null && !isStunned && !isDied && !grab.InterruptByKick())
+        // Brute: a kick during the grab wind-up cancels the grab and knocks him down for kickRecoveryTime
+        // (Kicked -> Loop Kicked). Kicks while he's down just hurt (the timer isn't reset). Any other time he blocks it.
+        if (grab != null && !isStunned && !isDied)
         {
-            BlockKick();
-            return;
+            if (isKicked)
+            {
+                { var hitState = Random.value < 0.5f ? EnemyThiefState.DamageLeft : EnemyThiefState.DamageRight; bool sameSide = hitState == currentState; currentState = hitState; if (sameSide) { ReplayHitAnimation(anim); } } // same side again: replay the hit instead of freezing
+                BruteHitTimer();
+                if (ObjectPoolingManager.instance != null) { ObjectPoolingManager.instance.SpawnObject("Blood", eyesTransform.position); }
+                SoundManager.instance.HumanSound_Grunt(sprRndr.transform.position);
+                TakeDamage(damageValue);
+                return;
+            }
+            if (!grab.InterruptByKick())
+            {
+                BlockKick();
+                return;
+            }
         }
         if (!isStunned)
         {
@@ -485,7 +523,7 @@ public class EnemyThief : EnemyEntity
 
         if(!isStunned)
         {
-            currentState = isLeft ? EnemyThiefState.DamageLeft : EnemyThiefState.DamageRight;
+            { var hitState = isLeft ? EnemyThiefState.DamageLeft : EnemyThiefState.DamageRight; bool sameSide = hitState == currentState; currentState = hitState; if (sameSide) { ReplayHitAnimation(anim); } } // same side again: replay the hit instead of freezing
             stateTimer = damageStunDuration;
         }
 
@@ -535,7 +573,7 @@ public class EnemyThief : EnemyEntity
 
         if (!isStunned)
         {
-            currentState = isLeft ? EnemyThiefState.DamageLeft : EnemyThiefState.DamageRight;
+            { var hitState = isLeft ? EnemyThiefState.DamageLeft : EnemyThiefState.DamageRight; bool sameSide = hitState == currentState; currentState = hitState; if (sameSide) { ReplayHitAnimation(anim); } } // same side again: replay the hit instead of freezing
             stateTimer = damageStunDuration;
         }
 
@@ -595,6 +633,15 @@ public class EnemyThief : EnemyEntity
         base.Die();
     }
 
+    // Brute: open to hits only while knocked down, stunned or parried
+    private bool BruteIsOpen() => isKicked || isStunned || isParried;
+
+    // Brute: a hit while knocked down plays the whole Damaged animation, then returns to the sitting loop
+    private void BruteHitTimer()
+    {
+        if (isKicked && !isStunned) { stateTimer = bruteDamagedTime; }
+    }
+
     // Brute: shrugs off a kick outside the grab wind-up
     private void BlockKick()
     {
@@ -652,6 +699,11 @@ public class EnemyThief : EnemyEntity
             {
                 // Timer finished, return to default behavior
                 currentState = EnemyThiefState.Run;
+            }
+            else if (stateTimer <= 0 && grab != null && isKicked)
+            {
+                // Brute still knocked down: back to sitting (Loop Kicked), without replaying the fall
+                currentState = EnemyThiefState.KickedLoop;
             }
         }
 
@@ -904,6 +956,11 @@ public class EnemyThief : EnemyEntity
             // 3. Restore the previous state and normalized time
             // Note: The target controller must have a state matching this hash for this to work smoothly
             anim.Play(stateNameHash, 0, normalizedTime);
+
+            // 4. A new controller starts with all its parameters off. Put the current state's bool back,
+            //    otherwise e.g. a killing blow that also swaps the blood version leaves IsDied off and the
+            //    corpse drifts back to Idle (ChooseAnimation only sets bools when the state changes).
+            if (lastStateHash != 0) { anim.SetBool(lastStateHash, true); }
         }
     }
 
@@ -925,7 +982,8 @@ public class EnemyThief : EnemyEntity
         { EnemyThiefState.Died, Animator.StringToHash("IsDied") },
         { EnemyThiefState.PreAttack, Animator.StringToHash("IsAttack1") },
         { EnemyThiefState.Hug, Animator.StringToHash("IsAttack2") },
-        { EnemyThiefState.BlockKick, Animator.StringToHash("IsBlockLeft") }
+        { EnemyThiefState.BlockKick, Animator.StringToHash("IsBlockLeft") },
+        { EnemyThiefState.KickedLoop, Animator.StringToHash("IsKicked") }
     };
 
     // Brute animator (Enemy_Brute.controller): Idle, Run, PreAttack, Attack, Kicked -> Loop Kicked, Block Kicked,
@@ -942,6 +1000,7 @@ public class EnemyThief : EnemyEntity
         { EnemyThiefState.Kicked, Animator.StringToHash("IsKicked") },
         { EnemyThiefState.Parried, Animator.StringToHash("IsKicked") },
         { EnemyThiefState.BlockKick, Animator.StringToHash("IsBlockKick") },
+        { EnemyThiefState.KickedLoop, Animator.StringToHash("IsKickedLoop") },
         { EnemyThiefState.BlockLeft, Animator.StringToHash("IsBlockLeft") },
         { EnemyThiefState.BlockRight, Animator.StringToHash("IsBlockRight") },
         { EnemyThiefState.DamageLeft, Animator.StringToHash("IsDamageLeft") },

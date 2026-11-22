@@ -32,6 +32,7 @@ public class ShrineAltar : MonoBehaviour
 
     private void Awake()
     {
+        SharpWorldText.Attach(label); // full-resolution text (the world renders at low resolution)
         settings = ShrineSettings.Load();
 
         // Heights come from ShrineSettings so they can be tuned in one place

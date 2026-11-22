@@ -166,16 +166,45 @@ public class ChallengeRoom : MonoBehaviour
         }
     }
 
+    // Enemies the normal spawners use on this floor (cached per floor)
+    private List<EnemySpawnData> roster;
+    private int rosterFloor = -1;
+
     private GameObject PickEnemy(int floor)
     {
+        int floorIndex = floor - 1;
+        if (roster == null || rosterFloor != floorIndex)
+        {
+            roster = FloorEnemyTable.Roster(floorIndex);
+            rosterFloor = floorIndex;
+        }
+        var allowed = new HashSet<GameObject>();
+        foreach (EnemySpawnData d in roster) { allowed.Add(d.enemyPrefab); }
+
         List<ChallengeDefinition.EnemyOption> pool = challenge.enemies != null && challenge.enemies.Count > 0 ? challenge.enemies : settings.defaultEnemies;
         float total = 0f;
         var options = new List<ChallengeDefinition.EnemyOption>();
         foreach (ChallengeDefinition.EnemyOption o in pool)
         {
             if (o == null || o.prefab == null || o.weight <= 0f || floor < o.minFloor) { continue; }
+            // Only enemies that appear on this floor
+            if (allowed.Count > 0 && !allowed.Contains(o.prefab)) { continue; }
             options.Add(o);
             total += o.weight;
+        }
+
+        // The challenge's own list has none of this floor's enemies: use the floor's enemies directly
+        if (options.Count == 0 && roster.Count > 0)
+        {
+            float sum = 0f;
+            foreach (EnemySpawnData d in roster) { sum += Mathf.Max(1f, d.spawnChance); }
+            float r = Random.value * sum;
+            foreach (EnemySpawnData d in roster)
+            {
+                r -= Mathf.Max(1f, d.spawnChance);
+                if (r <= 0f) { return d.enemyPrefab; }
+            }
+            return roster[roster.Count - 1].enemyPrefab;
         }
         if (options.Count == 0) { return null; }
 
@@ -190,6 +219,7 @@ public class ChallengeRoom : MonoBehaviour
 
     private void Complete()
     {
+        MetaRun.ChallengeCleared(); // meta progression: Emerald reward
         state = State.Cleared;
         if (active == this) { active = null; }
 

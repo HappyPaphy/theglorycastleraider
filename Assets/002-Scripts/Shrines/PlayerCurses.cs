@@ -129,6 +129,83 @@ public class PlayerCurses : MonoBehaviour
     // HUD (top left, one line per curse in its colour)
     // =========================================================
 
+    // The list sits just under the health / stamina / mana bars (measured on screen, so moving the bars
+    // or changing resolution never makes them overlap). DefaultTop is used if the bars can't be found.
+    private const float DefaultTop = -150f;
+    private const float GapBelowBars = 14f;
+    private RectTransform hudRect;
+    private Canvas hudCanvas;
+    private readonly List<Graphic> barGraphics = new List<Graphic>();
+    private readonly Vector3[] corners = new Vector3[4];
+    private float nextBarSearch;
+
+    private void LateUpdate()
+    {
+        if (hudRect == null || hudText == null || string.IsNullOrEmpty(hudText.text)) { return; }
+
+        barGraphics.RemoveAll(g => g == null);
+        if (barGraphics.Count == 0 && Time.unscaledTime >= nextBarSearch)
+        {
+            nextBarSearch = Time.unscaledTime + 1f;
+            FindBarGraphics();
+        }
+
+        // Lowest screen point of the visible bars
+        float lowest = float.MaxValue;
+        foreach (Graphic g in barGraphics)
+        {
+            if (!g.isActiveAndEnabled || g.canvas == null) { continue; }
+            Camera cam = g.canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : g.canvas.worldCamera;
+            g.rectTransform.GetWorldCorners(corners);
+            for (int i = 0; i < 4; i++)
+            {
+                float y = RectTransformUtility.WorldToScreenPoint(cam, corners[i]).y;
+                if (y < lowest) { lowest = y; }
+            }
+        }
+
+        float top = DefaultTop;
+        if (lowest < float.MaxValue)
+        {
+            float scale = hudCanvas != null && hudCanvas.scaleFactor > 0f ? hudCanvas.scaleFactor : 1f;
+            float belowBars = -(Screen.height - lowest) / scale - GapBelowBars;
+            top = Mathf.Min(DefaultTop, belowBars); // only ever move down, never up into the bars
+        }
+        if (!Mathf.Approximately(hudRect.anchoredPosition.y, top)) { hudRect.anchoredPosition = new Vector2(32f, top); }
+    }
+
+    // Every image/text of the panels that hold the player's bars
+    private void FindBarGraphics()
+    {
+        PlayerController player = PlayerController.instance;
+        if (player == null) { return; }
+        foreach (Slider bar in player.HudBars)
+        {
+            if (bar == null) { continue; }
+            // Climb to the panel directly under the bar's canvas (bar + its icon, frame and text)
+            Transform panel = bar.transform;
+            Canvas canvas = bar.GetComponentInParent<Canvas>();
+            while (panel.parent != null && canvas != null && panel.parent != canvas.transform && !IsLarge(panel.parent)) { panel = panel.parent; }
+            foreach (Graphic g in panel.GetComponentsInChildren<Graphic>(true))
+            {
+                if (!IsLarge(g.transform) && !barGraphics.Contains(g)) { barGraphics.Add(g); }
+            }
+        }
+    }
+
+    // Full-screen / big containers (HUD roots, overlays) aren't part of the bars
+    private bool IsLarge(Transform t)
+    {
+        RectTransform r = t as RectTransform;
+        if (r == null) { return false; }
+        Canvas c = t.GetComponentInParent<Canvas>();
+        Camera cam = c != null && c.renderMode != RenderMode.ScreenSpaceOverlay ? c.worldCamera : null;
+        r.GetWorldCorners(corners);
+        float a = RectTransformUtility.WorldToScreenPoint(cam, corners[0]).y;
+        float b = RectTransformUtility.WorldToScreenPoint(cam, corners[1]).y;
+        return Mathf.Abs(b - a) > Screen.height * 0.4f;
+    }
+
     private void BuildHud()
     {
         Canvas canvas = gameObject.AddComponent<Canvas>();
@@ -143,8 +220,10 @@ public class PlayerCurses : MonoBehaviour
         rt.SetParent(transform, false);
         rt.anchorMin = rt.anchorMax = new Vector2(0f, 1f);
         rt.pivot = new Vector2(0f, 1f);
-        rt.anchoredPosition = new Vector2(32f, -150f);
+        rt.anchoredPosition = new Vector2(32f, DefaultTop);
         rt.sizeDelta = new Vector2(600f, 300f);
+        hudRect = rt;
+        hudCanvas = canvas;
 
         TextMeshProUGUI text = rt.gameObject.AddComponent<TextMeshProUGUI>();
         GameFontSettings.Apply(text);

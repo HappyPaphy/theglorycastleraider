@@ -82,11 +82,24 @@ public sealed class ConstrainedTriangulator : Triangulator
 
         this.AddSuperTriangle();
         this.NormalizeCoordinates();
+        if (HasInvalidPoints())
+        {
+            return new int[] { };
+        }
         this.ComputeTriangulation();
+        if (failed)
+        {
+            return new int[] { };
+        }
 
         if (constraints.Count > 0)
         {
             this.ApplyConstraints();
+            if (failed)
+            {
+                // Degenerate cut: leave the cut face empty rather than hang
+                return new int[] { };
+            }
             this.DiscardTrianglesViolatingConstraints();
         }
 
@@ -126,6 +139,7 @@ public sealed class ConstrainedTriangulator : Triangulator
         // Loop through each edge constraint
         foreach (EdgeConstraint constraint in constraints)
         {
+            if (failed) return;
             if (constraint.v1 == constraint.v2) continue;
 
             // We find the edges of the triangulation that intersect the constraint edge and remove them
@@ -160,11 +174,27 @@ public sealed class ConstrainedTriangulator : Triangulator
         int edgeIndex = startEdge.t1Edge;
         int lastTriangle = t;
         bool finalTriangleFound = false;
+        int guard = 0;
+        int limit = triangulation.GetLength(0) + 2;
         while (!finalTriangleFound)
         {
+            // A constraint can cross each triangle at most once; more means we are walking in a circle
+            if (++guard > limit)
+            {
+                failed = true;
+                intersectingEdges.Clear();
+                break;
+            }
+
             // Cross the last intersecting edge and inspect the next triangle
             lastTriangle = t;
             t = triangulation[t, edgeIndex];
+            if (t == OUT_OF_BOUNDS)
+            {
+                failed = true;
+                intersectingEdges.Clear();
+                break;
+            }
 
             // Get coordinates of constraint end points and triangle vertices
             Vector2 v_i = points[constraint.v1].coords;
@@ -201,6 +231,8 @@ public sealed class ConstrainedTriangulator : Triangulator
             {
                 // Shouldn't reach this point
                 Debug.LogWarning("Failed to find final triangle, exiting early.");
+                failed = true;
+                intersectingEdges.Clear();
                 break;
             }
         }
@@ -308,11 +340,19 @@ public sealed class ConstrainedTriangulator : Triangulator
         // have been added after all edges have been visited, stop the loop. Every 
         // time an edge is added to newEdges, reset the counter.
         int counter = 0;
+        int guard = 0;
+        int limit = LoopLimit;
 
         // Loop through all intersecting edges until they have been properly resolved
         // or they have all been visited with no diagonal swaps.
         while (intersectingEdges.Count > 0 && counter <= intersectingEdges.Count)
         {
+            if (++guard > limit)
+            {
+                failed = true;
+                return;
+            }
+
             edge = intersectingEdges.Dequeue();
 
             Quad quad;
@@ -374,9 +414,14 @@ public sealed class ConstrainedTriangulator : Triangulator
         // Iterate over the list of newly created edges and swap non-constraint diagonals until no more swaps take place
         bool swapOccurred = true;
         int counter = 0;
+        int limit = 4 * (newEdges.Count + 16);
         while (swapOccurred)
         {
-            counter++;
+            if (++counter > limit)
+            {
+                // Not perfectly Delaunay, but still a valid triangulation - stop here
+                break;
+            }
             swapOccurred = false;
 
             for (int i = 0; i < newEdges.Count; i++)

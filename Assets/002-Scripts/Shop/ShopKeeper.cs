@@ -139,7 +139,7 @@ public class ShopKeeper : MonoBehaviour
         CoinWallet wallet = PlayerController.instance != null ? PlayerController.instance.coinWallet : null;
         if (wallet == null) { return PurchaseResult.Failed; }
 
-        if (wallet.Coins < slot.item.price)
+        if (wallet.Coins < slot.item.Price)
         {
             PlayClip(deniedSound);
             return PurchaseResult.NotEnoughCoins;
@@ -152,10 +152,16 @@ public class ShopKeeper : MonoBehaviour
             return PurchaseResult.CannotCarry;
         }
 
-        wallet.TrySpend(slot.item.price);
+        wallet.TrySpend(slot.item.Price);
         slot.remaining--;
         PlayerUpgrades.Instance.RecordPurchase(slot.item);
         PlayClip(buySound);
+
+        // Items/weapons already show a notification from the inventory; keys, upgrades etc. show it here
+        if (slot.item.kind != ShopItemKind.Item && slot.item.kind != ShopItemKind.Weapon)
+        {
+            ItemPickupPopup.Show(slot.item.displayName, "Purchased", slot.item.Icon, "shop:" + slot.item.displayName);
+        }
         return PurchaseResult.Success;
     }
 

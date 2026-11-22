@@ -27,7 +27,13 @@ public class BruteGrab : MonoBehaviour
     [Tooltip("Hug damage is dealt in ticks this far apart.")]
     public float damageTick = 0.35f;
     [Tooltip("Where the player is held, in front of him (metres).")]
-    public float holdDistance = 1.1f;
+    public float holdDistance = 0.7f;
+    [Tooltip("How high the player is lifted while hugged (metres), so he's face to face with the Brute.")]
+    public float liftHeight = 0.9f;
+    [Tooltip("Height of his face above his feet (metres): the player's camera locks onto it while hugged.")]
+    public float faceHeight = 2.6f;
+
+    public Vector3 FacePoint => transform.position + Vector3.up * faceHeight;
 
     [Header("Break free (mash Jump)")]
     [Tooltip("Struggle gained per Jump press (1 = free).")]

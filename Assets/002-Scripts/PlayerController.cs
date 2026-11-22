@@ -80,6 +80,7 @@ public class PlayerController : PlayerEntity
     // Held by a Brute: can't move, attack or be hit by others; mash Jump to break free
     [HideInInspector] public bool isHeld = false;
     private BruteGrab heldBy;
+    private float heldBaseY;
     private Vector3 pushVelocity;
     [HideInInspector] public float verticalRotation = 0f;
     private float attackLockTimer = 0f;
@@ -129,7 +130,7 @@ public class PlayerController : PlayerEntity
         {
             if (PauseGame.instance != null && EquipmentLoadOut.instance != null)
             {
-                if (!PauseGame.instance.IsPaused && !EquipmentLoadOut.instance.isPanelActive)
+                if (!PauseGame.instance.IsPaused && !EquipmentLoadOut.instance.isPanelActive && !DevItemGiver.IsOpen)
                 {
                     ChooseAnimations();
                     HandleKick();
@@ -232,7 +233,8 @@ public class PlayerController : PlayerEntity
                 {
                     SoundManager.instance.KickSound_Human(transform.position);
 
-                    float knockbackValue = PlayerPerkManager.Instance.GetJumpKickKnockback(11f);
+                    // Big Foot boosts the push only when the kick is done mid-jump
+                    float knockbackValue = PlayerPerkManager.Instance.GetJumpKickKnockback(11f, !controller.isGrounded);
 
                     targetEnemy.GotKicked(hit.point, finalKickDamage, knockbackValue);
                     if (targetEnemy.Elite != null) { targetEnemy.Elite.OnKicked(); } // breaks a Warded elite's ward
@@ -286,11 +288,25 @@ public class PlayerController : PlayerEntity
     {
         if(playerWeaponManager.isQuickMenuActive) { return; }
 
-        if(!isExecuting)
+        if (isHeld && heldBy != null)
+        {
+            // Hugged: no looking around, the camera is locked onto the Brute's face
+            Vector3 face = heldBy.FacePoint;
+            Vector3 flat = face - transform.position;
+            flat.y = 0f;
+            if (flat.sqrMagnitude > 0.001f)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(flat), Time.deltaTime * 12f);
+            }
+            float pitch = -Mathf.Atan2(face.y - cameraTransform.position.y, Mathf.Max(0.1f, flat.magnitude)) * Mathf.Rad2Deg;
+            verticalRotation = Mathf.Clamp(Mathf.LerpAngle(verticalRotation, pitch, Time.deltaTime * 12f), -maxLookAngle, maxLookAngle);
+        }
+        else if(!isExecuting)
         {
             Vector2 lookValue = InputSchemeManager.instance.input_Look.ReadValue<Vector2>();
 
-            float adjustedSensitivity = mouseSensitivity;
+            // Player's look sensitivity setting (mouse / controller, saved; 1 = default feel)
+            float adjustedSensitivity = mouseSensitivity * LookSensitivity.ForCurrentInput();
 
             if (InputSchemeManager.instance.CurrentInputMode == InputMode.PC)
             {
@@ -426,7 +442,7 @@ public class PlayerController : PlayerEntity
         {
             finalMove = Vector3.zero;
             Vector3 toHold = heldBy.HoldPoint - transform.position;
-            toHold.y = 0f;
+            toHold.y = heldBaseY + heldBy.liftHeight - transform.position.y; // lifted up to his face
             controller.Move(toHold * Mathf.Min(1f, 10f * Time.deltaTime));
         }
 
@@ -448,9 +464,16 @@ public class PlayerController : PlayerEntity
             TriggerMeleeJolt(new Vector3(-10f, 0f, 0f));
         }
 
-        // 5. Apply Gravity
-        velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
+        // 5. Apply Gravity (not while a Brute holds you up)
+        if (isHeld)
+        {
+            velocity = Vector3.zero;
+        }
+        else
+        {
+            velocity.y += gravity * Time.deltaTime;
+            controller.Move(velocity * Time.deltaTime);
+        }
     }
 
     public void TakeSwordHit(EnemyEntity enemy)
@@ -622,6 +645,12 @@ public class PlayerController : PlayerEntity
         isHeld = true;
         heldBy = by;
         pushVelocity = Vector3.zero;
+        heldBaseY = transform.position.y;
+
+        // Face him
+        Vector3 toBrute = by.transform.position - transform.position;
+        toBrute.y = 0f;
+        if (toBrute.sqrMagnitude > 0.01f) { transform.rotation = Quaternion.LookRotation(toBrute); }
         if (isSliding)
         {
             isSliding = false;

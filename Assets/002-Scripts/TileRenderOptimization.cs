@@ -33,6 +33,18 @@ public class TileRenderOptimization : MonoBehaviour
     private static readonly Queue<(Tile tile, int depth)> SearchQueue = new Queue<(Tile, int)>();
     private static Tile nearTilesCenter;
 
+    private void Awake()
+    {
+        // Rooms made by the room builders don't fill these in: find them (the room's Tile / its Environment)
+        if (tile == null) { tile = GetComponent<Tile>(); }
+        if (tile == null) { tile = GetComponentInParent<Tile>(); }
+        if (structureRoot == null)
+        {
+            Transform environment = transform.Find("Environment");
+            structureRoot = environment != null ? environment.gameObject : gameObject;
+        }
+    }
+
     private void Start()
     {
         if (isThisTileStart && RoguelikeManager.instance != null)
@@ -45,7 +57,7 @@ public class TileRenderOptimization : MonoBehaviour
             playerTransform = PlayerController.instance.transform;
         }
 
-        if (RoguelikeManager.instance != null)
+        if (RoguelikeManager.instance != null && tile != null)
         {
             RoguelikeManager.instance.allDungeonTiles.Add(tile);
         }
@@ -67,8 +79,8 @@ public class TileRenderOptimization : MonoBehaviour
     // Bounds of everything in the room, measured once (the room doesn't move after the dungeon is built)
     private void CacheBounds()
     {
-        bounds = CalculateBounds(tile);
-        boundsReady = true;
+        boundsReady = true; // never retry every frame, even if something below is missing
+        bounds = tile != null ? CalculateBounds(tile) : new Bounds(transform.position, Vector3.one * 10f);
     }
 
     private void EvaluateVisibility()
@@ -176,6 +188,7 @@ public class TileRenderOptimization : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        if (tile == null) { tile = GetComponent<Tile>(); }
         if (tile == null) { return; }
 
         Bounds b = boundsReady ? bounds : CalculateBounds(tile);

@@ -26,6 +26,13 @@ public class InventoryManager : MonoBehaviour
     /// </summary>
     public bool TryAddGeneralItem(Item item)
     {
+        bool added = TryAddGeneralItemInternal(item);
+        if (added) { ItemPickupPopup.ShowItem(item); } // top-right "item obtained" notification
+        return added;
+    }
+
+    private bool TryAddGeneralItemInternal(Item item)
+    {
         switch (item.itemCategory)
         {
             case ItemCategory.Consumable:
@@ -86,35 +93,48 @@ public class InventoryManager : MonoBehaviour
     /// <summary>
     /// Capped at 2 specific weapons per sub-type (e.g. Max 2 Short Swords)
     /// </summary>
-    public bool TryAddWeapon(Weapon newWeapon)
-    {
-        int currentCount = 0;
+    /// <summary>How many of one weapon kind can be carried: 2, plus the shop's Weapon Carry upgrade.</summary>
+    public static int WeaponCarryLimit => 2 + (PlayerUpgrades.Instance != null ? PlayerUpgrades.Instance.BonusWeaponCarry : 0);
 
-        switch (newWeapon.weaponCategory)
+    /// <summary>How many weapons of the same kind as this one the player carries.</summary>
+    public int CountSameKind(Weapon weapon)
+    {
+        if (weapon == null) { return 0; }
+        switch (weapon.weaponCategory)
         {
             case WeaponCategory.Melee:
-                currentCount = weapons.Count(w => w.weaponCategory == WeaponCategory.Melee && w.meleeType == newWeapon.meleeType);
-                break;
+                return weapons.Count(w => w.weaponCategory == WeaponCategory.Melee && w.meleeType == weapon.meleeType);
             case WeaponCategory.Shield:
-                currentCount = weapons.Count(w => w.weaponCategory == WeaponCategory.Shield && w.shieldType == newWeapon.shieldType);
-                break;
+                return weapons.Count(w => w.weaponCategory == WeaponCategory.Shield && w.shieldType == weapon.shieldType);
             case WeaponCategory.Bow:
-                currentCount = weapons.Count(w => w.weaponCategory == WeaponCategory.Bow && w.bowType == newWeapon.bowType);
-                break;
+                return weapons.Count(w => w.weaponCategory == WeaponCategory.Bow && w.bowType == weapon.bowType);
             case WeaponCategory.PyromancyFlame:
-                currentCount = weapons.Count(w => w.weaponCategory == WeaponCategory.PyromancyFlame && w.pyromancyType == newWeapon.pyromancyType);
-                break;
+                return weapons.Count(w => w.weaponCategory == WeaponCategory.PyromancyFlame && w.pyromancyType == weapon.pyromancyType);
             case WeaponCategory.SorceryCatalyst:
-                currentCount = weapons.Count(w => w.weaponCategory == WeaponCategory.SorceryCatalyst && w.sorceryType == newWeapon.sorceryType);
-                break;
-                // PyromancyFlame and SorceryCatalyst handled here if they are categorized as Weapons
+                return weapons.Count(w => w.weaponCategory == WeaponCategory.SorceryCatalyst && w.sorceryType == weapon.sorceryType);
+            default:
+                return 0;
         }
+    }
 
+    /// <summary>True if one more of this weapon fits in the inventory (counts the Weapon Carry upgrade).</summary>
+    public bool CanCarryWeapon(Weapon weapon) => weapon != null && CountSameKind(weapon) < WeaponCarryLimit;
+
+    /// <summary>Chests and enemy drops never give a weapon kind the player already has this many of
+    /// (fixed; the Weapon Carry upgrade doesn't raise it).</summary>
+    public const int LootWeaponLimit = 2;
+
+    /// <summary>True if chests / drops may still give this weapon.</summary>
+    public bool CanLootWeapon(Weapon weapon) => weapon != null && CountSameKind(weapon) < LootWeaponLimit;
+
+    public bool TryAddWeapon(Weapon newWeapon)
+    {
         // Base carry limit is 2 of each weapon; the shop's Weapon Carry upgrade raises it
-        if (currentCount < 2 + PlayerUpgrades.Instance.BonusWeaponCarry)
+        if (CanCarryWeapon(newWeapon))
         {
             weapons.Add(newWeapon);
             StoreItemSafely(newWeapon);
+            ItemPickupPopup.ShowItem(newWeapon);
             return true;
         }
 

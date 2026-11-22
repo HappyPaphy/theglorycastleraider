@@ -20,6 +20,8 @@ public class MinimapUI : MonoBehaviour
         public RoomKind kind;
         public Image room;
         public Image icon;
+        public Image levelMarker;
+        public int level = int.MinValue; // -1 below the player, 0 same level, 1 above (cached to reorder only on change)
         public readonly List<Image> doors = new List<Image>();
         public readonly List<Vector3> doorPositions = new List<Vector3>();
     }
@@ -156,6 +158,8 @@ public class MinimapUI : MonoBehaviour
             }
         }
 
+        float feet = PlayerFeetY(player);
+
         foreach (RoomVisual v in rooms.Values)
         {
             bool isVisited = visited.Contains(v.tile);
@@ -163,11 +167,44 @@ public class MinimapUI : MonoBehaviour
             bool isNeighbour = !isVisited && neighbours.Contains(v.tile);
             bool show = isVisited || isNeighbour;
 
-            v.room.enabled = show;
-            if (show) { v.room.color = isCurrent ? settings.currentRoomColor : isVisited ? settings.exploredRoomColor : settings.neighbourRoomColor; }
+            // Height: rooms on other levels are faded and sit underneath the player's level
+            int level = isCurrent ? 0 : LevelOf(v.tile.Bounds, feet);
+            if (level != v.level) { ApplyLevelOrder(v, level); }
+            float levelAlpha = level == 0 ? 1f : settings.otherLevelAlpha;
 
-            foreach (Image door in v.doors) { door.enabled = isVisited; }
-            if (v.icon != null) { v.icon.enabled = show; }
+            v.room.enabled = show;
+            if (show)
+            {
+                Color c = isCurrent ? settings.currentRoomColor : isVisited ? settings.exploredRoomColor : settings.neighbourRoomColor;
+                c.a *= levelAlpha;
+                v.room.color = c;
+            }
+
+            for (int i = 0; i < v.doors.Count; i++)
+            {
+                Image door = v.doors[i];
+                door.enabled = isVisited;
+                if (!isVisited) { continue; }
+                // A doorway is on the player's level if its height matches, even in a room on another level
+                bool doorSameLevel = Mathf.Abs(v.doorPositions[i].y - feet) < settings.ceilingClearance;
+                Color dc = settings.doorColor;
+                dc.a *= doorSameLevel || level == 0 ? 1f : settings.otherLevelAlpha;
+                door.color = dc;
+            }
+
+            if (v.icon != null)
+            {
+                v.icon.enabled = show;
+                Color ic = Color.white;
+                ic.a = levelAlpha;
+                v.icon.color = ic;
+            }
+
+            if (v.levelMarker != null)
+            {
+                v.levelMarker.enabled = show && level != 0 && settings.showLevelMarkers;
+                v.levelMarker.rectTransform.localScale = new Vector3(1f, level > 0 ? 1f : -1f, 1f); // up = above, down = below
+            }
         }
 
         // Move / turn the map around the player
@@ -184,7 +221,47 @@ public class MinimapUI : MonoBehaviour
 
         // Icons stay upright
         Quaternion upright = Quaternion.Euler(0f, 0f, -yaw);
-        foreach (RoomVisual v in rooms.Values) { if (v.icon != null) v.icon.rectTransform.localRotation = upright; }
+        foreach (RoomVisual v in rooms.Values)
+        {
+            if (v.icon != null) v.icon.rectTransform.localRotation = upright;
+            if (v.levelMarker != null) v.levelMarker.rectTransform.localRotation = upright;
+        }
+    }
+
+    // Bottom of the player's capsule (the transform pivot may not be at the feet)
+    private static float PlayerFeetY(PlayerController player)
+    {
+        CharacterController cc = player.GetComponent<CharacterController>();
+        if (cc == null) { return player.transform.position.y; }
+        return cc.bounds.min.y;
+    }
+
+    // 0 = the player's level, 1 = above, -1 = below. Tall rooms (stair halls) count as the player's level
+    // anywhere between their floor and ceiling.
+    private int LevelOf(Bounds b, float feet)
+    {
+        float floor = b.min.y;
+        float highestStand = Mathf.Max(floor, b.max.y - settings.ceilingClearance);
+        if (feet >= floor - settings.levelTolerance && feet <= highestStand + settings.levelTolerance) { return 0; }
+        return floor > feet ? 1 : -1;
+    }
+
+    // Player's level on top, other levels underneath
+    private static void ApplyLevelOrder(RoomVisual v, int level)
+    {
+        v.level = level;
+        if (level == 0)
+        {
+            v.room.rectTransform.SetAsLastSibling();
+            foreach (Image d in v.doors) { d.rectTransform.SetAsLastSibling(); }
+            if (v.icon != null) { v.icon.rectTransform.SetAsLastSibling(); }
+        }
+        else
+        {
+            v.room.rectTransform.SetAsFirstSibling();
+            foreach (Image d in v.doors) { d.rectTransform.SetAsFirstSibling(); }
+            if (v.icon != null) { v.icon.rectTransform.SetAsFirstSibling(); }
+        }
     }
 
     // Keep the visuals in step with the dungeon's rooms (new floor = new rooms)
@@ -236,6 +313,7 @@ public class MinimapUI : MonoBehaviour
                 door.raycastTarget = false;
                 door.enabled = false;
                 v.doors.Add(door);
+                v.doorPositions.Add(dp);
             }
         }
 
@@ -251,6 +329,18 @@ public class MinimapUI : MonoBehaviour
             v.icon.raycastTarget = false;
             v.icon.enabled = false;
         }
+
+        // Up/down arrow for rooms on another level (corner of the room, or centre if it is small)
+        RectTransform mrt = NewRect("Level", iconLayer);
+        Vector2 half = rt.sizeDelta * 0.5f;
+        Vector2 corner = new Vector2(Mathf.Max(0f, half.x - settings.levelMarkerSize), Mathf.Max(0f, half.y - settings.levelMarkerSize));
+        mrt.localPosition = (Vector2)rt.localPosition + (iconSprite != null ? corner : Vector2.zero);
+        mrt.sizeDelta = Vector2.one * settings.levelMarkerSize;
+        v.levelMarker = mrt.gameObject.AddComponent<Image>();
+        v.levelMarker.sprite = arrowSprite;
+        v.levelMarker.color = settings.levelMarkerColor;
+        v.levelMarker.raycastTarget = false;
+        v.levelMarker.enabled = false;
 
         return v;
     }
@@ -284,6 +374,7 @@ public class MinimapUI : MonoBehaviour
     {
         if (v.room != null) { Destroy(v.room.gameObject); }
         if (v.icon != null) { Destroy(v.icon.gameObject); }
+        if (v.levelMarker != null) { Destroy(v.levelMarker.gameObject); }
         foreach (Image d in v.doors) { if (d != null) Destroy(d.gameObject); }
     }
 

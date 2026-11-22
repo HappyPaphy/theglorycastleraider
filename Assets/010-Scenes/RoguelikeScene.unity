@@ -296,8 +296,9 @@ GameObject:
   m_Component:
   - component: {fileID: 558632016}
   - component: {fileID: 558632015}
+  - component: {fileID: 558632017}
   m_Layer: 0
-  m_Name: NavMesh Surface
+  m_Name: NavMesh Surface (Humaniod)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -350,6 +351,38 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &558632017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 558632014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshSurface
+  m_SerializedVersion: 0
+  m_AgentTypeID: -1372625422
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 1472
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.13333334
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 0}
+  m_BuildHeightMesh: 0
 --- !u!1 &640309495
 GameObject:
   m_ObjectHideFlags: 0
@@ -1060,7 +1093,7 @@ MonoBehaviour:
       PipelineOverride: {fileID: 0}
       ShouldRandomizeSeed: 1
       Seed: 0
-      MaxAttemptCount: 20
+      MaxAttemptCount: 50
       UseMaximumPairingAttempts: 0
       MaxPairingAttempts: 5
       UpDirection: 2
@@ -1085,7 +1118,7 @@ MonoBehaviour:
       CollisionSettings:
         AvoidCollisionsWithOtherDungeons: 0
         DisallowOverhangs: 0
-        OverlapThreshold: 0
+        OverlapThreshold: 0.05
         Padding: 0
         MultiDungeonCollisionMode: 1
         fileVersion: 0
@@ -1895,6 +1928,7 @@ MonoBehaviour:
   canvasGroup_TextFloorIndex: {fileID: 657992544}
   canvasGroup_ProceedNextFloor: {fileID: 1483945324}
   canvasGroup_BlackFadeUI: {fileID: 4643094}
+  eliteEnemiesEnabled: 1
   isPlayerInTheLastRoom: 0
 --- !u!4 &1948385173
 Transform:
@@ -2242,6 +2276,14 @@ PrefabInstance:
       propertyPath: inventory
       value: 
       objectReference: {fileID: 5070486164408892233}
+    - target: {fileID: 2828613660568874589, guid: fa2928a0fe1f4a24eb478fa5f693ac17, type: 3}
+      propertyPath: swordTimeSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 7d7235bf92984344b8e57d03ffc54fca, type: 3}
+    - target: {fileID: 2828613660568874589, guid: fa2928a0fe1f4a24eb478fa5f693ac17, type: 3}
+      propertyPath: swordTimeSoundVolume
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2828613660568874589, guid: fa2928a0fe1f4a24eb478fa5f693ac17, type: 3}
       propertyPath: parriesPerRiposteCharge
       value: 2

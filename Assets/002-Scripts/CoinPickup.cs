@@ -10,6 +10,14 @@ using UnityEngine;
 public class CoinPickup : MonoBehaviour
 {
     private const string PrefabPath = "Pickups/CoinPickup";
+    private const string EmeraldPrefabPath = "Pickups/EmeraldPickup";
+
+    public enum Currency { Coin, Emerald }
+
+    [Header("Currency")]
+    [Tooltip("Coin = gold for this run (CoinWallet). Emerald = kept between runs, spent at the Camp.")]
+    [SerializeField] private Currency currency = Currency.Coin;
+    [SerializeField] private Color textColor = new Color(1f, 0.85f, 0.35f);
 
     [Header("Visual")]
     [Tooltip("The coin sprite. Billboarded towards the camera and spun.")]
@@ -51,8 +59,22 @@ public class CoinPickup : MonoBehaviour
     private float spinAngle;
     private float bobPhase;
 
-    private static CoinPickup prefab;
-    private static bool prefabMissingLogged;
+    private static CoinPickup prefab, emeraldPrefab;
+    private static bool prefabMissingLogged, emeraldMissingLogged;
+
+    /// <summary>Drops emeralds (meta currency) the same way as coins: Resources/Pickups/EmeraldPickup.</summary>
+    public static void DropEmeralds(Vector3 position, int total, int maxPieces = 4)
+    {
+        if (total <= 0) { return; }
+        if (emeraldPrefab == null) { emeraldPrefab = Resources.Load<CoinPickup>(EmeraldPrefabPath); }
+        if (emeraldPrefab == null)
+        {
+            if (!emeraldMissingLogged) { Debug.LogWarning("[CoinPickup] Missing prefab at Resources/" + EmeraldPrefabPath + ". Emeralds are banked directly."); emeraldMissingLogged = true; }
+            MetaRun.CollectEmeralds(total);
+            return;
+        }
+        Spawn(emeraldPrefab, position, total, maxPieces);
+    }
 
     // =========================================================
     // SPAWNING
@@ -74,13 +96,18 @@ public class CoinPickup : MonoBehaviour
             return;
         }
 
+        Spawn(prefab, position, totalValue, maxPieces);
+    }
+
+    private static void Spawn(CoinPickup source, Vector3 position, int totalValue, int maxPieces)
+    {
         int pieces = Mathf.Clamp(totalValue, 1, Mathf.Max(1, maxPieces));
         int baseValue = totalValue / pieces;
         int remainder = totalValue % pieces;
 
         for (int i = 0; i < pieces; i++)
         {
-            CoinPickup coin = Instantiate(prefab, position, Quaternion.identity);
+            CoinPickup coin = Instantiate(source, position, Quaternion.identity);
             coin.value = baseValue + (i < remainder ? 1 : 0);
             coin.Launch(i, pieces);
         }
@@ -215,10 +242,11 @@ public class CoinPickup : MonoBehaviour
     private void Collect()
     {
         collected = true;
-        AddToWallet(value);
+        if (currency == Currency.Emerald) { MetaRun.CollectEmeralds(value); } // kept between runs
+        else { AddToWallet(value); }
 
         if (collectSound != null) { AudioSource.PlayClipAtPoint(collectSound, transform.position, collectVolume); }
-        SpawnFloatingText($"+{value}", transform.position + Vector3.up * textHeight, textRise);
+        SpawnFloatingText($"+{value}", transform.position + Vector3.up * textHeight, textRise, textColor);
 
         transform.DOKill();
         transform.DOScale(0f, 0.12f).SetLink(gameObject).OnComplete(() => Destroy(gameObject));
@@ -230,7 +258,7 @@ public class CoinPickup : MonoBehaviour
         if (player != null && player.coinWallet != null) { player.coinWallet.AddCoins(amount); }
     }
 
-    private static void SpawnFloatingText(string text, Vector3 position, float rise)
+    private static void SpawnFloatingText(string text, Vector3 position, float rise, Color color)
     {
         GameObject go = new GameObject("Coin Text");
         go.transform.position = position;
@@ -239,8 +267,9 @@ public class CoinPickup : MonoBehaviour
         tmp.text = text;
         tmp.fontSize = 2.2f;
         tmp.alignment = TextAlignmentOptions.Center;
-        tmp.color = new Color(1f, 0.85f, 0.35f);
+        tmp.color = color;
         tmp.rectTransform.sizeDelta = new Vector2(1.5f, 0.4f);
+        SharpWorldText.Attach(tmp).hideBehindWalls = false; // short pop-up right where the coin was
 
         Camera cam = Camera.main;
         if (cam != null) { go.transform.rotation = Quaternion.LookRotation(position - cam.transform.position); }

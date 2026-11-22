@@ -3938,7 +3938,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileRenderOptimization
   structureRoot: {fileID: 0}
-  tile: {fileID: 0}
+  tile: {fileID: 6838601181672032987}
   isThisTileStart: 0
 --- !u!1 &4574674074291178924
 GameObject:
@@ -12217,8 +12217,11 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 2c53b1376300e1349a9f5562ac424787, type: 2}
-    m_RemovedComponents:
-    - {fileID: 5426066408113306007, guid: b9fc7f196d774754a9e22c7661379195, type: 3}
+    - target: {fileID: 7154735390134610224, guid: b9fc7f196d774754a9e22c7661379195, type: 3}
+      propertyPath: m_VersionIndex
+      value: 2421
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -12421,8 +12424,11 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 2c53b1376300e1349a9f5562ac424787, type: 2}
-    m_RemovedComponents:
-    - {fileID: 5426066408113306007, guid: b9fc7f196d774754a9e22c7661379195, type: 3}
+    - target: {fileID: 7154735390134610224, guid: b9fc7f196d774754a9e22c7661379195, type: 3}
+      propertyPath: m_VersionIndex
+      value: 2421
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

@@ -43,6 +43,29 @@ public class Triangulator
     // Normalization scale factor
     public float normalizationScaleFactor = 1f;
 
+    // Set when the triangulation hit a degenerate case (NaN points, endless search). The cut face is
+    // then left empty instead of the game hanging and eating memory.
+    protected bool failed;
+
+    // Upper bound for search/swap loops so a bad cut can never loop forever
+    protected int LoopLimit => 64 * (triangleCount + 16);
+
+    /// <summary>
+    /// True if any point is NaN/Infinity (e.g. two identical points or a zero-size cut)
+    /// </summary>
+    protected bool HasInvalidPoints()
+    {
+        for (int i = 0; i < N; i++)
+        {
+            var c = points[i].coords;
+            if (float.IsNaN(c.x) || float.IsNaN(c.y) || float.IsInfinity(c.x) || float.IsInfinity(c.y))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /// <summary>
     /// Initializes the triangulator with the vertex data to be triangulated
     /// </summary>
@@ -93,7 +116,15 @@ public class Triangulator
 
         this.AddSuperTriangle();
         this.NormalizeCoordinates();
+        if (HasInvalidPoints())
+        {
+            return new int[] { };
+        }
         this.ComputeTriangulation();
+        if (failed)
+        {
+            return new int[] { };
+        }
         this.DiscardTrianglesWithSuperTriangleVertices();
 
         List<int> triangles = new List<int>(3 * triangleCount);
@@ -191,6 +222,11 @@ public class Triangulator
         // Loop through each point and insert it into the triangulation
         for (int i = 0; i < N; i++)
         {
+            if (failed)
+            {
+                return false;
+            }
+
             TriangulationPoint point = sortedPoints[i];
 
             // Insert new point into the triangulation. Start by finding the triangle that contains the point `p`
@@ -341,8 +377,16 @@ public class Triangulator
         s.Push((t2, triangulation[t2, E23]));
         s.Push((t3, triangulation[t3, E23]));
         
+        int guard = 0;
+        int limit = LoopLimit;
         while (s.Count > 0)
         {
+            if (++guard > limit)
+            {
+                failed = true;
+                return;
+            }
+
             // Pop next triangle and its adjacent triangle off the stack
             // t1 contains the newly added vertex at V1
             // t2 is adjacent to t1 along the opposite edge of V1

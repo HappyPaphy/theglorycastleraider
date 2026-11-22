@@ -84,21 +84,6 @@ public class PerkSelectionManager : MonoBehaviour
 
     private void Update()
     {
-        if (Keyboard.current.jKey.wasPressedThisFrame)
-        {
-            Open(commonOrb);
-        }
-
-        if (Keyboard.current.kKey.wasPressedThisFrame)
-        {
-            Open(rareOrb);
-        }
-
-        if (Keyboard.current.lKey.wasPressedThisFrame)
-        {
-            Open(uniqueOrb);
-        }
-
         // Only while open: closing an already closed panel would reset Time.timeScale to 1
         // (e.g. while the pause menu or a tutorial popup is using Cancel)
         if (CurrentState != SelectionState.Closed && InputSchemeManager.instance.IsCancelPressed)
@@ -445,6 +430,10 @@ public class PerkSelectionManager : MonoBehaviour
             if (card == null)
                 continue;
 
+            // Meta progression: perks in a Camp pack that hasn't been bought yet aren't offered
+            if (!MetaUnlocks.IsPerkUnlocked(card.PerkStat))
+                continue;
+
             int owned = inventory.GetOwnedLevel(card.PerkStat);
             PerkCardDefinition offerCard = card;
 
@@ -466,7 +455,7 @@ public class PerkSelectionManager : MonoBehaviour
         {
             foreach (PerkCardDefinition card in currentOrb.CardPool)
             {
-                if (card != null && seen.Add(card))
+                if (card != null && MetaUnlocks.IsPerkUnlocked(card.PerkStat) && seen.Add(card))
                     candidates.Add(new PerkOffer(card, card.Level));
             }
         }

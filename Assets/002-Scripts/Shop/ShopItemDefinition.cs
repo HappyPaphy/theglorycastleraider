@@ -33,6 +33,9 @@ public class ShopItemDefinition : ScriptableObject
     [Header("Price")]
     [Min(0)] public int price = 50;
 
+    /// <summary>What it costs right now: the base price with the Camp's Haggler discount.</summary>
+    public int Price => price <= 0 ? 0 : Mathf.Max(1, Mathf.RoundToInt(price * MetaUnlocks.ShopPriceMultiplier));
+
     [Header("What it gives")]
     public ShopItemKind kind = ShopItemKind.Item;
     [Tooltip("Item or Weapon prefab (for kind Item / Weapon).")]
